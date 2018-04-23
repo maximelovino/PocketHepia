@@ -3,3 +3,4 @@ dist/
 data/
 realm-object-server/
 package-lock.json
+log.txt
