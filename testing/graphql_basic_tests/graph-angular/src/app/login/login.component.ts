@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public model = new LoginUser();
+  user = new LoginUser();
   constructor(private userService: UserService, private router: Router, private flashService: FlashService) { }
 
   ngOnInit() {
@@ -22,14 +22,15 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-    console.log(this.model)
+    console.log(this.user)
 
-    this.userService.login(this.model.username, this.model.password).subscribe(data => {
+    this.userService.login(this.user.username, this.user.password).subscribe(data => {
       const token = data.refresh_token.token;
       console.log(token);
       this.userService.setRefreshToken(token);
       this.router.navigate(["/"]);
     }, error => {
+      this.flashService.add("There was a problem with the login");
       console.error(error)
     })
   }

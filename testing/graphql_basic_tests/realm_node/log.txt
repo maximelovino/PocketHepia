@@ -2149,3 +2149,223 @@
 2018-04-23T20:03:44.623Z - debug: The Realm Object Server proxy has 0 open connections to the sync server
 2018-04-23T20:03:44.623Z - debug: [0] closed connection from 127.0.0.1:57730
 2018-04-23T20:03:44.623Z - debug: The Realm Object Server proxy has 0 open connections to the sync server
+2018-04-23T20:07:21.311Z - info: Realm Object Server version 3.1.4 is starting
+2018-04-23T20:07:21.383Z - detail: Starting service sync
+2018-04-23T20:07:21.384Z - info: [sync] Configuring SyncService with a custom dataPath is deprecated and will be removed in a future version and the value will default to 'sync', relative to the server's dataPath.
+2018-04-23T20:07:21.384Z - detail: Starting service auth
+2018-04-23T20:07:21.387Z - detail: Starting service realms
+2018-04-23T20:07:21.388Z - detail: Starting service log
+2018-04-23T20:07:21.389Z - detail: Starting service permissions
+2018-04-23T20:07:21.389Z - detail: Starting service health
+2018-04-23T20:07:21.390Z - detail: Starting service welcome
+2018-04-23T20:07:21.390Z - detail: Starting service password-auth-ui
+2018-04-23T20:07:21.391Z - detail: Started service welcome
+2018-04-23T20:07:21.392Z - detail: Started service log
+2018-04-23T20:07:21.392Z - detail: Started service health
+2018-04-23T20:07:21.392Z - detail: Started service password-auth-ui
+2018-04-23T20:07:21.402Z - info: [sync] Realm sync server started ([realm-core-5.5.0], [realm-sync-3.1.0])
+2018-04-23T20:07:21.402Z - info: [sync] Directory holding persistent state: /Users/maximelovino/Documents/LOCAL_CODE/BACHELOR_PROJECT/PocketHepia/testing/graphql_basic_tests/realm_node/data/sync/user_data
+2018-04-23T20:07:21.403Z - detail: Started service sync
+2018-04-23T20:07:21.403Z - debug: Opening realm at /__admin: 127.0.0.1:61856
+2018-04-23T20:07:21.421Z - debug: Opening realm at /default: 127.0.0.1:61856
+2018-04-23T20:07:21.424Z - info: [sync] Cluster mode: Root node
+2018-04-23T20:07:21.424Z - info: [sync] Backup mode: disabled
+2018-04-23T20:07:21.424Z - info: [sync] Log level: info
+2018-04-23T20:07:21.425Z - info: [sync] Download log compaction is enabled
+2018-04-23T20:07:21.425Z - info: [sync] Max download size: 131072 bytes
+2018-04-23T20:07:21.425Z - info: [sync] Listening on 127.0.0.1:61856 (sync protocol version 24, max backlog is 128)
+2018-04-23T20:07:21.434Z - detail: sync-client: Connection[1]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61859') level=info
+2018-04-23T20:07:21.434Z - detail: sync-client: Connection[2]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61860') level=info
+2018-04-23T20:07:21.439Z - debug: Open progress for realm at /__admin: 0/0
+2018-04-23T20:07:21.445Z - debug: Open progress for realm at /default: 0/0
+2018-04-23T20:07:21.446Z - detail: Opened realm at /__admin
+2018-04-23T20:07:21.447Z - debug: Opening realm at /__revocation: 127.0.0.1:61856
+2018-04-23T20:07:21.484Z - detail: Opened realm at /default
+2018-04-23T20:07:21.484Z - detail: [realms] Creating and initializing the default Realm
+2018-04-23T20:07:21.485Z - detail: Started service realms
+2018-04-23T20:07:21.503Z - detail: sync-client: Connection[3]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61865') level=info
+2018-04-23T20:07:21.503Z - detail: sync-client: Connection[4]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61866') level=info
+2018-04-23T20:07:21.503Z - detail: sync-client: Connection[5]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61867') level=info
+2018-04-23T20:07:21.510Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__wildcardpermissions?shouldCreate=true&realmType=full HTTP/1.1 200 88 - 9.698 ms
+2018-04-23T20:07:21.515Z - debug: Obtained sync label for realm at /__wildcardpermissions: default
+2018-04-23T20:07:21.515Z - debug: Opening realm at /__wildcardpermissions: 127.0.0.1:61856
+2018-04-23T20:07:21.570Z - debug: Open progress for realm at /__revocation: 64/64
+2018-04-23T20:07:21.573Z - detail: Opened realm at /__revocation
+2018-04-23T20:07:21.577Z - detail: sync-client: Connection[6]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61871') level=info
+2018-04-23T20:07:21.579Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__configuration?shouldCreate=true&realmType=full HTTP/1.1 200 82 - 1.662 ms
+2018-04-23T20:07:21.579Z - detail: sync-client: Connection[7]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61872') level=info
+2018-04-23T20:07:21.580Z - debug: Obtained sync label for realm at /__configuration: default
+2018-04-23T20:07:21.580Z - debug: Opening realm at /__configuration: 127.0.0.1:61856
+2018-04-23T20:07:21.672Z - debug: Open progress for realm at /__wildcardpermissions: 402/402
+2018-04-23T20:07:21.673Z - detail: Opened realm at /__wildcardpermissions
+2018-04-23T20:07:21.675Z - detail: sync-client: Connection[8]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61875') level=info
+2018-04-23T20:07:21.676Z - detail: sync-client: Connection[9]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61877') level=info
+2018-04-23T20:07:21.677Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__perm?shouldCreate=true&realmType=full HTTP/1.1 200 73 - 1.067 ms
+2018-04-23T20:07:21.678Z - debug: Obtained sync label for realm at /__perm: default
+2018-04-23T20:07:21.678Z - debug: Opening realm at /__perm: 127.0.0.1:61856
+2018-04-23T20:07:21.702Z - debug: Open progress for realm at /__configuration: 580/580
+2018-04-23T20:07:21.703Z - detail: Opened realm at /__configuration
+2018-04-23T20:07:21.707Z - detail: [auth] Starting auth provider 'password'
+2018-04-23T20:07:21.708Z - detail: [auth] Starting auth provider 'anonymous'
+2018-04-23T20:07:21.708Z - detail: [auth] Starting auth provider 'nickname'
+2018-04-23T20:07:21.709Z - detail: sync-client: Connection[10]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61880') level=info
+2018-04-23T20:07:21.711Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__password?shouldCreate=true&realmType=full HTTP/1.1 200 77 - 0.916 ms
+2018-04-23T20:07:21.711Z - detail: sync-client: Connection[11]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61882') level=info
+2018-04-23T20:07:21.712Z - debug: Obtained sync label for realm at /__password: default
+2018-04-23T20:07:21.712Z - debug: Opening realm at /__password: 127.0.0.1:61856
+2018-04-23T20:07:21.724Z - debug: Open progress for realm at /__perm: 703/703
+2018-04-23T20:07:21.726Z - detail: sync-client: Connection[12]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61884') level=info
+2018-04-23T20:07:21.726Z - detail: Opened realm at /__perm
+2018-04-23T20:07:21.730Z - detail: Started service permissions
+2018-04-23T20:07:21.732Z - debug: Open progress for realm at /__password: 0/0
+2018-04-23T20:07:21.732Z - detail: Opened realm at /__password
+2018-04-23T20:07:21.733Z - detail: Started service auth
+2018-04-23T20:07:21.733Z - detail: All services have started
+2018-04-23T20:07:21.733Z - detail: TokenValidator started
+2018-04-23T20:07:21.742Z - info: Realm Object Server has started and is listening on http://0.0.0.0:9080
+2018-04-23T20:07:21.744Z - detail: sync-client: Connection[13]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61888') level=info
+2018-04-23T20:07:21.746Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin HTTP/1.1 200 74 - 1.794 ms
+2018-04-23T20:07:21.747Z - detail: sync-client: Connection[14]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:61889') level=info
+2018-04-23T20:07:21.750Z - detail: sync-client: Connection[15]: Connected to endpoint '0.0.0.0:9080' (from '127.0.0.1:61890') level=info
+2018-04-23T20:07:21.753Z - debug: Proxy upgrade: [0] new connection from 127.0.0.1:61890
+2018-04-23T20:07:21.757Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin?shouldCreate=false HTTP/1.1 200 74 - 0.985 ms
+2018-04-23T20:07:21.758Z - debug: new target for default is http://127.0.0.1:61856
+2018-04-23T20:07:21.758Z - debug: ignore repeated 'available' message from service watch
+2018-04-23T20:07:21.758Z - debug: The Realm Object Server proxy has 1 open connections to the sync server
+2018-04-23T20:07:21.769Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin HTTP/1.1 200 74 - 1.159 ms
+2018-04-23T20:07:21.772Z - detail: sync-client: Connection[16]: Connected to endpoint '0.0.0.0:9080' (from '127.0.0.1:61894') level=info
+2018-04-23T20:07:21.773Z - debug: Proxy upgrade: [1] new connection from 127.0.0.1:61894
+2018-04-23T20:07:21.776Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin?shouldCreate=false HTTP/1.1 200 74 - 1.471 ms
+2018-04-23T20:07:21.778Z - debug: The Realm Object Server proxy has 2 open connections to the sync server
+2018-04-23T20:07:29.767Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin?shouldCreate=true&realmType=full HTTP/1.1 200 74 - 2.608 ms
+2018-04-23T20:07:29.771Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 836 - 13.624 ms
+2018-04-23T20:07:31.791Z - info: Open files in Realm Object Server: {"regular":89,"directory":0,"character-device":6,"block-device":0,"pipe":94,"symbolic-link":0,"socket":41,"unknown":0,"total":230}
+2018-04-23T20:07:41.795Z - info: Open files in Realm Object Server: {"regular":89,"directory":0,"character-device":6,"block-device":0,"pipe":94,"symbolic-link":0,"socket":40,"unknown":0,"total":229}
+2018-04-23T20:07:45.245Z - debug: [http] 127.0.0.1 - GET /realms/files/%2Ftest?shouldCreate=true&realmType=full HTTP/1.1 200 71 - 1.411 ms
+2018-04-23T20:07:45.246Z - debug: Obtained sync label for realm at /test: default
+2018-04-23T20:07:45.247Z - debug: Opening realm at /test: 127.0.0.1:61856
+2018-04-23T20:07:45.365Z - detail: sync-client: Connection[17]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:62020') level=info
+2018-04-23T20:07:45.382Z - debug: Open progress for realm at /test: 479/479
+2018-04-23T20:07:45.385Z - detail: Opened realm at /test
+2018-04-23T20:07:45.437Z - debug: [http] 127.0.0.1 - POST /graphql/%2Ftest HTTP/1.1 200 28107 - 197.790 ms
+2018-04-23T20:07:45.439Z - detail: sync-client: Connection[18]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:62022') level=info
+2018-04-23T20:07:51.443Z - detail: sync-client: Connection[1]: Linger time expired level=info
+2018-04-23T20:07:51.443Z - detail: sync-client: Connection[2]: Linger time expired level=info
+2018-04-23T20:07:51.553Z - detail: sync-client: Connection[5]: Linger time expired level=info
+2018-04-23T20:07:51.597Z - detail: sync-client: Connection[6]: Linger time expired level=info
+2018-04-23T20:07:51.702Z - detail: sync-client: Connection[8]: Linger time expired level=info
+2018-04-23T20:07:51.728Z - detail: sync-client: Connection[10]: Linger time expired level=info
+2018-04-23T20:07:51.730Z - detail: sync-client: Connection[12]: Linger time expired level=info
+2018-04-23T20:07:51.766Z - info: Open files in Realm Object Server: {"regular":99,"directory":0,"character-device":6,"block-device":0,"pipe":103,"symbolic-link":0,"socket":30,"unknown":0,"total":238}
+2018-04-23T20:07:54.793Z - debug: [http] 127.0.0.1 - POST /graphql/%2Ftest HTTP/1.1 200 72 - 2.831 ms
+2018-04-23T20:08:15.385Z - detail: sync-client: Connection[17]: Linger time expired level=info
+2018-04-23T20:08:17.693Z - debug: Proxy upgrade: [2] new connection from 127.0.0.1:62183
+2018-04-23T20:08:17.694Z - debug: The Realm Object Server proxy has 3 open connections to the sync server
+2018-04-23T20:08:21.766Z - info: Open files in Realm Object Server: {"regular":99,"directory":0,"character-device":6,"block-device":0,"pipe":103,"symbolic-link":0,"socket":31,"unknown":0,"total":239}
+2018-04-23T20:09:54.792Z - detail: Closed realm at /test
+2018-04-23T20:10:01.790Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":31,"unknown":0,"total":226}
+2018-04-23T20:10:24.793Z - detail: sync-client: Connection[18]: Linger time expired level=info
+2018-04-23T20:10:31.798Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:12:58.141Z - debug: [http] 127.0.0.1 - OPTIONS /auth HTTP/1.1 204 0 - 1.351 ms
+2018-04-23T20:12:58.261Z - error: [http] HTTP response: b3f0ee5e-33e8-45a9-8837-9b7c96851806
+{"type":"https://realm.io/docs/object-server/problems/invalid-credentials","title":"The provided credentials are invalid or the user does not exist.","status":401,"code":611}
+2018-04-23T20:12:58.262Z - detail: [http] 127.0.0.1 - POST /auth HTTP/1.1 401 174 - 115.116 ms
+2018-04-23T20:13:01.847Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":30,"unknown":0,"total":225}
+2018-04-23T20:13:11.856Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:13:19.738Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin?shouldCreate=true&realmType=full HTTP/1.1 200 74 - 1.450 ms
+2018-04-23T20:13:19.741Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 836 - 6.415 ms
+2018-04-23T20:13:21.860Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":30,"unknown":0,"total":225}
+2018-04-23T20:13:31.862Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:13:39.975Z - debug: [http] 127.0.0.1 - OPTIONS /auth HTTP/1.1 204 0 - 0.364 ms
+2018-04-23T20:13:40.085Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 794 - 105.070 ms
+2018-04-23T20:13:41.860Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":30,"unknown":0,"total":225}
+2018-04-23T20:13:51.869Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:18:21.141Z - debug: [http] 127.0.0.1 - OPTIONS /auth HTTP/1.1 204 0 - 0.173 ms
+2018-04-23T20:18:21.262Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 794 - 113.614 ms
+2018-04-23T20:18:21.962Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":30,"unknown":0,"total":225}
+2018-04-23T20:18:31.964Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:19:09.727Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin?shouldCreate=true&realmType=full HTTP/1.1 200 74 - 1.375 ms
+2018-04-23T20:19:09.729Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 836 - 6.116 ms
+2018-04-23T20:19:11.982Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":30,"unknown":0,"total":225}
+2018-04-23T20:19:21.985Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:21:29.417Z - debug: [http] 127.0.0.1 - OPTIONS /auth HTTP/1.1 204 0 - 0.214 ms
+2018-04-23T20:21:29.518Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 794 - 96.325 ms
+2018-04-23T20:21:32.022Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":30,"unknown":0,"total":225}
+2018-04-23T20:21:42.024Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:21:52.026Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":32,"unknown":0,"total":227}
+2018-04-23T20:22:12.033Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:22:21.735Z - debug: [http] 127.0.0.1 - OPTIONS /auth HTTP/1.1 204 0 - 0.204 ms
+2018-04-23T20:22:21.850Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 794 - 107.384 ms
+2018-04-23T20:22:22.038Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":30,"unknown":0,"total":225}
+2018-04-23T20:22:32.037Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:22:44.864Z - debug: [http] 127.0.0.1 - OPTIONS /auth HTTP/1.1 204 0 - 0.191 ms
+2018-04-23T20:22:44.978Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 794 - 107.622 ms
+2018-04-23T20:24:59.717Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin?shouldCreate=true&realmType=full HTTP/1.1 200 74 - 1.072 ms
+2018-04-23T20:24:59.719Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 836 - 6.652 ms
+2018-04-23T20:25:02.088Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":30,"unknown":0,"total":225}
+2018-04-23T20:25:12.093Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:30:37.691Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 794 - 99.481 ms
+2018-04-23T20:30:42.203Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":30,"unknown":0,"total":225}
+2018-04-23T20:30:49.706Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin?shouldCreate=true&realmType=full HTTP/1.1 200 74 - 1.020 ms
+2018-04-23T20:30:49.710Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 836 - 7.844 ms
+2018-04-23T20:31:02.213Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:36:43.750Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin?shouldCreate=true&realmType=full HTTP/1.1 200 74 - 1.241 ms
+2018-04-23T20:36:43.753Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 836 - 6.411 ms
+2018-04-23T20:38:12.338Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":31,"unknown":0,"total":226}
+2018-04-23T20:38:22.342Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:39:30.687Z - debug: [http] 127.0.0.1 - OPTIONS /auth HTTP/1.1 204 0 - 0.137 ms
+2018-04-23T20:39:30.795Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 794 - 103.004 ms
+2018-04-23T20:39:32.365Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":30,"unknown":0,"total":225}
+2018-04-23T20:39:42.367Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":29,"unknown":0,"total":224}
+2018-04-23T20:42:33.683Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin?shouldCreate=true&realmType=full HTTP/1.1 200 74 - 1.036 ms
+2018-04-23T20:42:33.686Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 836 - 6.213 ms
+2018-04-23T20:48:23.704Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin?shouldCreate=true&realmType=full HTTP/1.1 200 74 - 33.889 ms
+2018-04-23T20:48:23.707Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 836 - 38.312 ms
+2018-04-23T20:52:24.754Z - debug: [http] 127.0.0.1 - GET /realms/files/%2Ftest?shouldCreate=true&realmType=full HTTP/1.1 200 71 - 1.398 ms
+2018-04-23T20:52:24.754Z - debug: Obtained sync label for realm at /test: default
+2018-04-23T20:52:24.755Z - debug: Opening realm at /test: 127.0.0.1:61856
+2018-04-23T20:52:24.759Z - detail: sync-client: Connection[19]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:64693') level=info
+2018-04-23T20:52:24.764Z - debug: Open progress for realm at /test: 479/479
+2018-04-23T20:52:24.764Z - detail: Opened realm at /test
+2018-04-23T20:52:24.790Z - debug: [http] 127.0.0.1 - POST /graphql/%2Ftest HTTP/1.1 200 28107 - 36.858 ms
+2018-04-23T20:52:24.790Z - detail: sync-client: Connection[20]: Connected to endpoint '127.0.0.1:61856' (from '127.0.0.1:64695') level=info
+2018-04-23T20:52:32.594Z - info: Open files in Realm Object Server: {"regular":99,"directory":0,"character-device":6,"block-device":0,"pipe":103,"symbolic-link":0,"socket":33,"unknown":0,"total":241}
+2018-04-23T20:52:41.200Z - debug: [http] 127.0.0.1 - POST /graphql/%2Ftest HTTP/1.1 200 63 - 1.543 ms
+2018-04-23T20:52:42.593Z - info: Open files in Realm Object Server: {"regular":99,"directory":0,"character-device":6,"block-device":0,"pipe":103,"symbolic-link":0,"socket":34,"unknown":0,"total":242}
+2018-04-23T20:52:52.592Z - info: Open files in Realm Object Server: {"regular":99,"directory":0,"character-device":6,"block-device":0,"pipe":103,"symbolic-link":0,"socket":33,"unknown":0,"total":241}
+2018-04-23T20:52:54.765Z - detail: sync-client: Connection[19]: Linger time expired level=info
+2018-04-23T20:53:02.546Z - error: [http] HTTP response: 4b818472-271e-41d8-9587-8ce8aec0e6fa
+{"type":"https://realm.io/docs/object-server/problems/invalid-credentials","title":"The provided credentials are invalid or the user does not exist.","status":401,"code":611}
+2018-04-23T20:53:02.546Z - detail: [http] 127.0.0.1 - POST /auth HTTP/1.1 401 174 - 113.558 ms
+2018-04-23T20:53:02.596Z - info: Open files in Realm Object Server: {"regular":99,"directory":0,"character-device":6,"block-device":0,"pipe":103,"symbolic-link":0,"socket":32,"unknown":0,"total":240}
+2018-04-23T20:53:05.962Z - debug: sync proxy closed
+2018-04-23T20:53:05.962Z - debug: [2] closed connection from 127.0.0.1:62183
+2018-04-23T20:53:05.962Z - debug: The Realm Object Server proxy has 2 open connections to the sync server
+2018-04-23T20:53:12.600Z - info: Open files in Realm Object Server: {"regular":99,"directory":0,"character-device":6,"block-device":0,"pipe":103,"symbolic-link":0,"socket":28,"unknown":0,"total":236}
+2018-04-23T20:53:16.109Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 794 - 109.112 ms
+2018-04-23T20:53:16.947Z - debug: [http] 127.0.0.1 - GET /health?thisInstance=true HTTP/1.1 200 2 - 0.832 ms
+2018-04-23T20:53:16.948Z - debug: [http] 127.0.0.1 - GET /health HTTP/1.1 304 - - 4.617 ms
+2018-04-23T20:53:17.058Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 794 - 117.481 ms
+2018-04-23T20:53:17.090Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 794 - 114.596 ms
+2018-04-23T20:53:17.122Z - debug: [http] 127.0.0.1 - GET /realms/files/%2F__admin?shouldCreate=true&realmType=full HTTP/1.1 200 74 - 0.848 ms
+2018-04-23T20:53:17.124Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 836 - 5.280 ms
+2018-04-23T20:53:17.126Z - debug: Proxy upgrade: [3] new connection from 127.0.0.1:64712
+2018-04-23T20:53:17.127Z - debug: The Realm Object Server proxy has 3 open connections to the sync server
+2018-04-23T20:53:19.498Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 794 - 107.640 ms
+2018-04-23T20:53:19.624Z - debug: [http] 127.0.0.1 - GET /realms/files/%2Ftest?shouldCreate=true&realmType=full HTTP/1.1 200 71 - 2.066 ms
+2018-04-23T20:53:19.627Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 829 - 6.893 ms
+2018-04-23T20:53:19.630Z - debug: Proxy upgrade: [4] new connection from 127.0.0.1:64715
+2018-04-23T20:53:19.631Z - debug: The Realm Object Server proxy has 4 open connections to the sync server
+2018-04-23T20:53:19.651Z - debug: sync proxy closed
+2018-04-23T20:53:19.651Z - debug: [4] closed connection from 127.0.0.1:64715
+2018-04-23T20:53:19.651Z - debug: The Realm Object Server proxy has 3 open connections to the sync server
+2018-04-23T20:53:19.657Z - debug: [http] 127.0.0.1 - GET /realms/files/%2Ftest?shouldCreate=true&realmType=full HTTP/1.1 200 71 - 0.812 ms
+2018-04-23T20:53:19.660Z - debug: [http] 127.0.0.1 - POST /auth HTTP/1.1 200 829 - 6.626 ms
+2018-04-23T20:53:19.734Z - debug: Proxy upgrade: [5] new connection from 127.0.0.1:64718
+2018-04-23T20:53:19.734Z - debug: The Realm Object Server proxy has 4 open connections to the sync server
+2018-04-23T20:53:22.605Z - info: Open files in Realm Object Server: {"regular":99,"directory":0,"character-device":6,"block-device":0,"pipe":103,"symbolic-link":0,"socket":35,"unknown":0,"total":243}
+2018-04-23T20:53:32.605Z - info: Open files in Realm Object Server: {"regular":99,"directory":0,"character-device":6,"block-device":0,"pipe":103,"symbolic-link":0,"socket":34,"unknown":0,"total":242}
+2018-04-23T20:54:41.200Z - detail: Closed realm at /test
+2018-04-23T20:54:42.631Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":34,"unknown":0,"total":229}
+2018-04-23T20:55:11.201Z - detail: sync-client: Connection[20]: Linger time expired level=info
+2018-04-23T20:55:12.711Z - info: Open files in Realm Object Server: {"regular":93,"directory":0,"character-device":6,"block-device":0,"pipe":96,"symbolic-link":0,"socket":32,"unknown":0,"total":227}
