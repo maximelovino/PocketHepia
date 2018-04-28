@@ -33,7 +33,7 @@ export class UserService {
     return this.http.post<RefreshTokenResponse>(authUrl, JSON.stringify(request), { headers: jsonHeaders })
   }
 
-  public getAccessToken(realmPath: string) {
+  public getAccessToken(realmPath: string): Observable<AccessTokenResponse> {
     const request = {
       "app_id": "",
       "provider": "realm",

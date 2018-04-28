@@ -15,6 +15,7 @@ import { UserGuard } from './user.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { FlashComponent } from './flash/flash.component';
 import { FlashService } from './flash.service';
+import { TaskService } from './task.service';
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { FlashService } from './flash.service';
     HttpClientModule,
     FormsModule
   ],
-  providers: [UserService, UserGuard, FlashService],
+  providers: [UserService, UserGuard, FlashService, TaskService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

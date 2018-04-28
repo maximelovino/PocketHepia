@@ -12,6 +12,7 @@
         "typescript": "2.5.3"
     },
     "dependencies": {
+        "cors": "^2.8.4",
         "realm-graphql-service": "^2.2.0",
         "realm-object-server": "3.1.4"
     }

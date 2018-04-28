@@ -1,6 +1,7 @@
 import { BasicServer, FileConsoleLogger } from 'realm-object-server'
 import * as path from 'path'
 import { GraphQLService } from "realm-graphql-service";
+import * as cors from 'cors';
 
 const server = new BasicServer();
 server.addService(new GraphQLService({
@@ -26,6 +27,7 @@ server.start({
             level: 'info'
         }
     }),
+    middlewares: [cors()],
 
     // The address on which to listen for connections
     // address?: string = '0.0.0.0'
