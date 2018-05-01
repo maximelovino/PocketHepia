@@ -1,0 +1,21 @@
+<mat-toolbar color="primary" class="navbar">
+  <span>
+    <a routerLink="/" mat-raised-button color="accent">PocketHepia</a>
+  </span>
+  <span>
+    <a routerLink="/transactions" mat-button>Transactions</a>
+  </span>
+  <span>
+    <a routerLink="/access" mat-button>Access</a>
+  </span>
+  <span>
+    <a routerLink="/books" mat-button>Books</a>
+  </span>
+  <span class="fillHorizontal"></span>
+  <span>
+    <button mat-button>Logout</button>
+  </span>
+</mat-toolbar>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,11 @@
+.navbar{
+	display: flex
+}
+
+span.fillHorizontal{
+	flex: 1 1 auto
+}
+
+.container{
+	margin: 5em
+}
