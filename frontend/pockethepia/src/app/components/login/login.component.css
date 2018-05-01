@@ -1,0 +1,15 @@
+.flex-container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#login-card{
+	max-width: 400px;
+	display: flex;
+	flex-direction: column
+}
+
+.full-width-card-form{
+	width: 100%;
+}

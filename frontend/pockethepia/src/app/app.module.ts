@@ -1,16 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule, MatButtonModule } from "@angular/material";
+import { MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule } from "@angular/material";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { LocalStorageModule } from '@ngx-pwa/local-storage';
+import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { TransactionsComponent } from './modules/transactions/transactions.component';
-import { AccessComponent } from './modules/access/access.component';
-import { BooksComponent } from './modules/books/books.component';
-import { HomeComponent } from './modules/home/home.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
+import { AccessComponent } from './components/access/access.component';
+import { BooksComponent } from './components/books/books.component';
+import { HomeComponent } from './components/home/home.component';
 
 import { UserService } from "./services/user.service";
+import { LoginComponent } from './components/login/login.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
 
 
 @NgModule({
@@ -19,15 +26,23 @@ import { UserService } from "./services/user.service";
     TransactionsComponent,
     AccessComponent,
     BooksComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    AppRoutingModule
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    AppRoutingModule,
+    LocalStorageModule
   ],
-  providers: [UserService],
+  providers: [UserService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

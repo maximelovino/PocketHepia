@@ -1,0 +1,15 @@
+<div class="flex-container">
+  <mat-card id="login-card">
+    <mat-card-title>Welcome to PocketHepia</mat-card-title>
+    <mat-card-subtitle>Please login to continue</mat-card-subtitle>
+    <form #loginForm="ngForm" (ngSubmit)="login()">
+      <mat-form-field class="full-width-card-form">
+        <input matInput placeholder="E-Mail" [(ngModel)]="email" name="email" required>
+      </mat-form-field>
+      <mat-form-field class="full-width-card-form">
+        <input matInput placeholder="Password" [(ngModel)]="password" name="password" type="password" required>
+      </mat-form-field>
+      <button mat-raised-button color="accent" class="full-width-card-form" [disabled]="loginForm.invalid">Login</button>
+    </form>
+  </mat-card>
+</div>

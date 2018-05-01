@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$pockethepia-theme-primary: mat-palette($mat-red, 900);
+$pockethepia-theme-accent: mat-palette($mat-blue-grey,500);
+$pockethepia-theme-warn: mat-palette($mat-deep-orange, A200);
+
+$pockethepia-theme: mat-light-theme(
+    $pockethepia-theme-primary,
+    $pockethepia-theme-accent,
+    $pockethepia-theme-warn
+);
+
+@include angular-material-theme($pockethepia-theme);
+
+
+body {
+	margin: 0;
+	overflow: hidden;
+}
