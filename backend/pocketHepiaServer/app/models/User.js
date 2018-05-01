@@ -24,8 +24,7 @@ const UserSchema = new Schema({
 	},
 	cardId: {
 		type: String,
-		required: false,
-		unique: true
+		required: false
 	},
 	balance: {
 		type: Number,

@@ -11,6 +11,7 @@ exports.register = (req, res, next) => {
 	const user = new User({ email: req.body.email, name: req.body.name });
 	User.register(user, req.body.password, (err, account) => {
 		if (err) {
+			console.log(err);
 			res.sendStatus(500);
 		} else {
 			next();
