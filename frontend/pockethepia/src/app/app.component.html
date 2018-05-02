@@ -2,17 +2,20 @@
   <span>
     <a routerLink="/" mat-raised-button color="accent">PocketHepia</a>
   </span>
-  <span>
+  <span *ngIf="isConnected">
     <a routerLink="/transactions" mat-button>Transactions</a>
   </span>
-  <span>
+  <span *ngIf="isConnected">
     <a routerLink="/access" mat-button>Access</a>
   </span>
-  <span>
+  <span *ngIf="isConnected">
     <a routerLink="/books" mat-button>Books</a>
   </span>
+  <span *ngIf="isAdmin">
+    <a routerLink="/admin" mat-button>Admin</a>
+  </span>
   <span class="fillHorizontal"></span>
-  <span>
+  <span *ngIf="isConnected">
     <button mat-button (click)="logout()">Logout</button>
   </span>
 </mat-toolbar>

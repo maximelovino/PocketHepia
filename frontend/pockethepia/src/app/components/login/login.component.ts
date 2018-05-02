@@ -12,9 +12,15 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
 
+
   constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
+    //TODO do this differently? with a guard or something?
+    this.userService.isLoggedIn().subscribe(isLoggedIn => {
+      if (isLoggedIn)
+        this.router.navigate(["/"]);
+    })
   }
 
   public login() {
@@ -22,6 +28,8 @@ export class LoginComponent implements OnInit {
       this.userService.login(data);
       this.router.navigate(["/"]);
     }, error => {
+      //TODO tell the user it's false, with a written feedback or modal or something
+      //TODO handle errors on backend calls in a standard way
       console.error("There was an error");
       console.error(error);
     })

@@ -29,6 +29,7 @@ export class UserService {
   //This should be asynchronous, and return when fetched from local storage or variable
   public retrieveUser(): Observable<User> {
     return this.getToken().pipe(flatMap((token) => {
+      //TODO this shouldn't fire if we don't get a token
       return this.http.get<User>(GET_USER_ROUTE, { headers: new HttpHeaders().set("Authorization", `Bearer ${token}`) })
     }))
   }
@@ -42,12 +43,9 @@ export class UserService {
   }
 
   public isLoggedIn(): Observable<boolean> {
-    //TODO use getToken
-    if (this.token) {
-      return of(true);
-    } else {
-      return this.localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY).pipe(map((value) => value !== undefined))
-    }
+    return this.getToken().pipe(map(token => {
+      return token !== undefined && token !== null
+    }));
   }
 
   private saveTokenToLocalStorage(token: String) {
