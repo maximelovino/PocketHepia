@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const passport = require('passport');
 const User = mongoose.model('User');
-const promisify = require('es6-promisify');
+const jwt = require('jsonwebtoken')
 
-exports.register = (req, res, next) => {
+//TODO this is to create a user, must take into consideration all other params
+exports.register = (req, res) => {
 	if (!(req.body.name && req.body.email && req.body.password)) {
 		res.sendStatus(400);
 		return;
@@ -14,9 +14,15 @@ exports.register = (req, res, next) => {
 			console.log(err);
 			res.sendStatus(500);
 		} else {
-			next();
+			res.json(account.exportForFrontend());
 		}
 	})
 }
 
-exports.login = passport.authenticate('local');
+exports.login = (req, res) => {
+	console.log("New login:")
+	console.log(req.user.toObject());
+	const user = req.user.exportForFrontend();
+	const token = jwt.sign(req.user.toObject(), process.env.JWT_SECRET);
+	res.json({ user, token });
+};

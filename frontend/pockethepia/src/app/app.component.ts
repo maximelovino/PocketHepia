@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'PocketHepia';
+  //TODO separate navigation in its own component
+  //TODO add footer
   constructor(private userService: UserService, private router: Router) { }
 
   public logout() {

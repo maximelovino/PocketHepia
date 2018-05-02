@@ -18,9 +18,8 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-    console.log("You clicked the shit");
     this.authService.login(this.email, this.password).subscribe((data) => {
-      this.userService.login(data.token);
+      this.userService.login(data);
       this.router.navigate(["/"]);
     }, error => {
       console.error("There was an error");

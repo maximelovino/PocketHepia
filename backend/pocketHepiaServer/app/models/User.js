@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const passportMongoose = require('passport-local-mongoose')
 const validator = require('validator');
 const Schema = mongoose.Schema;
+const FrontEndUser = require("./FrontEndUser")
 
 const UserSchema = new Schema({
 	name: {
@@ -17,10 +18,10 @@ const UserSchema = new Schema({
 		trim: true,
 		validate: [validator.isEmail, 'Invalid email address']
 	},
-	role: {
-		type: Number,
+	isAdmin: {
+		type: Boolean,
 		required: true,
-		default: 0
+		default: false
 	},
 	cardId: {
 		type: String,
@@ -30,8 +31,37 @@ const UserSchema = new Schema({
 		type: Number,
 		required: true,
 		default: 0
+	},
+	isLibrarian: {
+		type: Boolean,
+		required: true,
+		default: false
+	},
+	acceptsPayments: {
+		type: Boolean,
+		required: true,
+		default: false
+	},
+	adminForAreas: {
+		type: [Schema.Types.ObjectId],
+		required: true,
+		default: []
+	},
+	expiration: {
+		type: Date,
+		required: false
+	},
+	canInvite: {
+		type: Boolean,
+		required: true,
+		default: false
 	}
 });
+
+
+UserSchema.methods.exportForFrontend = function () {
+	return new FrontEndUser(this.name, this.email, this.isAdmin, this.cardId, this.balance, this.isLibrarian, this.acceptsPayments, this.adminForAreas, this.canInvite)
+}
 
 UserSchema.plugin(passportMongoose, { usernameField: 'email' });
 

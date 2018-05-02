@@ -1,18 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
-const jwt = require('jsonwebtoken');
+const passport = require('passport');
 
 
-router.post("/register", authController.register, (req, res) => {
-	res.sendStatus(200);
-});
+router.post("/register", authController.register);
 
-router.post("/login", authController.login, (req, res) => {
-	console.log("New login:")
-	console.log(req.user.toObject());
-	const token = jwt.sign(req.user.toObject(), process.env.JWT_SECRET);
-	res.json({ token });
-});
+router.post("/login", passport.authenticate('local'), authController.login);
 
 module.exports = router;
