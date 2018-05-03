@@ -17,7 +17,7 @@
   <span class="fillHorizontal"></span>
   <span *ngIf="isConnected">
     <mat-menu #userMenu="matMenu">
-      <button mat-menu-item>Change password</button>
+      <button mat-menu-item (click)="changePasswordDialog()">Change password</button>
       <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
 

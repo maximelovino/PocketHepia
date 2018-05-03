@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { UserService } from './services/user.service';
 import { Router, NavigationEnd, NavigationCancel } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { ChangePasswordDialogComponent } from './components/change-password-dialog/change-password-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ export class AppComponent {
   //TODO separate navigation in its own component
   //TODO add footer
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(public dialog: MatDialog, private userService: UserService, private router: Router) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd || val instanceof NavigationCancel) {
         this.updateLoggedIn()
@@ -42,5 +44,15 @@ export class AppComponent {
   public logout() {
     this.userService.logout();
     this.router.navigate(["/login"]);
+  }
+
+  public changePasswordDialog() {
+    this.userService.retrieveUser().subscribe(user => {
+      if (user) {
+        let dialogRef = this.dialog.open(ChangePasswordDialogComponent, {
+          data: user,
+        });
+      }
+    })
   }
 }

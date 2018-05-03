@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatIconModule } from "@angular/material";
+import { MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatIconModule, MatDialogModule } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { LocalStorageModule } from '@ngx-pwa/local-storage';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +18,7 @@ import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { ChangePasswordDialogComponent } from './components/change-password-dialog/change-password-dialog.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { AuthGuard } from './guards/auth.guard';
     AccessComponent,
     BooksComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    ChangePasswordDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -39,11 +41,13 @@ import { AuthGuard } from './guards/auth.guard';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
     MatMenuModule,
     MatIconModule,
     AppRoutingModule,
     LocalStorageModule
   ],
+  entryComponents: [ChangePasswordDialogComponent],
   providers: [UserService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
