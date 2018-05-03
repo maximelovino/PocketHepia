@@ -26,3 +26,27 @@ exports.login = (req, res) => {
 	const token = jwt.sign(req.user.toObject(), process.env.JWT_SECRET);
 	res.json({ user, token });
 };
+
+exports.changePassword = (req, res) => {
+	console.log("Hello");
+	if (req.body.password !== req.body.password2) {
+		res.status(400);
+		res.send("New passwords don't match");
+		return;
+	}
+
+	User.findById(req.user._id, (err, user) => {
+		if (!err && user) {
+			user.changePassword(req.body.oldPassword, req.body.password).then(() => {
+				user.save();
+				res.sendStatus(200);
+			}).catch(e => {
+				console.error(e);
+				res.status(400);
+				res.send(e.message);
+			})
+		} else {
+			res.sendStatus(400);
+		}
+	})
+}

@@ -13,3 +13,8 @@
 .full-width-card-form{
 	width: 100%;
 }
+
+.centered{
+	margin-top: 1em;
+	text-align: center;
+}

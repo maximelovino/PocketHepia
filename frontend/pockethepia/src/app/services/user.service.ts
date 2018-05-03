@@ -30,7 +30,10 @@ export class UserService {
   public retrieveUser(): Observable<User> {
     return this.getToken().pipe(flatMap((token) => {
       //TODO this shouldn't fire if we don't get a token
-      return this.http.get<User>(GET_USER_ROUTE, { headers: new HttpHeaders().set("Authorization", `Bearer ${token}`) })
+      if (token)
+        return this.http.get<User>(GET_USER_ROUTE, { headers: new HttpHeaders().set("Authorization", `Bearer ${token}`) })
+      else
+        return of(undefined)
     }))
   }
 

@@ -8,4 +8,6 @@ router.post("/register", authController.register);
 
 router.post("/login", passport.authenticate('local'), authController.login);
 
+router.post("/changePassword", passport.authenticate('jwt'), authController.changePassword);
+
 module.exports = router;

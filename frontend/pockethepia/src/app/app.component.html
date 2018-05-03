@@ -16,7 +16,14 @@
   </span>
   <span class="fillHorizontal"></span>
   <span *ngIf="isConnected">
-    <button mat-button (click)="logout()">Logout</button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item>Change password</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
   </span>
 </mat-toolbar>
 <div class="container">

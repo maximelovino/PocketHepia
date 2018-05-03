@@ -29,7 +29,7 @@ export class AppComponent {
 
   private updateIsAdmin() {
     this.userService.retrieveUser().subscribe(user => {
-      this.isAdmin = user.isAdmin;
+      this.isAdmin = user && user.isAdmin;
     })
   }
 

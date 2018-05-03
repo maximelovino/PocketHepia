@@ -11,5 +11,10 @@
       </mat-form-field>
       <button mat-raised-button color="accent" class="full-width-card-form" [disabled]="loginForm.invalid">Login</button>
     </form>
+    <mat-card-content *ngIf="loginError" class="centered">
+      <p>
+        Username or password incorrect
+      </p>
+    </mat-card-content>
   </mat-card>
 </div>

@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  loginError: boolean = false;
   email: string;
   password: string;
-
 
   constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
 
@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
     }, error => {
       //TODO tell the user it's false, with a written feedback or modal or something
       //TODO handle errors on backend calls in a standard way
+      this.loginError = true;
       console.error("There was an error");
       console.error(error);
     })

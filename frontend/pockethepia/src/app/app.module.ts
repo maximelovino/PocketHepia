@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule } from "@angular/material";
+import { MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatIconModule } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { LocalStorageModule } from '@ngx-pwa/local-storage';
 import { FormsModule } from '@angular/forms';
@@ -39,6 +39,8 @@ import { AuthGuard } from './guards/auth.guard';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatMenuModule,
+    MatIconModule,
     AppRoutingModule,
     LocalStorageModule
   ],
