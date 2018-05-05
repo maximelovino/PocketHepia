@@ -39,7 +39,7 @@ exports.changePassword = (req, res) => {
 		if (!err && user) {
 			user.changePassword(req.body.oldPassword, req.body.password).then(() => {
 				user.save();
-				res.sendStatus(200);
+				res.status(200).end();
 			}).catch(e => {
 				console.error(e);
 				res.status(400);

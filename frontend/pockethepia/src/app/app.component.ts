@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { UserService } from './services/user.service';
 import { Router, NavigationEnd, NavigationCancel } from '@angular/router';
-import { MatDialog } from '@angular/material';
-import { ChangePasswordDialogComponent } from './components/change-password-dialog/change-password-dialog.component';
+import { MatDialog, MatBottomSheet, MatSnackBar } from '@angular/material';
+import { ChangePasswordSheetComponent } from './components/change-password-sheet/change-password-sheet.component';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,7 @@ export class AppComponent {
   //TODO separate navigation in its own component
   //TODO add footer
 
-  constructor(public dialog: MatDialog, private userService: UserService, private router: Router) {
+  constructor(public sheet: MatBottomSheet, public dialog: MatDialog, private userService: UserService, private router: Router, public snackBar: MatSnackBar) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd || val instanceof NavigationCancel) {
         this.updateLoggedIn()
@@ -49,9 +49,17 @@ export class AppComponent {
   public changePasswordDialog() {
     this.userService.retrieveUser().subscribe(user => {
       if (user) {
-        let dialogRef = this.dialog.open(ChangePasswordDialogComponent, {
-          data: user,
-        });
+        let bottomSheet = this.sheet.open(ChangePasswordSheetComponent);
+        bottomSheet.afterDismissed().subscribe(value => {
+          console.log(value);
+          if (value !== undefined) {
+            if (value) {
+              this.snackBar.open("All good", null, { duration: 2000 })
+            } else {
+              this.snackBar.open("You didn't enter the correct password or your passwords didn't match", null, { duration: 2000 })
+            }
+          }
+        })
       }
     })
   }

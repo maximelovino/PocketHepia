@@ -28,11 +28,11 @@ export class LoginComponent implements OnInit {
       this.userService.login(data);
       this.router.navigate(["/"]);
     }, error => {
-      //TODO tell the user it's false, with a written feedback or modal or something
-      //TODO handle errors on backend calls in a standard way
-      this.loginError = true;
-      console.error("There was an error");
-      console.error(error);
+      if (error) {
+        this.loginError = true;
+        console.error("There was an error");
+        console.error(error);
+      }
     })
   }
 
