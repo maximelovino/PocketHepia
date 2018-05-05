@@ -1,9 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatIconModule, MatDialogModule, MatBottomSheetModule, MatSnackBarModule } from "@angular/material";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { LocalStorageModule } from '@ngx-pwa/local-storage';
 import { FormsModule } from '@angular/forms';
+import { MaterialModule } from './material.module';
 
 
 import { AppComponent } from './app.component';
@@ -13,7 +12,7 @@ import { AccessComponent } from './components/access/access.component';
 import { BooksComponent } from './components/books/books.component';
 import { HomeComponent } from './components/home/home.component';
 
-import { UserService } from "./services/user.service";
+import { UserService } from './services/user.service';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
@@ -35,19 +34,9 @@ import { ChangePasswordSheetComponent } from './components/change-password-sheet
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatCardModule,
-    MatBottomSheetModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatMenuModule,
-    MatIconModule,
     AppRoutingModule,
-    LocalStorageModule
+    LocalStorageModule,
+    MaterialModule
   ],
   entryComponents: [ChangePasswordSheetComponent],
   providers: [UserService, AuthService, AuthGuard],
