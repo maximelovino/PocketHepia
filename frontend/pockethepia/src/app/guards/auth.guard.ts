@@ -14,8 +14,8 @@ export class AuthGuard implements CanActivate {
 
     return this.userService.isLoggedIn().pipe(tap(isLoggedIn => {
       if (!isLoggedIn) {
-        console.warn("You need to login");
-        this.router.navigate(["/login"]);
+        console.warn('You need to login');
+        this.router.navigate(['/login']);
       }
     }));
   }

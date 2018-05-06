@@ -8,11 +8,11 @@ import { UserService } from '../../services/user.service';
 })
 export class HomeComponent implements OnInit {
 
-  //TODO let's check what we do with userService
-  //TODO that sounds cool
+  // TODO let's check what we do with userService
+  // TODO that sounds cool
   constructor(public userService: UserService) {
     userService.retrieveUser().subscribe(user => {
-      console.log(user)
+      console.log(user);
       const userJSON = JSON.stringify(user);
       const pre = document.querySelector('#userPre');
       pre.innerHTML = userJSON;

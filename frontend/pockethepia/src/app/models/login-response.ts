@@ -1,6 +1,6 @@
-import { User } from "./user";
+import { User } from './user';
 
 export class LoginResponse {
-	user: User;
-	token: String;
+  user: User;
+  token: String;
 }

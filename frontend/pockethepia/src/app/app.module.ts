@@ -18,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ChangePasswordSheetComponent } from './components/change-password-sheet/change-password-sheet.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { ChangePasswordSheetComponent } from './components/change-password-sheet
     BooksComponent,
     HomeComponent,
     LoginComponent,
-    ChangePasswordSheetComponent
+    ChangePasswordSheetComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

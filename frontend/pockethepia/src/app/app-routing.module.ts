@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from "@angular/router";
-import { HomeComponent } from "./components/home/home.component";
-import { TransactionsComponent } from "./components/transactions/transactions.component";
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
 import { AccessComponent } from './components/access/access.component';
 import { BooksComponent } from './components/books/books.component';
 import { LoginComponent } from './components/login/login.component';
@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'access', canActivate: [AuthGuard], component: AccessComponent },
   { path: 'books', canActivate: [AuthGuard], component: BooksComponent },
   { path: 'login', component: LoginComponent }
-]
+];
 
 @NgModule({
   imports: [

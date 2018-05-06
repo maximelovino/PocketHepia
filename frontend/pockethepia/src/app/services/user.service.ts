@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 import { Observable } from 'rxjs/Observable';
-import { of } from "rxjs/observable/of";
-import { tap, map, flatMap } from "rxjs/operators";
+import { of } from 'rxjs/observable/of';
+import { tap, map, flatMap } from 'rxjs/operators';
 import { LoginResponse } from '../models/login-response';
 import { User } from '../models/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-const LOCAL_STORAGE_TOKEN_KEY = "JWT_TOKEN";
-const GET_USER_ROUTE = "http://localhost:8080/users/current"
+const LOCAL_STORAGE_TOKEN_KEY = 'JWT_TOKEN';
+const GET_USER_ROUTE = 'http://localhost:8080/users/current';
 
 @Injectable()
 export class UserService {
@@ -22,19 +22,20 @@ export class UserService {
     if (this.token) {
       return of(this.token);
     } else {
-      return this.localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)
+      return this.localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
     }
   }
 
-  //This should be asynchronous, and return when fetched from local storage or variable
+  // This should be asynchronous, and return when fetched from local storage or variable
   public retrieveUser(): Observable<User> {
     return this.getToken().pipe(flatMap((token) => {
-      //TODO this shouldn't fire if we don't get a token
-      if (token)
-        return this.http.get<User>(GET_USER_ROUTE, { headers: new HttpHeaders().set("Authorization", `Bearer ${token}`) })
-      else
-        return of(undefined)
-    }))
+      // TODO this shouldn't fire if we don't get a token
+      if (token) {
+        return this.http.get<User>(GET_USER_ROUTE, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
+      } else {
+        return of(undefined);
+      }
+    }));
   }
 
   private init() {
@@ -42,12 +43,12 @@ export class UserService {
       if (data) {
         this.token = data;
       }
-    })
+    });
   }
 
   public isLoggedIn(): Observable<boolean> {
     return this.getToken().pipe(map(token => {
-      return token !== undefined && token !== null
+      return token !== undefined && token !== null;
     }));
   }
 
@@ -60,7 +61,7 @@ export class UserService {
     this.localStorage.removeItemSubscribe(LOCAL_STORAGE_TOKEN_KEY);
   }
   public login(data: LoginResponse) {
-    console.log("Logging in")
+    console.log('Logging in');
     this.token = data.token;
     this.saveTokenToLocalStorage(this.token);
   }

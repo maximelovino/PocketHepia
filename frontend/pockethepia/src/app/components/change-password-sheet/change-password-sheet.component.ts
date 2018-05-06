@@ -28,8 +28,7 @@ export class ChangePasswordSheetComponent implements OnInit {
         if (error) {
           this.bottomSheetRef.dismiss(false);
         }
-      })
-
+      });
     }
   }
 

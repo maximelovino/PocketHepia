@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" class="navbar">
+  <span>
+    <a routerLink="/" mat-raised-button color="accent">PocketHepia</a>
+  </span>
+  <span *ngIf="isConnected">
+    <a routerLink="/transactions" mat-button>Transactions</a>
+  </span>
+  <span *ngIf="isConnected">
+    <a routerLink="/access" mat-button>Access</a>
+  </span>
+  <span *ngIf="isConnected">
+    <a routerLink="/books" mat-button>Books</a>
+  </span>
+  <!-- isConnected && isAdmin -->
+  <span *ngIf="isConnected && isAdmin">
+    <a routerLink="/admin" mat-button>Admin</a>
+  </span>
+  <span class="fillHorizontal"></span>
+  <span *ngIf="isConnected">
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="changePasswordDialog()">Change password</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </span>
+</mat-toolbar>
