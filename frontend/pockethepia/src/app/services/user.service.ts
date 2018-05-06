@@ -6,6 +6,7 @@ import { tap, map, flatMap } from 'rxjs/operators';
 import { LoginResponse } from '../models/login-response';
 import { User } from '../models/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'JWT_TOKEN';
 const GET_USER_ROUTE = '/api/users/current';
@@ -29,7 +30,6 @@ export class UserService {
   // This should be asynchronous, and return when fetched from local storage or variable
   public retrieveUser(): Observable<User> {
     return this.getToken().pipe(flatMap((token) => {
-      // TODO this shouldn't fire if we don't get a token
       if (token) {
         return this.http.get<User>(GET_USER_ROUTE, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
       } else {
@@ -49,6 +49,16 @@ export class UserService {
   public isLoggedIn(): Observable<boolean> {
     return this.getToken().pipe(map(token => {
       return token !== undefined && token !== null;
+    }));
+  }
+
+  public isAdmin(): Observable<boolean> {
+    return this.retrieveUser().pipe(map(user => {
+      if (user) {
+        return user.isAdmin;
+      } else {
+        return false;
+      }
     }));
   }
 

@@ -7,12 +7,17 @@ import { AccessComponent } from './components/access/access.component';
 import { BooksComponent } from './components/books/books.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
+import { LogsComponent } from './components/logs/logs.component';
+import { UsersComponent } from './components/users/users.component';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', canActivate: [AuthGuard], component: HomeComponent },
   { path: 'transactions', canActivate: [AuthGuard], component: TransactionsComponent },
   { path: 'access', canActivate: [AuthGuard], component: AccessComponent },
   { path: 'books', canActivate: [AuthGuard], component: BooksComponent },
+  { path: 'admin/logs', canActivate: [AuthGuard, AdminGuard], component: LogsComponent },
+  { path: 'admin/users', canActivate: [AuthGuard, AdminGuard], component: UsersComponent },
   { path: 'login', component: LoginComponent }
 ];
 

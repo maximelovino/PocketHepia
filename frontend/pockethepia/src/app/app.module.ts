@@ -19,6 +19,9 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ChangePasswordSheetComponent } from './components/change-password-sheet/change-password-sheet.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { LogsComponent } from './components/logs/logs.component';
+import { UsersComponent } from './components/users/users.component';
+import { AdminGuard } from './guards/admin.guard';
 
 
 @NgModule({
@@ -30,7 +33,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     HomeComponent,
     LoginComponent,
     ChangePasswordSheetComponent,
-    NavbarComponent
+    NavbarComponent,
+    LogsComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +46,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MaterialModule
   ],
   entryComponents: [ChangePasswordSheetComponent],
-  providers: [UserService, AuthService, AuthGuard],
+  providers: [UserService, AuthService, AuthGuard, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

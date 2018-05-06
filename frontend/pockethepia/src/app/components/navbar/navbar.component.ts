@@ -29,8 +29,8 @@ export class NavbarComponent {
   }
 
   private updateIsAdmin() {
-    this.userService.retrieveUser().subscribe(user => {
-      this.isAdmin = (user && user.isAdmin) as boolean;
+    this.userService.isAdmin().subscribe(isAdmin => {
+      this.isAdmin = isAdmin;
     });
   }
 

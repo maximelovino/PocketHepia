@@ -13,7 +13,11 @@
   </span>
   <!-- isConnected && isAdmin -->
   <span *ngIf="isConnected && isAdmin">
-    <a routerLink="/admin" mat-button>Admin</a>
+    <mat-menu #adminMenu="matMenu">
+      <a routerLink="/admin/logs" mat-menu-item>View logs</a>
+      <a routerLink="/admin/users" mat-menu-item>Manage users</a>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="adminMenu">Admin</button>
   </span>
   <span class="fillHorizontal"></span>
   <span *ngIf="isConnected">

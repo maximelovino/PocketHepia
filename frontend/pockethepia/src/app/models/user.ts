@@ -1,11 +1,11 @@
 export class User {
   name: String;
   email: String;
-  isAdmin: Boolean;
+  isAdmin: boolean;
   cardId: String;
   balance: Number;
-  isLibrarian: Boolean;
-  acceptsPayments: Boolean;
+  isLibrarian: boolean;
+  acceptsPayments: boolean;
   adminForAreas: String[];
-  canInvite: Boolean;
+  canInvite: boolean;
 }
