@@ -6,8 +6,8 @@ import { LoginResponse } from '../models/login-response';
 import { UserService } from './user.service';
 import { User } from '../models/user';
 
-const LOGIN_URL = 'http://localhost:8080/auth/login';
-const CHANGE_PASSWORD_URL = 'http://localhost:8080/auth/changePassword';
+const LOGIN_URL = '/api/auth/login';
+const CHANGE_PASSWORD_URL = '/api/auth/changePassword';
 
 @Injectable()
 export class AuthService {

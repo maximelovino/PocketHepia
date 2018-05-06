@@ -8,7 +8,7 @@ import { User } from '../models/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'JWT_TOKEN';
-const GET_USER_ROUTE = 'http://localhost:8080/users/current';
+const GET_USER_ROUTE = '/api/users/current';
 
 @Injectable()
 export class UserService {

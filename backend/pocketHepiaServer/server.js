@@ -6,6 +6,8 @@ const cors = require('cors');
 const app = express();
 const dotenv = require('dotenv');
 const passport = require('passport');
+const https = require('https');
+const fs = require('fs');
 dotenv.config({ path: './conf/conf.env' });
 
 const DB_URL = process.env.DB_URL;
@@ -30,7 +32,15 @@ const routes = require('./app/routes/index');
 
 app.use("/", routes);
 
-app.listen(8080, () => {
-	console.log("Server listening on http://localhost:8080");
+const httpsOptions = {
+	key: fs.readFileSync('../../certs/server.key'),
+	cert: fs.readFileSync('../../certs/server.crt')
+}
+
+// TODO dev purposes
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+
+https.createServer(httpsOptions, app).listen(8080, () => {
+	console.log("Server listening on https://localhost:8080");
 });
 
