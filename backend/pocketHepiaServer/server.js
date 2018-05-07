@@ -17,9 +17,12 @@ mongoose.connect(DB_URL).then(() => {
 }).catch(e => {
 	console.error("There was a problem");
 	console.error(e);
-})
+});
+
+mongoose.Promise = global.Promise;
 
 require('./app/models/User');
+require('./app/models/Log');
 
 app.use(morgan('dev'));
 app.use(bodyparser.urlencoded({ extended: true }));

@@ -22,6 +22,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LogsComponent } from './components/logs/logs.component';
 import { UsersComponent } from './components/users/users.component';
 import { AdminGuard } from './guards/admin.guard';
+import { LogEntryComponent } from './components/log-entry/log-entry.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { AdminGuard } from './guards/admin.guard';
     ChangePasswordSheetComponent,
     NavbarComponent,
     LogsComponent,
-    UsersComponent
+    UsersComponent,
+    LogEntryComponent
   ],
   imports: [
     BrowserModule,

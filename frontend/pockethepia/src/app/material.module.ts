@@ -10,7 +10,12 @@ import {
   MatIconModule,
   MatDialogModule,
   MatBottomSheetModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatExpansionModule,
+  MatChipsModule,
+  MatButtonToggleModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -26,7 +31,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatDialogModule,
     MatSnackBarModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule,
+    MatChipsModule,
+    MatButtonToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -39,7 +49,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatDialogModule,
     MatSnackBarModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule,
+    MatChipsModule,
+    MatButtonToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class MaterialModule { }

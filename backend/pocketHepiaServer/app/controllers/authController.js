@@ -27,7 +27,7 @@ exports.login = (req, res) => {
 	res.json({ user, token });
 };
 
-exports.changePassword = (req, res) => {
+exports.changePassword = (req, res, next) => {
 	console.log("Hello");
 	if (req.body.password !== req.body.password2) {
 		res.status(400);
@@ -39,7 +39,7 @@ exports.changePassword = (req, res) => {
 		if (!err && user) {
 			user.changePassword(req.body.oldPassword, req.body.password).then(() => {
 				user.save();
-				res.status(200).end();
+				next();
 			}).catch(e => {
 				console.error(e);
 				res.status(400);

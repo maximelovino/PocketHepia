@@ -42,6 +42,7 @@ const UserSchema = new Schema({
 		required: true,
 		default: false
 	},
+	//TODO add ref
 	adminForAreas: {
 		type: [Schema.Types.ObjectId],
 		required: true,
