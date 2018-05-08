@@ -60,8 +60,13 @@ const UserSchema = new Schema({
 });
 
 
-UserSchema.methods.exportForFrontend = function () {
-	return new FrontEndUser(this.name, this.email, this.isAdmin, this.cardId, this.balance, this.isLibrarian, this.acceptsPayments, this.adminForAreas, this.canInvite)
+if (!UserSchema.options.toObject) UserSchema.options.toObject = {};
+UserSchema.options.toObject.transform = function (doc, ret) {
+	// Sets the _id to id and remove the version tag, not useful
+	ret.id = ret._id;
+	delete ret._id;
+	delete ret.__v;
+	return ret;
 }
 
 UserSchema.plugin(passportMongoose, { usernameField: 'email' });

@@ -25,4 +25,14 @@ const LogSchema = new Schema({
 	}
 });
 
+
+if (!LogSchema.options.toObject) LogSchema.options.toObject = {};
+LogSchema.options.toObject.transform = function (doc, ret) {
+	// Sets the _id to id and remove the version tag, not useful
+	ret.id = ret._id;
+	delete ret._id;
+	delete ret.__v;
+	return ret;
+}
+
 module.exports = mongoose.model('Log', LogSchema);

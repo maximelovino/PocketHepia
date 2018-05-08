@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
       console.log(user);
       const userJSON = JSON.stringify(user);
       const pre = document.querySelector('#userPre');
-      pre.innerHTML = userJSON;
+      pre.innerHTML = `${user.id} ${user.name}`;
     });
   }
 

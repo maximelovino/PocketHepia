@@ -20,3 +20,8 @@ body {
 	margin: 0;
     font-family: 'Roboto';
 }
+
+.align-expansion-headers .mat-expansion-panel-header-title, 
+.align-expansion-headers .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}

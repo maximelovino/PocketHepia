@@ -22,7 +22,7 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
 	console.log("New login:")
 	console.log(req.user.toObject());
-	const user = req.user.exportForFrontend();
+	const user = req.user.toObject();
 	const token = jwt.sign(req.user.toObject(), process.env.JWT_SECRET);
 	res.json({ user, token });
 };

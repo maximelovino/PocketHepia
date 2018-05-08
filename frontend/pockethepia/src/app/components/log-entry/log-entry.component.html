@@ -1,11 +1,12 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title>
-      {{name}}
+      {{log.category}}
     </mat-panel-title>
     <mat-panel-description>
-      {{description}}
+      {{log.description}}
     </mat-panel-description>
   </mat-expansion-panel-header>
-  Yo, this is more
+  <!-- Problem with date display -->
+  {{log.triggeringUser.name}} did this on {{log.date}}
 </mat-expansion-panel>

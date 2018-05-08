@@ -14,7 +14,7 @@
   <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
   <mat-datepicker #endDatePicker></mat-datepicker>
 </mat-form-field>
-<mat-accordion>
+<mat-accordion class="align-expansion-headers">
   <!-- TODO Change this to take real data from TS -->
-  <app-log-entry name="Log Title" description="Log description" *ngFor="let i of [0,1,2,3,4,5]"></app-log-entry>
+  <app-log-entry *ngFor="let log of logs" [log]="log"></app-log-entry>
 </mat-accordion>

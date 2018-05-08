@@ -19,7 +19,10 @@ exports.getAllLogs = async (req, res) => {
 		return;
 	}
 	try {
-		const entries = await Log.find().populate('triggeringUser');
+		const entries = await Log
+			.find()
+			.sort({ date: 'desc' })
+			.populate('triggeringUser');
 		res.json(entries);
 	} catch (e) {
 		res.sendStatus(500);

@@ -1,3 +1,3 @@
 exports.current = (req, res) => {
-	res.json(req.user.exportForFrontend());
+	res.json(req.user.toObject());
 }

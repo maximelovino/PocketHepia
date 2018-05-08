@@ -23,6 +23,7 @@ import { LogsComponent } from './components/logs/logs.component';
 import { UsersComponent } from './components/users/users.component';
 import { AdminGuard } from './guards/admin.guard';
 import { LogEntryComponent } from './components/log-entry/log-entry.component';
+import { LogService } from './services/log.service';
 
 
 @NgModule({
@@ -48,7 +49,7 @@ import { LogEntryComponent } from './components/log-entry/log-entry.component';
     MaterialModule
   ],
   entryComponents: [ChangePasswordSheetComponent],
-  providers: [UserService, AuthService, AuthGuard, AdminGuard],
+  providers: [UserService, AuthService, LogService, AuthGuard, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
