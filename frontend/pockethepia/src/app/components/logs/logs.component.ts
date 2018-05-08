@@ -29,14 +29,7 @@ export class LogsComponent implements OnInit {
     }, error => {
       console.error('There was a problem retrieving categories');
     });
-    this.logService.getAllLogs().subscribe(data => {
-      console.log(data);
-      this.logs = data;
-      this.filterCategory();
-    }, error => {
-      console.error('There was a problem retrieving logs');
-      console.error(error);
-    });
+    this.filterDate();
   }
 
   // TODO This should filter locally
@@ -45,8 +38,15 @@ export class LogsComponent implements OnInit {
   }
 
   // TODO This should filter on server request
-  public filterDate(event: MatDatepickerInputEvent<Date>) {
-    console.log('DATE');
-    console.log(event);
+  public filterDate() {
+    const start = this.startDate.getTime();
+    const end = this.endDate.getTime();
+    console.log(start, end);
+    this.logService.getLogs(start, end).subscribe(data => {
+      this.logs = data;
+      this.filterCategory();
+    }, error => {
+      console.error('Couldn\'t retrieve logs');
+    });
   }
 }

@@ -7,6 +7,8 @@ const passport = require('passport');
 
 router.get("/all", passport.authenticate('jwt'), authController.checkAdmin, logController.getAllLogs);
 
+router.get("/range/:startDate/:endDate", passport.authenticate('jwt'), authController.checkAdmin, logController.getLogs);
+
 router.get("/categories", passport.authenticate('jwt'), authController.checkAdmin, logController.getCategories);
 
 module.exports = router;

@@ -28,3 +28,28 @@ exports.getAllLogs = async (req, res) => {
 exports.getCategories = (req, res) => {
 	res.json(Object.values(categories));
 }
+
+
+exports.getLogs = async (req, res) => {
+	if (!(req.params.startDate && req.params.endDate)) {
+		res.sendStatus(400);
+		return;
+	}
+	// passed parameters are milliseconds
+	const start = new Date(parseInt(req.params.startDate));
+	const end = new Date(parseInt(req.params.endDate));
+	console.log(start.toLocaleString())
+	console.log(end.toLocaleString())
+	try {
+		const entries = await Log.find({
+			date: {
+				"$gte": start,
+				"$lte": end
+			}
+		}).sort({ date: 'desc' }).populate('triggeringUser');
+		res.json(entries);
+	} catch (e) {
+		res.sendStatus(500);
+	}
+
+}
