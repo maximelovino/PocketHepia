@@ -14,10 +14,6 @@ exports.passwordChange = (req, res) => {
 
 
 exports.getAllLogs = async (req, res) => {
-	if (!req.user.isAdmin) {
-		res.sendStatus(403);
-		return;
-	}
 	try {
 		const entries = await Log
 			.find()
@@ -27,4 +23,8 @@ exports.getAllLogs = async (req, res) => {
 	} catch (e) {
 		res.sendStatus(500);
 	}
+}
+
+exports.getCategories = (req, res) => {
+	res.json(Object.values(categories));
 }

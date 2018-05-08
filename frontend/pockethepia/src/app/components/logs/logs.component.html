@@ -1,20 +1,38 @@
-<mat-button-toggle-group name="category" (change)="filterCategory($event)">
-  <mat-button-toggle value="all" checked>All</mat-button-toggle>
-  <mat-button-toggle value="usersCreations">Users creations</mat-button-toggle>
-  <mat-button-toggle value="permissionsChanges">Permission changes</mat-button-toggle>
-</mat-button-toggle-group>
-<mat-form-field class="date-field">
-  <input matInput #startDateInput [matDatepicker]="startDatePicker" placeholder="Choose a start date" [(ngModel)]="startDate"
-    (dateChange)="filterDate($event)">
-  <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-  <mat-datepicker #startDatePicker></mat-datepicker>
-</mat-form-field>
-<mat-form-field class="date-field">
-  <input matInput #endDateInput [matDatepicker]="endDatePicker" placeholder="Choose an end date" [(ngModel)]="endDate" (dateChange)="filterDate($event)">
-  <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-  <mat-datepicker #endDatePicker></mat-datepicker>
-</mat-form-field>
+<div class="filters-area">
+  <mat-form-field>
+    <mat-select placeholder="Categories to display" [(ngModel)]="categories" multiple (selectionChange)="filterCategory($event)">
+      <mat-select-trigger>
+        <ng-container *ngIf="categories.length === categoriesList.length; else notAllCats">
+          All categories
+        </ng-container>
+        <ng-template #notAllCats>
+          {{categories ? categories[0] : ''}}
+          <span *ngIf="categories.length > 1">
+            (+{{categories.length - 1}} others)
+          </span>
+        </ng-template>
+      </mat-select-trigger>
+      <mat-option *ngFor="let category of categoriesList" [value]="category">{{category}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="date-field">
+    <input matInput #startDateInput [matDatepicker]="startDatePicker" placeholder="Choose a start date" [(ngModel)]="startDate"
+      (dateChange)="filterDate($event)">
+    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #startDatePicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="date-field">
+    <input matInput #endDateInput [matDatepicker]="endDatePicker" placeholder="Choose an end date" [(ngModel)]="endDate" (dateChange)="filterDate($event)">
+    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #endDatePicker></mat-datepicker>
+  </mat-form-field>
+</div>
 <mat-accordion class="align-expansion-headers">
-  <!-- TODO Change this to take real data from TS -->
-  <app-log-entry *ngFor="let log of logs" [log]="log"></app-log-entry>
+  <ng-container *ngIf="filteredLogs.length === 0; else notEmptyLogs">
+    There are no logs available for the selected criteria
+  </ng-container>
+  <ng-template #notEmptyLogs>
+    <app-log-entry *ngFor="let log of filteredLogs" [log]="log"></app-log-entry>
+  </ng-template>
+
 </mat-accordion>

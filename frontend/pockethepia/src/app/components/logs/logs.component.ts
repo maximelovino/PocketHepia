@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDatepickerInputEvent, MatButtonToggleChange } from '@angular/material';
+import { MatDatepickerInputEvent, MatButtonToggleChange, MatSelectChange } from '@angular/material';
 import { Log } from '../../models/log';
 import { LogService } from '../../services/log.service';
 import { User } from '../../models/user';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-logs',
@@ -12,26 +13,35 @@ import { User } from '../../models/user';
 export class LogsComponent implements OnInit {
   startDate: Date = new Date();
   endDate: Date = new Date();
-  public logs: Log[] = [];
+  categoriesList: String[] = [];
+  categories: String[] = this.categoriesList;
+  logs: Log[] = [];
+  filteredLogs: Log[] = [];
 
   constructor(private logService: LogService) { }
 
   ngOnInit() {
     // one month range filter date
     this.startDate.setMonth(this.startDate.getMonth() - 1);
+    this.logService.getCategories().subscribe(data => {
+      this.categories = data;
+      this.categoriesList = data;
+    }, error => {
+      console.error('There was a problem retrieving categories');
+    });
     this.logService.getAllLogs().subscribe(data => {
       console.log(data);
       this.logs = data;
+      this.filterCategory();
     }, error => {
-      console.error('There was a problem');
+      console.error('There was a problem retrieving logs');
       console.error(error);
     });
   }
 
   // TODO This should filter locally
-  public filterCategory(event: MatButtonToggleChange) {
-    console.log('categories');
-    console.log(event);
+  public filterCategory() {
+    this.filteredLogs = this.logs.filter(log => this.categories.includes(log.category));
   }
 
   // TODO This should filter on server request

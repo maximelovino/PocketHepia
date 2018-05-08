@@ -50,3 +50,11 @@ exports.changePassword = (req, res, next) => {
 		}
 	})
 }
+
+exports.checkAdmin = (req, res, next) => {
+	if (!req.user.isAdmin) {
+		res.sendStatus(403);
+		return;
+	}
+	next();
+}

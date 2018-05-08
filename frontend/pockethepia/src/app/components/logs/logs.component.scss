@@ -5,3 +5,12 @@ mat-button-toggle-group{
 .date-field{
 	margin-left: 2em;
 }
+
+.filters-area{
+	display: flex;
+	flex-direction: row;
+}
+
+.filters-area > * {
+	flex: 1 1 auto;
+}
