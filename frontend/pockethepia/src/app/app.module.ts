@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocalStorageModule } from '@ngx-pwa/local-storage';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { MaterialModule } from './material.module';
 
 
@@ -46,10 +46,11 @@ import { LogService } from './services/log.service';
     HttpClientModule,
     AppRoutingModule,
     LocalStorageModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ],
   entryComponents: [ChangePasswordSheetComponent],
-  providers: [UserService, AuthService, LogService, AuthGuard, AdminGuard],
+  providers: [FormBuilder, UserService, AuthService, LogService, AuthGuard, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

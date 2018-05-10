@@ -17,6 +17,7 @@ export class LogService {
 
   constructor(private http: HttpClient, private userService: UserService) { }
 
+  // TODO find another way to create the request with the token everytime, perhaps directly return the header from getToken()
   public getAllLogs(): Observable<Log[]> {
     return this.userService.getToken().pipe(flatMap((token) => {
       return this.http.get<Log[]>(GET_ALL_LOGS_URL,

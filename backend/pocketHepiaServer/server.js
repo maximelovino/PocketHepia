@@ -43,6 +43,7 @@ const httpsOptions = {
 // TODO dev purposes
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
+// TODO add http listen as well for Android dev
 https.createServer(httpsOptions, app).listen(8080, () => {
 	console.log("Server listening on https://localhost:8080");
 });
