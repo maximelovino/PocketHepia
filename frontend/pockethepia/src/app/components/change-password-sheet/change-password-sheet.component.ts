@@ -32,6 +32,7 @@ export class ChangePasswordSheetComponent {
       if (pass.value === passConfirm.value) {
         return null;
       } else {
+        passConfirm.setErrors({ passwordMatch: true });
         return {
           passwordMatch: true
         };
