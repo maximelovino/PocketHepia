@@ -1,0 +1,13 @@
+.create-user-form-card{
+	max-width: 500px;
+}
+
+.checkboxesFlex{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	margin-bottom: 1em;
+}
+
+.checkboxesFlex > mat-checkbox{
+	max-width: 50%;
+}

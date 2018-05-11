@@ -10,6 +10,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { LogsComponent } from './components/logs/logs.component';
 import { UsersComponent } from './components/users/users.component';
 import { AdminGuard } from './guards/admin.guard';
+import { CreateUserComponent } from './components/create-user/create-user.component';
 
 const routes: Routes = [
   { path: '', canActivate: [AuthGuard], component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'books', canActivate: [AuthGuard], component: BooksComponent },
   { path: 'admin/logs', canActivate: [AuthGuard, AdminGuard], component: LogsComponent },
   { path: 'admin/users', canActivate: [AuthGuard, AdminGuard], component: UsersComponent },
+  { path: 'admin/users/create', canActivate: [AuthGuard, AdminGuard], component: CreateUserComponent },
   { path: 'login', component: LoginComponent }
 ];
 

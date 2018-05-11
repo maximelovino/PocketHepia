@@ -1,0 +1,56 @@
+<mat-card class="create-user-form-card">
+  <mat-horizontal-stepper [linear]='true' #userCreationStepper>
+    <mat-step [stepControl]="personalFormGroup" label="Personal infos">
+      <form [formGroup]="personalFormGroup">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Full Name" formControlName="fullName" required>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Email" formControlName="email" type="email" required>
+          <mat-error *ngIf="this.personalFormGroup.get('email').hasError('email') && this.personalFormGroup.get('email').touched">Please enter a valid email</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Password" formControlName="password" [type]="hide ? 'password':'text'" required>
+          <mat-icon matSuffix (click)="hide = !hide" [matTooltip]="hide ? 'Show password' : 'Hide password'" [matTooltipPosition]="'above'">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+          <mat-icon (click)="copyPass()" matSuffix matTooltip="Copy to clipboard" id="passwordInput" [matTooltipPosition]="'above'">file_copy</mat-icon>
+          <mat-icon (click)="generatePassword()" matSuffix matTooltip="Click to generate a random password" [matTooltipPosition]="'above'">vpn_key</mat-icon>
+        </mat-form-field>
+      </form>
+      <div>
+        <button mat-raised-button matStepperNext class="full-width">Next</button>
+      </div>
+    </mat-step>
+    <mat-step label="Permissions">
+      <form [formGroup]="permissionsFormGroup" class="checkboxesFlex">
+        <mat-checkbox formControlName="librarian">Librarian</mat-checkbox>
+        <mat-checkbox formControlName="acceptPayments">Can Accept Payments</mat-checkbox>
+        <mat-checkbox formControlName="admin">Administrator</mat-checkbox>
+        <mat-checkbox formControlName="auditor">Auditor</mat-checkbox>
+        <mat-checkbox formControlName="canInvite">Can Invite</mat-checkbox>
+      </form>
+      <div>
+        <button mat-raised-button matStepperNext class="full-width">Next</button>
+      </div>
+    </mat-step>
+    <mat-step label="Confirmation">
+      <mat-list role="list">
+        <h3 mat-subheader>Personal infos</h3>
+        <mat-list-item role="listitem">{{this.personalFormGroup.get('fullName').value}}</mat-list-item>
+        <mat-list-item role="listitem">{{this.personalFormGroup.get('email').value}}</mat-list-item>
+        <mat-list-item role="listitem">{{this.personalFormGroup.get('password').value}}</mat-list-item>
+        <h3 mat-subheader>Permissions</h3>
+        <ng-container *ngIf="checkedPermissions.length > 0; else noPermissions">
+          <mat-list-item role="listitem" *ngFor="let perm of checkedPermissions">{{perm}}</mat-list-item>
+        </ng-container>
+        <ng-template #noPermissions>
+          <mat-list-item role="listitem">No permissions were set for the user</mat-list-item>
+        </ng-template>
+
+      </mat-list>
+      <div>
+        <button mat-raised-button matStepperNext class="full-width">Create user</button>
+      </div>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+</mat-card>

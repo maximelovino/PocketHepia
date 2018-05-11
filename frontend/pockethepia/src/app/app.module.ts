@@ -24,6 +24,9 @@ import { UsersComponent } from './components/users/users.component';
 import { AdminGuard } from './guards/admin.guard';
 import { LogEntryComponent } from './components/log-entry/log-entry.component';
 import { LogService } from './services/log.service';
+import { CreateUserComponent } from './components/create-user/create-user.component';
+import { UsersTableComponent } from './components/users-table/users-table.component';
+import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 
 
 @NgModule({
@@ -38,7 +41,9 @@ import { LogService } from './services/log.service';
     NavbarComponent,
     LogsComponent,
     UsersComponent,
-    LogEntryComponent
+    LogEntryComponent,
+    CreateUserComponent,
+    UsersTableComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +52,10 @@ import { LogService } from './services/log.service';
     AppRoutingModule,
     LocalStorageModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   entryComponents: [ChangePasswordSheetComponent],
   providers: [FormBuilder, UserService, AuthService, LogService, AuthGuard, AdminGuard],
