@@ -17,50 +17,22 @@ export class NavbarComponent {
 
   constructor(public sheet: MatBottomSheet,
     public dialog: MatDialog,
-    private userService: UserService,
+    public userService: UserService,
     private router: Router,
     public snackBar: MatSnackBar) {
-    router.events.subscribe((val) => {
-      if (val instanceof NavigationEnd || val instanceof NavigationCancel) {
-        this.updateLoggedIn();
-        this.updateIsAdmin();
-      }
-    });
-  }
-
-  private updateIsAdmin() {
-    this.userService.isAdmin().subscribe(isAdmin => {
-      this.isAdmin = isAdmin;
-    });
-  }
-
-  private updateLoggedIn() {
-    this.userService.isLoggedIn().subscribe(isLoggedIn => {
-      this.isConnected = isLoggedIn;
-    });
-  }
-
-  public logout() {
-    this.userService.logout();
-    this.router.navigate(['/login']);
   }
 
   public changePasswordDialog() {
-    this.userService.retrieveUser().subscribe(user => {
-      if (user) {
-        const bottomSheet = this.sheet.open(ChangePasswordSheetComponent);
-        bottomSheet.afterDismissed().subscribe(value => {
-          console.log(value);
-          if (value !== undefined) {
-            if (value) {
-              this.snackBar.open('All good', null, { duration: 2000 });
-            } else {
-              this.snackBar.open('You didn\'t enter the correct password or your passwords didn\'t match', null, { duration: 2000 });
-            }
-          }
-        });
+    const bottomSheet = this.sheet.open(ChangePasswordSheetComponent);
+    bottomSheet.afterDismissed().subscribe(value => {
+      console.log(value);
+      if (value !== undefined) {
+        if (value) {
+          this.snackBar.open('All good', null, { duration: 2000 });
+        } else {
+          this.snackBar.open('You didn\'t enter the correct password or your passwords didn\'t match', null, { duration: 2000 });
+        }
       }
     });
   }
-
 }

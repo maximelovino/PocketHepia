@@ -7,6 +7,7 @@ import { FormControl } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Observable, of } from 'rxjs';
 import { map, startWith, filter } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-logs',
@@ -38,8 +39,13 @@ export class LogsComponent implements OnInit {
           map(value => typeof value === 'string' ? value : value.name),
           map(val => this.filterUsersList(val))
         );
-    }, error => {
-      console.error('There was a problem retrieving all users');
+    }, (error: HttpErrorResponse) => {
+      if (error.status === 403) {
+        console.error('You\'re not admin anymore');
+        // TODO show modal only once
+      } else {
+        console.error('There was a problem retrieving all users');
+      }
     });
     this.logService.getCategories().subscribe(data => {
       this.categories = data;
