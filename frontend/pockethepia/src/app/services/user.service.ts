@@ -28,13 +28,15 @@ export class UserService {
     } else {
       return this.localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY).pipe(tap(token => {
         this.token = token;
-        this.retrieveUser().subscribe(user => this.user = user);
+        if (!this.user) {
+          this.retrieveUser().subscribe(user => this.user = user);
+        }
       }));
     }
   }
 
   // This should be asynchronous, and return when fetched from local storage or variable
-  private retrieveUser(): Observable<User> {
+  public retrieveUser(): Observable<User> {
     return this.getToken().pipe(flatMap((token) => {
       if (token) {
         return this.http.get<User>(GET_USER_ROUTE, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });

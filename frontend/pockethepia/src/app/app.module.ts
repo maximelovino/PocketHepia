@@ -27,6 +27,7 @@ import { LogService } from './services/log.service';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { UsersTableComponent } from './components/users-table/users-table.component';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/mate
     UsersComponent,
     LogEntryComponent,
     CreateUserComponent,
-    UsersTableComponent
+    UsersTableComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,

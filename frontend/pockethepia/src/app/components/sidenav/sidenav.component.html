@@ -1,0 +1,56 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="isHandset ? 'dialog' : 'navigation'" [mode]="(isHandset | async)!.matches ? 'over' : 'side'"
+    [opened]="!(isHandset | async)!.matches">
+    <mat-toolbar color="primary">
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item (click)="changePasswordDialog()">Change password</button>
+        <button mat-menu-item (click)="this.userService.logout()">Logout</button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="userMenu">
+        {{this.userService.getUser().name}}
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+    </mat-toolbar>
+    <mat-nav-list>
+      <mat-list-item routerLink="/">
+        <mat-icon matListIcon>home</mat-icon>
+        <span>Home</span>
+      </mat-list-item>
+      <mat-list-item routerLink="/transactions">
+        <mat-icon matListIcon>attach_money</mat-icon>
+        <span>Transactions</span>
+      </mat-list-item>
+      <mat-list-item routerLink="/access">
+        <mat-icon matListIcon>vpn_key</mat-icon>
+        <span>Access</span>
+      </mat-list-item>
+      <mat-list-item routerLink="/books">
+        <mat-icon matListIcon>book</mat-icon>
+        <span>Books</span>
+      </mat-list-item>
+      <span *ngIf="this.userService.isAdmin()">
+        <mat-divider></mat-divider>
+        <h3 mat-subheader>Admin</h3>
+        <mat-list-item routerLink="/admin/users">
+          <mat-icon matListIcon>person</mat-icon>
+          <span>Users</span>
+        </mat-list-item>
+        <mat-list-item routerLink="/admin/logs">
+          <mat-icon matListIcon>mail</mat-icon>
+          <span>Logs</span>
+        </mat-list-item>
+      </span>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="(isHandset | async)!.matches">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>PocketHepia</span>
+    </mat-toolbar>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

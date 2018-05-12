@@ -21,7 +21,8 @@ import {
   MatCheckboxModule,
   MatTooltipModule,
   MatListModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatSidenavModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -48,7 +49,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatCheckboxModule,
     MatTooltipModule,
     MatListModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSidenavModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -72,7 +74,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatCheckboxModule,
     MatTooltipModule,
     MatListModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSidenavModule
   ]
 })
 export class MaterialModule { }

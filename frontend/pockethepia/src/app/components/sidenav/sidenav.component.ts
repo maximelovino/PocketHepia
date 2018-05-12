@@ -1,27 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
 import { UserService } from '../../services/user.service';
-import { Router, NavigationEnd, NavigationCancel } from '@angular/router';
-import { MatDialog, MatBottomSheet, MatSnackBar } from '@angular/material';
 import { ChangePasswordSheetComponent } from '../change-password-sheet/change-password-sheet.component';
+import { MatSnackBar, MatBottomSheet } from '@angular/material';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  selector: 'app-sidenav',
+  templateUrl: './sidenav.component.html',
+  styleUrls: ['./sidenav.component.css']
 })
-export class NavbarComponent {
-  title = 'PocketHepia';
-  isConnected = false;
-  isAdmin = false;
-
-
-  constructor(public sheet: MatBottomSheet,
+export class SidenavComponent {
+  isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
+  constructor(private breakpointObserver: BreakpointObserver,
     public userService: UserService,
-    private router: Router,
-    public snackBar: MatSnackBar) {
-  }
+    public sheet: MatBottomSheet,
+    public snackBar: MatSnackBar) { }
 
   public changePasswordDialog() {
+
     const bottomSheet = this.sheet.open(ChangePasswordSheetComponent);
     bottomSheet.afterDismissed().subscribe(value => {
       console.log(value);

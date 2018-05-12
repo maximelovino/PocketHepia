@@ -1,0 +1,20 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+  box-shadow: 3px 0 6px rgba(0,0,0,.24);
+}
+
+.container{
+	margin: 2em;
+}
+
+mat-toolbar {
+	display: flex;
+}
+
+span.fillHorizontal{
+	flex: 1 1 auto;
+}
