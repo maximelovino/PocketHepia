@@ -13,7 +13,6 @@ import { User } from '../../models/user';
 })
 export class SidenavComponent {
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
-  isAdmin: Observable<boolean> = this.userService.isAdmin();
   user: Observable<User> = this.userService.retrieveUser();
 
   constructor(private breakpointObserver: BreakpointObserver,

@@ -75,6 +75,7 @@ export class UserService {
 
   public logout() {
     this.token = undefined;
+    this.user = undefined;
     this.localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY).subscribe(done => this.router.navigate(['/login']));
   }
 

@@ -15,18 +15,13 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { NotAuthGuard } from './guards/not-auth.guard';
 
 const routes: Routes = [
-  {
-    path: '', canActivate: [AuthGuard], component: SidenavComponent,
-    children: [
-      { path: '', component: HomeComponent },
-      { path: 'transactions', component: TransactionsComponent },
-      { path: 'access', component: AccessComponent },
-      { path: 'books', component: BooksComponent },
-      { path: 'admin/logs', canActivate: [AdminGuard], component: LogsComponent },
-      { path: 'admin/users', canActivate: [AdminGuard], component: UsersComponent },
-      { path: 'admin/users/create', canActivate: [AdminGuard], component: CreateUserComponent },
-    ]
-  },
+  { path: '', canActivate: [AuthGuard], component: HomeComponent },
+  { path: 'transactions', canActivate: [AuthGuard], component: TransactionsComponent },
+  { path: 'access', canActivate: [AuthGuard], component: AccessComponent },
+  { path: 'books', canActivate: [AuthGuard], component: BooksComponent },
+  { path: 'admin/logs', canActivate: [AuthGuard, AdminGuard], component: LogsComponent },
+  { path: 'admin/users', canActivate: [AuthGuard, AdminGuard], component: UsersComponent },
+  { path: 'admin/users/create', canActivate: [AuthGuard, AdminGuard], component: CreateUserComponent },
   { path: 'login', canActivate: [NotAuthGuard], component: LoginComponent }
 ];
 
