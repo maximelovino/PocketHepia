@@ -28,6 +28,7 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
 import { UsersTableComponent } from './components/users-table/users-table.component';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { NotAuthGuard } from './guards/not-auth.guard';
 
 
 @NgModule({
@@ -60,7 +61,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
     MatSortModule
   ],
   entryComponents: [ChangePasswordSheetComponent],
-  providers: [FormBuilder, UserService, AuthService, LogService, AuthGuard, AdminGuard],
+  providers: [FormBuilder, UserService, AuthService, LogService, AuthGuard, AdminGuard, NotAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

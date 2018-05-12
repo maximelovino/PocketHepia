@@ -38,6 +38,7 @@ exports.getLogs = async (req, res) => {
 	// passed parameters are milliseconds
 	const start = new Date(parseInt(req.params.startDate));
 	const end = new Date(parseInt(req.params.endDate));
+	// TODO check that start < end => 400
 	console.log(start.toLocaleString())
 	console.log(end.toLocaleString())
 	try {

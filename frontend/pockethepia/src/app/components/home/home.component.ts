@@ -7,6 +7,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  user = this.userService.retrieveUser();
 
   // TODO let's check what we do with userService
   // TODO that sounds cool

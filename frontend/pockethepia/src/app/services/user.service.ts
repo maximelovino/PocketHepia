@@ -16,6 +16,7 @@ const GET_ALL_USERS_ROUTE = '/api/users/all';
 @Injectable()
 export class UserService {
   private token: String = undefined;
+  private user: User;
 
   constructor(private localStorage: LocalStorage, private http: HttpClient, private router: Router) {
     this.init();
@@ -25,15 +26,19 @@ export class UserService {
     if (this.token) {
       return of(this.token);
     } else {
-      return this.localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
+      return this.localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY).pipe(tap(token => this.token = token));
     }
   }
 
-  // This should be asynchronous, and return when fetched from local storage or variable
+  // TODO store user in service and if we already have, return of(user)
   public retrieveUser(): Observable<User> {
+    if (this.user) {
+      return of(this.user);
+    }
     return this.getToken().pipe(flatMap((token) => {
       if (token) {
-        return this.http.get<User>(GET_USER_ROUTE, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
+        return this.http.get<User>(GET_USER_ROUTE, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) })
+          .pipe(tap(user => this.user = user));
       } else {
         return of(undefined);
       }

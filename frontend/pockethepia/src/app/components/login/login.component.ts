@@ -16,13 +16,6 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    // TODO do this differently? with a guard or something?
-    // TODO actually we could do a notSignedIn guard
-    this.userService.isLoggedIn().subscribe(isLoggedIn => {
-      if (isLoggedIn) {
-        this.router.navigate(['/']);
-      }
-    });
   }
 
   // TODO rewrite this using reactiveForms

@@ -1,5 +1,10 @@
 .sidenav-container {
-  height: 100%;
+	/* height: 100%; */
+	position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .sidenav {
@@ -9,10 +14,12 @@
 
 .container{
 	margin: 2em;
+	margin-top: 5em;
 }
 
-mat-toolbar {
-	display: flex;
+.fixed-toolbar {
+	position: fixed;
+	z-index: 2;
 }
 
 span.fillHorizontal{

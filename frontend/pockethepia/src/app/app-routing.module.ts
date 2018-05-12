@@ -12,6 +12,7 @@ import { UsersComponent } from './components/users/users.component';
 import { AdminGuard } from './guards/admin.guard';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { NotAuthGuard } from './guards/not-auth.guard';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
       { path: 'admin/users/create', canActivate: [AdminGuard], component: CreateUserComponent },
     ]
   },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', canActivate: [NotAuthGuard], component: LoginComponent }
 ];
 
 @NgModule({

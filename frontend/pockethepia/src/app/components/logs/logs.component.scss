@@ -6,6 +6,8 @@ mat-button-toggle-group{
 .filters-area{
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
+	max-width: 100%;
 }
 
 .filters-area > * {
