@@ -6,8 +6,8 @@
         <button mat-menu-item (click)="changePasswordDialog()">Change password</button>
         <button mat-menu-item (click)="this.userService.logout()">Logout</button>
       </mat-menu>
-      <button mat-button [matMenuTriggerFor]="userMenu">
-        {{this.userService.getUser().name}}
+      <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="this.user | async as doneUser">
+        {{doneUser.name}}
         <mat-icon>arrow_drop_down</mat-icon>
       </button>
     </mat-toolbar>
@@ -28,7 +28,7 @@
         <mat-icon matListIcon>book</mat-icon>
         <span>Books</span>
       </mat-list-item>
-      <span *ngIf="this.userService.isAdmin()">
+      <span *ngIf="this.isAdmin | async">
         <mat-divider></mat-divider>
         <h3 mat-subheader>Admin</h3>
         <mat-list-item routerLink="/admin/users">

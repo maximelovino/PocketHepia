@@ -16,7 +16,6 @@ const GET_ALL_USERS_ROUTE = '/api/users/all';
 @Injectable()
 export class UserService {
   private token: String = undefined;
-  private user: User = undefined;
 
   constructor(private localStorage: LocalStorage, private http: HttpClient, private router: Router) {
     this.init();
@@ -26,12 +25,7 @@ export class UserService {
     if (this.token) {
       return of(this.token);
     } else {
-      return this.localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY).pipe(tap(token => {
-        this.token = token;
-        if (!this.user) {
-          this.retrieveUser().subscribe(user => this.user = user);
-        }
-      }));
+      return this.localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
     }
   }
 
@@ -44,10 +38,6 @@ export class UserService {
         return of(undefined);
       }
     }));
-  }
-
-  public getUser(): User {
-    return this.user;
   }
 
   private init() {
@@ -64,11 +54,14 @@ export class UserService {
     }));
   }
 
-  public isAdmin(): boolean {
-    if (!this.user) {
-      return false;
-    }
-    return this.user && this.user.isAdmin;
+  public isAdmin(): Observable<boolean> {
+    return this.retrieveUser().pipe(map(user => {
+      if (user) {
+        return user.isAdmin;
+      } else {
+        return false;
+      }
+    }));
   }
 
   private saveTokenToLocalStorage(token: String) {
@@ -77,7 +70,6 @@ export class UserService {
 
   public logout() {
     this.token = undefined;
-    this.user = undefined;
     this.localStorage.removeItem(LOCAL_STORAGE_TOKEN_KEY).subscribe(done => this.router.navigate(['/login']));
   }
 
@@ -85,7 +77,6 @@ export class UserService {
     console.log('Logging in');
     this.token = data.token;
     this.saveTokenToLocalStorage(this.token);
-    this.retrieveUser().subscribe(user => this.user = user);
   }
 
   public getAllUsers(): Observable<User[]> {

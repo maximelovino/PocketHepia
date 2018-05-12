@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UserService } from '../../services/user.service';
 import { ChangePasswordSheetComponent } from '../change-password-sheet/change-password-sheet.component';
 import { MatSnackBar, MatBottomSheet } from '@angular/material';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-sidenav',
@@ -12,6 +13,9 @@ import { MatSnackBar, MatBottomSheet } from '@angular/material';
 })
 export class SidenavComponent {
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
+  isAdmin: Observable<boolean> = this.userService.isAdmin();
+  user: Observable<User> = this.userService.retrieveUser();
+
   constructor(private breakpointObserver: BreakpointObserver,
     public userService: UserService,
     public sheet: MatBottomSheet,
