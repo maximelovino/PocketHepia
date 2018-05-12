@@ -10,6 +10,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'JWT_TOKEN';
 const GET_USER_ROUTE = '/api/users/current';
+const GET_ALL_USERS_ROUTE = '/api/users/all';
 
 @Injectable()
 export class UserService {
@@ -70,10 +71,21 @@ export class UserService {
     this.token = undefined;
     this.localStorage.removeItemSubscribe(LOCAL_STORAGE_TOKEN_KEY);
   }
+
   public login(data: LoginResponse) {
     console.log('Logging in');
     this.token = data.token;
     this.saveTokenToLocalStorage(this.token);
+  }
+
+  public getAllUsers(): Observable<User[]> {
+    return this.getToken().pipe(flatMap((token) => {
+      if (token) {
+        return this.http.get<User>(GET_ALL_USERS_ROUTE, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
+      } else {
+        return of(undefined);
+      }
+    }));
   }
 
 }

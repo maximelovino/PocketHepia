@@ -2,9 +2,6 @@ mat-button-toggle-group{
 	margin-bottom: 2em;
 }
 
-.date-field{
-	margin-left: 2em;
-}
 
 .filters-area{
 	display: flex;
@@ -13,4 +10,6 @@ mat-button-toggle-group{
 
 .filters-area > * {
 	flex: 1 1 auto;
+	margin-left: 1em;
+	margin-right: 1em;
 }

@@ -15,6 +15,15 @@
       <mat-option *ngFor="let category of categoriesList" [value]="category">{{category}}</mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field>
+    <input type="text" placeholder="Filter by user" aria-label="Number" matInput [formControl]="userFilterControl" [matAutocomplete]="auto">
+    <mat-icon *ngIf="userFilterControl.value" (click)="cancelUserFilter()" matSuffix>close</mat-icon>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="userAutoCompleteDisplay" (optionSelected)="userFilterSelected($event)">
+      <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
+        {{ user.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
   <mat-form-field class="date-field">
     <input matInput #startDateInput [matDatepicker]="startDatePicker" placeholder="Choose a start date" [(ngModel)]="startDate"
       (dateChange)="filterDate($event)">
