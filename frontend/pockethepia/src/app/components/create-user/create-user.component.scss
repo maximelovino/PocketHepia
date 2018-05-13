@@ -2,9 +2,12 @@
 	max-width: 500px;
 }
 
-.checkboxesFlex{
+.flex-two-columns{
 	display: grid;
 	grid-template-columns: 1fr 1fr;
+}
+
+.spacing-bottom{
 	margin-bottom: 1em;
 }
 
