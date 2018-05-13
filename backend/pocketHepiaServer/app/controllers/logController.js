@@ -56,10 +56,14 @@ exports.getLogs = async (req, res) => {
 }
 
 exports.userCreation = (req, res) => {
+	const newUser = req.newUser.toObject();
+	delete newUser.salt;
+	delete newUser.hash;
 	const entry = new Log({
 		category: categories.USER_CREATION,
 		triggeringUser: req.user._id,
-		description: `${req.user.name} has created user "${req.newUser.name}"`
+		description: `${req.user.name} has created user "${newUser.name}"`,
+		rawData: newUser,
 	});
 	entry.save();
 	res.status(200).end();

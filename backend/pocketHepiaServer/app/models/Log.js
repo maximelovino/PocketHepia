@@ -22,6 +22,10 @@ const LogSchema = new Schema({
 		type: String,
 		required: true,
 		trim: true
+	},
+	rawData: {
+		type: Object,
+		required: false
 	}
 });
 
