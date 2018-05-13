@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const passportMongoose = require('passport-local-mongoose')
 const validator = require('validator');
 const Schema = mongoose.Schema;
-const FrontEndUser = require("./FrontEndUser")
 
 const UserSchema = new Schema({
 	name: {
@@ -53,6 +52,11 @@ const UserSchema = new Schema({
 		required: false
 	},
 	canInvite: {
+		type: Boolean,
+		required: true,
+		default: false
+	},
+	isAuditor: {
 		type: Boolean,
 		required: true,
 		default: false

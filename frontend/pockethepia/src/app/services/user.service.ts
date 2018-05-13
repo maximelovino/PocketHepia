@@ -8,10 +8,12 @@ import { User } from '../models/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Router } from '@angular/router';
+import { UserCreation } from '../models/user-creation';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'JWT_TOKEN';
 const GET_USER_ROUTE = '/api/users/current';
 const GET_ALL_USERS_ROUTE = '/api/users/all';
+const CREATE_USER_ROUTE = '/api/users/create';
 
 @Injectable()
 export class UserService {
@@ -93,6 +95,12 @@ export class UserService {
         return of(undefined);
       }
     }));
+  }
+
+  public createUser(user: UserCreation): Observable<void> {
+    return this.getToken().pipe(flatMap((token) => {
+      return this.http.post<void>(CREATE_USER_ROUTE, user, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
+    });
   }
 
 }

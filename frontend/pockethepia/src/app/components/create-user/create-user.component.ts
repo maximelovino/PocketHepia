@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatStepper } from '@angular/material';
+import { UserCreation } from '../../models/user-creation';
+import { UserService } from '../../services/user.service';
+import { ENGINE_METHOD_DIGESTS } from 'constants';
 
 @Component({
   selector: 'app-create-user',
@@ -11,19 +14,20 @@ export class CreateUserComponent implements OnInit {
   personalFormGroup: FormGroup;
   permissionsFormGroup: FormGroup;
   public hide = true;
+  @ViewChild('userCreationStepper') stepper: MatStepper;
 
-  constructor(private fb: FormBuilder, public snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder, public snackBar: MatSnackBar, private userService: UserService) {
     this.personalFormGroup = this.fb.group({
       fullName: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.required]
     });
     this.permissionsFormGroup = this.fb.group({
-      librarian: [''],
-      acceptPayments: [''],
-      admin: [''],
-      auditor: [''],
-      canInvite: [''],
+      librarian: [false],
+      acceptPayments: [false],
+      admin: [false],
+      auditor: [false],
+      canInvite: [false],
     });
   }
 
@@ -77,7 +81,21 @@ export class CreateUserComponent implements OnInit {
   }
 
   public createUser() {
-
+    const name = this.personalFormGroup.get('fullName').value;
+    const email = this.personalFormGroup.get('email').value;
+    const password = this.personalFormGroup.get('password').value;
+    const librarian = this.permissionsFormGroup.get('librarian').value;
+    const acceptPayments = this.permissionsFormGroup.get('acceptPayments').value;
+    const admin = this.permissionsFormGroup.get('admin').value;
+    const auditor = this.permissionsFormGroup.get('auditor').value;
+    const canInvite = this.permissionsFormGroup.get('canInvite').value;
+    const user = new UserCreation(name, email, password, admin, librarian, acceptPayments, canInvite, auditor);
+    this.userService.createUser(user).subscribe(data => {
+      this.snackBar.open(`User ${name} created`, null, { duration: 2000 });
+      this.stepper.reset();
+    }, error => {
+      this.snackBar.open(`There was a problem creating the user`, null, { duration: 2000 });
+    });
   }
 
   ngOnInit() {

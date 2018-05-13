@@ -54,3 +54,13 @@ exports.getLogs = async (req, res) => {
 	}
 
 }
+
+exports.userCreation = (req, res) => {
+	const entry = new Log({
+		category: categories.USER_CREATION,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} has created user "${req.newUser.name}"`
+	});
+	entry.save();
+	res.status(200).end();
+}
