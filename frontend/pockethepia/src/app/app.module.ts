@@ -29,6 +29,7 @@ import { UsersTableComponent } from './components/users-table/users-table.compon
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { NotAuthGuard } from './guards/not-auth.guard';
+import { UsersImportComponent } from './components/users-import/users-import.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { NotAuthGuard } from './guards/not-auth.guard';
     LogEntryComponent,
     CreateUserComponent,
     UsersTableComponent,
-    SidenavComponent
+    SidenavComponent,
+    UsersImportComponent
   ],
   imports: [
     BrowserModule,

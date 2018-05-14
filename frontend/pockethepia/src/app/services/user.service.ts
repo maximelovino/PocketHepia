@@ -90,7 +90,10 @@ export class UserService {
   public getAllUsers(): Observable<User[]> {
     return this.getToken().pipe(flatMap((token) => {
       if (token) {
-        return this.http.get<User>(GET_ALL_USERS_ROUTE, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
+        return this.http.get<User[]>(GET_ALL_USERS_ROUTE, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) })
+          .pipe(map(users => {
+            return users.map(user => new User(user));
+          }));
       } else {
         return of(undefined);
       }
@@ -100,7 +103,7 @@ export class UserService {
   public createUser(user: UserCreation): Observable<void> {
     return this.getToken().pipe(flatMap((token) => {
       return this.http.post<void>(CREATE_USER_ROUTE, user, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
-    });
+    }));
   }
 
 }
