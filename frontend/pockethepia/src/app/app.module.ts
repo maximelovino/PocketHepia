@@ -30,6 +30,9 @@ import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/mate
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { NotAuthGuard } from './guards/not-auth.guard';
 import { UsersImportComponent } from './components/users-import/users-import.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { EditUserModalComponent } from './components/edit-user-modal/edit-user-modal.component';
+import { DeleteUserModalComponent } from './components/delete-user-modal/delete-user-modal.component';
 
 
 @NgModule({
@@ -48,7 +51,10 @@ import { UsersImportComponent } from './components/users-import/users-import.com
     CreateUserComponent,
     UsersTableComponent,
     SidenavComponent,
-    UsersImportComponent
+    UsersImportComponent,
+    NotFoundComponent,
+    EditUserModalComponent,
+    DeleteUserModalComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +68,7 @@ import { UsersImportComponent } from './components/users-import/users-import.com
     MatPaginatorModule,
     MatSortModule
   ],
-  entryComponents: [ChangePasswordSheetComponent],
+  entryComponents: [ChangePasswordSheetComponent, DeleteUserModalComponent, EditUserModalComponent],
   providers: [FormBuilder, UserService, AuthService, LogService, AuthGuard, AdminGuard, NotAuthGuard],
   bootstrap: [AppComponent]
 })

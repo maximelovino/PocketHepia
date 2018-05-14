@@ -1,8 +1,11 @@
 <div class="table-container mat-elevation-z1">
   <div class="table-header">
-    <mat-form-field class="search-bar">
-      <input matInput (keyup)="filterTable($event.target.value)" placeholder="Filter">
-    </mat-form-field>
+    <div class="search-bar">
+      <mat-form-field class="search-bar-input">
+        <input matInput id="filter" (keyup)="filterTable($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+      <mat-icon class="refresh-icon" (click)="refreshData()" matTooltip="Click to refresh users list" [matTooltipPosition]="'above'">refresh</mat-icon>
+    </div>
   </div>
   <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
 

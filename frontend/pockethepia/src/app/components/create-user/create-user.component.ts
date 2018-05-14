@@ -9,6 +9,8 @@ import { UserService } from '../../services/user.service';
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss']
 })
+
+// TODO this component could emit an event when user creation works so we can catch it and refresh users table
 export class CreateUserComponent implements OnInit {
   personalFormGroup: FormGroup;
   permissionsFormGroup: FormGroup;
