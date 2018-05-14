@@ -68,3 +68,16 @@ exports.userCreation = (req, res) => {
 	entry.save();
 	res.status(200).end();
 }
+
+exports.userDeletion = (req, res) => {
+	const oldUser = req.oldUser.toObject();
+	const entry = new Log({
+		category: categories.USER_DELETED,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} has deleted user "${oldUser.name}"`,
+		rawData: oldUser,
+	});
+
+	entry.save();
+	res.status(200).end();
+}

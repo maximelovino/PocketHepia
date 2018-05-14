@@ -7,8 +7,15 @@
 			{{log.description}}
 		</mat-panel-description>
 	</mat-expansion-panel-header>
-	{{log.triggeringUser.name}} (
-	<a href="mailto:{{log.triggeringUser.email}}">{{log.triggeringUser.email}}</a>) did this on {{log.date.toLocaleString()}}
+	<ng-container *ngIf="log.triggeringUser; else userDead">
+
+		{{log.triggeringUser.name}} (
+		<a href="mailto:{{log.triggeringUser.email}}">{{log.triggeringUser.email}}</a>)
+	</ng-container>
+	<ng-template #userDead>
+		<i>Non-existing user</i>
+	</ng-template>
+	did this on {{log.date.toLocaleString()}}
 	<br>
 	<pre>{{log | json}}</pre>
 </mat-expansion-panel>

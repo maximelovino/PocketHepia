@@ -23,10 +23,7 @@ export class LogService {
       return this.http.get<Log[]>(GET_ALL_LOGS_URL,
         { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) })
         .pipe(map(res => {
-          res.forEach((d) => {
-            d.date = new Date(d.date);
-          });
-          return res;
+          return res.map(d => new Log(d));
         }));
     }));
   }

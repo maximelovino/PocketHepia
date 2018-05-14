@@ -14,6 +14,7 @@ const LOCAL_STORAGE_TOKEN_KEY = 'JWT_TOKEN';
 const GET_USER_ROUTE = '/api/users/current';
 const GET_ALL_USERS_ROUTE = '/api/users/all';
 const CREATE_USER_ROUTE = '/api/users/create';
+const DELETE_USER_ROUTE = '/api/users/delete';
 
 @Injectable()
 export class UserService {
@@ -103,6 +104,13 @@ export class UserService {
   public createUser(user: UserCreation): Observable<void> {
     return this.getToken().pipe(flatMap((token) => {
       return this.http.post<void>(CREATE_USER_ROUTE, user, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
+    }));
+  }
+
+  public deleteUser(user: User): Observable<void> {
+    return this.getToken().pipe(flatMap((token) => {
+      return this.http.delete<void>(
+        `${DELETE_USER_ROUTE}/${user.id}`, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
     }));
   }
 

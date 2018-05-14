@@ -8,12 +8,12 @@ export class Log {
   triggeringUser: User;
   rawData: any;
 
-  constructor(id: String, category: String, description: String, date: Date, triggeringUser: User, rawData: any) {
-    this.category = category;
-    this.id = id;
-    this.description = description;
-    this.date = date;
-    this.triggeringUser = triggeringUser;
-    this.rawData = rawData;
+  constructor(log: Log) {
+    this.category = log.category;
+    this.id = log.id;
+    this.description = log.description;
+    this.date = new Date(log.date);
+    this.triggeringUser = log.triggeringUser ? undefined : new User(this.triggeringUser);
+    this.rawData = log.rawData;
   }
 }

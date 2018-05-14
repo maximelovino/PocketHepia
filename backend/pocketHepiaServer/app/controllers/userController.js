@@ -39,3 +39,20 @@ exports.create = async (req, res, next) => {
 		}
 	});
 }
+
+exports.delete = async (req, res, next) => {
+	if (!req.params.id) {
+		res.sendStatus(400);
+		return;
+	}
+
+	const user = await User.findByIdAndRemove(req.params.id);
+
+	if (!user) {
+		res.sendStatus(404);
+		return;
+	}
+
+	req.oldUser = user;
+	next();
+}

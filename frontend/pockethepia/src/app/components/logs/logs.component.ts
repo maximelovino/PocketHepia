@@ -81,7 +81,7 @@ export class LogsComponent implements OnInit {
   private applyFilters() {
     this.filteredLogs = this.logs.filter(
       log => this.categories.includes(log.category) &&
-        (!this.userToFilter || log.triggeringUser.id === this.userToFilter.id));
+        (!this.userToFilter || (log.triggeringUser && log.triggeringUser.id === this.userToFilter.id)));
   }
 
   userAutoCompleteDisplay(user?: User): String | undefined {

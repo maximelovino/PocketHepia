@@ -20,7 +20,6 @@ const allowMultiSelect = false;
 export class UsersTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<User>;
-  @ViewChild('#filter') filterBar: HTMLInputElement;
   data: User[];
   dataSource: User[];
   isLoadingResults = false;
@@ -66,15 +65,19 @@ export class UsersTableComponent implements OnInit {
     console.log('Clicked on edit');
     console.log(user);
     this.dialog.open(EditUserModalComponent, { data: user });
+    // TODO here we should do a snack as well, with failure or success (so pass data on close event)
+    this.dialog.afterAllClosed.subscribe(closed => this.refreshData());
   }
   public deleteUser(user: User) {
     console.log('Clicked on delete');
     console.log(user);
     this.dialog.open(DeleteUserModalComponent, { data: user });
+    this.dialog.afterAllClosed.subscribe(closed => this.refreshData());
   }
 
   public refreshData() {
-    // this.filterBar.value = '';
+    const filterBar = document.querySelector('#filter') as HTMLInputElement;
+    filterBar.value = '';
     this.refresh();
   }
 
@@ -83,7 +86,6 @@ export class UsersTableComponent implements OnInit {
       console.log(data);
       this.data = data;
       this.dataSource = data;
-      // TODO This doesn't set correctly
       this.sortData();
     });
   }
