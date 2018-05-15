@@ -25,14 +25,8 @@
         </div>
       </mat-step>
       <mat-step label="Permissions" [optional]="true">
-        <form [formGroup]="permissionsFormGroup" class="flex-two-columns spacing-bottom">
-          <mat-checkbox formControlName="librarian">Librarian</mat-checkbox>
-          <mat-checkbox formControlName="acceptPayments">Can Accept Payments</mat-checkbox>
-          <mat-checkbox formControlName="admin">Administrator</mat-checkbox>
-          <mat-checkbox formControlName="auditor">Auditor</mat-checkbox>
-          <mat-checkbox formControlName="canInvite">Can Invite</mat-checkbox>
-        </form>
-        <div>
+        <app-permissions-form #permissions [user]="undefined"></app-permissions-form>
+        <div class="spacing-top">
           <button mat-raised-button color="primary" matStepperNext class="full-width">Next</button>
         </div>
       </mat-step>
@@ -41,8 +35,8 @@
           Do you confirm the creation of the user {{this.personalFormGroup.get('fullName').value}}?
         </p>
         <div>
-          <button mat-raised-button color="accent" class="full-width spacing-bottom" (click)="copyLoginInfo()">Copy login information</button>
-          <button mat-raised-button color="primary" matStepperNext class="full-width" (click)="createUser()">Create user</button>
+          <button mat-raised-button color="accent" class="full-width" (click)="copyLoginInfo()">Copy login information</button>
+          <button mat-raised-button color="primary" matStepperNext class="full-width spacing-top" (click)="createUser()">Create user</button>
         </div>
       </mat-step>
 

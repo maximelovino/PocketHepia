@@ -22,7 +22,11 @@ import {
   MatTooltipModule,
   MatListModule,
   MatAutocompleteModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatTabsModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -50,7 +54,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatTooltipModule,
     MatListModule,
     MatAutocompleteModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTabsModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -75,7 +83,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatTooltipModule,
     MatListModule,
     MatAutocompleteModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTabsModule
   ]
 })
 export class MaterialModule { }

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from
 import { MatSnackBar, MatStepper } from '@angular/material';
 import { UserCreation } from '../../models/user-creation';
 import { UserService } from '../../services/user.service';
+import { PermissionsFormComponent } from '../permissions-form/permissions-form.component';
 
 @Component({
   selector: 'app-create-user',
@@ -13,7 +14,7 @@ import { UserService } from '../../services/user.service';
 // TODO this component could emit an event when user creation works so we can catch it and refresh users table
 export class CreateUserComponent implements OnInit {
   personalFormGroup: FormGroup;
-  permissionsFormGroup: FormGroup;
+  @ViewChild('permissions') permissions: PermissionsFormComponent;
   public hide = true;
   @ViewChild('userCreationStepper') stepper: MatStepper;
 
@@ -22,13 +23,6 @@ export class CreateUserComponent implements OnInit {
       fullName: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.required]
-    });
-    this.permissionsFormGroup = this.fb.group({
-      librarian: [false],
-      acceptPayments: [false],
-      admin: [false],
-      auditor: [false],
-      canInvite: [false],
     });
   }
 
@@ -43,16 +37,6 @@ export class CreateUserComponent implements OnInit {
     if (pass) {
       this.clip(pass);
     }
-  }
-
-  get checkedPermissions(): String[] {
-    const perms: String[] = [];
-    Object.keys(this.permissionsFormGroup.controls).forEach(key => {
-      if (this.permissionsFormGroup.get(key).value) {
-        perms.push(key);
-      }
-    });
-    return perms;
   }
 
   public copyLoginInfo() {
@@ -85,11 +69,11 @@ export class CreateUserComponent implements OnInit {
     const name = this.personalFormGroup.get('fullName').value;
     const email = this.personalFormGroup.get('email').value;
     const password = this.personalFormGroup.get('password').value;
-    const librarian = this.permissionsFormGroup.get('librarian').value;
-    const acceptPayments = this.permissionsFormGroup.get('acceptPayments').value;
-    const admin = this.permissionsFormGroup.get('admin').value;
-    const auditor = this.permissionsFormGroup.get('auditor').value;
-    const canInvite = this.permissionsFormGroup.get('canInvite').value;
+    const librarian = this.permissions.permGroup.get('librarian').value;
+    const acceptPayments = this.permissions.permGroup.get('acceptPayments').value;
+    const admin = this.permissions.permGroup.get('admin').value;
+    const auditor = this.permissions.permGroup.get('auditor').value;
+    const canInvite = this.permissions.permGroup.get('canInvite').value;
     const user = new UserCreation(name, email, password, admin, librarian, acceptPayments, canInvite, auditor);
     this.userService.createUser(user).subscribe(data => {
       this.snackBar.open(`User ${name} created`, null, { duration: 2000 });

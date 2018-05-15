@@ -36,12 +36,13 @@
     <mat-datepicker #endDatePicker></mat-datepicker>
   </mat-form-field>
 </div>
-<mat-accordion class="align-expansion-headers">
-  <ng-container *ngIf="filteredLogs.length === 0; else notEmptyLogs">
-    There are no logs available for the selected criteria
-  </ng-container>
-  <ng-template #notEmptyLogs>
-    <app-log-entry *ngFor="let log of filteredLogs" [log]="log"></app-log-entry>
-  </ng-template>
-
-</mat-accordion>
+<div class="logs-list">
+  <mat-accordion class="align-expansion-headers">
+    <ng-container *ngIf="filteredLogs.length === 0; else notEmptyLogs">
+      There are no logs available for the selected criteria
+    </ng-container>
+    <ng-template #notEmptyLogs>
+      <app-log-entry *ngFor="let log of filteredLogs" [log]="log"></app-log-entry>
+    </ng-template>
+  </mat-accordion>
+</div>

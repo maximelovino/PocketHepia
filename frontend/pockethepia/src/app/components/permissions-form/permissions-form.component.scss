@@ -1,0 +1,8 @@
+.flex-two-columns{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.checkboxesFlex > mat-checkbox{
+	max-width: 50%;
+}

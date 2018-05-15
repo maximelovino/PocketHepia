@@ -1,3 +1,21 @@
-<p>
-  We clicked on {{data.name}}
-</p>
+<mat-tab-group>
+  <mat-tab label="Password reset">
+    <form class="mat-tab-content full-width" [formGroup]="resetPassGroup" (ngSubmit)="resetPass()">
+      <mat-form-field class="full-width">
+        <input matInput formControlName="newPassword" placeholder="New password" type="password" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput formControlName="newPasswordConfirm" placeholder="Repeat new password" type="password" required>
+        <mat-error *ngIf="resetPassGroup.hasError('passwordMatch') && resetPassGroup.get('newPassword').touched && resetPassGroup.get('newPasswordConfirm').touched">Passwords don't match</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="accent" class="full-width" [disabled]="resetPassGroup.invalid">Change password</button>
+    </form>
+  </mat-tab>
+  <mat-tab label="Permissions change">
+    <div class="mat-tab-content">
+      <app-permissions-form #permissions [user]="data">
+      </app-permissions-form>
+      <button mat-raised-button color="accent" class="full-width" (click)="changePermissions()">Change permissions</button>
+    </div>
+  </mat-tab>
+</mat-tab-group>
