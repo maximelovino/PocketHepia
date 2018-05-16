@@ -17,13 +17,20 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
 const routes: Routes = [
-  { path: '', canActivate: [AuthGuard], component: HomeComponent },
-  { path: 'transactions', canActivate: [AuthGuard], component: TransactionsComponent },
-  { path: 'access', canActivate: [AuthGuard], component: AccessComponent },
-  { path: 'books', canActivate: [AuthGuard], component: BooksComponent },
-  { path: 'admin/logs', canActivate: [AuthGuard, AdminGuard], component: LogsComponent },
-  { path: 'admin/users', canActivate: [AuthGuard, AdminGuard], component: UsersComponent },
-  { path: 'admin/users/create', canActivate: [AuthGuard, AdminGuard], component: CreateUserComponent },
+  {
+    path: '', canActivate: [AuthGuard], children: [
+      { path: '', component: HomeComponent },
+      { path: 'transactions', component: TransactionsComponent },
+      { path: 'access', component: AccessComponent },
+      { path: 'books', component: BooksComponent },
+      {
+        path: 'admin', canActivate: [AdminGuard], children: [
+          { path: 'logs', component: LogsComponent },
+          { path: 'users', component: UsersComponent },
+        ]
+      },
+    ]
+  },
   { path: 'login', canActivate: [NotAuthGuard], component: LoginComponent },
   { path: '404', component: NotFoundComponent },
   { path: 'forbidden', component: ForbiddenComponent },
