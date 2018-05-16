@@ -4,6 +4,7 @@ import { User } from '../../models/user';
 import { FormGroup, FormBuilder, Validators, ValidatorFn } from '@angular/forms';
 import { PermissionsFormComponent } from '../permissions-form/permissions-form.component';
 import { UserService } from '../../services/user.service';
+import { EditUserModalReturn } from '../../models/edit-user-modal-return';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -52,10 +53,10 @@ export class EditUserModalComponent implements OnInit {
     const password = this.resetPassGroup.get('newPassword').value;
     const password2 = this.resetPassGroup.get('newPasswordConfirm').value;
     this.userService.resetPassword(this.data, password, password2).subscribe(data => {
-      console.log('Change worked');
-      this.dialogRef.close();
+      this.dialogRef.close(EditUserModalReturn.PASSWORD_RESET_OK);
     }, error => {
       console.error(error);
+      this.dialogRef.close(EditUserModalReturn.PASSWORD_RESET_FAIL);
     });
   }
 

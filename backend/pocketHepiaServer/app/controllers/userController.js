@@ -45,6 +45,7 @@ exports.delete = async (req, res, next) => {
 		res.sendStatus(400);
 		return;
 	}
+	//TODO check that the user being deleted is not the current user
 
 	const user = await User.findByIdAndRemove(req.params.id);
 

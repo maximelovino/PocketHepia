@@ -15,6 +15,7 @@
           </mat-form-field>
           <mat-form-field class="full-width">
             <input matInput placeholder="Password" formControlName="password" [type]="hide ? 'password':'text'" required>
+            <!-- TODO change to mat icon buttons -->
             <mat-icon matSuffix (click)="hide = !hide" [matTooltip]="hide ? 'Show password' : 'Hide password'" [matTooltipPosition]="'above'">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
             <mat-icon (click)="copyPass()" matSuffix matTooltip="Copy to clipboard" id="passwordInput" [matTooltipPosition]="'above'">file_copy</mat-icon>
             <mat-icon (click)="generatePassword()" matSuffix matTooltip="Click to generate a random password" [matTooltipPosition]="'above'">vpn_key</mat-icon>

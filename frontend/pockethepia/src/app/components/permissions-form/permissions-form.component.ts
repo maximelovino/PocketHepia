@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../../models/user';
+import { Observable } from 'rxjs';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-permissions-form',
@@ -9,9 +11,10 @@ import { User } from '../../models/user';
 })
 export class PermissionsFormComponent implements OnInit {
   public permGroup: FormGroup;
+  public currentUser: Observable<User> = this.userService.retrieveUser();
   @Input() public user: User;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private userService: UserService) {
     console.log(this.user);
   }
 

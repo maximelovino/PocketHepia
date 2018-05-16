@@ -4,7 +4,9 @@
       <mat-form-field class="search-bar-input">
         <input matInput id="filter" (keyup)="filterTable($event.target.value)" placeholder="Filter">
       </mat-form-field>
-      <mat-icon class="refresh-icon" (click)="refreshData()" matTooltip="Click to refresh users list" [matTooltipPosition]="'above'">refresh</mat-icon>
+      <button mat-icon-button class="refresh-icon" (click)="refreshData()">
+        <mat-icon matTooltip="Click to refresh users list" [matTooltipPosition]="'above'">refresh</mat-icon>
+      </button>
     </div>
   </div>
   <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
@@ -35,9 +37,11 @@
         </mat-icon>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <mat-icon (click)="editUser(row)">
-          edit
-        </mat-icon>
+        <button mat-icon-button (click)="editUser(row)">
+          <mat-icon>
+            edit
+          </mat-icon>
+        </button>
       </mat-cell>
     </ng-container>
 
@@ -49,9 +53,11 @@
         </mat-icon>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <mat-icon (click)="deleteUser(row)">
-          delete
-        </mat-icon>
+        <button mat-icon-button (click)="deleteUser(row)" [disabled]="(currentUser | async).id == row.id">
+          <mat-icon>
+            delete
+          </mat-icon>
+        </button>
       </mat-cell>
     </ng-container>
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { MatPaginator, MatSort, MatTable, MatTab, MatDialog } from '@angular/material';
+import { MatPaginator, MatSort, MatTable, MatTab, MatDialog, MatSnackBar } from '@angular/material';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { EditUserModalComponent } from '../edit-user-modal/edit-user-modal.component';
 import { DeleteUserModalComponent } from '../delete-user-modal/delete-user-modal.component';
+import { EditUserModalReturn } from '../../models/edit-user-modal-return';
 
 const initialSelection = [];
 const allowMultiSelect = false;
@@ -20,6 +21,7 @@ const allowMultiSelect = false;
 export class UsersTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<User>;
+  currentUser: Observable<User> = this.userService.retrieveUser();
   data: User[];
   dataSource: User[];
   isLoadingResults = false;
@@ -29,7 +31,10 @@ export class UsersTableComponent implements OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name', 'email', 'permissions', 'edit', 'delete'];
 
-  constructor(private dialog: MatDialog, private userService: UserService, private breakpointObserver: BreakpointObserver) { }
+  constructor(private dialog: MatDialog,
+    private userService: UserService,
+    private breakpointObserver: BreakpointObserver,
+    private snackbar: MatSnackBar) { }
 
   ngOnInit() {
     this.sort.disableClear = true;
@@ -64,15 +69,34 @@ export class UsersTableComponent implements OnInit {
   public editUser(user: User) {
     console.log('Clicked on edit');
     console.log(user);
-    this.dialog.open(EditUserModalComponent, { data: user });
-    // TODO here we should do a snack as well, with failure or success (so pass data on close event)
-    this.dialog.afterAllClosed.subscribe(closed => this.refreshData());
+    const openedDialog = this.dialog.open(EditUserModalComponent, { data: user });
+    openedDialog.afterClosed().subscribe((closed: EditUserModalReturn) => {
+      if (closed !== undefined) {
+        let snackbarMessage = '';
+        switch (closed) {
+          case EditUserModalReturn.PASSWORD_RESET_OK:
+            snackbarMessage = 'Password was successfully reset';
+            break;
+          case EditUserModalReturn.PASSWORD_RESET_FAIL:
+            snackbarMessage = 'There was a problem resetting the password';
+            break;
+          case EditUserModalReturn.PERMISSION_CHANGE_OK:
+            snackbarMessage = 'New permissions were successfully set';
+            break;
+          case EditUserModalReturn.PERMISSION_CHANGE_OK:
+            snackbarMessage = 'There was a problem setting the new permissions';
+            break;
+        }
+        this.snackbar.open(snackbarMessage, null, { duration: 2000 });
+      }
+      this.refreshData();
+    });
   }
   public deleteUser(user: User) {
     console.log('Clicked on delete');
     console.log(user);
-    this.dialog.open(DeleteUserModalComponent, { data: user });
-    this.dialog.afterAllClosed.subscribe(closed => this.refreshData());
+    const openedDialog = this.dialog.open(DeleteUserModalComponent, { data: user });
+    openedDialog.afterClosed().subscribe(closed => this.refreshData());
   }
 
   public refreshData() {
