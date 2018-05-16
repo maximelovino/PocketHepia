@@ -15,6 +15,7 @@ const GET_USER_ROUTE = '/api/users/current';
 const GET_ALL_USERS_ROUTE = '/api/users/all';
 const CREATE_USER_ROUTE = '/api/users/create';
 const DELETE_USER_ROUTE = '/api/users/delete';
+const RESET_PASS_ROUTE = '/api/users/resetPassword';
 
 @Injectable()
 export class UserService {
@@ -111,6 +112,13 @@ export class UserService {
     return this.getToken().pipe(flatMap((token) => {
       return this.http.delete<void>(
         `${DELETE_USER_ROUTE}/${user.id}`, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
+    }));
+  }
+
+  public resetPassword(user: User, password: String, password2: String): Observable<void> {
+    return this.getToken().pipe(flatMap((token) => {
+      return this.http.put<void>(
+        `${RESET_PASS_ROUTE}/${user.id}`, { password, password2 }, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
     }));
   }
 

@@ -36,6 +36,7 @@ exports.changePassword = (req, res, next) => {
 		return;
 	}
 
+	// TODO change this to promise
 	User.findById(req.user._id, (err, user) => {
 		if (!err && user) {
 			user.changePassword(req.body.oldPassword, req.body.password).then(() => {

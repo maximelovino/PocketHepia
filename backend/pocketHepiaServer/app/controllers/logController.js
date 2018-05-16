@@ -81,3 +81,16 @@ exports.userDeletion = (req, res) => {
 	entry.save();
 	res.status(200).end();
 }
+
+exports.resetPassword = (req, res) => {
+	const user = req.affectedUser.toObject();
+	const entry = new Log({
+		category: categories.ADMIN_CHANGE_PASSWORD,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} has reset the password for user "${user.name}"`,
+		rawData: user,
+	});
+
+	entry.save();
+	res.status(200).end();
+}

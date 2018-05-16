@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { User } from '../../models/user';
 import { FormGroup, FormBuilder, Validators, ValidatorFn } from '@angular/forms';
 import { PermissionsFormComponent } from '../permissions-form/permissions-form.component';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -15,7 +16,9 @@ export class EditUserModalComponent implements OnInit {
 
 
   constructor(public dialogRef: MatDialogRef<EditUserModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: User, private fb: FormBuilder) {
+    @Inject(MAT_DIALOG_DATA) public data: User,
+    private fb: FormBuilder,
+    private userService: UserService) {
     this.resetPassGroup = this.fb.group({
       newPassword: ['', Validators.required],
       newPasswordConfirm: ['', Validators.required]
@@ -46,7 +49,14 @@ export class EditUserModalComponent implements OnInit {
 
 
   public resetPass() {
-
+    const password = this.resetPassGroup.get('newPassword').value;
+    const password2 = this.resetPassGroup.get('newPasswordConfirm').value;
+    this.userService.resetPassword(this.data, password, password2).subscribe(data => {
+      console.log('Change worked');
+      this.dialogRef.close();
+    }, error => {
+      console.error(error);
+    });
   }
 
   public changePermissions() {

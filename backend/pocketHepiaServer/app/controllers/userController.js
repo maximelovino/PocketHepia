@@ -56,3 +56,30 @@ exports.delete = async (req, res, next) => {
 	req.oldUser = user;
 	next();
 }
+
+exports.resetPassword = async (req, res, next) => {
+	if (!req.params.id || req.body.password !== req.body.password2) {
+		res.status(400);
+		res.send("New passwords don't match");
+		return;
+	}
+
+	const user = await User.findById(req.params.id);
+
+	if (!user) {
+		res.sendStatus(404);
+	}
+
+	req.affectedUser = user;
+
+	user.setPassword(req.body.password).then(() => {
+		user.save();
+		next();
+	}).catch(e => {
+		console.error(e);
+		res.status(500);
+		res.send(e.message);
+	})
+
+
+}
