@@ -14,7 +14,7 @@ export class AdminGuard implements CanActivate {
       console.log(`Admin: ${admin}`);
       if (!admin) {
         console.warn('User is not admin');
-        this.router.navigate(['/']);
+        this.router.navigate(['/forbidden']);
       }
     }));
   }

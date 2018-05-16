@@ -14,8 +14,8 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { NotAuthGuard } from './guards/not-auth.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
-// TODO add 404 route and redirect everything else to 404
 const routes: Routes = [
   { path: '', canActivate: [AuthGuard], component: HomeComponent },
   { path: 'transactions', canActivate: [AuthGuard], component: TransactionsComponent },
@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'admin/users/create', canActivate: [AuthGuard, AdminGuard], component: CreateUserComponent },
   { path: 'login', canActivate: [NotAuthGuard], component: LoginComponent },
   { path: '404', component: NotFoundComponent },
+  { path: 'forbidden', component: ForbiddenComponent },
   { path: '**', redirectTo: '404' }
 ];
 

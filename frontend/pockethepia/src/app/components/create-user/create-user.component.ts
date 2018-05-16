@@ -78,6 +78,7 @@ export class CreateUserComponent implements OnInit {
     this.userService.createUser(user).subscribe(data => {
       this.snackBar.open(`User ${name} created`, null, { duration: 2000 });
       this.stepper.reset();
+      this.permissions.reset();
     }, error => {
       this.snackBar.open(`There was a problem creating the user`, null, { duration: 2000 });
     });

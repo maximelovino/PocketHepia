@@ -14,4 +14,4 @@ module.exports = {
 	ADMIN_DONE_REQUEST: "Admin Does Request",
 	ADMIN_DELETES_REQUEST: "Admin Deletes Request"
 }
-
+// TODO Add admin changes permissions

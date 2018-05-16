@@ -33,6 +33,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { EditUserModalComponent } from './components/edit-user-modal/edit-user-modal.component';
 import { DeleteUserModalComponent } from './components/delete-user-modal/delete-user-modal.component';
 import { PermissionsFormComponent } from './components/permissions-form/permissions-form.component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { PermissionsFormComponent } from './components/permissions-form/permissi
     NotFoundComponent,
     EditUserModalComponent,
     DeleteUserModalComponent,
-    PermissionsFormComponent
+    PermissionsFormComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,

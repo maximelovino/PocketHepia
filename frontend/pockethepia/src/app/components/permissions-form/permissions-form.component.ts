@@ -25,6 +25,16 @@ export class PermissionsFormComponent implements OnInit {
     });
   }
 
+  public reset() {
+    this.permGroup.reset({
+      librarian: false,
+      acceptPayments: false,
+      admin: false,
+      auditor: false,
+      canInvite: false
+    });
+  }
+
   get checkedPermissions(): String[] {
     const perms: String[] = [];
     Object.keys(this.permGroup.controls).forEach(key => {
