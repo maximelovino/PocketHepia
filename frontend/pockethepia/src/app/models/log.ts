@@ -13,7 +13,7 @@ export class Log {
     this.id = log.id;
     this.description = log.description;
     this.date = new Date(log.date);
-    this.triggeringUser = log.triggeringUser ? undefined : new User(this.triggeringUser);
+    this.triggeringUser = log.triggeringUser ? new User(log.triggeringUser) : undefined;
     this.rawData = log.rawData;
   }
 }

@@ -26,6 +26,7 @@ export class UserService {
     this.init();
   }
 
+  // TODO move token and login, logout to auth service
   public getToken(): Observable<String> {
     if (this.token) {
       return of(this.token);
@@ -39,14 +40,7 @@ export class UserService {
     if (this.user) {
       return of(this.user);
     }
-    return this.getToken().pipe(flatMap((token) => {
-      if (token) {
-        return this.http.get<User>(GET_USER_ROUTE, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) })
-          .pipe(tap(user => this.user = user));
-      } else {
-        return of(undefined);
-      }
-    }));
+    return this.http.get<User>(GET_USER_ROUTE).pipe(tap(user => this.user = user));
   }
 
   private init() {
@@ -90,36 +84,22 @@ export class UserService {
   }
 
   public getAllUsers(): Observable<User[]> {
-    return this.getToken().pipe(flatMap((token) => {
-      if (token) {
-        return this.http.get<User[]>(GET_ALL_USERS_ROUTE, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) })
-          .pipe(map(users => {
-            return users.map(user => new User(user));
-          }));
-      } else {
-        return of(undefined);
-      }
-    }));
+    return this.http.get<User[]>(GET_ALL_USERS_ROUTE)
+      .pipe(map(users => {
+        return users.map(user => new User(user));
+      }));
   }
 
   public createUser(user: UserCreation): Observable<void> {
-    return this.getToken().pipe(flatMap((token) => {
-      return this.http.post<void>(CREATE_USER_ROUTE, user, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
-    }));
+    return this.http.post<void>(CREATE_USER_ROUTE, user);
   }
 
   public deleteUser(user: User): Observable<void> {
-    return this.getToken().pipe(flatMap((token) => {
-      return this.http.delete<void>(
-        `${DELETE_USER_ROUTE}/${user.id}`, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
-    }));
+    return this.http.delete<void>(`${DELETE_USER_ROUTE}/${user.id}`);
   }
 
   public resetPassword(user: User, password: String, password2: String): Observable<void> {
-    return this.getToken().pipe(flatMap((token) => {
-      return this.http.put<void>(
-        `${RESET_PASS_ROUTE}/${user.id}`, { password, password2 }, { headers: new HttpHeaders().set('Authorization', `Bearer ${token}`) });
-    }));
+    return this.http.put<void>(`${RESET_PASS_ROUTE}/${user.id}`, { password, password2 });
   }
 
 }

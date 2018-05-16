@@ -14,7 +14,7 @@ import { HomeComponent } from './components/home/home.component';
 
 import { UserService } from './services/user.service';
 import { LoginComponent } from './components/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ChangePasswordSheetComponent } from './components/change-password-sheet/change-password-sheet.component';
@@ -34,6 +34,7 @@ import { EditUserModalComponent } from './components/edit-user-modal/edit-user-m
 import { DeleteUserModalComponent } from './components/delete-user-modal/delete-user-modal.component';
 import { PermissionsFormComponent } from './components/permissions-form/permissions-form.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+import { HttpTokenInterceptorService } from './services/http-token-interceptor.service';
 
 
 @NgModule({
@@ -69,7 +70,11 @@ import { ForbiddenComponent } from './components/forbidden/forbidden.component';
     ReactiveFormsModule
   ],
   entryComponents: [ChangePasswordSheetComponent, DeleteUserModalComponent, EditUserModalComponent],
-  providers: [FormBuilder, UserService, AuthService, LogService, AuthGuard, AdminGuard, NotAuthGuard],
+  providers: [FormBuilder, UserService, AuthService, LogService, AuthGuard, AdminGuard, NotAuthGuard, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpTokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
