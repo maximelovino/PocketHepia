@@ -13,7 +13,7 @@ import { PermissionsFormComponent } from '../permissions-form/permissions-form.c
 
 // TODO this component could emit an event when user creation works so we can catch it and refresh users table
 export class CreateUserComponent implements OnInit {
-  @Output() created = new EventEmitter<boolean>;
+  @Output() created = new EventEmitter<boolean>();
   personalFormGroup: FormGroup;
   @ViewChild('permissions') permissions: PermissionsFormComponent;
   public hide = true;
