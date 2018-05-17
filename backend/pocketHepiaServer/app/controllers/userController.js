@@ -1,6 +1,7 @@
 // TODO missing populate for the areas
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const fs = require('fs');
 
 
 exports.current = (req, res) => {
@@ -121,4 +122,35 @@ exports.changePermissions = async (req, res, next) => {
 
 	next();
 
+}
+
+exports.import = async (req, res, next) => {
+	console.log(req.body);
+	console.log(req.file);
+
+	const content = fs.readFileSync(req.file.path, { encoding: "utf-8" });
+	const lines = content.split('\n').map(line => line.trim());
+	const headers = lines[0];
+	const usersLines = lines.slice(1);
+
+	console.log(headers);
+	console.log(usersLines);
+
+	// TODO handle headers by doing a dictionnary of value and index
+
+	const users = usersLines.map((lineContent, index) => {
+		// TODO for each line create a user model
+	});
+
+	users.forEach(async us => {
+		try {
+			const saved = await us.save()
+		} catch (error) {
+			// TODO something went wrong with this save, add to list of unsaved users
+		}
+	});
+
+
+
+	next()
 }

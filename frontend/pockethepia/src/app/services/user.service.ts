@@ -17,6 +17,7 @@ const CREATE_USER_ROUTE = '/api/users/create';
 const DELETE_USER_ROUTE = '/api/users/delete';
 const RESET_PASS_ROUTE = '/api/users/resetPassword';
 const CHANGE_PERMISSIONS_ROUTE = '/api/users/changePermissions';
+const IMPORT_USERS_ROUTE = '/api/users/import';
 
 @Injectable()
 export class UserService {
@@ -112,4 +113,7 @@ export class UserService {
     return this.http.put<void>(`${CHANGE_PERMISSIONS_ROUTE}/${user.id}`, { isAdmin, isLibrarian, acceptsPayments, canInvite, isAuditor });
   }
 
+  public importUsers(data: FormData) {
+    return this.http.post<void>(IMPORT_USERS_ROUTE, data);
+  }
 }

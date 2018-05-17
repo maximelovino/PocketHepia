@@ -2,9 +2,15 @@
 	position: relative;
 	overflow: hidden;
 	display: inline-block;
+	flex: 0 1 auto;
 }
 .explanation-div{
 	margin-bottom: 2em;
+}
+
+.file-buttons{
+	display: flex;
+	flex-direction: row;
 }
   
 .upload-btn-wrapper input[type=file] {

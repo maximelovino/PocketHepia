@@ -107,3 +107,7 @@ exports.changePermissions = (req, res) => {
 	entry.save();
 	res.status(200).end();
 }
+
+exports.importUsers = (req, res) => {
+	res.status(200).end();
+}
