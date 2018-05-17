@@ -16,6 +16,7 @@ const GET_ALL_USERS_ROUTE = '/api/users/all';
 const CREATE_USER_ROUTE = '/api/users/create';
 const DELETE_USER_ROUTE = '/api/users/delete';
 const RESET_PASS_ROUTE = '/api/users/resetPassword';
+const CHANGE_PERMISSIONS_ROUTE = '/api/users/changePermissions';
 
 @Injectable()
 export class UserService {
@@ -100,6 +101,15 @@ export class UserService {
 
   public resetPassword(user: User, password: String, password2: String): Observable<void> {
     return this.http.put<void>(`${RESET_PASS_ROUTE}/${user.id}`, { password, password2 });
+  }
+
+  public changePermissions(user: User,
+    isAdmin: boolean,
+    isLibrarian: boolean,
+    acceptsPayments: boolean,
+    canInvite: boolean,
+    isAuditor: boolean): Observable<void> {
+    return this.http.put<void>(`${CHANGE_PERMISSIONS_ROUTE}/${user.id}`, { isAdmin, isLibrarian, acceptsPayments, canInvite, isAuditor });
   }
 
 }

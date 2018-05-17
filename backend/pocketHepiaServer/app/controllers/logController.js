@@ -94,3 +94,16 @@ exports.resetPassword = (req, res) => {
 	entry.save();
 	res.status(200).end();
 }
+
+exports.changePermissions = (req, res) => {
+	const data = req.rawData;
+	const entry = new Log({
+		category: categories.ADMIN_CHANGE_PERMISSION,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} has change permissions for user "${data.oldUser.name}"`,
+		rawData: data,
+	});
+
+	entry.save();
+	res.status(200).end();
+}

@@ -61,7 +61,17 @@ export class EditUserModalComponent implements OnInit {
   }
 
   public changePermissions() {
-    console.log(this.permissions.permGroup);
+    const librarian = this.permissions.permGroup.get('librarian').value;
+    const acceptPayments = this.permissions.permGroup.get('acceptPayments').value;
+    const admin = this.permissions.permGroup.get('admin').value;
+    const auditor = this.permissions.permGroup.get('auditor').value;
+    const canInvite = this.permissions.permGroup.get('canInvite').value;
+    this.userService.changePermissions(this.data, admin, librarian, acceptPayments, canInvite, auditor).subscribe(data => {
+      this.dialogRef.close(EditUserModalReturn.PERMISSION_CHANGE_OK);
+    }, error => {
+      console.error(error);
+      this.dialogRef.close(EditUserModalReturn.PERMISSION_CHANGE_FAIL);
+    });
   }
 
 }

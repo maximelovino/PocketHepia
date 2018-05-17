@@ -28,7 +28,7 @@ exports.create = async (req, res, next) => {
 		canInvite: req.body.canInvite,
 		isAuditor: req.body.isAuditor
 	});
-
+	// TODO use promise
 	User.register(user, req.body.password, (err, account) => {
 		if (err) {
 			console.log(err);
@@ -45,7 +45,11 @@ exports.delete = async (req, res, next) => {
 		res.sendStatus(400);
 		return;
 	}
-	//TODO check that the user being deleted is not the current user
+
+	if (req.params.id == req.user._id) {
+		res.sendStatus(400);
+		return;
+	}
 
 	const user = await User.findByIdAndRemove(req.params.id);
 
@@ -81,6 +85,40 @@ exports.resetPassword = async (req, res, next) => {
 		res.status(500);
 		res.send(e.message);
 	})
+}
 
+exports.changePermissions = async (req, res, next) => {
+	if (!req.params.id) {
+		res.status(400);
+		res.send("You didn't specify the user");
+		return;
+	}
+
+	// If one of them is not defined, we assume it as true
+	const isLibrarian = req.body.isLibrarian == undefined ? false : req.body.isLibrarian;
+	const acceptsPayments = req.body.acceptsPayments == undefined ? false : req.body.acceptsPayments;
+	const isAdmin = req.body.isAdmin == undefined ? false : req.body.isAdmin;
+	const isAuditor = req.body.isAuditor == undefined ? false : req.body.isAuditor;
+	const canInvite = req.body.canInvite == undefined ? false : req.body.canInvite;
+
+	if (req.params.id == req.user.id && !isAdmin) {
+		res.status(400);
+		res.send("You can't remove your admin rights");
+		return;
+	}
+
+	const oldUser = await User.findByIdAndUpdate(req.params.id, { isLibrarian, acceptsPayments, isAdmin, isAuditor, canInvite });
+	if (!oldUser) {
+		res.sendStatus(500);
+	}
+	const newUser = await User.findById(req.params.id);
+
+	if (!newUser) {
+		res.sendStatus(500);
+	}
+
+	req.rawData = { oldUser: oldUser.toObject(), newUser: newUser.toObject() };
+
+	next();
 
 }

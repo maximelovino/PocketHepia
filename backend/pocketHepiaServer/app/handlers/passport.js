@@ -11,14 +11,11 @@ opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.JWT_SECRET;
 
 passport.use(new JwtStrategy(opts, (payload, done) => {
-	console.log("PAYLOAD")
-	console.log(payload.id);
 	User.findById(payload.id, (err, user) => {
 		if (err) {
 			return done(err, false);
 		}
 		if (user) {
-			console.log(user);
 			done(null, user);
 		} else {
 			done(null, false);

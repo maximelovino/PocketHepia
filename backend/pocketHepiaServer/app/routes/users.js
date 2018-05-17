@@ -11,5 +11,6 @@ router.get("/all", passport.authenticate('jwt'), authController.checkAdmin, user
 router.post("/create", passport.authenticate('jwt'), authController.checkAdmin, userController.create, logController.userCreation);
 router.delete("/delete/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.delete, logController.userDeletion)
 router.put("/resetPassword/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.resetPassword, logController.resetPassword)
+router.put("/changePermissions/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.changePermissions, logController.changePermissions)
 
 module.exports = router;

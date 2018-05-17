@@ -3,6 +3,7 @@ module.exports = {
 	USER_CHANGE_PASSWORD: "User Password Change",
 	USER_DELETED: "User Deleted",
 	ADMIN_CHANGE_PASSWORD: "Admin Password Change",
+	ADMIN_CHANGE_PERMISSION: "Admin Permissions Change",
 	ADMIN_CREATES_AREA: "Admin Creates Area",
 	ADMIN_REMOVES_AREA: "Admin Removes Area",
 	ADMIN_DELEGATES_AREA: "Admin Area Delegation",
