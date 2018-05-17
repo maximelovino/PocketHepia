@@ -17,6 +17,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LogsComponent implements OnInit {
   startDate: Date = new Date();
   endDate: Date = new Date();
+  minDate = new Date(2018, 0, 3);
   categoriesList: String[] = [];
   categories: String[] = this.categoriesList;
   users: User[];
@@ -40,6 +41,7 @@ export class LogsComponent implements OnInit {
           map(val => this.filterUsersList(val))
         );
     }, (error: HttpErrorResponse) => {
+      // TODO do we really need to do this for every admin request?
       if (error.status === 403) {
         console.error('You\'re not admin anymore');
         // TODO show modal only once
@@ -91,7 +93,6 @@ export class LogsComponent implements OnInit {
   public filterDate() {
     const start = this.startDate.getTime();
     const end = this.endDate.getTime();
-    console.log(start, end);
     this.logService.getLogs(start, end).subscribe(data => {
       this.logs = data;
       this.filteredLogs = this.logs;

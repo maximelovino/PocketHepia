@@ -26,14 +26,15 @@
   </mat-form-field>
   <mat-form-field class="date-field">
     <input matInput #startDateInput [matDatepicker]="startDatePicker" placeholder="Choose a start date" [(ngModel)]="startDate"
-      (dateChange)="filterDate()">
+      (dateChange)="filterDate()" [max]="endDate" disabled>
     <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #startDatePicker></mat-datepicker>
+    <mat-datepicker #startDatePicker disabled="false"></mat-datepicker>
   </mat-form-field>
   <mat-form-field class="date-field">
-    <input matInput #endDateInput [matDatepicker]="endDatePicker" placeholder="Choose an end date" [(ngModel)]="endDate" (dateChange)="filterDate()">
+    <input matInput #endDateInput [matDatepicker]="endDatePicker" placeholder="Choose an end date" [(ngModel)]="endDate" (dateChange)="filterDate()"
+      [min]="startDate" disabled>
     <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #endDatePicker></mat-datepicker>
+    <mat-datepicker #endDatePicker disabled="false"></mat-datepicker>
   </mat-form-field>
 </div>
 <div class="logs-list">
