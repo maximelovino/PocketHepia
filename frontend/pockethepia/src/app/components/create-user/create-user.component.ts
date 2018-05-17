@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { MatSnackBar, MatStepper } from '@angular/material';
 import { UserCreation } from '../../models/user-creation';
@@ -13,6 +13,7 @@ import { PermissionsFormComponent } from '../permissions-form/permissions-form.c
 
 // TODO this component could emit an event when user creation works so we can catch it and refresh users table
 export class CreateUserComponent implements OnInit {
+  @Output() created = new EventEmitter<boolean>;
   personalFormGroup: FormGroup;
   @ViewChild('permissions') permissions: PermissionsFormComponent;
   public hide = true;
@@ -55,7 +56,6 @@ export class CreateUserComponent implements OnInit {
     });
     let snackbarText: string;
     if (document.execCommand('copy')) {
-      // TODO do a snackbar or something
       snackbarText = 'Copied to clipboard';
       console.log('Copy worked');
     } else {
@@ -79,6 +79,7 @@ export class CreateUserComponent implements OnInit {
       this.snackBar.open(`User ${name} created`, null, { duration: 2000 });
       this.stepper.reset();
       this.permissions.reset();
+      this.created.emit(true);
     }, error => {
       this.snackBar.open(`There was a problem creating the user`, null, { duration: 2000 });
     });

@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xl-4">
-		<app-create-user class="bottom-margin"></app-create-user>
-		<app-users-import class="bottom-margin"></app-users-import>
+		<app-create-user #userCreate class="bottom-margin" (created)="onCreated($event)"></app-create-user>
+		<app-users-import #usersImport class="bottom-margin"></app-users-import>
 	</div>
-	<app-users-table class="col-xl-8"></app-users-table>
+	<app-users-table #usersTable class="col-xl-8"></app-users-table>
 </div>

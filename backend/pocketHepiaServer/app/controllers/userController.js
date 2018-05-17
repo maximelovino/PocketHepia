@@ -94,7 +94,7 @@ exports.changePermissions = async (req, res, next) => {
 		return;
 	}
 
-	// If one of them is not defined, we assume it as true
+	// If one of them is not defined, we assume it as false
 	const isLibrarian = req.body.isLibrarian == undefined ? false : req.body.isLibrarian;
 	const acceptsPayments = req.body.acceptsPayments == undefined ? false : req.body.acceptsPayments;
 	const isAdmin = req.body.isAdmin == undefined ? false : req.body.isAdmin;
