@@ -111,11 +111,13 @@ exports.changePermissions = async (req, res, next) => {
 	const oldUser = await User.findByIdAndUpdate(req.params.id, { isLibrarian, acceptsPayments, isAdmin, isAuditor, canInvite });
 	if (!oldUser) {
 		res.sendStatus(500);
+		return;
 	}
 	const newUser = await User.findById(req.params.id);
 
 	if (!newUser) {
 		res.sendStatus(500);
+		return;
 	}
 
 	req.rawData = { oldUser: oldUser.toObject(), newUser: newUser.toObject() };

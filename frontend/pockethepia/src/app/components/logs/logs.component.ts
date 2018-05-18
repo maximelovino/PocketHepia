@@ -92,7 +92,7 @@ export class LogsComponent implements OnInit {
 
   public filterDate() {
     const start = this.startDate.getTime();
-    const end = this.endDate.getTime();
+    const end = this.endDate.getTime() + (24 * 3600 * 1000) - 1;
     this.logService.getLogs(start, end).subscribe(data => {
       this.logs = data;
       this.filteredLogs = this.logs;
