@@ -136,21 +136,63 @@ exports.import = async (req, res, next) => {
 	console.log(headers);
 	console.log(usersLines);
 
-	// TODO handle headers by doing a dictionnary of value and index
+	const headersFields = headers.split(',');
+	console.log(headersFields);
+
+	const headersIndexes = {
+		name: headersFields.findIndex(v => v == 'name'),
+		email: headersFields.findIndex(v => v == 'email'),
+		password: headersFields.findIndex(v => v == 'password'),
+		isAdmin: headersFields.findIndex(v => v == 'isAdmin'),
+		isLibrarian: headersFields.findIndex(v => v == 'isLibrarian'),
+		acceptsPayments: headersFields.findIndex(v => v == 'acceptsPayments'),
+		canInvite: headersFields.findIndex(v => v == 'canInvite'),
+		isAuditor: headersFields.findIndex(v => v == 'isAuditor'),
+	}
+
+	if (Object.values(headersIndexes).includes(-1)) {
+		res.status(400);
+		res.send("The file headers are incomplete");
+		return;
+	}
+
+	console.log(headersIndexes);
 
 	const users = usersLines.map((lineContent, index) => {
 		// TODO for each line create a user model
-	});
-
-	users.forEach(async us => {
-		try {
-			const saved = await us.save()
-		} catch (error) {
-			// TODO something went wrong with this save, add to list of unsaved users
+		const line = lineContent.split(',');
+		if (line.length === headersFields.length) {
+			return new User({
+				email: line[headersIndexes.email],
+				name: line[headersIndexes.name],
+				isAdmin: line[headersIndexes.isAdmin],
+				isLibrarian: line[headersIndexes.isLibrarian],
+				acceptsPayments: line[headersIndexes.acceptsPayments],
+				canInvite: line[headersIndexes.canInvite],
+				isAuditor: line[headersIndexes.isAuditor]
+			});
+		} else {
+			return undefined;
 		}
 	});
 
+	console.log(users);
 
+	let doneUsers = []
+	let failedUsers = []
+
+	users.forEach(async (us, index) => {
+		try {
+			const account = await User.register(us, usersLines[index].split(',')[headersIndexes.password])
+			doneUsers.push({ line: index, user: us });
+		} catch (error) {
+			failedUsers.push({ line: index, user: us });
+		}
+	});
+
+	console.log(doneUsers);
+	console.log("########");
+	console.log(failedUsers);
 
 	next()
 }

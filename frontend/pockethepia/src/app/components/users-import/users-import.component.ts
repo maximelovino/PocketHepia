@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 
@@ -8,7 +8,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./users-import.component.scss']
 })
 export class UsersImportComponent implements OnInit {
-
+  @Output() imported = new EventEmitter<boolean>();
   formGroup = this.fb.group({
     csvFile: [null, Validators.required]
   });
@@ -38,7 +38,9 @@ export class UsersImportComponent implements OnInit {
     console.log(form);
     this.userService.importUsers(form).subscribe(data => {
       console.log('All good');
-      // TODO here we should emit the event
+      this.formGroup.reset({ csvFile: null });
+      // TODO this is a bit of a hack to wait here before making the emit to fire the refresh
+      setTimeout(() => this.imported.emit(true), 1000);
     }, error => {
       console.error(error);
     });

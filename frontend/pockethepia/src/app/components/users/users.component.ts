@@ -23,4 +23,9 @@ export class UsersComponent implements OnInit {
     this.table.refreshData();
   }
 
+  onImport(imported: boolean) {
+    console.log('Users imported');
+    this.table.refreshData();
+  }
+
 }
