@@ -113,7 +113,7 @@ export class UserService {
     return this.http.put<void>(`${CHANGE_PERMISSIONS_ROUTE}/${user.id}`, { isAdmin, isLibrarian, acceptsPayments, canInvite, isAuditor });
   }
 
-  public importUsers(data: FormData) {
-    return this.http.post<void>(IMPORT_USERS_ROUTE, data);
+  public importUsers(data: FormData): Observable<String> {
+    return this.http.post<String>(IMPORT_USERS_ROUTE, data);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-users-import',
@@ -15,7 +16,7 @@ export class UsersImportComponent implements OnInit {
 
   file: any = undefined;
 
-  constructor(private fb: FormBuilder, private userService: UserService) { }
+  constructor(private fb: FormBuilder, private userService: UserService, private snackbar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -39,8 +40,10 @@ export class UsersImportComponent implements OnInit {
     this.userService.importUsers(form).subscribe(data => {
       console.log('All good');
       this.formGroup.reset({ csvFile: null });
-      // TODO this is a bit of a hack to wait here before making the emit to fire the refresh
-      setTimeout(() => this.imported.emit(true), 1000);
+      this.snackbar.open('Users imported', 'Undo', { duration: 4000 }).onAction().subscribe(() => {
+        console.log('You clicked the action bar action');
+      })
+      this.imported.emit(true);
     }, error => {
       console.error(error);
     });

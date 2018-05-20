@@ -109,5 +109,14 @@ exports.changePermissions = (req, res) => {
 }
 
 exports.importUsers = (req, res) => {
-	res.status(200).end();
+	const entry = new Log({
+		category: categories.ADMIN_IMPORT_USERS,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} has imported ${req.doneUsers.length} users`,
+		rawData: { batch: req.importBatch, successful: req.doneUsers, failed: req.failedUsers },
+	});
+	entry.save();
+	res.status(200);
+	// TODO here we should return {doneCount, failedCount, undoId} and display the thing in frontend, create model in frontend for this
+	res.send(JSON.stringify(req.importBatch));
 }

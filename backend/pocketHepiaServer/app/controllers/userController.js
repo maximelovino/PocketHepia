@@ -1,8 +1,6 @@
 // TODO missing populate for the areas
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
-const fs = require('fs');
-
 
 exports.current = (req, res) => {
 	res.json(req.user.toObject());
@@ -127,74 +125,22 @@ exports.changePermissions = async (req, res, next) => {
 }
 
 exports.import = async (req, res, next) => {
-	console.log(req.body);
-	console.log(req.file);
 
-	const content = fs.readFileSync(req.file.path, { encoding: "utf-8" });
-	const lines = content.split('\n').map(line => line.trim());
-	const headers = lines[0];
-	const usersLines = lines.slice(1);
-
-	console.log(headers);
-	console.log(usersLines);
-
-	const headersFields = headers.split(',');
-	console.log(headersFields);
-
-	const headersIndexes = {
-		name: headersFields.findIndex(v => v == 'name'),
-		email: headersFields.findIndex(v => v == 'email'),
-		password: headersFields.findIndex(v => v == 'password'),
-		isAdmin: headersFields.findIndex(v => v == 'isAdmin'),
-		isLibrarian: headersFields.findIndex(v => v == 'isLibrarian'),
-		acceptsPayments: headersFields.findIndex(v => v == 'acceptsPayments'),
-		canInvite: headersFields.findIndex(v => v == 'canInvite'),
-		isAuditor: headersFields.findIndex(v => v == 'isAuditor'),
-	}
-
-	if (Object.values(headersIndexes).includes(-1)) {
-		res.status(400);
-		res.send("The file headers are incomplete");
-		return;
-	}
-
-	console.log(headersIndexes);
-
-	const users = usersLines.map((lineContent, index) => {
-		// TODO for each line create a user model
-		const line = lineContent.split(',');
-		if (line.length === headersFields.length) {
-			return new User({
-				email: line[headersIndexes.email],
-				name: line[headersIndexes.name],
-				isAdmin: line[headersIndexes.isAdmin],
-				isLibrarian: line[headersIndexes.isLibrarian],
-				acceptsPayments: line[headersIndexes.acceptsPayments],
-				canInvite: line[headersIndexes.canInvite],
-				isAuditor: line[headersIndexes.isAuditor]
-			});
-		} else {
-			return undefined;
-		}
-	});
-
-	console.log(users);
+	const users = req.users;
+	//console.log(users);
 
 	let doneUsers = []
 	let failedUsers = []
 
-	users.forEach(async (us, index) => {
-		try {
-			const account = await User.register(us, usersLines[index].split(',')[headersIndexes.password])
-			doneUsers.push({ line: index, user: us });
-		} catch (error) {
-			failedUsers.push({ line: index, user: us });
-		}
+
+	const promises = users.map((us, index) => {
+		return User.register(us.user, us.password).catch(() => failedUsers.push({ line: index, user: us.user.toObject() }));
 	});
 
-	console.log(doneUsers);
-	console.log("########");
-	console.log(failedUsers);
+	const results = await Promise.all(promises);
+	doneUsers = results.filter((value, index) => !failedUsers.map(u => u.line).includes(index))
 
+	req.doneUsers = doneUsers;
+	req.failedUsers = failedUsers;
 	next()
 }
