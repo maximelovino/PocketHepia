@@ -126,11 +126,13 @@ exports.changePermissions = async (req, res, next) => {
 
 exports.import = async (req, res, next) => {
 
-	const users = req.users;
-	//console.log(users);
+	//Only defined users
+	const users = req.users.filter(us => us);
 
-	let doneUsers = []
-	let failedUsers = []
+	let doneUsers = [];
+	// All undefined users
+	let failedUsers = req.users.filter(us => !us);
+
 
 
 	const promises = users.map((us, index) => {
@@ -143,4 +145,14 @@ exports.import = async (req, res, next) => {
 	req.doneUsers = doneUsers;
 	req.failedUsers = failedUsers;
 	next()
+}
+
+exports.undoImport = async (req, res, next) => {
+	if (!req.params.id) {
+		res.sendStatus(400);
+		return;
+	}
+	await User.deleteMany({ importBatch: req.params.id })
+
+	next();
 }

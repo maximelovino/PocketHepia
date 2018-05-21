@@ -17,5 +17,6 @@ router.delete("/delete/:id", passport.authenticate('jwt'), authController.checkA
 router.put("/resetPassword/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.resetPassword, logController.resetPassword)
 router.put("/changePermissions/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.changePermissions, logController.changePermissions)
 router.post("/import", passport.authenticate('jwt'), authController.checkAdmin, upload.single('csvFile'), csv.parseUsers, userController.import, logController.importUsers)
+router.delete("/undo/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.undoImport, logController.undoImport)
 
 module.exports = router;

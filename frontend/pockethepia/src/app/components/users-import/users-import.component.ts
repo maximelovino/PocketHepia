@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/cor
 import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-users-import',
@@ -39,13 +40,22 @@ export class UsersImportComponent implements OnInit {
     console.log(form);
     this.userService.importUsers(form).subscribe(data => {
       console.log('All good');
+      console.log(data);
       this.formGroup.reset({ csvFile: null });
-      this.snackbar.open('Users imported', 'Undo', { duration: 4000 }).onAction().subscribe(() => {
-        console.log('You clicked the action bar action');
-      })
+      this.snackbar.open(`${data.doneCount} user${data.doneCount === 1 ? '' : 's'} imported, ${data.failedCount} failed`, 'Undo', {
+        duration: 4000,
+        panelClass: 'swapped-theme'
+      }).onAction()
+        .subscribe(() => {
+          this.userService.undoImport(data.importBatch).subscribe(() => {
+            this.imported.emit(true);
+          });
+        });
       this.imported.emit(true);
-    }, error => {
+    }, (error: HttpErrorResponse) => {
       console.error(error);
+      this.snackbar.open(`Error: ${error.error}`);
+      this.formGroup.reset({ csvFile: null });
     });
   }
 }

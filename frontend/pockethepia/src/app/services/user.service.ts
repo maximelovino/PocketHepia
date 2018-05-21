@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Router } from '@angular/router';
 import { UserCreation } from '../models/user-creation';
+import { ImportResponse } from '../models/import-response';
 
 const LOCAL_STORAGE_TOKEN_KEY = 'JWT_TOKEN';
 const GET_USER_ROUTE = '/api/users/current';
@@ -18,6 +19,7 @@ const DELETE_USER_ROUTE = '/api/users/delete';
 const RESET_PASS_ROUTE = '/api/users/resetPassword';
 const CHANGE_PERMISSIONS_ROUTE = '/api/users/changePermissions';
 const IMPORT_USERS_ROUTE = '/api/users/import';
+const UNDO_IMPORT_ROUTE = '/api/users/undo';
 
 @Injectable()
 export class UserService {
@@ -113,7 +115,11 @@ export class UserService {
     return this.http.put<void>(`${CHANGE_PERMISSIONS_ROUTE}/${user.id}`, { isAdmin, isLibrarian, acceptsPayments, canInvite, isAuditor });
   }
 
-  public importUsers(data: FormData): Observable<String> {
-    return this.http.post<String>(IMPORT_USERS_ROUTE, data);
+  public importUsers(data: FormData): Observable<ImportResponse> {
+    return this.http.post<ImportResponse>(IMPORT_USERS_ROUTE, data);
+  }
+
+  public undoImport(importBatch: string): Observable<void> {
+    return this.http.delete<void>(`${UNDO_IMPORT_ROUTE}/${importBatch}`);
   }
 }

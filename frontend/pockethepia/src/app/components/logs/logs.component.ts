@@ -31,7 +31,7 @@ export class LogsComponent implements OnInit {
 
   ngOnInit() {
     // one month range filter date
-    this.startDate.setMonth(this.startDate.getMonth() - 1);
+    this.startDate.setDate(this.startDate.getDate() - 1);
     this.userService.getAllUsers().subscribe(data => {
       this.users = data;
       this.filteredUsers = this.userFilterControl.valueChanges

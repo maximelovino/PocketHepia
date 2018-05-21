@@ -13,7 +13,18 @@ $pockethepia-theme: mat-light-theme(
     $pockethepia-theme-warn
 );
 
+
+$pockethepia-theme-primary-punchy: mat-palette($mat-red, 500);
+$pockethepia-theme-snackbar: mat-light-theme(
+    $pockethepia-theme-accent,
+    $pockethepia-theme-primary-punchy,
+    $pockethepia-theme-warn
+);
+
 @include angular-material-theme($pockethepia-theme);
+.swapped-theme{
+    @include angular-material-theme($pockethepia-theme-snackbar);
+}
 
 
 body {

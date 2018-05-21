@@ -117,6 +117,20 @@ exports.importUsers = (req, res) => {
 	});
 	entry.save();
 	res.status(200);
-	// TODO here we should return {doneCount, failedCount, undoId} and display the thing in frontend, create model in frontend for this
-	res.send(JSON.stringify(req.importBatch));
+	res.send(JSON.stringify({
+		importBatch: req.importBatch,
+		doneCount: req.doneUsers.length,
+		failedCount: req.failedUsers.length
+	}));
+}
+
+exports.undoImport = (req, res) => {
+	const entry = new Log({
+		category: categories.ADMIN_UNDO_IMPORT,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} has cancelled import ${req.params.id}`,
+		rawData: { batch: req.params.id },
+	});
+	entry.save();
+	res.status(200).end();
 }
