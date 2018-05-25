@@ -44,7 +44,7 @@ export class UsersTableComponent implements OnInit {
     this.sort.sortChange.subscribe(() => this.sortData());
     this.isHandset.subscribe((match) => {
       if (match.matches) {
-        this.displayedColumns = ['name', 'edit', 'delete'];
+        this.displayedColumns = this.displayedColumns.includes('email') ? ['name', 'edit', 'delete'] : ['name', 'email', 'permissions', 'edit', 'delete'];
         this.table.renderRows();
       }
     });
