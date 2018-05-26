@@ -45,3 +45,8 @@ body {
 button:focus{
     outline: none;
 }
+
+.button-progress{
+	display: flex;
+	align-items: center;
+}

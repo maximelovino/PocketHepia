@@ -10,7 +10,11 @@
     </div>
     <form [formGroup]="formGroup" (ngSubmit)="uploadFile()">
       <div class="full-width file-buttons">
-        <button mat-raised-button class="full-width" color="accent" [disabled]="formGroup.invalid || formGroup.pristine">Upload file</button>
+        <div class="full-width button-progress">
+          <button mat-raised-button class="full-width" color="accent" [disabled]="formGroup.invalid || formGroup.pristine" [hidden]="sending">Upload file
+          </button>
+          <mat-progress-bar mode="indeterminate" [hidden]="!sending"></mat-progress-bar>
+        </div>
         <div class="upload-btn-wrapper col-auto">
           <button mat-icon-button color="primary">
             <mat-icon>attachment</mat-icon>

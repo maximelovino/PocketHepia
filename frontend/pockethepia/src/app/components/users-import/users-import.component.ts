@@ -16,6 +16,7 @@ export class UsersImportComponent implements OnInit {
   });
 
   file: any = undefined;
+  sending = false;
 
   constructor(private fb: FormBuilder, private userService: UserService, private snackbar: MatSnackBar) { }
 
@@ -38,8 +39,10 @@ export class UsersImportComponent implements OnInit {
     console.log(this.file);
     const form = this.prepareSave();
     console.log(form);
+    this.sending = true;
     this.userService.importUsers(form).subscribe(data => {
       console.log('All good');
+      this.sending = false;
       console.log(data);
       this.formGroup.reset({ csvFile: null });
       this.snackbar.open(`${data.doneCount} user${data.doneCount === 1 ? '' : 's'} imported, ${data.failedCount} failed`, 'Undo', {
@@ -53,6 +56,7 @@ export class UsersImportComponent implements OnInit {
         });
       this.imported.emit(true);
     }, (error: HttpErrorResponse) => {
+      this.sending = false;
       console.error(error);
       this.snackbar.open(`Error: ${error.error}`);
       this.formGroup.reset({ csvFile: null });

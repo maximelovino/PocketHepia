@@ -17,6 +17,7 @@ export class CreateUserComponent implements OnInit {
   personalFormGroup: FormGroup;
   @ViewChild('permissions') permissions: PermissionsFormComponent;
   public hide = true;
+  sending = false;
   @ViewChild('userCreationStepper') stepper: MatStepper;
 
   constructor(private fb: FormBuilder, public snackBar: MatSnackBar, private userService: UserService) {
@@ -66,6 +67,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   public createUser() {
+    this.sending = true;
     const name = this.personalFormGroup.get('fullName').value;
     const email = this.personalFormGroup.get('email').value;
     const password = this.personalFormGroup.get('password').value;
@@ -76,11 +78,13 @@ export class CreateUserComponent implements OnInit {
     const canInvite = this.permissions.permGroup.get('canInvite').value;
     const user = new UserCreation(name, email, password, admin, librarian, acceptPayments, canInvite, auditor);
     this.userService.createUser(user).subscribe(data => {
+      this.sending = false;
       this.snackBar.open(`User ${name} created`, null, { duration: 2000 });
       this.stepper.reset();
       this.permissions.reset();
       this.created.emit(true);
     }, error => {
+      this.sending = false;
       this.snackBar.open(`There was a problem creating the user`, null, { duration: 2000 });
     });
   }

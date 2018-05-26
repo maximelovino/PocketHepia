@@ -106,11 +106,15 @@ export class UsersTableComponent implements OnInit {
   }
 
   private refresh() {
+    this.isLoadingResults = true;
     this.userService.getAllUsers().subscribe(data => {
       console.log(data);
       this.data = data;
       this.dataSource = data;
       this.sortData();
+      this.isLoadingResults = false;
+    }, error => {
+      this.isLoadingResults = false;
     });
   }
 }

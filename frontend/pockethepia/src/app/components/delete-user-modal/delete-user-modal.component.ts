@@ -9,7 +9,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./delete-user-modal.component.scss']
 })
 export class DeleteUserModalComponent implements OnInit {
-
+  sending = false;
   constructor(public dialogRef: MatDialogRef<DeleteUserModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: User, private userService: UserService) { }
 
@@ -22,10 +22,13 @@ export class DeleteUserModalComponent implements OnInit {
 
   delete() {
     console.log('Deleting');
+    this.sending = true;
     this.userService.deleteUser(this.data).subscribe(done => {
+      this.sending = false;
       console.log(` We deleted ${this.data.name}`);
       this.dialogRef.close();
     }, error => {
+      this.sending = false;
       console.error(error);
     });
   }

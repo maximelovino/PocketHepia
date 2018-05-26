@@ -38,8 +38,9 @@
   </mat-form-field>
 </div>
 <div class="logs-list">
+  <mat-progress-bar mode="indeterminate" [hidden]="!fetching"></mat-progress-bar>
   <mat-accordion class="align-expansion-headers">
-    <ng-container *ngIf="filteredLogs.length === 0; else notEmptyLogs">
+    <ng-container *ngIf="filteredLogs.length === 0 && !fetching; else notEmptyLogs">
       There are no logs available for the selected criteria
     </ng-container>
     <ng-template #notEmptyLogs>

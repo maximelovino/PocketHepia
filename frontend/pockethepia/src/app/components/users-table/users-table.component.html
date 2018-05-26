@@ -9,6 +9,7 @@
       </button>
     </div>
   </div>
+  <mat-progress-bar mode="indeterminate" [hidden]="!isLoadingResults"></mat-progress-bar>
   <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
 
     <!-- Name Column -->

@@ -8,14 +8,14 @@
         <input matInput formControlName="newPasswordConfirm" placeholder="Repeat new password" type="password" required>
         <mat-error *ngIf="resetPassGroup.hasError('passwordMatch') && resetPassGroup.get('newPassword').touched && resetPassGroup.get('newPasswordConfirm').touched">Passwords don't match</mat-error>
       </mat-form-field>
-      <button mat-raised-button color="accent" class="full-width" [disabled]="resetPassGroup.invalid">Change password</button>
+      <button mat-raised-button color="accent" class="full-width" [disabled]="resetPassGroup.invalid || sending">Change password</button>
     </form>
   </mat-tab>
   <mat-tab label="Permissions change">
     <div class="mat-tab-content">
       <app-permissions-form #permissions [user]="data">
       </app-permissions-form>
-      <button mat-raised-button color="accent" class="full-width" (click)="changePermissions()">Change permissions</button>
+      <button mat-raised-button color="accent" class="full-width" (click)="changePermissions()" [disabled]="sending">Change permissions</button>
     </div>
   </mat-tab>
 </mat-tab-group>

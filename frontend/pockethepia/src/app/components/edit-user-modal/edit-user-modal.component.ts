@@ -13,6 +13,7 @@ import { EditUserModalReturn } from '../../models/edit-user-modal-return';
 })
 export class EditUserModalComponent implements OnInit {
   resetPassGroup: FormGroup;
+  sending = false;
   @ViewChild('permissions') permissions: PermissionsFormComponent;
 
 
@@ -52,9 +53,12 @@ export class EditUserModalComponent implements OnInit {
   public resetPass() {
     const password = this.resetPassGroup.get('newPassword').value;
     const password2 = this.resetPassGroup.get('newPasswordConfirm').value;
+    this.sending = true;
     this.userService.resetPassword(this.data, password, password2).subscribe(data => {
+      this.sending = false;
       this.dialogRef.close(EditUserModalReturn.PASSWORD_RESET_OK);
     }, error => {
+      this.sending = false;
       console.error(error);
       this.dialogRef.close(EditUserModalReturn.PASSWORD_RESET_FAIL);
     });
@@ -66,9 +70,12 @@ export class EditUserModalComponent implements OnInit {
     const admin = this.permissions.permGroup.get('admin').value;
     const auditor = this.permissions.permGroup.get('auditor').value;
     const canInvite = this.permissions.permGroup.get('canInvite').value;
+    this.sending = true;
     this.userService.changePermissions(this.data, admin, librarian, acceptPayments, canInvite, auditor).subscribe(data => {
+      this.sending = false;
       this.dialogRef.close(EditUserModalReturn.PERMISSION_CHANGE_OK);
     }, error => {
+      this.sending = false;
       console.error(error);
       this.dialogRef.close(EditUserModalReturn.PERMISSION_CHANGE_FAIL);
     });

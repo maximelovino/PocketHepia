@@ -37,7 +37,10 @@
         </p>
         <div>
           <button mat-raised-button color="accent" class="full-width" (click)="copyLoginInfo()">Copy login information</button>
-          <button mat-raised-button color="primary" matStepperNext class="full-width spacing-top" (click)="createUser()">Create user</button>
+          <div class="full-width button-progress spacing-top">
+            <button mat-raised-button color="primary" matStepperNext class="full-width" (click)="createUser()" [hidden]="sending">Create user</button>
+            <mat-progress-bar mode="indeterminate" [hidden]="!sending"></mat-progress-bar>
+          </div>
         </div>
       </mat-step>
 

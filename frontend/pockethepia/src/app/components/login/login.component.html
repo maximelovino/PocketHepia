@@ -3,13 +3,16 @@
     <mat-card-title>Welcome to PocketHepia</mat-card-title>
     <mat-card-subtitle>Please login to continue</mat-card-subtitle>
     <form #loginForm="ngForm" (ngSubmit)="login()">
-      <mat-form-field class="full-width-card-form">
+      <mat-form-field class="full-width">
         <input matInput placeholder="E-Mail" [(ngModel)]="email" name="email" required>
       </mat-form-field>
-      <mat-form-field class="full-width-card-form">
+      <mat-form-field class="full-width">
         <input matInput placeholder="Password" [(ngModel)]="password" name="password" type="password" required>
       </mat-form-field>
-      <button mat-raised-button color="accent" class="full-width-card-form" [disabled]="loginForm.invalid">Login</button>
+      <div class="full-width button-progress">
+        <button mat-raised-button color="accent" class="full-width" [disabled]="loginForm.invalid" [hidden]="sending">Login</button>
+        <mat-progress-bar mode="indeterminate" [hidden]="!sending"></mat-progress-bar>
+      </div>
     </form>
     <mat-card-content *ngIf="loginError" class="centered">
       <p>

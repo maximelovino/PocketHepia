@@ -26,6 +26,7 @@ export class LogsComponent implements OnInit {
   userToFilter: User;
   logs: Log[] = [];
   filteredLogs: Log[] = [];
+  fetching = false;
 
   constructor(private logService: LogService, private userService: UserService) { }
 
@@ -91,13 +92,16 @@ export class LogsComponent implements OnInit {
   }
 
   public filterDate() {
+    this.fetching = true;
     const start = this.startDate.getTime();
     const end = this.endDate.getTime() + (24 * 3600 * 1000) - 1;
     this.logService.getLogs(start, end).subscribe(data => {
+      this.fetching = false;
       this.logs = data;
       this.filteredLogs = this.logs;
       this.applyFilters();
     }, error => {
+      this.fetching = false;
       console.error('Couldn\'t retrieve logs');
     });
   }
