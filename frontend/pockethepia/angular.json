@@ -49,9 +49,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "pockethepia:build",
-            "sslKey": "../../certs/server.key",
-            "sslCert": "../../certs/server.crt",
+            "sslKey": "../../certs/privkey.pem",
+            "sslCert": "../../certs/fullchain.pem",
             "proxyConfig": "../../conf/proxy.conf.json",
+            "host": "pockethepia.maximelovino.ch",
             "port": 443
           },
           "configurations": {

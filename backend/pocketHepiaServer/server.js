@@ -9,7 +9,7 @@ const passport = require('passport');
 const https = require('https');
 const fs = require('fs');
 dotenv.config({ path: './conf/conf.env' });
-
+const path = require('path');
 const DB_URL = process.env.DB_URL;
 
 mongoose.connect(DB_URL).then(() => {
@@ -34,10 +34,11 @@ require('./app/handlers/passport');
 const routes = require('./app/routes/index');
 
 app.use("/", routes);
+app.use('/static', express.static(path.join(__dirname, 'assets')))
 
 const httpsOptions = {
-	key: fs.readFileSync('../../certs/server.key'),
-	cert: fs.readFileSync('../../certs/server.crt')
+	key: fs.readFileSync('../../certs/privkey.pem'),
+	cert: fs.readFileSync('../../certs/fullchain.pem')
 }
 
 // TODO dev purposes

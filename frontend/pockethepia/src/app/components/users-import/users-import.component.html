@@ -4,8 +4,11 @@
   </mat-card-title>
   <mat-card-content>
     <div class="explanation-div">
-      <p>
-        TODO WRITE EXPLANATION ABOUT FILE FORMAT
+      <p class="mat-body explanation">
+        Here you can import a CSV file containing a list of users to import with headers on the first line for the different properties
+        of the users. You can use
+        <a href="/static/user_template.csv">this template</a> with the headers already inserted and fill in the users before uploading it back. For the boolean
+        fields, fill in with 0 (false) and 1 (true).
       </p>
     </div>
     <form [formGroup]="formGroup" (ngSubmit)="uploadFile()">

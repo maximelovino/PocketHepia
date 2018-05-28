@@ -54,7 +54,7 @@ export class UsersTableComponent implements OnInit {
     const ascendingMult = this.sort.direction === 'asc' ? 1 : -1;
     this.dataSource = this.dataSource.sort((a, b) => {
       switch (this.sort.active) {
-        case 'name': return (a.name < b.name ? -1 : 1) * ascendingMult;
+        case 'name': return (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1) * ascendingMult;
         case 'email': return (a.email < b.email ? -1 : 1) * ascendingMult;
       }
     });
