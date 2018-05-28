@@ -1,0 +1,18 @@
+version: "3.1"
+services:
+  mongo:
+    build: db
+    container_name: mongodb
+    volumes:
+        - ./db/data/db:/data/db
+        - ./db/data/configdb:/data/configdb
+    ports:
+      - "27017:27017"
+  backend:
+    build: backend
+    container_name: backend_node
+    depends_on:
+      - "mongo"
+    ports:
+      - "8080:8080"
+    tty: true

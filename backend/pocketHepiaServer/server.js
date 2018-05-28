@@ -12,12 +12,18 @@ dotenv.config({ path: './conf/conf.env' });
 const path = require('path');
 const DB_URL = process.env.DB_URL;
 
-mongoose.connect(DB_URL).then(() => {
-	console.log("Mongo Connection worked");
-}).catch(e => {
-	console.error("There was a problem");
-	console.error(e);
-});
+
+function mongooseConnection() {
+	mongoose.connect(DB_URL).then(() => {
+		console.log("Mongo Connection worked");
+	}).catch(e => {
+		console.error("There was a problem, retrying in 5 seconds");
+		console.error(e);
+		setTimeout(mongooseConnection, 5000);
+	});
+}
+
+mongooseConnection();
 
 mongoose.Promise = global.Promise;
 
@@ -37,8 +43,8 @@ app.use("/", routes);
 app.use('/static', express.static(path.join(__dirname, 'assets')))
 
 const httpsOptions = {
-	key: fs.readFileSync('../../certs/privkey.pem'),
-	cert: fs.readFileSync('../../certs/fullchain.pem')
+	key: fs.readFileSync('../certs/privkey.pem'),
+	cert: fs.readFileSync('../certs/fullchain.pem')
 }
 
 // TODO dev purposes

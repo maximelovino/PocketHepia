@@ -1,0 +1,203 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage{dirtree}
+\setlength{\parindent}{0pt}
+\addtolength{\hoffset}{-1cm}
+\addtolength{\textwidth}{2cm}
+\usepackage{fontspec}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{xcolor,graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter}
+
+\usepackage[titletoc,title]{appendix}
+
+\setcounter{secnumdepth}{5}
+\usepackage[nonumberlist]{glossaries}
+\makeglossaries
+\newglossaryentry{nfc}
+{
+	name=NFC,
+	description={est un acronyme pour Near Field Communication qui représente un ensemble de protocoles de communication permettant de communiquer à des distances de quelques centimètres en utilisant l'induction électromagnétique}
+}
+
+\newglossaryentry{JVM}
+{
+	name=JVM,
+	description={est un acronyme pour Java Virtual Machine. Il s'agit d'une machine virtuelle permettant d'executer un programme compilé en bytecode Java sur un ordinateur ou un terminal mobile. On parle de langage fonctionnant sur la JVM lorsque la compilation du langage produit du bytecode Java.}
+}
+
+\newglossaryentry{IDE}
+{
+	name=IDE,
+	description={est un acronyme pour Integrated Development Environment. Il s'agit d'un programme intégrant un éditeur de texte avec coloration syntaxique et autocomplétion du code pour un ou plusieurs langages de programmation ainsi que des fonctions de compilation, débogage et tout autre fonctionnalité permettant de faciliter et fluidifier le travail du développeur}
+}
+
+\usepackage[section]{minted}
+\definecolor{mintedbackground}{rgb}{0.95,0.95,0.95}
+\usemintedstyle{colorful}
+
+\newmintedfile[javacode]{java}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true, %with this setting you can force the list to appear on the same page
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+\newmintedfile[jsoncode]{json}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true,
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+\newmintedfile[kotlincode]{kotlin}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true,
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+\newmintedfile[jscode]{javascript}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true,
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+\newmintedfile[tscode]{typescript}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true,
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+\newmintedfile[xmlcode]{xml}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true,
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+
+\begin{document}
+\begin{titlepage}
+	\centering
+	{\scshape \LARGE Projet de Bachelor ITI \par}
+	\vspace{1cm}
+	{\scshape\Large Août 2018\par}
+	\vspace{1.5cm}
+	{\huge\bfseries PocketHepia - Carte d’étudiant virtuelle basée sur la technologie NFC \par}
+	\vspace{2cm}
+	{\Large\itshape Maxime Alexandre Lovino\par}
+	\vfill
+	Supervisé par\par
+	Prof. Mickaël Hoerdt
+	\vfill
+		\begin{minipage}{.5\textwidth}
+		\centering
+		\includegraphics[width=.7\linewidth]{assets/logo_hepia.png}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\centering
+		\includegraphics[width=.7\linewidth]{assets/logo_hes.png}
+	\end{minipage}
+\end{titlepage}
+\shipout\null
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\chapter*{Remerciements}
+\glsaddall
+\printglossary[title=Termes et définitions]
+\newpage
+\shipout\null
+\pagenumbering{arabic}
+\chapter{Introduction}
+
+\end{document}

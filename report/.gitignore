@@ -1,0 +1,15 @@
+.texpadtmp/
+*.aux
+*.log
+*.lof
+*.synctex.gz
+*.out
+*.blg
+*.bbl
+*.nav
+*.snm
+*.toc
+_minted*/
+*.vrb
+*.gl*
+*.ist
