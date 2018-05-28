@@ -15,4 +15,11 @@ services:
       - "mongo"
     ports:
       - "8080:8080"
-    tty: true
+  frontend:
+    build: frontend
+    container_name: frontend_nginx_angular
+    depends_on:
+      - "mongo"
+    ports: 
+      - "80:80"
+      - "443:443"
