@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   // TODO rewrite this using reactiveForms
   public login() {
     this.sending = true;
+    this.loginError = false;
     this.authService.login(this.email, this.password).subscribe((data) => {
       this.userService.login(data);
       this.sending = false;
