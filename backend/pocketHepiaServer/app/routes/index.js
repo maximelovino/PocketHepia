@@ -7,8 +7,8 @@ router.use('/auth', authRouter);
 router.use('/users', usersRouter);
 router.use('/logs', logsRouter);
 
-router.get("/", (req, res) => {
-	res.send("Hello world");
-});
+const authController = require('../controllers/authController')
+
+router.get("/init", authController.initFirstAdmin);
 
 module.exports = router;

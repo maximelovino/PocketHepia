@@ -60,3 +60,22 @@ exports.checkAdmin = (req, res, next) => {
 	}
 	next();
 }
+
+
+exports.initFirstAdmin = async (req, res) => {
+	const users = await User.count();
+	if (users > 0) {
+		res.status(400);
+		res.send("You can't initiate the server if it's already been initiated");
+		return;
+	}
+	const user = new User({ email: "root@pockethepia.maximelovino.ch", name: "Default Root Account", isAdmin: true });
+	User.register(user, "root", (err, account) => {
+		if (err) {
+			console.log(err);
+			res.sendStatus(500);
+		} else {
+			res.json({ email: "root@pockethepia.maximelovino.ch", password: "root" });
+		}
+	})
+}
