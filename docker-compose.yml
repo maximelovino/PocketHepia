@@ -5,6 +5,7 @@ services:
     image: gcr.io/pockethepia/pockethepia_db:latest
     container_name: mongo
     volumes:
+    # TODO create one persistent volume on compute engine and fix it here, so it isn't recreated here
         - ./db/data/db:/data/db
         - ./db/data/configdb:/data/configdb
     ports:
