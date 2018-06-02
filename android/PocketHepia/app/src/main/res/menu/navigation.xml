@@ -6,23 +6,22 @@
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home"
-        app:showAsAction="always|withText" />
+        app:showAsAction="ifRoom|withText" />
 
     <item
         android:id="@+id/navigation_transactions"
         android:icon="@drawable/money"
-        android:title="Transactions"
-        app:showAsAction="always|withText"/>
+        android:title="@string/title_transactions"
+        app:showAsAction="ifRoom|withText" />
 
     <item
         android:id="@+id/navigation_access"
         android:icon="@drawable/key"
-        android:title="Access"
-        app:showAsAction="always|withText"/>
+        android:title="@string/title_access"
+        app:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/navigation_books"
         android:icon="@drawable/book"
-        android:title="Books"
-        app:showAsAction="always|withText"/>
-
+        android:title="@string/title_books"
+        app:showAsAction="ifRoom|withText" />
 </menu>
