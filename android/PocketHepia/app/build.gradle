@@ -5,14 +5,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 'android-P'
     defaultConfig {
         applicationId "ch.maximelovino.pockethepia"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -23,13 +23,32 @@ android {
 }
 
 dependencies {
+    // Android KTX extensions
+    implementation 'androidx.core:core-ktx:1.0.0-alpha1'
+    implementation 'androidx.fragment:fragment-ktx:1.0.0-alpha1'
+    implementation 'androidx.collection:collection-ktx:1.0.0-alpha1'
+
+    //TODO these imports not working, this is shit
+    /*// Android architecture components
+    def room_version = "1.1.0" // or, for latest rc, use "1.1.1-rc1"
+    implementation 'androidx.room:room-runtime:2.0.0-alpha1'
+    // TODO should use kapt here, check http://kotlinlang.org/docs/reference/kapt.html
+    annotationProcessor 'androidx.room:room-compiler:2.0.0-alpha1'
+
+    def work_version = "1.0.0-alpha02"
+    implementation "android.arch.work:work-runtime-ktx:$work_version" // use -ktx for Kotlin
+    implementation "android.arch.work:work-firebase:$work_version"
+
+    def lifecycle_version = "1.1.1"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1'
+    */
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+    implementation 'com.google.android.material:material:1.0.0-alpha1'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-alpha1'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
 }

@@ -1,21 +1,26 @@
 package ch.maximelovino.pockethepia
 
 import android.content.Context
-import android.preference.PreferenceManager
+import androidx.core.content.edit
 
 
 object TokenManager {
     private const val TOKEN_KEY = "TOKEN"
+    private const val PREF_STORE = "POCKETHEPIA"
 
     fun retrieveToken(context: Context): String? {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(TOKEN_KEY, null)
+        return context.getSharedPreferences(PREF_STORE, Context.MODE_PRIVATE).getString(TOKEN_KEY, null)
     }
 
     fun saveToken(context: Context, token: String) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(TOKEN_KEY, token).apply()
+        context.getSharedPreferences(PREF_STORE, Context.MODE_PRIVATE).edit {
+            putString(TOKEN_KEY, token)
+        }
     }
 
     fun deleteToken(context: Context) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().remove(TOKEN_KEY).apply()
+        context.getSharedPreferences(PREF_STORE, Context.MODE_PRIVATE).edit {
+            remove(TOKEN_KEY)
+        }
     }
 }

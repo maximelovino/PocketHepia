@@ -4,15 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.design.internal.BottomNavigationItemView
-import android.support.design.internal.BottomNavigationMenuView
-import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         Log.v("Fragment", "YOooo")
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        val fragment: Fragment = when (item.itemId) {
+        val fragment: androidx.fragment.app.Fragment = when (item.itemId) {
             R.id.navigation_home -> {
                 //TODO this shouldn't be created everytime
                 Log.v("Fragment", "Home")
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("RestrictedApi")
-    private fun disableShiftMode(view: BottomNavigationView) {
+    private fun disableShiftMode(view: com.google.android.material.bottomnavigation.BottomNavigationView) {
         val menuView = view.getChildAt(0) as BottomNavigationMenuView
         try {
             val shiftingMode = menuView.javaClass.getDeclaredField("mShiftingMode")
@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
             shiftingMode.isAccessible = false
             for (i in 0 until menuView.childCount) {
                 val item = menuView.getChildAt(i) as BottomNavigationItemView
-                item.setShiftingMode(false)
+                item.setShifting(false)
                 // set once again checked value, so view will be updated
                 item.setChecked(item.itemData.isChecked)
             }
