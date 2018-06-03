@@ -28,19 +28,24 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.0.0-alpha1'
     implementation 'androidx.collection:collection-ktx:1.0.0-alpha1'
 
+
+    def room_version = "2.0.0-alpha1"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    def lifecycle_version = "2.0.0-alpha1"
+
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
+
     //TODO these imports not working, this is shit
     /*// Android architecture components
-    def room_version = "1.1.0" // or, for latest rc, use "1.1.1-rc1"
-    implementation 'androidx.room:room-runtime:2.0.0-alpha1'
-    // TODO should use kapt here, check http://kotlinlang.org/docs/reference/kapt.html
-    annotationProcessor 'androidx.room:room-compiler:2.0.0-alpha1'
 
     def work_version = "1.0.0-alpha02"
     implementation "android.arch.work:work-runtime-ktx:$work_version" // use -ktx for Kotlin
     implementation "android.arch.work:work-firebase:$work_version"
-
-    def lifecycle_version = "1.1.1"
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1'
     */
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
