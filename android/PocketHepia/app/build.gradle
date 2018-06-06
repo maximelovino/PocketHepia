@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 'android-P'
     defaultConfig {
@@ -32,21 +34,13 @@ dependencies {
     def room_version = "2.0.0-alpha1"
 
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     def lifecycle_version = "2.0.0-alpha1"
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
-
-    //TODO these imports not working, this is shit
-    /*// Android architecture components
-
-    def work_version = "1.0.0-alpha02"
-    implementation "android.arch.work:work-runtime-ktx:$work_version" // use -ktx for Kotlin
-    implementation "android.arch.work:work-firebase:$work_version"
-    */
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'

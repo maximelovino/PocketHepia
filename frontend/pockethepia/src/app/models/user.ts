@@ -7,6 +7,7 @@ export class User {
   balance: Number;
   isLibrarian: boolean;
   acceptsPayments: boolean;
+  // TODO this will actually be a list of areas
   adminForAreas: String[];
   canInvite: boolean;
   isAuditor: boolean;
