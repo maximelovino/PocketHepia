@@ -4,17 +4,20 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
+import android.support.design.internal.BottomNavigationItemView
+import android.support.design.internal.BottomNavigationMenuView
+import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener
+import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import ch.maximelovino.pockethepia.data.models.UserRepository
 import ch.maximelovino.pockethepia.workers.RetrieveUsersWorker
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -25,44 +28,6 @@ import javax.net.ssl.HttpsURLConnection
 
 class MainActivity : AppCompatActivity() {
     private var token: String? = null
-
-
-    private val mOnNavigationItemSelectedListener = OnNavigationItemSelectedListener { item ->
-        Log.v("Fragment", "YOooo")
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        // TODO use ktx fragment transactions
-        val fragment: Fragment = when (item.itemId) {
-            R.id.navigation_home -> {
-                //TODO this shouldn't be created everytime
-                Log.v("Fragment", "Home")
-                HomeFragment()
-            }
-            R.id.navigation_transactions -> {
-                Log.v("Fragment", "Transactions")
-                TransactionsFragment()
-            }
-            R.id.navigation_access -> {
-                Log.v("Fragment", "Access")
-                AccessFragment()
-            }
-            R.id.navigation_books -> {
-                Log.v("Fragment", "Books")
-                BooksFragment()
-            }
-            R.id.navigation_admin -> {
-                Log.v("Fragment", "Admin")
-                AdminFragment()
-            }
-            else -> {
-                Log.v("Fragment", "else")
-                HomeFragment()
-            }
-        }
-        fragmentTransaction.replace(R.id.fragment_content, fragment)
-        fragmentTransaction.commit()
-        true
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,8 +42,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         disableShiftMode(navigation)
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        navigation.selectedItemId = R.id.navigation_home
         UserAdminCheckTask(token).execute()
 
         val repo = UserRepository(this.application)
@@ -86,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         swipe_refresh.setOnRefreshListener {
             RetrieveUsersWorker(token, repo).execute()
         }
+        val navController = findNavController(R.id.nav_host_fragment)
+        navigation.setupWithNavController(navController)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -134,7 +99,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addAdminMenu() {
-        navigation.menu.add(Menu.NONE, R.id.navigation_admin, Menu.NONE, R.string.title_admin).setIcon(R.drawable.admin)
+        navigation.menu.add(Menu.NONE, R.id.adminFragment, Menu.NONE, R.string.title_admin).setIcon(R.drawable.admin)
         disableShiftMode(navigation)
     }
 

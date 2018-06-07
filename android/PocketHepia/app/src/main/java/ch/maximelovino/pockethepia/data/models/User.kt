@@ -1,7 +1,8 @@
 package ch.maximelovino.pockethepia.data.models
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import org.json.JSONObject
 
 @Entity

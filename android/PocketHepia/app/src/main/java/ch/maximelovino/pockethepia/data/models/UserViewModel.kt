@@ -1,9 +1,7 @@
 package ch.maximelovino.pockethepia.data.models
 
 import android.app.Application
-
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import android.arch.lifecycle.AndroidViewModel
 
 
 class UserViewModel(application: Application) : AndroidViewModel(application) {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="ch.maximelovino.pockethepia.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="ch.maximelovino.pockethepia.TransactionsFragment"
+        android:label="fragment_transactions"
+        tools:layout="@layout/fragment_transactions" />
+    <fragment
+        android:id="@+id/accessFragment"
+        android:name="ch.maximelovino.pockethepia.AccessFragment"
+        android:label="fragment_access"
+        tools:layout="@layout/fragment_access" />
+    <fragment
+        android:id="@+id/booksFragment"
+        android:name="ch.maximelovino.pockethepia.BooksFragment"
+        android:label="fragment_books"
+        tools:layout="@layout/fragment_books" />
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="ch.maximelovino.pockethepia.AdminFragment"
+        android:label="fragment_admin"
+        tools:layout="@layout/fragment_admin" />
+</navigation>

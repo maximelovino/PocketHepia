@@ -1,7 +1,8 @@
 package ch.maximelovino.pockethepia.data.models
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
+import android.arch.lifecycle.LiveData
+import android.arch.persistence.room.*
+
 
 @Dao
 interface UserDao {

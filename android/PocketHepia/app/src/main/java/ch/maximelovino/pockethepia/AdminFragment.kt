@@ -1,16 +1,16 @@
 package ch.maximelovino.pockethepia
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import ch.maximelovino.pockethepia.data.adapters.UserListAdapter
 import ch.maximelovino.pockethepia.data.models.UserViewModel
 
@@ -31,7 +31,6 @@ class AdminFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -41,11 +40,8 @@ class AdminFragment : Fragment() {
 
         val viewAdapter = UserListAdapter(this.context!!)
         val viewManager = LinearLayoutManager(this.context!!)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.users_recycler_view).apply {
-            // use a linear layout manager
+        view.findViewById<RecyclerView>(R.id.users_recycler_view).apply {
             layoutManager = viewManager
-
-            // specify an viewAdapter (see also next example)
             adapter = viewAdapter
         }
 

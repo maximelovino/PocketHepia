@@ -14,7 +14,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -26,28 +26,41 @@ android {
 
 dependencies {
     // Android KTX extensions
-    implementation 'androidx.core:core-ktx:1.0.0-alpha1'
-    implementation 'androidx.fragment:fragment-ktx:1.0.0-alpha1'
-    implementation 'androidx.collection:collection-ktx:1.0.0-alpha1'
+    // TODO put them back when using androidx
+    /*implementation 'androidx.core:core-ktx:1.0.0-alpha3'
+    implementation 'androidx.fragment:fragment-ktx:1.0.0-alpha3'
+    implementation 'androidx.collection:collection-ktx:1.0.0-alpha3'*/
 
 
-    def room_version = "2.0.0-alpha1"
+    def room_version = "1.1.0"
 
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
 
-    def lifecycle_version = "2.0.0-alpha1"
+    def lifecycle_version = "1.1.1"
 
     // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+
+    def nav_version = "1.0.0-alpha01"
+    implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version" // use -ktx for Kotlin
+    implementation "android.arch.navigation:navigation-ui-ktx:$nav_version" // use -ktx for Kotlin
+
+
+    def work_version = "1.0.0-alpha02"
+
+    implementation "android.arch.work:work-runtime-ktx:$work_version" // use -ktx for Kotlin
+
+    // optional - Firebase JobDispatcher support
+    implementation "android.arch.work:work-firebase:$work_version"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
-    implementation 'com.google.android.material:material:1.0.0-alpha1'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0-alpha1'
+    implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
+    implementation 'com.android.support:design:28.0.0-alpha3'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support:support-v4:28.0.0-alpha3'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

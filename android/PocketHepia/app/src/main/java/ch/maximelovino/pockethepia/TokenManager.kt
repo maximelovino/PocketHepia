@@ -1,7 +1,6 @@
 package ch.maximelovino.pockethepia
 
 import android.content.Context
-import androidx.core.content.edit
 
 
 object TokenManager {
@@ -13,14 +12,10 @@ object TokenManager {
     }
 
     fun saveToken(context: Context, token: String) {
-        context.getSharedPreferences(PREF_STORE, Context.MODE_PRIVATE).edit {
-            putString(TOKEN_KEY, token)
-        }
+        context.getSharedPreferences(PREF_STORE, Context.MODE_PRIVATE).edit().putString(TOKEN_KEY, token).apply()
     }
 
     fun deleteToken(context: Context) {
-        context.getSharedPreferences(PREF_STORE, Context.MODE_PRIVATE).edit {
-            remove(TOKEN_KEY)
-        }
+        context.getSharedPreferences(PREF_STORE, Context.MODE_PRIVATE).edit().remove(TOKEN_KEY).apply()
     }
 }
