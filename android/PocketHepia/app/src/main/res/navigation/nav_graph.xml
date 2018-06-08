@@ -27,5 +27,19 @@
         android:id="@+id/adminFragment"
         android:name="ch.maximelovino.pockethepia.AdminFragment"
         android:label="fragment_admin"
-        tools:layout="@layout/fragment_admin" />
+        tools:layout="@layout/fragment_admin">
+        <action
+            android:id="@+id/adminToUserDetail"
+            app:destination="@id/userDetailFragment"
+            app:popUpTo="@+id/adminFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="ch.maximelovino.pockethepia.UserDetailFragment"
+        android:label="fragment_user_detail"
+        tools:layout="@layout/fragment_user_detail">
+        <argument
+            android:name="userID"
+            app:type="string" />
+    </fragment>
 </navigation>

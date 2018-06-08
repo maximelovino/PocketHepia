@@ -1,17 +1,22 @@
 package ch.maximelovino.pockethepia.data.adapters
 
 import android.content.Context
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import ch.maximelovino.pockethepia.AdminFragmentDirections
 import ch.maximelovino.pockethepia.R
+import ch.maximelovino.pockethepia.UserDetailFragmentArgs
 import ch.maximelovino.pockethepia.data.models.User
 
 
-class UserListAdapter(context: Context) : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
+class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
 
     var users: List<User> = listOf()
         set(value) {
@@ -87,6 +92,9 @@ class UserListAdapter(context: Context) : RecyclerView.Adapter<UserListAdapter.U
             val current: User = users[position]
             holder.nameText.text = current.name
             holder.emailText.text = current.email
+            holder.parentCard.setOnClickListener {
+                it.findNavController().navigate(AdminFragmentDirections.adminToUserDetail(current.id))
+            }
         } else {
             // Covers the case of data not being ready yet.
             holder.nameText.setText(R.string.no_user)
@@ -97,5 +105,6 @@ class UserListAdapter(context: Context) : RecyclerView.Adapter<UserListAdapter.U
     class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nameText: TextView = view.findViewById(R.id.user_name)
         val emailText: TextView = view.findViewById(R.id.user_email)
+        val parentCard: CardView = view.findViewById(R.id.user_item_card)
     }
 }

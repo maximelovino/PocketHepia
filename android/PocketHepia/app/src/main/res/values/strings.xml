@@ -23,4 +23,7 @@
     <string name="title_books">Books</string>
     <string name="title_admin">Admin</string>
     <string name="no_user">No User</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

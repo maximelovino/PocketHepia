@@ -3,6 +3,7 @@ package ch.maximelovino.pockethepia
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
+import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Build
@@ -21,6 +22,10 @@ import java.io.InputStreamReader
 import java.net.URL
 import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.support.v4.content.ContextCompat.getSystemService
+import android.view.inputmethod.InputMethodManager
+
 
 /**
  * A login screen that offers login via email/password.
@@ -56,6 +61,9 @@ class LoginActivity : AppCompatActivity() {
         if (mAuthTask != null) {
             return
         }
+
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(email.windowToken, 0)
 
         // Reset errors.
         email.error = null
