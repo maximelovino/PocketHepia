@@ -1,6 +1,8 @@
 package ch.maximelovino.pockethepia.data.adapters
 
 import android.content.Context
+import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -16,13 +18,58 @@ import ch.maximelovino.pockethepia.UserDetailFragmentArgs
 import ch.maximelovino.pockethepia.data.models.User
 
 
-class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
+class UserListAdapter(val context: Context) : ListAdapter<User, UserListAdapter.UserViewHolder>(object : DiffUtil.ItemCallback<User>() {
+    /**
+     * Called to check whether two objects represent the same item.
+     *
+     *
+     * For example, if your items have unique ids, this method should check their id equality.
+     *
+     *
+     * Note: `null` items in the list are assumed to be the same as another `null`
+     * item and are assumed to not be the same as a non-`null` item. This callback will
+     * not be invoked for either of those cases.
+     *
+     * @param oldItem The item in the old list.
+     * @param newItem The item in the new list.
+     * @return True if the two items represent the same object or false if they are different.
+     *
+     * @see Callback.areItemsTheSame
+     */
+    override fun areItemsTheSame(oldItem: User, newItem: User): Boolean = oldItem.id == newItem.id
 
-    var users: List<User> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    /**
+     * Called to check whether two items have the same data.
+     *
+     *
+     * This information is used to detect if the contents of an item have changed.
+     *
+     *
+     * This method to check equality instead of [Object.equals] so that you can
+     * change its behavior depending on your UI.
+     *
+     *
+     * For example, if you are using DiffUtil with a
+     * [RecyclerView.Adapter][android.support.v7.widget.RecyclerView.Adapter], you should
+     * return whether the items' visual representations are the same.
+     *
+     *
+     * This method is called only if [.areItemsTheSame] returns `true` for
+     * these items.
+     *
+     *
+     * Note: Two `null` items are assumed to represent the same contents. This callback
+     * will not be invoked for this case.
+     *
+     * @param oldItem The item in the old list.
+     * @param newItem The item in the new list.
+     * @return True if the contents of the items are the same or false if they are different.
+     *
+     * @see Callback.areContentsTheSame
+     */
+    override fun areContentsTheSame(oldItem: User, newItem: User): Boolean = oldItem == newItem
+
+}) {
 
     private val layoutInflater = LayoutInflater.from(context)
 
@@ -56,15 +103,6 @@ class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapt
     }
 
     /**
-     * Returns the total number of items in the data set held by the adapter.
-     *
-     * @return The total number of items in this adapter.
-     */
-    override fun getItemCount(): Int {
-        return users.size
-    }
-
-    /**
      * Called by RecyclerView to display the data at the specified position. This method should
      * update the contents of the [ViewHolder.itemView] to reflect the item at the given
      * position.
@@ -87,9 +125,8 @@ class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapt
      */
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         Log.v("SHOWING STUFF", position.toString())
-        Log.v("SHOWING STUFF", users.toString())
-        if (position < users.size) {
-            val current: User = users[position]
+        if (position < itemCount) {
+            val current: User = getItem(position)
             holder.nameText.text = current.name
             holder.emailText.text = current.email
             holder.parentCard.setOnClickListener {

@@ -124,6 +124,10 @@ class MainActivity : AppCompatActivity() {
         disableShiftMode(navigation)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.nav_host_fragment).navigateUp()
+    }
+
     inner class UserAdminCheckTask internal constructor(private val token: String) : AsyncTask<Void, Void, Boolean>() {
         /**
          * Override this method to perform a computation on a background thread. The

@@ -10,7 +10,7 @@ interface UserDao {
     fun getAll(): LiveData<List<User>>
 
     @Query("SELECT * FROM user WHERE id LIKE :id")
-    fun findById(id: String): LiveData<List<User>>
+    fun findById(id: String): LiveData<User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg users: User)
