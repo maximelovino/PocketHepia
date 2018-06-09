@@ -1,24 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserDetailFragment">
 
     <android.support.design.card.MaterialCardView
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="200dp"
-        app:cardElevation="5dp"
+        android:layout_margin="5dp"
         app:cardCornerRadius="5dp"
-        android:layout_margin="5dp">
+        app:cardElevation="5dp"
+        app:contentPadding="@dimen/activity_vertical_margin">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/user_detail_id" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/user_detail_name"
+                style="@style/TextAppearance.MaterialComponents.Headline4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Marco Lopes The Bitch" />
+
+            <TextView
+                android:id="@+id/user_detail_email"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="marco@bitcoin.com" />
+
+            <android.support.design.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/add_nfc_tag"
+                app:backgroundTint="@color/colorPrimary" />
+
+        </LinearLayout>
+
 
     </android.support.design.card.MaterialCardView>
 

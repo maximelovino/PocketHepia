@@ -39,7 +39,8 @@ class UserDetailFragment : Fragment() {
         Log.v("USER_ID", id)
 
 
-        val userDetailID: TextView = v.findViewById(R.id.user_detail_id)
+        val userDetailName: TextView = v.findViewById(R.id.user_detail_name)
+        val userDetailEmail: TextView = v.findViewById(R.id.user_detail_email)
 
 
         val userDao = AppDatabase.getInstance(context!!).userDao()
@@ -48,7 +49,9 @@ class UserDetailFragment : Fragment() {
         val user = userDao.findById(id)
 
         user.observe(this, Observer {
-            userDetailID.text = it?.name
+            Log.v("User detail", it.toString())
+            userDetailName.text = it?.name
+            userDetailEmail.text = it?.email
         })
 
         return v
