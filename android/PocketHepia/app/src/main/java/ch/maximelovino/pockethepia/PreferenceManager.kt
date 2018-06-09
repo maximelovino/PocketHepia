@@ -7,7 +7,8 @@ import android.content.Context
     only current user and store it in users table
     so then when showing balance we can take balance for the id stored in prefs
 */
-object TokenManager {
+// TODO why don't we put "isAdmin" here as well for the GUI
+object PreferenceManager {
     private const val TOKEN_KEY = "TOKEN"
     private const val PREF_STORE = "POCKETHEPIA"
 

@@ -1,21 +1,21 @@
 package ch.maximelovino.pockethepia
 
 import android.annotation.SuppressLint
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.internal.BottomNavigationItemView
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import ch.maximelovino.pockethepia.data.models.UserRepository
 import ch.maximelovino.pockethepia.workers.RetrieveUsersWorker
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val token = TokenManager.retrieveToken(this)
+        val token = PreferenceManager.retrieveToken(this)
 
         if (token == null) {
             startActivity(Intent(this, LoginActivity::class.java))
@@ -47,7 +47,28 @@ class MainActivity : AppCompatActivity() {
         val repo = UserRepository(this.application)
 
         swipe_refresh.setOnRefreshListener {
-            RetrieveUsersWorker(token, repo).execute()
+            val request = OneTimeWorkRequest.Builder(RetrieveUsersWorker::class.java).addTag("SYNC").build()
+            val workManager = WorkManager.getInstance()
+            workManager.enqueue(request)
+            val status = workManager.getStatusesByTag("SYNC")
+
+
+            status.observe(this, Observer {
+                // If there are no matching work statuses, do nothing
+                if (it == null || it.isEmpty()) {
+                    return@Observer
+                }
+
+                // We only care about the one output status.
+                // Every continuation has only one worker tagged TAG_OUTPUT
+                val workStatus = it[0]
+
+                val finished = workStatus.state.isFinished
+
+                if (finished) {
+                    swipe_refresh.isRefreshing = false
+                }
+            })
         }
         val navController = findNavController(R.id.nav_host_fragment)
         navigation.setupWithNavController(navController)
@@ -67,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
         if (id == R.id.logout_menu_item) {
             //TODO here we should also delete all data and disable the sync task
-            TokenManager.deleteToken(this)
+            PreferenceManager.deleteToken(this)
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
@@ -123,7 +144,7 @@ class MainActivity : AppCompatActivity() {
          */
         override fun doInBackground(vararg params: Void?): Boolean {
             try {
-                val url = URL(CURRENT_USER_URL)
+                val url = URL(Constants.CURRENT_USER_URL)
                 val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "GET"
                 connection.setRequestProperty("Authorization", "Bearer $token")
@@ -147,9 +168,5 @@ class MainActivity : AppCompatActivity() {
                 addAdminMenu()
             }
         }
-    }
-
-    companion object {
-        private const val CURRENT_USER_URL = "${Constants.BACKEND_ROOT_URL}users/current"
     }
 }

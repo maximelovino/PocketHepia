@@ -31,7 +31,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_adminFragment_to_userDetailFragment">
+                            <entry key="adminToUserDetail">
                               <value>
                                 <LayoutPositions />
                               </value>

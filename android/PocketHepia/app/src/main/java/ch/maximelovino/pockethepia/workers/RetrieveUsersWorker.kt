@@ -1,26 +1,53 @@
 package ch.maximelovino.pockethepia.workers
 
-import android.content.Context
-import android.os.AsyncTask
 import android.util.Log
+import androidx.work.Worker
 import ch.maximelovino.pockethepia.Constants
-import ch.maximelovino.pockethepia.MainActivity
+import ch.maximelovino.pockethepia.PreferenceManager
 import ch.maximelovino.pockethepia.data.AppDatabase
 import ch.maximelovino.pockethepia.data.models.User
-import ch.maximelovino.pockethepia.data.models.UserRepository
 import org.json.JSONArray
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
 
-//TODO context is temporary here, should disappear
-class RetrieveUsersWorker(val token: String, val repo: UserRepository) : AsyncTask<Void, Void, List<User>>() {
-    override fun doInBackground(vararg p0: Void?): List<User> {
+class RetrieveUsersWorker : Worker() {
+    /**
+     * Override this method to do your actual background processing.
+     *
+     * @return The result of the work, corresponding to a [WorkerResult] value.  If a
+     * different value is returned, the result shall be defaulted to
+     * [Worker.WorkerResult.FAILURE].
+     */
+    override fun doWork(): WorkerResult {
+        val context = applicationContext
+
+        val token = PreferenceManager.retrieveToken(context) ?: return WorkerResult.FAILURE
+
+        val currentUser = getCurrentUser(token) ?: return WorkerResult.FAILURE
+
+        val userDao = AppDatabase.getInstance(context).userDao()
+
+        val users = if (currentUser.isAdmin) {
+            retrieveUsers(token)
+        } else {
+            listOf(currentUser)
+        }
+
+        userDao.nuke()
+        userDao.insert(*users.toTypedArray())
+
+        return WorkerResult.SUCCESS
+    }
+
+    private fun retrieveUsers(token: String): List<User> {
         val users = mutableListOf<User>()
+
         try {
-            val url = URL(GET_ALL_USERS_ROUTE)
+            val url = URL(Constants.GET_ALL_USERS_ROUTE)
             val connection = url.openConnection() as HttpsURLConnection
             connection.requestMethod = "GET"
             connection.setRequestProperty("Authorization", "Bearer $token")
@@ -35,24 +62,36 @@ class RetrieveUsersWorker(val token: String, val repo: UserRepository) : AsyncTa
                     val user = User.fromJson(arrayJson.getJSONObject(it))
                     users.add(user)
                 }
-                //TODO iterate over each user and parse them and put them in list, pass list to onpostexecute and insert, or insert here
             }
         } catch (e: Exception) {
-            Log.e("USERS_WORKER", "There was an error ${e.message}")
+            Log.e(LOG_TAG, "Couldn't get list of users because: ${e.message}")
         }
-        return users
+
+        return users.toList()
     }
 
-    override fun onPostExecute(result: List<User>?) {
-        super.onPostExecute(result)
 
-        Log.v("USERS_WORKER", result.toString())
-        result?.forEach {
-            repo.insert(it)
+    private fun getCurrentUser(token: String): User? {
+        try {
+            val url = URL(Constants.CURRENT_USER_URL)
+            val connection = url.openConnection() as HttpsURLConnection
+            connection.requestMethod = "GET"
+            connection.setRequestProperty("Authorization", "Bearer $token")
+
+            val statusCode = connection.responseCode
+            if (statusCode == 200) {
+                val inStream = BufferedReader(InputStreamReader(connection.inputStream))
+                val content = inStream.readText()
+                val jsonContent = JSONObject(content)
+                return User.fromJson(jsonContent)
+            }
+        } catch (e: Exception) {
+            Log.e(LOG_TAG, "Couldn't get current user because: ${e.message}")
         }
+        return null
     }
 
     companion object {
-        const val GET_ALL_USERS_ROUTE = "${Constants.BACKEND_ROOT_URL}users/all"
+        const val LOG_TAG = "UsersWorker"
     }
 }

@@ -22,8 +22,6 @@ import java.io.InputStreamReader
 import java.net.URL
 import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
-import android.content.Context.INPUT_METHOD_SERVICE
-import android.support.v4.content.ContextCompat.getSystemService
 import android.view.inputmethod.InputMethodManager
 
 
@@ -117,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun loginCorrect(token: String) {
         //TODO here we should enable the sync task perhaps?
-        TokenManager.saveToken(this, token)
+        PreferenceManager.saveToken(this, token)
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
