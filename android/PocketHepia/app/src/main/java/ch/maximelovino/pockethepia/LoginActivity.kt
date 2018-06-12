@@ -166,8 +166,6 @@ class LoginActivity : AppCompatActivity() {
 
         override fun doInBackground(vararg params: Void): String? {
             try {
-
-
                 val url = URL(AUTH_URL)
                 val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "POST"

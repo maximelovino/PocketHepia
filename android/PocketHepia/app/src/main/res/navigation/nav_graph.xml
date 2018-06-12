@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@+id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
         android:name="ch.maximelovino.pockethepia.HomeFragment"
@@ -41,5 +41,17 @@
         <argument
             android:name="userID"
             app:type="string" />
+        <action
+            android:id="@+id/userDetailToNFC"
+            app:destination="@id/nfcAssignmentActivity" />
     </fragment>
+    <activity
+        android:id="@+id/nfcAssignmentActivity"
+        android:name="ch.maximelovino.pockethepia.NfcAssignmentActivity"
+        android:label="activity_nfc_assignment"
+        tools:layout="@layout/activity_nfc_assignment">
+        <argument
+            android:name="userID"
+            app:type="string" />
+    </activity>
 </navigation>

@@ -65,6 +65,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="nfcAssignmentActivity">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="782" />
+                            <option name="y" value="-131" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="transactionsFragment">
                     <value>
                       <LayoutPositions>

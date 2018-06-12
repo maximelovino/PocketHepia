@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.support.design.internal.BottomNavigationItemView
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -17,6 +17,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import ch.maximelovino.pockethepia.data.models.UserRepository
+import ch.maximelovino.pockethepia.utils.ForegroundDispatchedActivity
 import ch.maximelovino.pockethepia.workers.RetrieveUsersWorker
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
@@ -26,11 +27,12 @@ import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ForegroundDispatchedActivity() {
     private var token: String? = null
+    private val workManager: WorkManager = WorkManager.getInstance()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreate(savedState: Bundle?) {
+        super.onCreate(savedState)
         setContentView(R.layout.activity_main)
 
         val token = PreferenceManager.retrieveToken(this)
@@ -46,32 +48,43 @@ class MainActivity : AppCompatActivity() {
 
         val repo = UserRepository(this.application)
 
+        val status = workManager.getStatusesByTag("SYNC")
+
+        status.observe(this, Observer {
+            // If there are no matching work statuses, do nothing
+            Log.v("STATUS", "Change of status, ${it.toString()}")
+            if (it == null || it.isEmpty()) {
+                return@Observer
+            }
+
+            // We only care about the one output status.
+            // Every continuation has only one worker tagged TAG_OUTPUT
+            val workStatus = it[0]
+
+            val finished = workStatus.state.isFinished
+
+            if (finished)
+                swipe_refresh.isRefreshing = false
+        })
+
+
         swipe_refresh.setOnRefreshListener {
-            val request = OneTimeWorkRequest.Builder(RetrieveUsersWorker::class.java).addTag("SYNC").build()
-            val workManager = WorkManager.getInstance()
-            workManager.enqueue(request)
-            val status = workManager.getStatusesByTag("SYNC")
-
-
-            status.observe(this, Observer {
-                // If there are no matching work statuses, do nothing
-                if (it == null || it.isEmpty()) {
-                    return@Observer
-                }
-
-                // We only care about the one output status.
-                // Every continuation has only one worker tagged TAG_OUTPUT
-                val workStatus = it[0]
-
-                val finished = workStatus.state.isFinished
-
-                if (finished) {
-                    swipe_refresh.isRefreshing = false
-                }
-            })
+            launchSync()
         }
         val navController = findNavController(R.id.nav_host_fragment)
         navigation.setupWithNavController(navController)
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        launchSync()
+    }
+
+    private fun launchSync() {
+        swipe_refresh.isRefreshing = true
+        val request = OneTimeWorkRequest.Builder(RetrieveUsersWorker::class.java).addTag("SYNC").build()
+        this.workManager.enqueue(request)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
