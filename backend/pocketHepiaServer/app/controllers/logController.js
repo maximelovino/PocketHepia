@@ -134,3 +134,14 @@ exports.undoImport = (req, res) => {
 	entry.save();
 	res.status(200).end();
 }
+
+exports.assignTag = (req, res) => {
+	const entry = new Log({
+		category: categories.ADMIN_ASSIGN_TAG,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} has assigned tag to ${req.affectedUser.name}`,
+		rawData: { affectedUser: req.affectedUser },
+	});
+	entry.save();
+	res.status(200).end();
+}

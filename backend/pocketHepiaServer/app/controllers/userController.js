@@ -156,3 +156,40 @@ exports.undoImport = async (req, res, next) => {
 
 	next();
 }
+
+exports.assignTag = async (req, res, next) => {
+	// TODO we should think about how to remove a tag for someone, certainly through android app
+	if (!req.body.tagID || !req.body.userID) {
+		res.sendStatus(400);
+		return;
+	}
+
+	try {
+		//TODO problem is here in this query, use findOne()
+		const alreadyAssigned = await User.find({ cardId: req.body.tagID })
+
+
+		if (alreadyAssigned) {
+			res.status(500)
+			res.send(`Tag already assigned to ${alreadyAssigned.name}`)
+			return;
+		}
+
+		const oldUser = await User.findByIdAndUpdate(req.body.userID, { cardId: req.body.tagID })
+
+		if (!oldUser) {
+			res.sendStatus(500);
+			return;
+		}
+		const newUser = await User.findById(req.body.userID);
+
+		if (!newUser) {
+			res.sendStatus(500);
+			return;
+		}
+		req.affectedUser = newUser
+		next()
+	} catch (e) {
+		res.sendStatus(500);
+	}
+}

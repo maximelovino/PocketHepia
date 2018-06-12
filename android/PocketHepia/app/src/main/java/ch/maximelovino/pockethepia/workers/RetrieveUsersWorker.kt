@@ -37,6 +37,7 @@ class RetrieveUsersWorker : Worker() {
             listOf(currentUser)
         }
 
+        PreferenceManager.saveUserID(applicationContext,currentUser.id)
         userDao.nuke()
         userDao.insert(*users.toTypedArray())
 

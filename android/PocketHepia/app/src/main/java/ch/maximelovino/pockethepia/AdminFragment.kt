@@ -25,6 +25,7 @@ import ch.maximelovino.pockethepia.data.models.UserViewModel
  *
  */
 class AdminFragment : Fragment() {
+    // TODO we should have a search through the list here
     private lateinit var usersViewModel: UserViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

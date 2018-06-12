@@ -4,6 +4,7 @@ module.exports = {
 	USER_DELETED: "User Deleted",
 	ADMIN_IMPORT_USERS: "Admin Imports Users",
 	ADMIN_UNDO_IMPORT: "Admin Cancels Import",
+	ADMIN_ASSIGN_TAG: "Admin Assigned NFC Tag",
 	ADMIN_CHANGE_PASSWORD: "Admin Password Change",
 	ADMIN_CHANGE_PERMISSION: "Admin Permissions Change",
 	ADMIN_CREATES_AREA: "Admin Creates Area",

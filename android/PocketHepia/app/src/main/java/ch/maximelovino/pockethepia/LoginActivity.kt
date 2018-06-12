@@ -184,8 +184,9 @@ class LoginActivity : AppCompatActivity() {
                     val inStream = BufferedReader(InputStreamReader(connection.inputStream))
                     val content = inStream.readText()
                     val jsonContent = JSONObject(content)
-                    val token = jsonContent.getString("token")
-                    return token
+                    val id = jsonContent.getJSONObject("user").getString("id")
+                    PreferenceManager.saveUserID(applicationContext,id)
+                    return jsonContent.getString("token")
                 }
             } catch (e: Exception) {
                 Log.e("LOGIN_ERROR", e.message);

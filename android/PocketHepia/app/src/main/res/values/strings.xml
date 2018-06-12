@@ -26,6 +26,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="add_nfc_tag">Add NFC Tag</string>
+    <string name="add_nfc_tag">Assign NFC Card</string>
     <string name="tap_tag_to_assign">Tap a tag to assign it</string>
+    <string name="no_card_assigned">No card assigned</string>
+    <string name="card_assigned">Card assigned</string>
+    <string name="problem_card_assign">There was a problem assigning the card</string>
 </resources>

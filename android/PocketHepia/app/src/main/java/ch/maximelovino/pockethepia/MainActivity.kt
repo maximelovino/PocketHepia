@@ -16,6 +16,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
+import ch.maximelovino.pockethepia.data.AppDatabase
 import ch.maximelovino.pockethepia.data.models.UserRepository
 import ch.maximelovino.pockethepia.utils.ForegroundDispatchedActivity
 import ch.maximelovino.pockethepia.workers.RetrieveUsersWorker
@@ -30,23 +31,22 @@ import javax.net.ssl.HttpsURLConnection
 class MainActivity : ForegroundDispatchedActivity() {
     private var token: String? = null
     private val workManager: WorkManager = WorkManager.getInstance()
+    private var adminShown = false
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
         setContentView(R.layout.activity_main)
 
         val token = PreferenceManager.retrieveToken(this)
+        val currentID = PreferenceManager.retrieveUserID(this)
 
-        if (token == null) {
+        if (token == null || currentID == null) {
             startActivity(Intent(this, LoginActivity::class.java))
             this.finish()
             return
         }
 
         disableShiftMode(navigation)
-        UserAdminCheckTask(token).execute()
-
-        val repo = UserRepository(this.application)
 
         val status = workManager.getStatusesByTag("SYNC")
 
@@ -73,6 +73,14 @@ class MainActivity : ForegroundDispatchedActivity() {
         }
         val navController = findNavController(R.id.nav_host_fragment)
         navigation.setupWithNavController(navController)
+
+        val currentUser = AppDatabase.getInstance(this).userDao().findById(currentID)
+
+        currentUser.observe(this, Observer {
+            if(it != null && it.isAdmin.xor(adminShown)) {
+                toggleAdminMenu()
+            }
+        })
     }
 
 
@@ -101,7 +109,10 @@ class MainActivity : ForegroundDispatchedActivity() {
 
         if (id == R.id.logout_menu_item) {
             //TODO here we should also delete all data and disable the sync task
-            PreferenceManager.deleteToken(this)
+
+            //TODO problem is this should be done on other thread
+            //AppDatabase.getInstance(this).clearAllTables()
+            PreferenceManager.deleteAll(this)
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
@@ -132,8 +143,13 @@ class MainActivity : ForegroundDispatchedActivity() {
         }
     }
 
-    fun addAdminMenu() {
-        navigation.menu.add(Menu.NONE, R.id.adminFragment, Menu.NONE, R.string.title_admin).setIcon(R.drawable.admin)
+    private fun toggleAdminMenu() {
+        if(adminShown){
+            navigation.menu.removeItem(R.id.adminFragment)
+        }else{
+            navigation.menu.add(Menu.NONE, R.id.adminFragment, Menu.NONE, R.string.title_admin).setIcon(R.drawable.admin)
+        }
+        adminShown = !adminShown
         disableShiftMode(navigation)
     }
 
@@ -182,7 +198,7 @@ class MainActivity : ForegroundDispatchedActivity() {
 
         override fun onPostExecute(isAdmin: Boolean) {
             if (isAdmin) {
-                addAdminMenu()
+                toggleAdminMenu()
             }
         }
     }

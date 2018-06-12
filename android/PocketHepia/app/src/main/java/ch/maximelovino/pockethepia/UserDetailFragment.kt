@@ -47,6 +47,7 @@ class UserDetailFragment : Fragment() {
 
         val userDetailName: TextView = v.findViewById(R.id.user_detail_name)
         val userDetailEmail: TextView = v.findViewById(R.id.user_detail_email)
+        val userDetailCardID: TextView = v.findViewById(R.id.user_detail_cardid)
 
         val addNFCButton: MaterialButton = v.findViewById(R.id.add_nfc_button)
 
@@ -61,6 +62,7 @@ class UserDetailFragment : Fragment() {
             Log.v("User detail", it.toString())
             userDetailName.text = it?.name
             userDetailEmail.text = it?.email
+            userDetailCardID.text = if (it?.cardId == null) getString(R.string.no_card_assigned) else "Card# ${it.cardId}"
         })
 
 

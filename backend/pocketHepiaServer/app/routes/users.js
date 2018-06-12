@@ -19,4 +19,6 @@ router.put("/changePermissions/:id", passport.authenticate('jwt'), authControlle
 router.post("/import", passport.authenticate('jwt'), authController.checkAdmin, upload.single('csvFile'), csv.parseUsers, userController.import, logController.importUsers)
 router.delete("/undo/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.undoImport, logController.undoImport)
 
+router.put("/assign", passport.authenticate('jwt'), authController.checkAdmin, userController.assignTag, logController.assignTag)
+
 module.exports = router;

@@ -33,6 +33,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="marco@bitcoin.com" />
+            <TextView
+                android:id="@+id/user_detail_cardid"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Tag# BOOBCAFE" />
 
             <android.support.design.button.MaterialButton
                 style="@style/Widget.MaterialComponents.Button"
