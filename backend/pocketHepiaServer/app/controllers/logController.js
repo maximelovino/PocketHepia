@@ -145,3 +145,14 @@ exports.assignTag = (req, res) => {
 	entry.save();
 	res.status(200).end();
 }
+
+exports.removeTag = (req, res) => {
+	const entry = new Log({
+		category: categories.ADMIN_REMOVED_TAG,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} has removed tag of ${req.affectedUser.name}`,
+		rawData: { affectedUser: req.affectedUser },
+	});
+	entry.save();
+	res.status(200).end();
+}

@@ -46,6 +46,15 @@
                 android:layout_height="match_parent"
                 android:id="@+id/add_nfc_button"
                 android:text="@string/add_nfc_tag"
+                app:backgroundTint="@color/colorAccent" />
+
+            <android.support.design.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/remove_nfc_button"
+                android:visibility="gone"
+                android:text="@string/remove_nfc_card"
                 app:backgroundTint="@color/colorPrimary" />
 
         </LinearLayout>

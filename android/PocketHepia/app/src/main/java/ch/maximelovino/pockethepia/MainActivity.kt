@@ -3,12 +3,10 @@ package ch.maximelovino.pockethepia
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.internal.BottomNavigationItemView
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -17,15 +15,9 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import ch.maximelovino.pockethepia.data.AppDatabase
-import ch.maximelovino.pockethepia.data.models.UserRepository
 import ch.maximelovino.pockethepia.utils.ForegroundDispatchedActivity
 import ch.maximelovino.pockethepia.workers.RetrieveUsersWorker
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.URL
-import javax.net.ssl.HttpsURLConnection
 
 
 class MainActivity : ForegroundDispatchedActivity() {
@@ -77,7 +69,7 @@ class MainActivity : ForegroundDispatchedActivity() {
         val currentUser = AppDatabase.getInstance(this).userDao().findById(currentID)
 
         currentUser.observe(this, Observer {
-            if(it != null && it.isAdmin.xor(adminShown)) {
+            if (it != null && it.isAdmin.xor(adminShown)) {
                 toggleAdminMenu()
             }
         })
@@ -89,7 +81,7 @@ class MainActivity : ForegroundDispatchedActivity() {
         launchSync()
     }
 
-    private fun launchSync() {
+    fun launchSync() {
         swipe_refresh.isRefreshing = true
         val request = OneTimeWorkRequest.Builder(RetrieveUsersWorker::class.java).addTag("SYNC").build()
         this.workManager.enqueue(request)
@@ -144,9 +136,9 @@ class MainActivity : ForegroundDispatchedActivity() {
     }
 
     private fun toggleAdminMenu() {
-        if(adminShown){
+        if (adminShown) {
             navigation.menu.removeItem(R.id.adminFragment)
-        }else{
+        } else {
             navigation.menu.add(Menu.NONE, R.id.adminFragment, Menu.NONE, R.string.title_admin).setIcon(R.drawable.admin)
         }
         adminShown = !adminShown
@@ -155,51 +147,5 @@ class MainActivity : ForegroundDispatchedActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.nav_host_fragment).navigateUp()
-    }
-
-    inner class UserAdminCheckTask internal constructor(private val token: String) : AsyncTask<Void, Void, Boolean>() {
-        /**
-         * Override this method to perform a computation on a background thread. The
-         * specified parameters are the parameters passed to [.execute]
-         * by the caller of this task.
-         *
-         * This method can call [.publishProgress] to publish updates
-         * on the UI thread.
-         *
-         * @param params The parameters of the task.
-         *
-         * @return A result, defined by the subclass of this task.
-         *
-         * @see .onPreExecute
-         * @see .onPostExecute
-         *
-         * @see .publishProgress
-         */
-        override fun doInBackground(vararg params: Void?): Boolean {
-            try {
-                val url = URL(Constants.CURRENT_USER_URL)
-                val connection = url.openConnection() as HttpsURLConnection
-                connection.requestMethod = "GET"
-                connection.setRequestProperty("Authorization", "Bearer $token")
-
-                val statusCode = connection.responseCode
-                if (statusCode == 200) {
-                    val inStream = BufferedReader(InputStreamReader(connection.inputStream))
-                    val content = inStream.readText()
-                    val jsonContent = JSONObject(content)
-                    //TODO parse all user here
-                    return jsonContent.getBoolean("isAdmin")
-                }
-            } catch (e: Exception) {
-                Log.e("ADMIN CHECK", e.message)
-            }
-            return false
-        }
-
-        override fun onPostExecute(isAdmin: Boolean) {
-            if (isAdmin) {
-                toggleAdminMenu()
-            }
-        }
     }
 }

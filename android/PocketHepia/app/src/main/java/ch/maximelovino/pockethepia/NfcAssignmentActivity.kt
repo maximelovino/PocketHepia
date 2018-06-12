@@ -82,11 +82,12 @@ class NfcAssignmentActivity : ForegroundDispatchedActivity() {
                 DataOutputStream(connection.outputStream).use({ wr -> wr.write(postData) })
 
                 val statusCode = connection.responseCode
-                val inStream = BufferedReader(InputStreamReader(connection.inputStream))
-                response = inStream.readText()
+
                 if (statusCode == 200) {
                     return true
                 } else {
+                    val inStream = BufferedReader(InputStreamReader(connection.errorStream))
+                    response = inStream.readText()
                     Log.e("STATUS CODE", statusCode.toString())
                 }
             } catch (e: Exception) {

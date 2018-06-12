@@ -2,6 +2,7 @@ package ch.maximelovino.pockethepia
 
 
 import android.arch.lifecycle.Observer
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.button.MaterialButton
 import android.support.v4.app.Fragment
@@ -11,13 +12,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import androidx.navigation.NavDirections
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import ch.maximelovino.pockethepia.data.AppDatabase
-import ch.maximelovino.pockethepia.data.models.UserRepository
-import kotlinx.android.synthetic.main.fragment_user_detail.*
+import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 
 /**
@@ -50,7 +50,7 @@ class UserDetailFragment : Fragment() {
         val userDetailCardID: TextView = v.findViewById(R.id.user_detail_cardid)
 
         val addNFCButton: MaterialButton = v.findViewById(R.id.add_nfc_button)
-
+        val removeNFCButton: MaterialButton = v.findViewById(R.id.remove_nfc_button)
 
 
         val userDao = AppDatabase.getInstance(context!!).userDao()
@@ -60,25 +60,71 @@ class UserDetailFragment : Fragment() {
 
         user.observe(this, Observer {
             Log.v("User detail", it.toString())
-            userDetailName.text = it?.name
-            userDetailEmail.text = it?.email
-            userDetailCardID.text = if (it?.cardId == null) getString(R.string.no_card_assigned) else "Card# ${it.cardId}"
+            if (it != null) {
+                userDetailName.text = it.name
+                userDetailEmail.text = it.email
+                userDetailCardID.text = if (it.cardId == null) getString(R.string.no_card_assigned) else "Card# ${it.cardId}"
+                removeNFCButton.visibility = if (it.cardId != null) View.VISIBLE else View.GONE
+            }
         })
 
 
         addNFCButton.setOnClickListener {
-            Log.v("CLICK", "We clicked")
             val value = user.value
             if (value != null)
                 findNavController().navigate(UserDetailFragmentDirections.userDetailToNFC(value.id))
+        }
+
+        removeNFCButton.setOnClickListener {
+            val token = PreferenceManager.retrieveToken(activity!!)
+            if (token != null)
+                DeleteTagTask(token, id).execute()
         }
 
 
         return v
     }
 
+    fun postTagDelete(success: Boolean) {
+        val activity: MainActivity = activity!! as MainActivity
+        val message = if (success) {
+            getString(R.string.card_delete_ok)
+        } else {
+            getString(R.string.problem_deleting_card)
+        }
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+        activity.launchSync()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    }
+
+    inner class DeleteTagTask(val token: String, val userID: String) : AsyncTask<Void, Void, Boolean>() {
+        override fun doInBackground(vararg p0: Void?): Boolean {
+            try {
+                val url = URL("${Constants.NFC_DELETE_ROUTE}/$userID")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "DELETE"
+                connection.setRequestProperty("Authorization", "Bearer $token")
+
+                val statusCode = connection.responseCode
+
+                if (statusCode == 200) {
+                    return true
+                } else {
+                    Log.e("STATUS CODE", statusCode.toString())
+                }
+            } catch (e: Exception) {
+                Log.e("NFC_DELETE", e.message)
+            }
+            return false
+        }
+
+        override fun onPostExecute(result: Boolean?) {
+            if (result != null)
+                postTagDelete(result)
+        }
     }
 }

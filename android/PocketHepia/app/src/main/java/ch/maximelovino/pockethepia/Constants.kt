@@ -8,4 +8,5 @@ object Constants {
     const val GET_ALL_USERS_ROUTE = "${BACKEND_ROOT_URL}users/all"
 
     const val NFC_ASSIGNMENT_ROUTE = "${BACKEND_ROOT_URL}users/assign"
+    const val NFC_DELETE_ROUTE = "${BACKEND_ROOT_URL}users/removeTag"
 }

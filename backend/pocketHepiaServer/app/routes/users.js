@@ -21,4 +21,6 @@ router.delete("/undo/:id", passport.authenticate('jwt'), authController.checkAdm
 
 router.put("/assign", passport.authenticate('jwt'), authController.checkAdmin, userController.assignTag, logController.assignTag)
 
+router.delete("/removeTag/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.removeTag, logController.removeTag)
+
 module.exports = router;

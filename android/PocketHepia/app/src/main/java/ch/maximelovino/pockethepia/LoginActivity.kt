@@ -13,6 +13,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
@@ -22,7 +23,6 @@ import java.io.InputStreamReader
 import java.net.URL
 import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
-import android.view.inputmethod.InputMethodManager
 
 
 /**
@@ -185,7 +185,7 @@ class LoginActivity : AppCompatActivity() {
                     val content = inStream.readText()
                     val jsonContent = JSONObject(content)
                     val id = jsonContent.getJSONObject("user").getString("id")
-                    PreferenceManager.saveUserID(applicationContext,id)
+                    PreferenceManager.saveUserID(applicationContext, id)
                     return jsonContent.getString("token")
                 }
             } catch (e: Exception) {
