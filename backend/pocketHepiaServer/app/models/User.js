@@ -26,10 +26,10 @@ const UserSchema = new Schema({
 		type: String,
 		required: false
 	},
-	// TODO should we put min 0 here
 	balance: {
 		type: Number,
 		required: true,
+		min: [0, 'No negative balance'],
 		default: 0
 	},
 	isLibrarian: {

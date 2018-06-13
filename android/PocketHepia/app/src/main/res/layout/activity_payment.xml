@@ -53,17 +53,16 @@
             android:orientation="horizontal"
             android:paddingTop="@dimen/activity_vertical_margin">
 
-            <Switch
-                android:id="@+id/sending_money_switch"
+            <CheckBox
+                android:id="@+id/receiving_money"
                 style="@style/TextAppearance.MaterialComponents.Body2"
+                android:buttonTint="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="@string/sending_money"
+                android:text="@string/receiving_money"
                 android:switchPadding="2dp"
-                android:textOn="@string/sending_money"
-                android:textOff="@string/receiving_money"
-                android:thumbTint="@color/colorPrimary" />
+                android:enabled="false" />
 
             <android.support.design.button.MaterialButton
                 style="@style/Widget.MaterialComponents.Button"
