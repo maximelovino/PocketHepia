@@ -2,9 +2,11 @@ package ch.maximelovino.pockethepia
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import ch.maximelovino.pockethepia.utils.BaseFragment
 
 /**
  * A simple [Fragment] subclass.
@@ -15,11 +17,21 @@ import android.view.ViewGroup
  * create an instance of this fragment.
  *
  */
-class BooksFragment : Fragment() {
+class BooksFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_books, container, false)
+        val v = inflater.inflate(R.layout.fragment_books, container, false)
+        handleFabDisplay()
+        return v
+    }
+
+    override fun handleFabDisplay() {
+        val fab = (activity!! as MainActivity).fab
+        fab.visibility = View.VISIBLE
+        fab.setOnClickListener {
+            Log.v("BOOKS", "Clicked on books FAB")
+        }
     }
 }

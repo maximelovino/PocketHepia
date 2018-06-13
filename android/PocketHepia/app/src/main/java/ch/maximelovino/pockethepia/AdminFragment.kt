@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import ch.maximelovino.pockethepia.data.adapters.UserListAdapter
 import ch.maximelovino.pockethepia.data.models.UserViewModel
+import ch.maximelovino.pockethepia.utils.BaseFragment
 
 
 /**
@@ -23,9 +24,10 @@ import ch.maximelovino.pockethepia.data.models.UserViewModel
  * create an instance of this fragment.
  *
  */
-class AdminFragment : Fragment() {
+class AdminFragment : BaseFragment() {
     // TODO we should have a search through the list here
     private lateinit var usersViewModel: UserViewModel
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -48,6 +50,7 @@ class AdminFragment : Fragment() {
                 viewAdapter.submitList(it)
         })
 
+        handleFabDisplay()
         return view
     }
 

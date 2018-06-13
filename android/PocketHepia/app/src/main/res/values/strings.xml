@@ -34,4 +34,9 @@
     <string name="remove_nfc_card">Remove NFC card</string>
     <string name="problem_deleting_card">There was a problem deleting the card</string>
     <string name="card_delete_ok">Card deleted successfully</string>
+    <string name="administrator">Administrator</string>
+    <string name="librarian">Librarian</string>
+    <string name="accepts_payments">Accepts payments</string>
+    <string name="auditor">Auditor</string>
+    <string name="can_invite">Can invite</string>
 </resources>

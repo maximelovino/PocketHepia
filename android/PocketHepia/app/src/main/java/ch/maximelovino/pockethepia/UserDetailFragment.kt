@@ -16,6 +16,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import ch.maximelovino.pockethepia.data.AppDatabase
+import ch.maximelovino.pockethepia.utils.BaseFragment
+import kotlinx.android.synthetic.main.fragment_user_detail.*
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
@@ -24,12 +26,11 @@ import javax.net.ssl.HttpsURLConnection
  * A simple [Fragment] subclass.
  *
  */
-class UserDetailFragment : Fragment() {
+class UserDetailFragment : BaseFragment() {
     private var dialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity()
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -65,6 +66,11 @@ class UserDetailFragment : Fragment() {
                 userDetailEmail.text = it.email
                 userDetailCardID.text = if (it.cardId == null) getString(R.string.no_card_assigned) else "Card# ${it.cardId}"
                 removeNFCButton.visibility = if (it.cardId != null) View.VISIBLE else View.GONE
+                user_detail_admin_icon.setImageResource(if (it.isAdmin) R.drawable.checkmark else R.drawable.xmark)
+                user_detail_payments_icon.setImageResource(if (it.acceptsPayments) R.drawable.checkmark else R.drawable.xmark)
+                user_detail_auditor_icon.setImageResource(if (it.isAuditor) R.drawable.checkmark else R.drawable.xmark)
+                user_detail_librarian_icon.setImageResource(if (it.isLibrarian) R.drawable.checkmark else R.drawable.xmark)
+                user_detail_invite_icon.setImageResource(if (it.canInvite) R.drawable.checkmark else R.drawable.xmark)
             }
         })
 
@@ -81,6 +87,7 @@ class UserDetailFragment : Fragment() {
                 DeleteTagTask(token, id).execute()
         }
 
+        handleFabDisplay()
 
         return v
     }

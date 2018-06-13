@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.design.internal.BottomNavigationItemView
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.FloatingActionButton
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -24,6 +25,7 @@ class MainActivity : ForegroundDispatchedActivity() {
     private var token: String? = null
     private val workManager: WorkManager = WorkManager.getInstance()
     private var adminShown = false
+    lateinit var fab: FloatingActionButton
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
@@ -37,6 +39,8 @@ class MainActivity : ForegroundDispatchedActivity() {
             this.finish()
             return
         }
+
+        fab = findViewById(R.id.floating_plus_button)
 
         disableShiftMode(navigation)
 
