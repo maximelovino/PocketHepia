@@ -35,6 +35,7 @@ class NfcAssignmentActivity : ForegroundDispatchedActivity() {
             if (it != null)
                 nfc_assignment_username.text = it.name
         })
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onSupportNavigateUp(): Boolean {

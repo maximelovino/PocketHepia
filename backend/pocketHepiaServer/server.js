@@ -29,6 +29,7 @@ mongoose.Promise = global.Promise;
 
 require('./app/models/User');
 require('./app/models/Log');
+require('./app/models/Transaction')
 
 app.use(morgan('dev'));
 app.use(bodyparser.urlencoded({ extended: true }));

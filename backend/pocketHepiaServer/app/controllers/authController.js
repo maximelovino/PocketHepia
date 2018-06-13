@@ -61,6 +61,13 @@ exports.checkAdmin = (req, res, next) => {
 	next();
 }
 
+exports.checkAcceptPayment = (req, res, next) => {
+	if (!req.user.acceptsPayments) {
+		res.sendStatus(403);
+		return;
+	}
+	next();
+}
 
 exports.initFirstAdmin = async (req, res) => {
 	const users = await User.count();

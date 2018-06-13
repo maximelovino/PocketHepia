@@ -39,4 +39,8 @@
     <string name="accepts_payments">Accepts payments</string>
     <string name="auditor">Auditor</string>
     <string name="can_invite">Can invite</string>
+    <string name="sending_money">Sending money</string>
+    <string name="complete_payment">Complete payment</string>
+    <string name="CHF_currency">CHF</string>
+    <string name="receiving_money">Receiving money</string>
 </resources>

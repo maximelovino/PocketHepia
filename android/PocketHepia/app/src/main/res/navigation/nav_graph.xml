@@ -12,7 +12,11 @@
         android:id="@+id/transactionsFragment"
         android:name="ch.maximelovino.pockethepia.TransactionsFragment"
         android:label="fragment_transactions"
-        tools:layout="@layout/fragment_transactions" />
+        tools:layout="@layout/fragment_transactions" >
+        <action
+            android:id="@+id/transactionsToPayment"
+            app:destination="@id/paymentActivity" />
+    </fragment>
     <fragment
         android:id="@+id/accessFragment"
         android:name="ch.maximelovino.pockethepia.AccessFragment"
@@ -50,6 +54,15 @@
         android:name="ch.maximelovino.pockethepia.NfcAssignmentActivity"
         android:label="activity_nfc_assignment"
         tools:layout="@layout/activity_nfc_assignment">
+        <argument
+            android:name="userID"
+            app:type="string" />
+    </activity>
+    <activity
+        android:id="@+id/paymentActivity"
+        android:name="ch.maximelovino.pockethepia.PaymentActivity"
+        android:label="activity_payment"
+        tools:layout="@layout/activity_payment" >
         <argument
             android:name="userID"
             app:type="string" />

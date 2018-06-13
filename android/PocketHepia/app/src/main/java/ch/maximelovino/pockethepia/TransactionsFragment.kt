@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import ch.maximelovino.pockethepia.data.AppDatabase
 import ch.maximelovino.pockethepia.utils.BaseFragment
 import kotlinx.android.synthetic.main.fragment_transactions.*
@@ -22,16 +23,20 @@ import kotlinx.android.synthetic.main.fragment_transactions.*
  *
  */
 class TransactionsFragment : BaseFragment() {
+    private lateinit var userID: String
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_transactions, container, false)
         handleFabDisplay()
 
-        val userID = PreferenceManager.retrieveUserID(activity!!) ?: return v
+        userID = PreferenceManager.retrieveUserID(activity!!) ?: return v
+
+        // TODO since all of these fragments need the DB and all need the current user at least,
+        // put a public db field in MainActivity and a public user livedata as well
+
         val db = AppDatabase.getInstance(activity!!)
         val users = db.userDao()
-
         val user = users.findById(userID)
 
         user.observe(this, Observer {
@@ -46,7 +51,9 @@ class TransactionsFragment : BaseFragment() {
         val fab = (activity!! as MainActivity).fab
         fab.visibility = View.VISIBLE
         fab.setOnClickListener {
-            Log.v("TRANSACTIONS", "Clicked on transactions FAB")
+            Log.v("TRANSACTION", "Clicked on transactions FAB")
+            val directions = TransactionsFragmentDirections.transactionsToPayment(userID)
+            findNavController().navigate(directions)
         }
     }
 }

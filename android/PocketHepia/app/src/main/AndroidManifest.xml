@@ -29,8 +29,8 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".NfcAssignmentActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".NfcAssignmentActivity" />
+        <activity android:name=".PaymentActivity"></activity>
     </application>
 
 </manifest>
