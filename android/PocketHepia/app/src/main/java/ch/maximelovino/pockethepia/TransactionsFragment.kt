@@ -1,12 +1,15 @@
 package ch.maximelovino.pockethepia
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import ch.maximelovino.pockethepia.data.AppDatabase
 import ch.maximelovino.pockethepia.utils.BaseFragment
+import kotlinx.android.synthetic.main.fragment_transactions.*
 
 
 /**
@@ -24,6 +27,18 @@ class TransactionsFragment : BaseFragment() {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_transactions, container, false)
         handleFabDisplay()
+
+        val userID = PreferenceManager.retrieveUserID(activity!!) ?: return v
+        val db = AppDatabase.getInstance(activity!!)
+        val users = db.userDao()
+
+        val user = users.findById(userID)
+
+        user.observe(this, Observer {
+            if (it != null) {
+                hero_balance.text = "${it.balance} CHF"
+            }
+        })
         return v
     }
 
