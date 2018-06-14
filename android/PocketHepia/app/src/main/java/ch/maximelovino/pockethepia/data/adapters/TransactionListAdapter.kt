@@ -1,43 +1,24 @@
 package ch.maximelovino.pockethepia.data.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
-import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import ch.maximelovino.pockethepia.AdminFragmentDirections
 import ch.maximelovino.pockethepia.R
-import ch.maximelovino.pockethepia.UserDetailFragmentArgs
+import ch.maximelovino.pockethepia.data.models.Transaction
 import ch.maximelovino.pockethepia.data.models.User
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class UserListAdapter(val context: Context) : ListAdapter<User, UserListAdapter.UserViewHolder>(object : DiffUtil.ItemCallback<User>() {
-    /**
-     * Called to check whether two objects represent the same item.
-     *
-     *
-     * For example, if your items have unique ids, this method should check their id equality.
-     *
-     *
-     * Note: `null` items in the list are assumed to be the same as another `null`
-     * item and are assumed to not be the same as a non-`null` item. This callback will
-     * not be invoked for either of those cases.
-     *
-     * @param oldItem The item in the old list.
-     * @param newItem The item in the new list.
-     * @return True if the two items represent the same object or false if they are different.
-     *
-     * @see Callback.areItemsTheSame
-     */
-    override fun areItemsTheSame(oldItem: User, newItem: User): Boolean = oldItem.id == newItem.id
-
+class TransactionListAdapter(val context: Context) : ListAdapter<Transaction, TransactionListAdapter.TransactionViewHolder>(object : DiffUtil.ItemCallback<Transaction>() {
     /**
      * Called to check whether two items have the same data.
      *
@@ -67,13 +48,33 @@ class UserListAdapter(val context: Context) : ListAdapter<User, UserListAdapter.
      *
      * @see Callback.areContentsTheSame
      */
-    override fun areContentsTheSame(oldItem: User, newItem: User): Boolean = oldItem == newItem
+    override fun areContentsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
+        return oldItem == newItem
+    }
 
+    /**
+     * Called to check whether two objects represent the same item.
+     *
+     *
+     * For example, if your items have unique ids, this method should check their id equality.
+     *
+     *
+     * Note: `null` items in the list are assumed to be the same as another `null`
+     * item and are assumed to not be the same as a non-`null` item. This callback will
+     * not be invoked for either of those cases.
+     *
+     * @param oldItem The item in the old list.
+     * @param newItem The item in the new list.
+     * @return True if the two items represent the same object or false if they are different.
+     *
+     * @see Callback.areItemsTheSame
+     */
+    override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
+        return oldItem.id == newItem.id
+    }
 }) {
-
     private val layoutInflater = LayoutInflater.from(context)
-
-
+    private val simpleDateFormat = SimpleDateFormat("dd/MM/yy HH:mm", Locale.ENGLISH)
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
      * an item.
@@ -97,9 +98,9 @@ class UserListAdapter(val context: Context) : ListAdapter<User, UserListAdapter.
      * @see .getItemViewType
      * @see .onBindViewHolder
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val itemView: View = layoutInflater.inflate(R.layout.user_list_item, parent, false)
-        return UserViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
+        val itemView: View = layoutInflater.inflate(R.layout.transaction_list_item, parent, false)
+        return TransactionViewHolder(itemView)
     }
 
     /**
@@ -123,24 +124,29 @@ class UserListAdapter(val context: Context) : ListAdapter<User, UserListAdapter.
      * item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
      */
-    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         if (position < itemCount) {
-            val current: User = getItem(position)
-            holder.nameText.text = current.name
-            holder.emailText.text = current.email
-            holder.parentCard.setOnClickListener {
-                it.findNavController().navigate(AdminFragmentDirections.adminToUserDetail(current.id))
-            }
+            val current: Transaction = getItem(position)
+            holder.titleText.text = current.title
+            //TODO Here we should change so we know which one is us and display the other => perhaps change in model
+            holder.personText.text = "${current.from.name} => ${current.to.name}"
+            holder.dateText.text = simpleDateFormat.format(current.date.time)
+            holder.amountText.text = current.amount.toString()
+            holder.amountText.setTextColor(if(current.amount < 0) context.resources.getColor(R.color.negativeAmount) else context.resources.getColor(R.color.positiveAmount))
         } else {
             // Covers the case of data not being ready yet.
-            holder.nameText.setText(R.string.no_user)
-            holder.emailText.text = ""
+            holder.titleText.setText(R.string.no_transaction)
+            holder.dateText.text = ""
+            holder.personText.text = ""
+            holder.amountText.text = ""
         }
     }
 
-    class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nameText: TextView = view.findViewById(R.id.user_name)
-        val emailText: TextView = view.findViewById(R.id.user_email)
-        val parentCard: CardView = view.findViewById(R.id.user_item_card)
+    class TransactionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val titleText: TextView = view.findViewById(R.id.transaction_name)
+        val dateText: TextView = view.findViewById(R.id.transaction_date)
+        val personText: TextView = view.findViewById(R.id.transaction_person)
+        val amountText: TextView = view.findViewById(R.id.transaction_amount)
     }
+
 }

@@ -3,4 +3,6 @@
     <color name="colorPrimary">#C62828</color>
     <color name="colorPrimaryDark">#B71C1C</color>
     <color name="colorAccent">#607D8B</color>
+    <color name="negativeAmount">#C62828</color>
+    <color name="positiveAmount">#00E676</color>
 </resources>

@@ -3,17 +3,24 @@ const Transaction = mongoose.model('Transaction');
 const User = mongoose.model('User');
 
 exports.my = async (req, res) => {
-	// TODO should we directly here change the sign of the transactions "from"? It's not much work
 	const transactions = await Transaction.find({
 		$or: [
 			{ from: req.user._id },
 			{ to: req.user._id }
 		]
 	}).sort({ date: 'desc' }).populate('to').populate('from')
-	const toSend = transactions.map(t => t.toObject())
+
+	// TODO Correct this, not working, test locally
+	const toSend = transactions.map(t => {
+		if (t.from._id == req.user._id) {
+			t.amount = t.amount * -1
+		}
+		return t.toObject()
+	});
 	res.json(toSend)
 }
 
+// TODO the problem here is that we don't expect the userID...but the serial of the card (or the temporary card)
 exports.pay = async (req, res) => {
 	if (!(req.body.title && req.body.toID && req.body.amount)) {
 		res.sendStatus(400)
@@ -42,9 +49,6 @@ exports.pay = async (req, res) => {
 		res.send("Amount should be positive")
 		return
 	}
-
-
-	//TODO The problem here is the validator doesn't run on update with $inc
 
 	try {
 		const current = await User.findById(req.user._id)
@@ -84,6 +88,7 @@ exports.pay = async (req, res) => {
 	res.sendStatus(200)
 }
 
+// TODO the problem here is that we don't expect the userID...but the serial of the card (or the temporary card)
 exports.getPaid = async (req, res) => {
 	if (!(req.body.title && req.body.fromID && req.body.amount)) {
 		res.sendStatus(400)

@@ -33,5 +33,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
+        android:id="@+id/transactions_recycler_view"
         tools:listitem="@layout/transaction_list_item" />
 </LinearLayout>

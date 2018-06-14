@@ -98,6 +98,15 @@
                             <option name="y" value="-253" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="transactionsToPayment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>

@@ -11,7 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ch.maximelovino.pockethepia.data.adapters.UserListAdapter
-import ch.maximelovino.pockethepia.data.models.UserViewModel
+import ch.maximelovino.pockethepia.data.viewmodels.UserViewModel
 import ch.maximelovino.pockethepia.utils.BaseFragment
 
 

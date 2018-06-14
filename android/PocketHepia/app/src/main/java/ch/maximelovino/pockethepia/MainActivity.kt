@@ -1,6 +1,7 @@
 package ch.maximelovino.pockethepia
 
 import android.annotation.SuppressLint
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
@@ -14,18 +15,26 @@ import android.view.MenuItem
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkContinuation
 import androidx.work.WorkManager
 import ch.maximelovino.pockethepia.data.AppDatabase
+import ch.maximelovino.pockethepia.data.models.User
 import ch.maximelovino.pockethepia.utils.ForegroundDispatchedActivity
-import ch.maximelovino.pockethepia.workers.RetrieveUsersWorker
+import ch.maximelovino.pockethepia.workers.TransactionsWorker
+import ch.maximelovino.pockethepia.workers.UsersWorker
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : ForegroundDispatchedActivity() {
-    private var token: String? = null
     private val workManager: WorkManager = WorkManager.getInstance()
     private var adminShown = false
     lateinit var fab: FloatingActionButton
+        private set
+    lateinit var db: AppDatabase
+        private set
+    lateinit var currentUser: LiveData<User>
+        private set
+
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
@@ -43,6 +52,16 @@ class MainActivity : ForegroundDispatchedActivity() {
         fab = findViewById(R.id.floating_plus_button)
 
         disableShiftMode(navigation)
+
+        db = AppDatabase.getInstance(this)
+
+        currentUser = db.userDao().findById(currentID)
+        currentUser.observe(this, Observer {
+            if (it != null && it.isAdmin.xor(adminShown)) {
+                toggleAdminMenu()
+            }
+        })
+
 
         val status = workManager.getStatusesByTag("SYNC")
 
@@ -69,14 +88,6 @@ class MainActivity : ForegroundDispatchedActivity() {
         }
         val navController = findNavController(R.id.nav_host_fragment)
         navigation.setupWithNavController(navController)
-
-        val currentUser = AppDatabase.getInstance(this).userDao().findById(currentID)
-
-        currentUser.observe(this, Observer {
-            if (it != null && it.isAdmin.xor(adminShown)) {
-                toggleAdminMenu()
-            }
-        })
     }
 
 
@@ -87,8 +98,10 @@ class MainActivity : ForegroundDispatchedActivity() {
 
     fun launchSync() {
         swipe_refresh.isRefreshing = true
-        val request = OneTimeWorkRequest.Builder(RetrieveUsersWorker::class.java).addTag("SYNC").build()
-        this.workManager.enqueue(request)
+        val request = OneTimeWorkRequest.Builder(UsersWorker::class.java).addTag("SYNC").build()
+        val transactionsRequest = OneTimeWorkRequest.Builder(TransactionsWorker::class.java).addTag("SYNC").build()
+        val continuation = this.workManager.beginWith(request).then(transactionsRequest)
+        continuation.enqueue()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

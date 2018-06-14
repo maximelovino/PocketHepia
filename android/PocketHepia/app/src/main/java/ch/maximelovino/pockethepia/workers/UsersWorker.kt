@@ -14,7 +14,7 @@ import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
 
-class RetrieveUsersWorker : Worker() {
+class UsersWorker : Worker() {
     /**
      * Override this method to do your actual background processing.
      *
