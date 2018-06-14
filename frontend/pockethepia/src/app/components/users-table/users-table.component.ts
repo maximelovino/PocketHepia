@@ -86,6 +86,12 @@ export class UsersTableComponent implements OnInit {
           case EditUserModalReturn.PERMISSION_CHANGE_OK:
             snackbarMessage = 'There was a problem setting the new permissions';
             break;
+          case EditUserModalReturn.SET_BALANCE_OK:
+            snackbarMessage = 'Balance succesfully set';
+            break;
+          case EditUserModalReturn.SET_BALANCE_FAIL:
+            snackbarMessage = 'There was a problem setting the balance';
+            break;
         }
         this.snackbar.open(snackbarMessage, null, { duration: 2000 });
       }

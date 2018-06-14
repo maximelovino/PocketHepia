@@ -35,6 +35,7 @@ import { DeleteUserModalComponent } from './components/delete-user-modal/delete-
 import { PermissionsFormComponent } from './components/permissions-form/permissions-form.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { HttpTokenInterceptorService } from './services/http-token-interceptor.service';
+import { TransactionService } from './services/transaction.service';
 
 
 @NgModule({
@@ -70,7 +71,7 @@ import { HttpTokenInterceptorService } from './services/http-token-interceptor.s
     ReactiveFormsModule
   ],
   entryComponents: [ChangePasswordSheetComponent, DeleteUserModalComponent, EditUserModalComponent],
-  providers: [FormBuilder, UserService, AuthService, LogService, AuthGuard, AdminGuard, NotAuthGuard, {
+  providers: [FormBuilder, TransactionService, UserService, AuthService, LogService, AuthGuard, AdminGuard, NotAuthGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpTokenInterceptorService,
     multi: true

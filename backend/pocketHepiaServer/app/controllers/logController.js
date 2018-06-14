@@ -100,7 +100,7 @@ exports.changePermissions = (req, res) => {
 	const entry = new Log({
 		category: categories.ADMIN_CHANGE_PERMISSION,
 		triggeringUser: req.user._id,
-		description: `${req.user.name} has change permissions for user "${data.oldUser.name}"`,
+		description: `${req.user.name} has changed permissions for user "${data.oldUser.name}"`,
 		rawData: data,
 	});
 
@@ -151,6 +151,17 @@ exports.removeTag = (req, res) => {
 		category: categories.ADMIN_REMOVED_TAG,
 		triggeringUser: req.user._id,
 		description: `${req.user.name} has removed tag of ${req.affectedUser.name}`,
+		rawData: { affectedUser: req.affectedUser },
+	});
+	entry.save();
+	res.status(200).end();
+}
+
+exports.setBalance = (req, res) => {
+	const entry = new Log({
+		category: categories.ADMIN_SET_BALANCE,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} has set balance of ${req.affectedUser.name} to ${req.body.amount}`,
 		rawData: { affectedUser: req.affectedUser },
 	});
 	entry.save();

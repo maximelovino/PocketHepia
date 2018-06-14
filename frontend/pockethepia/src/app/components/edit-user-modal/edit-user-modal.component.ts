@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators, ValidatorFn } from '@angular/forms'
 import { PermissionsFormComponent } from '../permissions-form/permissions-form.component';
 import { UserService } from '../../services/user.service';
 import { EditUserModalReturn } from '../../models/edit-user-modal-return';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -13,6 +14,7 @@ import { EditUserModalReturn } from '../../models/edit-user-modal-return';
 })
 export class EditUserModalComponent implements OnInit {
   resetPassGroup: FormGroup;
+  setBalanceGroup: FormGroup;
   sending = false;
   @ViewChild('permissions') permissions: PermissionsFormComponent;
 
@@ -20,13 +22,35 @@ export class EditUserModalComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<EditUserModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: User,
     private fb: FormBuilder,
-    private userService: UserService) {
+    private userService: UserService,
+    private transactionService: TransactionService) {
     this.resetPassGroup = this.fb.group({
       newPassword: ['', Validators.required],
       newPasswordConfirm: ['', Validators.required]
     }, {
         validator: this.passwordMatch()
       });
+
+    this.setBalanceGroup = this.fb.group({
+      newBalanceAmount: ['', Validators.required]
+    }, {
+        validator: this.amountMatch()
+      });
+  }
+  private amountMatch(): ValidatorFn {
+    return (formGroup: FormGroup) => {
+      const amount = formGroup.get('newBalanceAmount');
+      const regex = new RegExp('^[0-9]+(\.[0-9]{1,2})?$');
+
+      if (regex.test(amount.value)) {
+        return null;
+      } else {
+        amount.setErrors({ format: true });
+        return {
+          format: true
+        };
+      }
+    };
   }
 
   private passwordMatch(): ValidatorFn {
@@ -62,6 +86,29 @@ export class EditUserModalComponent implements OnInit {
       console.error(error);
       this.dialogRef.close(EditUserModalReturn.PASSWORD_RESET_FAIL);
     });
+  }
+
+  public setBalance() {
+    try {
+      const amount = parseFloat(this.setBalanceGroup.get('newBalanceAmount').value);
+      this.sending = true;
+      this.transactionService.setBalance(this.data, amount).subscribe(data => {
+        this.sending = false;
+        this.dialogRef.close(EditUserModalReturn.SET_BALANCE_OK);
+      }, error => {
+        this.sending = false;
+        console.error(error);
+        this.dialogRef.close(EditUserModalReturn.SET_BALANCE_FAIL);
+      });
+    } catch (e) {
+      this.sending = false;
+      console.error(e);
+      this.dialogRef.close(EditUserModalReturn.SET_BALANCE_FAIL);
+      return;
+    }
+
+
+    // TODO create transaction service and call setBalanceRoute
   }
 
   public changePermissions() {

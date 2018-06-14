@@ -44,10 +44,6 @@ exports.pay = async (req, res) => {
 	}
 
 
-
-	const balanceChangeForMe = floatAmount
-
-
 	//TODO The problem here is the validator doesn't run on update with $inc
 
 	try {
@@ -86,12 +82,113 @@ exports.pay = async (req, res) => {
 
 	await transaction.save()
 	res.sendStatus(200)
-
-	//TODO find the TO user => if it doesn't exist => return 500
-	//TODO check my balance => if not enough => return 500 with message
-	//TODO (in transaction) => update balance of FROM (add limit in model so it can be <0) => create transaction => save it => return 200 if all good
 }
 
 exports.getPaid = async (req, res) => {
+	if (!(req.body.title && req.body.fromID && req.body.amount)) {
+		res.sendStatus(400)
+		return
+	}
+
+	const source = await User.findById(req.body.fromID)
+
+	if (!source) {
+		res.status(500)
+		res.send("The source user doesn't exist")
+		return
+	}
+
+	let floatAmount = 0
+	try {
+		floatAmount = parseFloat(req.body.amount)
+	} catch (e) {
+		res.status(500)
+		res.send("Amount was not a number")
+		return
+	}
+
+	if (floatAmount < 0) {
+		res.status(400)
+		res.send("Amount should be positive")
+		return
+	}
+
+
+	try {
+		if (source.balance < floatAmount) {
+			res.status(500)
+			res.send("Not enough money")
+			return
+		}
+		source.balance = source.balance - floatAmount;
+		await source.save()
+	} catch (e) {
+		console.error(e)
+		res.status(500)
+		res.send("Not enough money")
+		return
+	}
+
+
+	try {
+		await User.findByIdAndUpdate(req.user._id, { $inc: { balance: floatAmount } })
+	} catch (e) {
+		console.error(e)
+		res.status(500)
+		res.send("Problem increasing your balance")
+		return
+	}
+
+
+	const transaction = new Transaction({
+		amount: floatAmount,
+		to: req.user._id,
+		from: source._id,
+		title: req.body.title
+	})
+
+	await transaction.save()
 	res.sendStatus(200)
+}
+
+exports.setBalance = async (req, res, next) => {
+	if (!(req.body.userID && req.body.amount)) {
+		res.sendStatus(400)
+		return
+	}
+	const user = await User.findById(req.body.userID)
+
+	if (!user) {
+		res.status(500)
+		res.send("The user doesn't exist")
+		return
+	}
+
+	let floatAmount = 0
+	try {
+		floatAmount = parseFloat(req.body.amount)
+	} catch (e) {
+		res.status(500)
+		res.send("Amount was not a number")
+		return
+	}
+
+	if (floatAmount < 0) {
+		res.status(400)
+		res.send("Amount should be positive")
+		return
+	}
+
+	user.balance = floatAmount
+	try {
+		await user.save()
+	} catch (e) {
+		res.status(500)
+		res.send("Problem saving new balance")
+		return
+	}
+
+	req.affectedUser = user
+
+	next()
 }
