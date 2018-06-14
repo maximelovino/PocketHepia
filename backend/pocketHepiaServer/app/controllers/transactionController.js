@@ -10,9 +10,8 @@ exports.my = async (req, res) => {
 		]
 	}).sort({ date: 'desc' }).populate('to').populate('from')
 
-	// TODO Correct this, not working, test locally
 	const toSend = transactions.map(t => {
-		if (t.from._id == req.user._id) {
+		if (t.from.id === req.user.id) {
 			t.amount = t.amount * -1
 		}
 		return t.toObject()
