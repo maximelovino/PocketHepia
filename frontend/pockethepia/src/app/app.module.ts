@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { LocalStorageModule } from '@ngx-pwa/local-storage';
 import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { MaterialModule } from './material.module';
 
@@ -66,7 +65,6 @@ import { TransactionService } from './services/transaction.service';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    LocalStorageModule,
     MaterialModule,
     ReactiveFormsModule
   ],
