@@ -44,4 +44,5 @@
     <string name="CHF_currency">CHF</string>
     <string name="receiving_money">Receiving money</string>
     <string name="no_transaction">No transaction</string>
+    <string name="payment_description_hint">Payment description</string>
 </resources>

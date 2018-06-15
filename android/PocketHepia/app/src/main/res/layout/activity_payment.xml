@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".PaymentActivity">
 
     <LinearLayout
@@ -27,9 +27,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:hint="0.00"
                 android:inputType="numberDecimal"
                 android:textAlignment="textEnd"
-                android:hint="0.00"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -40,40 +40,42 @@
                 android:text="@string/CHF_currency"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
         </LinearLayout>
-        
+
         <EditText
+            style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Payment description"
-            style="@style/TextAppearance.MaterialComponents.Headline5"/>
+            android:hint="@string/payment_description_hint" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/activity_vertical_margin">
-
-            <CheckBox
-                android:id="@+id/receiving_money"
-                style="@style/TextAppearance.MaterialComponents.Body2"
-                android:buttonTint="@color/colorPrimary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/receiving_money"
-                android:switchPadding="2dp"
-                android:enabled="false" />
-
-            <android.support.design.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button"
+            android:paddingVertical="2dp"
+            android:id="@+id/sending_money_choice_layout">
+            <TextView
+                android:id="@+id/sending_money_switch_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_weight="1"
-                android:text="@string/complete_payment"
-                app:backgroundTint="@color/colorPrimary"
-                tools:ignore="RtlHardcoded" />
+                android:text="@string/receiving_money"
+                style="@style/TextAppearance.MaterialComponents.Body1"/>
+
+            <Switch
+                android:id="@+id/sending_money_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumbTint="@color/colorPrimary"
+                android:checked="false"/>
         </LinearLayout>
+
+        <android.support.design.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/complete_payment"
+            app:backgroundTint="@color/colorPrimary"
+            tools:ignore="RtlHardcoded" />
     </LinearLayout>
 
 
