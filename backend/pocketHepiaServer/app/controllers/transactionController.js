@@ -26,7 +26,7 @@ exports.pay = async (req, res) => {
 		return
 	}
 
-	const destination = await User.findById(req.body.toID)
+	const destination = await User.findOne({ $or: [{ cardId: req.body.toID }, { virtualCard: req.body.toID }] })
 
 	if (!destination) {
 		res.status(500)
@@ -94,7 +94,7 @@ exports.getPaid = async (req, res) => {
 		return
 	}
 
-	const source = await User.findById(req.body.fromID)
+	const source = await User.findOne({ $or: [{ cardId: req.body.fromID }, { virtualCard: req.body.fromID }] })
 
 	if (!source) {
 		res.status(500)

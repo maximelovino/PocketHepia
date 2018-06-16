@@ -4,6 +4,7 @@ export class User {
   email: String;
   isAdmin: boolean;
   cardId: String;
+  virtualCard: String;
   balance: Number;
   isLibrarian: boolean;
   acceptsPayments: boolean;
@@ -18,6 +19,7 @@ export class User {
     this.email = user.email;
     this.isAdmin = user.isAdmin;
     this.cardId = user.cardId;
+    this.virtualCard = user.virtualCard;
     this.balance = user.balance;
     this.isLibrarian = user.isLibrarian;
     this.acceptsPayments = user.acceptsPayments;

@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const passportMongoose = require('passport-local-mongoose')
 const validator = require('validator');
 const Schema = mongoose.Schema;
-
 const UserSchema = new Schema({
 	name: {
 		type: String,
@@ -23,6 +22,10 @@ const UserSchema = new Schema({
 		default: false
 	},
 	cardId: {
+		type: String,
+		required: false
+	},
+	virtualCard: {
 		type: String,
 		required: false
 	},

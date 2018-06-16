@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.internal.BottomNavigationItemView
 import android.support.design.internal.BottomNavigationMenuView
@@ -117,10 +118,8 @@ class MainActivity : ForegroundDispatchedActivity() {
         val id = item.itemId
 
         if (id == R.id.logout_menu_item) {
-            //TODO here we should also delete all data and disable the sync task
-
-            //TODO problem is this should be done on other thread
-            //AppDatabase.getInstance(this).clearAllTables()
+            val db = AppDatabase.getInstance(this)
+            ClearDatabaseTask(db).execute()
             PreferenceManager.deleteAll(this)
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -164,5 +163,12 @@ class MainActivity : ForegroundDispatchedActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.nav_host_fragment).navigateUp()
+    }
+
+    class ClearDatabaseTask(val db: AppDatabase) : AsyncTask<Void,Void,Unit>(){
+        override fun doInBackground(vararg p0: Void?) {
+            db.clearAllTables()
+        }
+
     }
 }

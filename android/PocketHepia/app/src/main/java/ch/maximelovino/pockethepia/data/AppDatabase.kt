@@ -11,7 +11,7 @@ import ch.maximelovino.pockethepia.data.models.Transaction
 import ch.maximelovino.pockethepia.data.models.User
 
 
-@Database(entities = arrayOf(User::class, Transaction::class), version = 2)
+@Database(entities = arrayOf(User::class, Transaction::class), version = 3)
 @TypeConverters(DataTransformers::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao

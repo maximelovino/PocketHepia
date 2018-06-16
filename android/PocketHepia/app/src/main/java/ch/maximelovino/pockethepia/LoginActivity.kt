@@ -177,7 +177,7 @@ class LoginActivity : AppCompatActivity() {
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
                 connection.setRequestProperty("charset", "utf-8")
                 connection.setRequestProperty("Content-Length", postDataLength.toString())
-                DataOutputStream(connection.outputStream).use({ wr -> wr.write(postData) })
+                DataOutputStream(connection.outputStream).use { wr -> wr.write(postData) }
 
                 val statusCode = connection.responseCode
                 if (statusCode == 200) {

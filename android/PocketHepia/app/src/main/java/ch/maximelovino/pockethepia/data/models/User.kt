@@ -12,6 +12,7 @@ data class User(
         val email: String,
         val isAdmin: Boolean,
         val cardId: String?,
+        val virtualCard: String?,
         val balance: Double,
         val isLibrarian: Boolean,
         val acceptsPayments: Boolean,
@@ -37,7 +38,13 @@ data class User(
                 null
             }
 
-            return User(id, name, email, isAdmin, cardId, balance, isLibrarian, acceptsPayments, canInvite, isAuditor)
+            val virtualCard = try {
+                jsonObject.getString("virtualCard")
+            } catch (e: Exception) {
+                null
+            }
+
+            return User(id, name, email, isAdmin, cardId, virtualCard, balance, isLibrarian, acceptsPayments, canInvite, isAuditor)
         }
     }
 }

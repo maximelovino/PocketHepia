@@ -23,6 +23,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/payment_amount"
                 style="@style/TextAppearance.MaterialComponents.Headline3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -42,6 +43,7 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/payment_title"
             style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,7 +60,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/receiving_money"
+                android:text="@string/sending_money"
                 style="@style/TextAppearance.MaterialComponents.Body1"/>
 
             <Switch
@@ -66,10 +68,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:thumbTint="@color/colorPrimary"
-                android:checked="false"/>
+                android:checked="true"/>
         </LinearLayout>
 
         <android.support.design.button.MaterialButton
+            android:id="@+id/complete_payment_button"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -3,7 +3,11 @@ package ch.maximelovino.pockethepia
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.content.Intent
+import android.nfc.NdefMessage
+import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
+import android.nfc.Tag
+import android.nfc.tech.Ndef
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +22,7 @@ import java.io.InputStreamReader
 import java.net.URL
 import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
+
 
 class NfcAssignmentActivity : ForegroundDispatchedActivity() {
     private lateinit var userID: String
@@ -44,11 +49,14 @@ class NfcAssignmentActivity : ForegroundDispatchedActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED == intent.action) {
-            val tagID = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)
-            val hexTagID = tagID.toHex()
-            AssignNFCTask(token).execute(hexTagID)
-        }
+        // TODO this is not good for the tags, change it
+        val tagID = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)
+        val hexTagID = tagID.toHex()
+        val tag: Tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+        val ndefTag = Ndef.get(tag)
+        ndefTag.connect()
+        ndefTag.writeNdefMessage(NdefMessage(NdefRecord(NdefRecord.TNF_EMPTY, null, null, null)))
+        AssignNFCTask(token).execute(hexTagID)
     }
 
     fun postAssignment(success: Boolean, response: String?) {
@@ -80,7 +88,7 @@ class NfcAssignmentActivity : ForegroundDispatchedActivity() {
                 connection.setRequestProperty("charset", "utf-8")
                 connection.setRequestProperty("Content-Length", postDataLength.toString())
                 connection.setRequestProperty("Authorization", "Bearer $token")
-                DataOutputStream(connection.outputStream).use({ wr -> wr.write(postData) })
+                DataOutputStream(connection.outputStream).use { wr -> wr.write(postData) }
 
                 val statusCode = connection.responseCode
 
