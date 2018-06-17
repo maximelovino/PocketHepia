@@ -1,0 +1,6 @@
+<div *ngIf="transactions$ | async as transactions">
+  <div *ngFor="let trans of transactions" class="spacing-bottom">
+    <app-transaction-entry [transaction]="trans"></app-transaction-entry>
+  </div>
+
+</div>

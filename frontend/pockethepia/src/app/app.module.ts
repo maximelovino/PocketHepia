@@ -35,6 +35,10 @@ import { PermissionsFormComponent } from './components/permissions-form/permissi
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { HttpTokenInterceptorService } from './services/http-token-interceptor.service';
 import { TransactionService } from './services/transaction.service';
+import { BalanceCardComponent } from './components/balance-card/balance-card.component';
+import { RechargeCardComponent } from './components/recharge-card/recharge-card.component';
+import { TransactionsListComponent } from './components/transactions-list/transactions-list.component';
+import { TransactionEntryComponent } from './components/transaction-entry/transaction-entry.component';
 
 
 @NgModule({
@@ -58,7 +62,11 @@ import { TransactionService } from './services/transaction.service';
     EditUserModalComponent,
     DeleteUserModalComponent,
     PermissionsFormComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    BalanceCardComponent,
+    RechargeCardComponent,
+    TransactionsListComponent,
+    TransactionEntryComponent
   ],
   imports: [
     BrowserModule,

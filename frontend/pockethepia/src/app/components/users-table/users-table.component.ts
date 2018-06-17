@@ -23,7 +23,7 @@ export class UsersTableComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<User>;
   currentUser: Observable<User> = this.userService.retrieveUser();
   data: User[];
-  dataSource: User[];
+  dataSource: User[] = [];
   isLoadingResults = false;
   selection = new SelectionModel<User>(allowMultiSelect, initialSelection);
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
@@ -40,8 +40,8 @@ export class UsersTableComponent implements OnInit {
     this.sort.disableClear = true;
     this.sort.active = 'name';
     this.sort.direction = 'asc';
-    this.refresh();
     this.sort.sortChange.subscribe(() => this.sortData());
+    this.refresh();
     this.isHandset.subscribe((match) => {
       if (match.matches) {
         this.displayedColumns = this.displayedColumns.includes('email') ? ['name', 'edit', 'delete'] : ['name', 'email', 'permissions', 'edit', 'delete'];
@@ -59,7 +59,6 @@ export class UsersTableComponent implements OnInit {
       }
     });
     this.table.renderRows();
-
   }
 
   public filterTable(filter: string) {

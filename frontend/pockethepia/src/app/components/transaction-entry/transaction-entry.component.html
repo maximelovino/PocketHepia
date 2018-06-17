@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-content>
+    <div class="row">
+      <div class="col">
+        <p class="mat-title transaction-text">{{transaction.title}}</p>
+        <p class="mat-subheading-2 transaction-text">
+          <ng-container *ngIf="transaction.amount < 0; else toName">
+            {{transaction.to.name}}
+          </ng-container>
+          <ng-template #toName>
+            {{transaction.from.name}}
+          </ng-template>
+        </p>
+        <p class="mat-subheading-2 transaction-text">{{transaction.date.toLocaleString()}}</p>
+      </div>
+      <ng-container *ngIf="transaction.amount < 0; else positiveValue">
+        <div class="col-auto mat-display-1 amount negativeAmount">
+          {{transaction.amount}}
+        </div>
+      </ng-container>
+      <ng-template #positiveValue>
+        <div class="col-auto mat-display-1 amount positiveAmount">
+          {{transaction.amount}}
+        </div>
+      </ng-template>
+
+    </div>
+  </mat-card-content>
+</mat-card>

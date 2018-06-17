@@ -6,7 +6,7 @@ import { Log } from '../models/log';
 import { UserService } from './user.service';
 
 const GET_ALL_LOGS_URL = '/api/logs/all';
-const GET_LOG_RANGE_URL = 'api/logs/range';
+const GET_LOG_RANGE_URL = '/api/logs/range';
 const GET_CATEGORIES_URL = '/api/logs/categories';
 
 

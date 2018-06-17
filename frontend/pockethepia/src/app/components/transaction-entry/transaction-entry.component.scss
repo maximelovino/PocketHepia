@@ -1,0 +1,16 @@
+@import '~@angular/material/theming';
+.amount{
+	margin: auto
+}
+
+.transaction-text{
+	margin: 0 0 8px
+}
+
+.positiveAmount{
+	color: #00E676
+}
+
+.negativeAmount{
+	color: #C62828
+}

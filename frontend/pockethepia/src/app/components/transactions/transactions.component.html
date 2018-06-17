@@ -1,3 +1,13 @@
-<p>
-  transactions works!
-</p>
+<div class="row">
+  <div class="col-4">
+    <div *ngIf="currentUser | async as user">
+      <app-balance-card [balance]="user.balance"></app-balance-card>
+    </div>
+    <div class="spacing-top">
+      <app-recharge-card></app-recharge-card>
+    </div>
+  </div>
+  <div class="col">
+    <app-transactions-list></app-transactions-list>
+  </div>
+</div>

@@ -19,7 +19,6 @@ exports.my = async (req, res) => {
 	res.json(toSend)
 }
 
-// TODO the problem here is that we don't expect the userID...but the serial of the card (or the temporary card)
 exports.pay = async (req, res) => {
 	if (!(req.body.title && req.body.toID && req.body.amount)) {
 		res.sendStatus(400)
@@ -87,7 +86,6 @@ exports.pay = async (req, res) => {
 	res.sendStatus(200)
 }
 
-// TODO the problem here is that we don't expect the userID...but the serial of the card (or the temporary card)
 exports.getPaid = async (req, res) => {
 	if (!(req.body.title && req.body.fromID && req.body.amount)) {
 		res.sendStatus(400)
