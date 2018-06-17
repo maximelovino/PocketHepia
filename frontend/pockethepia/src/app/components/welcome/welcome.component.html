@@ -1,0 +1,9 @@
+<mat-card>
+  <mat-card-content>
+    <div *ngIf="currentUser | async as user">
+      <p class="mat-display-3 welcome-text">
+        Welcome {{user.name}}
+      </p>
+    </div>
+  </mat-card-content>
+</mat-card>

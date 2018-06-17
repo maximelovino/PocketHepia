@@ -1,13 +1,11 @@
 <div class="row">
-  <div class="col-4">
-    <div *ngIf="currentUser | async as user">
-      <app-balance-card [balance]="user.balance"></app-balance-card>
-    </div>
-    <div class="spacing-top">
+  <div class="col-xl-4">
+    <app-balance-card></app-balance-card>
+    <div class="spacing-top spacing-bottom">
       <app-recharge-card></app-recharge-card>
     </div>
   </div>
-  <div class="col">
+  <div class="col-xl">
     <app-transactions-list></app-transactions-list>
   </div>
 </div>

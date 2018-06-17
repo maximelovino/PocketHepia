@@ -39,6 +39,7 @@ import { BalanceCardComponent } from './components/balance-card/balance-card.com
 import { RechargeCardComponent } from './components/recharge-card/recharge-card.component';
 import { TransactionsListComponent } from './components/transactions-list/transactions-list.component';
 import { TransactionEntryComponent } from './components/transaction-entry/transaction-entry.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { TransactionEntryComponent } from './components/transaction-entry/transa
     BalanceCardComponent,
     RechargeCardComponent,
     TransactionsListComponent,
-    TransactionEntryComponent
+    TransactionEntryComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

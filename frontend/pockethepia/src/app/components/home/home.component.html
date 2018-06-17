@@ -1,3 +1,16 @@
-<pre *ngIf="user | async as doneUser">
-{{doneUser | json}}
-</pre>
+<app-welcome></app-welcome>
+<div class="row spacing-top">
+	<div class="col-xl-4">
+		<div>
+			<app-balance-card></app-balance-card>
+		</div>
+		<mat-card class="clickable spacing-top" routerLink="/transactions">
+			<mat-card-content>
+				<p class="mat-body-2">
+					View more transactions
+					<mat-icon [inline]="true">arrow_forward</mat-icon>
+				</p>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>

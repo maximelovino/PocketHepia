@@ -17,4 +17,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+  public viewTransactions() {
+    console.log('You clicked');
+  }
+
+
 }

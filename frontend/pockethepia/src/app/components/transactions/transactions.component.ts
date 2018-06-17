@@ -9,9 +9,8 @@ import { User } from '../../models/user';
   styleUrls: ['./transactions.component.css']
 })
 export class TransactionsComponent implements OnInit {
-  currentUser: Observable<User> = this.userService.retrieveUser();
 
-  constructor(private userService: UserService) { }
+  constructor() { }
 
   ngOnInit() {
   }
