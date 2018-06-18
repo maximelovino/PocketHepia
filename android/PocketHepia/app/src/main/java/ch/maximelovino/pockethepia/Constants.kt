@@ -13,4 +13,5 @@ object Constants {
     const val TRANSACTIONS_GET_ROUTE = "${BACKEND_ROOT_URL}transactions/my"
     const val TRANSACTIONS_PAY_ROUTE = "${BACKEND_ROOT_URL}transactions/pay"
     const val TRANSACTIONS_GET_PAID_ROUTE = "${BACKEND_ROOT_URL}transactions/getPaid"
+    const val TRANSACTIONS_GET_BALANCE_ROUTE = "${BACKEND_ROOT_URL}transactions/balance"
 }

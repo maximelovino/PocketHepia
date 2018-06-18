@@ -46,7 +46,7 @@ class TransactionsFragment : BaseFragment() {
 
         activity.currentUser.observe(this, Observer {
             if (it != null) {
-                hero_balance.text = "${it.balance} CHF"
+                hero_balance.text = "${it.balance ?: 0} CHF"
             }
         })
 

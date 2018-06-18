@@ -32,14 +32,14 @@ class UsersWorker : Worker() {
         val userDao = AppDatabase.getInstance(context).userDao()
 
         val users = if (currentUser.isAdmin) {
-            retrieveUsers(token)
+            retrieveUsers(token).filter { it.id != currentUser.id }
         } else {
-            listOf(currentUser)
+            listOf()
         }
 
-        PreferenceManager.saveUserID(applicationContext,currentUser.id)
+        PreferenceManager.saveUserID(applicationContext, currentUser.id)
         userDao.nuke()
-        userDao.insert(*users.toTypedArray())
+        userDao.insert(*users.toTypedArray(), currentUser)
 
         return WorkerResult.SUCCESS
     }
@@ -84,7 +84,18 @@ class UsersWorker : Worker() {
                 val inStream = BufferedReader(InputStreamReader(connection.inputStream))
                 val content = inStream.readText()
                 val jsonContent = JSONObject(content)
-                return User.fromJson(jsonContent)
+                val urlBalance = URL(Constants.TRANSACTIONS_GET_BALANCE_ROUTE)
+                val balanceConnection = urlBalance.openConnection() as HttpsURLConnection
+                balanceConnection.requestMethod = "GET"
+                balanceConnection.setRequestProperty("Authorization", "Bearer $token")
+                val balanceStatus = connection.responseCode
+                return if (balanceStatus == 200) {
+                    val balanceStream = BufferedReader(InputStreamReader(balanceConnection.inputStream))
+                    val balanceContent = balanceStream.readText()
+                    User.fromJson(jsonContent, balanceContent.toDouble())
+                } else {
+                    User.fromJson(jsonContent)
+                }
             }
         } catch (e: Exception) {
             Log.e(LOG_TAG, "Couldn't get current user because: ${e.message}")

@@ -150,7 +150,7 @@ exports.addToBalance = async (req, res, next) => {
 
 	const transaction = new Transaction({
 		amount: floatAmount,
-		to: req.user._id,
+		to: user._id,
 		title: `Added by admin ${req.user.name}`,
 		adminCharge: true
 	})

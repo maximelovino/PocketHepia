@@ -128,7 +128,7 @@ class TransactionListAdapter(val context: Context) : ListAdapter<Transaction, Tr
         if (position < itemCount) {
             val current: Transaction = getItem(position)
             holder.titleText.text = current.title
-            holder.personText.text = if(current.amount < 0) current.to.name else current.from.name
+            holder.personText.text = current.nameToDisplay()
             holder.dateText.text = simpleDateFormat.format(current.date.time)
             holder.amountText.text = current.amount.toString()
             holder.amountText.setTextColor(if(current.amount < 0) context.resources.getColor(R.color.negativeAmount) else context.resources.getColor(R.color.positiveAmount))

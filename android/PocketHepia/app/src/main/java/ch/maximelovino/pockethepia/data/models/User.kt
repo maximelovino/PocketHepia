@@ -13,7 +13,7 @@ data class User(
         val isAdmin: Boolean,
         val cardId: String?,
         val virtualCard: String?,
-        val balance: Double,
+        val balance: Double?,
         val isLibrarian: Boolean,
         val acceptsPayments: Boolean,
         val canInvite: Boolean,
@@ -21,10 +21,9 @@ data class User(
 ) {
 
     companion object {
-        fun fromJson(jsonObject: JSONObject): User {
+        fun fromJson(jsonObject: JSONObject, balance: Double? = null): User {
             val id = jsonObject.getString("id")
             val isAdmin = jsonObject.getBoolean("isAdmin")
-            val balance = jsonObject.getDouble("balance")
             val isLibrarian = jsonObject.getBoolean("isLibrarian")
             val acceptsPayments = jsonObject.getBoolean("acceptsPayments")
             val canInvite = jsonObject.getBoolean("canInvite")

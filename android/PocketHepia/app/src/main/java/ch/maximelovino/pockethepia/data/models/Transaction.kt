@@ -13,9 +13,25 @@ data class Transaction(
         val title: String,
         val amount: Double,
         @Embedded(prefix = "to") val to: User,
-        @Embedded(prefix = "from") val from: User,
-        val date: Calendar
+        @Embedded(prefix = "from") val from: User?,
+        val date: Calendar,
+        val adminCharge: Boolean,
+        val stripe: Boolean
 ) {
+
+    fun nameToDisplay(): String {
+        return if (this.stripe) {
+            "Stripe Charge"
+        } else if (this.adminCharge) {
+            "Admin Charge"
+        } else {
+            if (this.amount < 0) {
+                this.to.name
+            } else {
+                this.from?.name ?: "Name not found"
+            }
+        }
+    }
     companion object {
         fun fromJson(jsonObject: JSONObject): Transaction {
             val id = jsonObject.getString("id")
@@ -23,9 +39,15 @@ data class Transaction(
             date.timeInMillis = jsonObject.getLong("date")
             val amount = jsonObject.getDouble("amount")
             val to = User.fromJson(jsonObject.getJSONObject("to"))
-            val from = User.fromJson(jsonObject.getJSONObject("from"))
+            val from = try {
+                User.fromJson(jsonObject.getJSONObject("from"))
+            }catch (e: Exception){
+                null
+            }
             val title = jsonObject.getString("title")
-            return Transaction(id, title, amount, to, from, date)
+            val adminCharge = jsonObject.getBoolean("adminCharge")
+            val stripe = jsonObject.getBoolean("stripe")
+            return Transaction(id, title, amount, to, from, date, adminCharge, stripe)
         }
     }
 }
