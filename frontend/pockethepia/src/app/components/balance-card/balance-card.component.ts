@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs';
-import { User } from '../../models/user';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-balance-card',
@@ -10,9 +9,9 @@ import { User } from '../../models/user';
 })
 // TODO this should go take the balance itself from the user service
 export class BalanceCardComponent implements OnInit {
-  currentUser: Observable<User> = this.userService.retrieveUser();
+  balance: Observable<Number> = this.transactionService.getBalance();
 
-  constructor(private userService: UserService) { }
+  constructor(private transactionService: TransactionService) { }
 
   ngOnInit() {
   }

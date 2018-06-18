@@ -6,7 +6,7 @@ module.exports = {
 	ADMIN_UNDO_IMPORT: "Admin Cancels Import",
 	ADMIN_ASSIGN_TAG: "Admin Assigned NFC Tag",
 	ADMIN_REMOVED_TAG: "Admin Removed NFC Tag",
-	ADMIN_SET_BALANCE: "Admin Set Balance",
+	ADMIN_ADD_BALANCE: "Admin Add To Balance",
 	ADMIN_CHANGE_PASSWORD: "Admin Password Change",
 	ADMIN_CHANGE_PERMISSION: "Admin Permissions Change",
 	ADMIN_CREATES_AREA: "Admin Creates Area",

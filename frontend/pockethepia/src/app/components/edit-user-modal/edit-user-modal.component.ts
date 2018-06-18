@@ -14,7 +14,7 @@ import { TransactionService } from '../../services/transaction.service';
 })
 export class EditUserModalComponent implements OnInit {
   resetPassGroup: FormGroup;
-  setBalanceGroup: FormGroup;
+  addToBalanceGroup: FormGroup;
   sending = false;
   @ViewChild('permissions') permissions: PermissionsFormComponent;
 
@@ -31,15 +31,15 @@ export class EditUserModalComponent implements OnInit {
         validator: this.passwordMatch()
       });
 
-    this.setBalanceGroup = this.fb.group({
-      newBalanceAmount: ['', Validators.required]
+    this.addToBalanceGroup = this.fb.group({
+      amount: ['', Validators.required]
     }, {
         validator: this.amountMatch()
       });
   }
   private amountMatch(): ValidatorFn {
     return (formGroup: FormGroup) => {
-      const amount = formGroup.get('newBalanceAmount');
+      const amount = formGroup.get('amount');
       const regex = new RegExp('^[0-9]+(\.[0-9]{1,2})?$');
 
       if (regex.test(amount.value)) {
@@ -88,11 +88,11 @@ export class EditUserModalComponent implements OnInit {
     });
   }
 
-  public setBalance() {
+  public addToBalance() {
     try {
-      const amount = parseFloat(this.setBalanceGroup.get('newBalanceAmount').value);
+      const amount = parseFloat(this.addToBalanceGroup.get('amount').value);
       this.sending = true;
-      this.transactionService.setBalance(this.data, amount).subscribe(data => {
+      this.transactionService.addToBalance(this.data, amount).subscribe(data => {
         this.sending = false;
         this.dialogRef.close(EditUserModalReturn.SET_BALANCE_OK);
       }, error => {
@@ -106,9 +106,6 @@ export class EditUserModalComponent implements OnInit {
       this.dialogRef.close(EditUserModalReturn.SET_BALANCE_FAIL);
       return;
     }
-
-
-    // TODO create transaction service and call setBalanceRoute
   }
 
   public changePermissions() {

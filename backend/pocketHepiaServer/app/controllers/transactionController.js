@@ -11,12 +11,17 @@ exports.my = async (req, res) => {
 	}).sort({ date: 'desc' }).populate('to').populate('from')
 
 	const toSend = transactions.map(t => {
-		if (t.from.id === req.user.id) {
+		if (t.from && t.from.id === req.user.id) {
 			t.amount = t.amount * -1
 		}
 		return t.toObject()
 	});
 	res.json(toSend)
+}
+
+exports.getMyBalance = async (req, res) => {
+	const balance = await req.user.getBalance();
+	res.json(balance)
 }
 
 exports.pay = async (req, res) => {
@@ -48,32 +53,12 @@ exports.pay = async (req, res) => {
 		return
 	}
 
-	try {
-		const current = await User.findById(req.user._id)
-		if (current.balance < floatAmount) {
-			res.status(500)
-			res.send("Not enough money")
-			return
-		}
-		current.balance = current.balance - floatAmount;
-		await current.save()
-	} catch (e) {
-		console.error(e)
+	const userBalance = await req.user.getBalance()
+	if (userBalance < floatAmount) {
 		res.status(500)
 		res.send("Not enough money")
 		return
 	}
-
-
-	try {
-		await User.findByIdAndUpdate(destination._id, { $inc: { balance: floatAmount } })
-	} catch (e) {
-		console.error(e)
-		res.status(500)
-		res.send("Problem increasing other balance")
-		return
-	}
-
 
 	const transaction = new Transaction({
 		amount: floatAmount,
@@ -116,31 +101,13 @@ exports.getPaid = async (req, res) => {
 	}
 
 
-	try {
-		if (source.balance < floatAmount) {
-			res.status(500)
-			res.send("Not enough money")
-			return
-		}
-		source.balance = source.balance - floatAmount;
-		await source.save()
-	} catch (e) {
-		console.error(e)
+	const sourceBalance = await source.getBalance()
+
+	if (sourceBalance < floatAmount) {
 		res.status(500)
 		res.send("Not enough money")
 		return
 	}
-
-
-	try {
-		await User.findByIdAndUpdate(req.user._id, { $inc: { balance: floatAmount } })
-	} catch (e) {
-		console.error(e)
-		res.status(500)
-		res.send("Problem increasing your balance")
-		return
-	}
-
 
 	const transaction = new Transaction({
 		amount: floatAmount,
@@ -153,7 +120,7 @@ exports.getPaid = async (req, res) => {
 	res.sendStatus(200)
 }
 
-exports.setBalance = async (req, res, next) => {
+exports.addToBalance = async (req, res, next) => {
 	if (!(req.body.userID && req.body.amount)) {
 		res.sendStatus(400)
 		return
@@ -181,14 +148,16 @@ exports.setBalance = async (req, res, next) => {
 		return
 	}
 
-	user.balance = floatAmount
-	try {
-		await user.save()
-	} catch (e) {
-		res.status(500)
-		res.send("Problem saving new balance")
-		return
-	}
+	const transaction = new Transaction({
+		amount: floatAmount,
+		to: req.user._id,
+		title: `Added by admin ${req.user.name}`,
+		adminCharge: true
+	})
+
+	await transaction.save()
+
+	req.transaction = transaction;
 
 	req.affectedUser = user
 

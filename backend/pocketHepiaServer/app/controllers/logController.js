@@ -157,12 +157,12 @@ exports.removeTag = (req, res) => {
 	res.status(200).end();
 }
 
-exports.setBalance = (req, res) => {
+exports.addToBalance = (req, res) => {
 	const entry = new Log({
-		category: categories.ADMIN_SET_BALANCE,
+		category: categories.ADMIN_ADD_BALANCE,
 		triggeringUser: req.user._id,
-		description: `${req.user.name} has set balance of ${req.affectedUser.name} to ${req.body.amount}`,
-		rawData: { affectedUser: req.affectedUser },
+		description: `${req.user.name} has added ${req.transaction.amount} to the balance of ${req.affectedUser.name}`,
+		rawData: { affectedUser: req.affectedUser, transaction: req.transaction },
 	});
 	entry.save();
 	res.status(200).end();

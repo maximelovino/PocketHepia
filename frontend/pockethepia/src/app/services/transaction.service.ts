@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { Transaction } from '../models/transaction';
 import { map } from 'rxjs/operators';
 
-
-const SET_BALANCE_ROUTE = '/api/transactions/setBalance';
+const ADD_BALANCE_ROUTE = '/api/transactions/addBalance';
+const GET_BALANCE_ROUTE = '/api/transactions/balance';
 const GET_TRANSACTIONS_ROUTE = '/api/transactions/my';
 
 @Injectable({
@@ -16,8 +16,12 @@ export class TransactionService {
 
   constructor(private http: HttpClient) { }
 
-  public setBalance(user: User, amount: Number): Observable<void> {
-    return this.http.post<void>(SET_BALANCE_ROUTE, { userID: user.id, amount: amount });
+  public addToBalance(user: User, amount: Number): Observable<void> {
+    return this.http.post<void>(ADD_BALANCE_ROUTE, { userID: user.id, amount: amount });
+  }
+
+  public getBalance(): Observable<Number> {
+    return this.http.get<Number>(GET_BALANCE_ROUTE);
   }
 
   public getTransactions(): Observable<Transaction[]> {

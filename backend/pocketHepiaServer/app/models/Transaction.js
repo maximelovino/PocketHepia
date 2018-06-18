@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// TODO add stripe token string field required false 
 const TransactionSchema = new Schema({
 	title: {
 		type: String,
@@ -14,7 +15,7 @@ const TransactionSchema = new Schema({
 	from: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',
-		required: true
+		required: false
 	},
 	to: {
 		type: Schema.Types.ObjectId,
@@ -24,6 +25,16 @@ const TransactionSchema = new Schema({
 	amount: {
 		type: Number,
 		required: true
+	},
+	stripe: {
+		type: Boolean,
+		required: true,
+		default: false
+	},
+	adminCharge: {
+		type: Boolean,
+		required: true,
+		default: false
 	}
 });
 

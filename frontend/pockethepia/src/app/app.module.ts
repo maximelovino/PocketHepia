@@ -40,6 +40,7 @@ import { RechargeCardComponent } from './components/recharge-card/recharge-card.
 import { TransactionsListComponent } from './components/transactions-list/transactions-list.component';
 import { TransactionEntryComponent } from './components/transaction-entry/transaction-entry.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { RechargeModalComponent } from './components/recharge-modal/recharge-modal.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
     RechargeCardComponent,
     TransactionsListComponent,
     TransactionEntryComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    RechargeModalComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +80,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
     MaterialModule,
     ReactiveFormsModule
   ],
-  entryComponents: [ChangePasswordSheetComponent, DeleteUserModalComponent, EditUserModalComponent],
+  entryComponents: [ChangePasswordSheetComponent, DeleteUserModalComponent, EditUserModalComponent, RechargeModalComponent],
   providers: [FormBuilder, TransactionService, UserService, AuthService, LogService, AuthGuard, AdminGuard, NotAuthGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpTokenInterceptorService,

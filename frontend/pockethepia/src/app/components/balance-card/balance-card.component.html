@@ -1,8 +1,8 @@
 <mat-card>
   <mat-card-title>Your Balance</mat-card-title>
   <mat-card-content>
-    <div *ngIf="currentUser | async as user" class="mat-display-3 balance-value">
-      {{user.balance}} CHF
+    <div class="mat-display-3 balance-value">
+      {{(balance | async) || 0}} CHF
     </div>
   </mat-card-content>
 </mat-card>

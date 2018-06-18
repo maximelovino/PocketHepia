@@ -18,15 +18,15 @@
       <button mat-raised-button color="accent" class="full-width" (click)="changePermissions()" [disabled]="sending">Change permissions</button>
     </div>
   </mat-tab>
-  <mat-tab label="Set Balance">
-    <form class="mat-tab-content full-width" [formGroup]="setBalanceGroup" (ngSubmit)="setBalance()">
+  <mat-tab label="Add To Balance">
+    <form class="mat-tab-content full-width" [formGroup]="addToBalanceGroup" (ngSubmit)="addToBalance()">
       <mat-form-field class="full-width">
-        <input matInput formControlName="newBalanceAmount" placeholder="New amount" [value]="data.balance" type="text" required>
-        <mat-error *ngIf="setBalanceGroup.hasError('format') && setBalanceGroup.get('newBalanceAmount').touched">Format is wrong</mat-error>
+        <input matInput formControlName="amount" placeholder="Amount to add" type="text" required>
+        <mat-error *ngIf="addToBalanceGroup.hasError('format') && addToBalanceGroup.get('amount').touched">Format is wrong</mat-error>
         <mat-hint>Use format: 0(.00)</mat-hint>
       </mat-form-field>
       <div class="spacing-top">
-        <button mat-raised-button color="accent" class="full-width" (click)="setBalance()" [disabled]="setBalanceGroup.invalid ||sending">Set Balance</button>
+        <button mat-raised-button color="accent" class="full-width" (click)="addToBalance()" [disabled]="addToBalanceGroup.invalid ||sending">Add to Balance</button>
       </div>
     </form>
   </mat-tab>

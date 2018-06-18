@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Load money on your account</h1>
+<mat-dialog-content>
+  <form [formGroup]="loadMoneyGroup" (ngSubmit)="loadMoney()">
+    <mat-form-field class="full-width">
+      <input type="text" matInput placeholder="How much do you want to load?" formControlName="amount">
+      <mat-hint>Format: 0(.00)</mat-hint>
+    </mat-form-field>
+    <div class="spacing-top">
+      <button mat-raised-button color="accent" class="full-width" (click)="loadMoney()" [disabled]="loadMoneyGroup.invalid">Load Money</button>
+    </div>
+  </form>
+</mat-dialog-content>

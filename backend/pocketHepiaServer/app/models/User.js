@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const passportMongoose = require('passport-local-mongoose')
 const validator = require('validator');
 const Schema = mongoose.Schema;
+
+const Transaction = mongoose.model('Transaction');
+
 const UserSchema = new Schema({
 	name: {
 		type: String,
@@ -70,6 +73,34 @@ const UserSchema = new Schema({
 	}
 });
 
+
+UserSchema.method('getBalance', async function () {
+	const balanceIn = await Transaction.aggregate([{
+		$match: {
+			to: this._id
+		}
+	}, {
+		$group: {
+			_id: null,
+			totalAmount: { $sum: "$amount" }
+		}
+	}]);
+
+	const balanceOut = await Transaction.aggregate([{
+		$match: {
+			from: this._id
+		}
+	}, {
+		$group: {
+			_id: null,
+			totalAmount: { $sum: "$amount" }
+		}
+	}]);
+	const inMoney = balanceIn[0] ? balanceIn[0].totalAmount : 0.0;
+	const outMoney = balanceOut[0] ? balanceOut[0].totalAmount : 0.0;
+	const totalBalance = inMoney - outMoney
+	return totalBalance
+})
 
 if (!UserSchema.options.toObject) UserSchema.options.toObject = {};
 UserSchema.options.toObject.transform = function (doc, ret) {
