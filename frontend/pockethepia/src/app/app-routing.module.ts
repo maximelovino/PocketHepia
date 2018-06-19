@@ -15,6 +15,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { NotAuthGuard } from './guards/not-auth.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+import { AccessAdminComponent } from './components/access-admin/access-admin.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
         path: 'admin', canActivate: [AdminGuard], children: [
           { path: 'logs', component: LogsComponent },
           { path: 'users', component: UsersComponent },
+          { path: 'access', component: AccessAdminComponent },
         ]
       },
     ]

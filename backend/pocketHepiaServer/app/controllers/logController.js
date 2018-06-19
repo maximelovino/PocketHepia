@@ -167,3 +167,25 @@ exports.addToBalance = (req, res) => {
 	entry.save();
 	res.status(200).end();
 }
+
+exports.createArea = (req, res) => {
+	const entry = new Log({
+		category: categories.ADMIN_CREATES_AREA,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} has created area ${req.area.name}`,
+		rawData: { area: req.area },
+	});
+	entry.save();
+	res.status(200).end();
+}
+
+exports.createRoom = (req, res) => {
+	const entry = new Log({
+		category: categories.ADMIN_CREATES_ROOM,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} has created room ${req.room.name}`,
+		rawData: { area: req.area, room: req.room },
+	});
+	entry.save();
+	res.status(200).end();
+}

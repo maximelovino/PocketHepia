@@ -41,6 +41,7 @@ import { TransactionsListComponent } from './components/transactions-list/transa
 import { TransactionEntryComponent } from './components/transaction-entry/transaction-entry.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { RechargeModalComponent } from './components/recharge-modal/recharge-modal.component';
+import { AccessAdminComponent } from './components/access-admin/access-admin.component';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { RechargeModalComponent } from './components/recharge-modal/recharge-mod
     TransactionsListComponent,
     TransactionEntryComponent,
     WelcomeComponent,
-    RechargeModalComponent
+    RechargeModalComponent,
+    AccessAdminComponent
   ],
   imports: [
     BrowserModule,
