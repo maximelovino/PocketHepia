@@ -189,3 +189,14 @@ exports.createRoom = (req, res) => {
 	entry.save();
 	res.status(200).end();
 }
+
+exports.giveAccess = (req, res) => {
+	const entry = new Log({
+		category: categories.ADMIN_GIVES_ACCESS,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} gave access to  ${req.room.name} to user ${req.user.name}`,
+		rawData: { access: req.access, room: req.room, user: req.user },
+	});
+	entry.save();
+	res.status(200).end();
+}

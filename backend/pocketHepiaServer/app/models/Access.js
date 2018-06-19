@@ -23,14 +23,28 @@ const AccessSchema = new Schema({
 	},
 	startTime: {
 		type: Number,
-		required: false,
+		required: true,
+		default: 0,
+		min: 0,
+		max: 24 * 60 - 2
 	},
 	endTime: {
 		type: Number,
-		required: false,
+		required: true,
+		default: 24 * 60 - 1,
+		min: 1,
+		max: 24 * 60 - 1,
 	},
 });
 
+
+AccessSchema.pre('validate', function (next) {
+	if (this.startDate > this.endDate || this.startTime >= this.endTime) {
+		next(new Error('Problem with timing of the access'));
+	} else {
+		next();
+	}
+});
 
 if (!AccessSchema.options.toObject) AccessSchema.options.toObject = {};
 AccessSchema.options.toObject.transform = function (doc, ret) {
