@@ -42,6 +42,10 @@ import { TransactionEntryComponent } from './components/transaction-entry/transa
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { RechargeModalComponent } from './components/recharge-modal/recharge-modal.component';
 import { AccessAdminComponent } from './components/access-admin/access-admin.component';
+import { AreaCreationComponent } from './components/area-creation/area-creation.component';
+import { RoomCreationComponent } from './components/room-creation/room-creation.component';
+import { RoomTableComponent } from './components/room-table/room-table.component';
+import { AreaTableComponent } from './components/area-table/area-table.component';
 
 
 @NgModule({
@@ -72,7 +76,11 @@ import { AccessAdminComponent } from './components/access-admin/access-admin.com
     TransactionEntryComponent,
     WelcomeComponent,
     RechargeModalComponent,
-    AccessAdminComponent
+    AccessAdminComponent,
+    AreaCreationComponent,
+    RoomCreationComponent,
+    RoomTableComponent,
+    AreaTableComponent
   ],
   imports: [
     BrowserModule,

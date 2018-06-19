@@ -79,6 +79,14 @@ exports.getRoomsForArea = async (req, res) => {
 	res.json(toReturn)
 }
 
+exports.getRooms = async (req, res) => {
+	const rooms = await Room.find().populate('area')
+
+	const toReturn = rooms.map(r => r.toObject());
+
+	res.json(toReturn)
+}
+
 exports.giveAccess = async (req, res, next) => {
 	if (!(req.body.userID && req.body.roomID)) {
 		res.status(400);
@@ -140,7 +148,7 @@ exports.giveAccess = async (req, res, next) => {
 }
 
 exports.removeAccess = async (req, res, next) => {
-
+	//TODO
 }
 
 exports.getAccessesForRoom = async (req, res) => {

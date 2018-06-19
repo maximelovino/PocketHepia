@@ -25,7 +25,6 @@ export class UsersTableComponent implements OnInit {
   data: User[];
   dataSource: User[] = [];
   isLoadingResults = false;
-  selection = new SelectionModel<User>(allowMultiSelect, initialSelection);
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */

@@ -5,7 +5,8 @@ const RoomSchema = new Schema({
 	name: {
 		type: String,
 		required: true,
-		trim: true
+		trim: true,
+		unique: true
 	},
 	area: {
 		type: Schema.Types.ObjectId,

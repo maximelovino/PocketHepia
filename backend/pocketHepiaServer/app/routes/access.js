@@ -13,6 +13,9 @@ router.post("/giveAccess", passport.authenticate('jwt'), authController.checkAdm
 
 router.get("/areas", passport.authenticate('jwt'), authController.checkAdmin, accessController.getAreas)
 
+//TODO is this admin only or for everybody for completion?
+router.get("/rooms", passport.authenticate('jwt'), authController.checkAdmin, accessController.getRooms)
+
 router.get("/rooms/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.getRoomsForArea)
 
 router.get("/accesses/room/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.getAccessesForRoom)

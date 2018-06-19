@@ -12,40 +12,13 @@
     </div>
   </div>
   <mat-progress-bar mode="indeterminate" [hidden]="!isLoadingResults"></mat-progress-bar>
+
   <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
-    </ng-container>
-
-    <!-- Email Column -->
-    <ng-container matColumnDef="email">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.email}}</mat-cell>
-    </ng-container>
-
-    <!-- Permissions Column -->
-    <ng-container matColumnDef="permissions">
-      <mat-header-cell *matHeaderCellDef>Permissions</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.permissions.join(', ')}}</mat-cell>
-    </ng-container>
-
-    <!-- Edit column -->
-    <ng-container matColumnDef="edit">
-      <mat-header-cell *matHeaderCellDef>
-        <mat-icon style="visibility: hidden;">
-          edit
-        </mat-icon>
-      </mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="editUser(row)">
-          <mat-icon>
-            edit
-          </mat-icon>
-        </button>
-      </mat-cell>
     </ng-container>
 
     <!-- Delete column -->
@@ -56,9 +29,25 @@
         </mat-icon>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="deleteUser(row)" [disabled]="(currentUser | async).id == row.id">
+        <button mat-icon-button (click)="deleteArea(row)">
           <mat-icon>
             delete
+          </mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Edit column -->
+    <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon style="visibility: hidden;">
+          edit
+        </mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="editArea(row)">
+          <mat-icon>
+            edit
           </mat-icon>
         </button>
       </mat-cell>
@@ -67,4 +56,8 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
+
+
+
+
 </div>

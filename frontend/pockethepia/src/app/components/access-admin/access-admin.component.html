@@ -1,3 +1,18 @@
-<p>
-  access-admin works!
-</p>
+<div class="row">
+  <div class="col-xl">
+    <div class="spacing-bottom">
+      <app-area-creation #createArea (areaCreated)="onAreaCreated($event)"></app-area-creation>
+    </div>
+    <div class="spacing-bottom">
+      <app-area-table #areaTable></app-area-table>
+    </div>
+  </div>
+  <div class="col-xl">
+    <div class="spacing-bottom">
+      <app-room-creation #createRoom (roomCreated)="onRoomCreated($event)"></app-room-creation>
+    </div>
+    <div class="spacing-bottom">
+      <app-room-table #roomTable></app-room-table>
+    </div>
+  </div>
+</div>
