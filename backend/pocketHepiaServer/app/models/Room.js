@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Access = mongoose.model('Access');
 
 const RoomSchema = new Schema({
 	name: {
@@ -18,6 +19,12 @@ const RoomSchema = new Schema({
 		required: true,
 		default: []
 	}
+});
+
+RoomSchema.pre('remove', function (next) {
+	console.log(`Room pre hook for ${this.name}`);
+	Access.remove({ room: this._id }).exec();
+	next();
 });
 
 

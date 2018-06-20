@@ -107,30 +107,14 @@ exports.deleteArea = async (req, res, next) => {
 	if (!req.params.id) {
 		res.sendStatus(400);
 	}
-	const area = await Area.findByIdAndRemove(req.params.id);
-
-	console.log(area);
+	const area = await Area.findById(req.params.id);
 
 	if (!area) {
 		res.sendStatus(404);
 		return;
 	}
-	const rooms = await Room.find({ area: area._id });
 
-	if (!rooms) {
-		next();
-		return;
-	}
-
-	console.log(rooms);
-
-	const deleteAllAccesses = rooms.map(room => Access.remove({ room: room._id }));
-
-	await Promise.all(deleteAllAccesses);
-
-	const deleteRooms = rooms.map(room => room.remove());
-
-	await Promise.all(deleteRooms);
+	await area.remove();
 
 	req.area = area;
 
@@ -141,14 +125,14 @@ exports.deleteRoom = async (req, res, next) => {
 	if (!req.params.id) {
 		res.sendStatus(400);
 	}
-	const room = await Room.findByIdAndRemove(req.params.id);
+	const room = await Room.findById(req.params.id);
 
 	if (!room) {
 		res.sendStatus(404);
 		return;
 	}
 
-	await Access.remove({ room: room._id });
+	await room.remove();
 
 	req.room = room;
 

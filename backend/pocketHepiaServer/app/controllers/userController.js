@@ -50,12 +50,14 @@ exports.delete = async (req, res, next) => {
 		return;
 	}
 
-	const user = await User.findByIdAndRemove(req.params.id);
+	const user = await User.findById(req.params.id);
 
 	if (!user) {
 		res.sendStatus(404);
 		return;
 	}
+
+	await user.remove();
 
 	req.oldUser = user;
 	next();

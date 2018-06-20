@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Room = mongoose.model('Room');
 
 const AreaSchema = new Schema({
 	name: {
@@ -10,6 +11,12 @@ const AreaSchema = new Schema({
 	}
 });
 
+AreaSchema.pre('remove', function (next) {
+	console.log(`Area pre hook for ${this.name}`);
+	Room.find({ area: this._id }).then(rooms => {
+		return Promise.all(rooms.map(r => r.remove()));
+	}).then(() => next()).catch(() => next());
+});
 
 if (!AreaSchema.options.toObject) AreaSchema.options.toObject = {};
 AreaSchema.options.toObject.transform = function (doc, ret) {

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const passportMongoose = require('passport-local-mongoose')
 const validator = require('validator');
 const Schema = mongoose.Schema;
+const Access = mongoose.model('Access');
 
 const Transaction = mongoose.model('Transaction');
 
@@ -72,6 +73,14 @@ const UserSchema = new Schema({
 		type: String
 	}
 });
+
+
+UserSchema.pre('remove', function (next) {
+	console.log(`User pre hook for ${this.name}`);
+	Access.remove({ user: this._id }).exec();
+	next();
+});
+
 
 
 UserSchema.method('getBalance', async function () {

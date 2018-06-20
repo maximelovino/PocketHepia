@@ -28,11 +28,11 @@ mongooseConnection();
 mongoose.Promise = global.Promise;
 
 require('./app/models/Transaction')
+require('./app/models/Access');
 require('./app/models/User');
 require('./app/models/Log');
-require('./app/models/Area');
 require('./app/models/Room');
-require('./app/models/Access');
+require('./app/models/Area');
 
 app.use(morgan('dev'));
 app.use(bodyparser.urlencoded({ extended: true }));
