@@ -2,4 +2,12 @@
   <mat-card-title>Add a reader for Room
     <span *ngIf="room">{{room.name}}</span>
   </mat-card-title>
+  <mat-card-content>
+    <form (ngSubmit)="createReader()" [formGroup]="formGroup" autocomplete="off">
+      <mat-form-field class="full-width">
+        <input type="text" matInput placeholder="Access reader identifier" required formControlName="identifier">
+      </mat-form-field>
+      <button class="full-width" type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid">Add access reader</button>
+    </form>
+  </mat-card-content>
 </mat-card>

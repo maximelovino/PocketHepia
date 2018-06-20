@@ -30,6 +30,13 @@ router.get("/accesses/user/:id", passport.authenticate('jwt'), authController.ch
 
 router.delete("/accesses/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.deleteAccess, logController.deleteAccess)
 
+router.post("/accesses/room/reader", passport.authenticate('jwt'), authController.checkAdmin, accessController.createReaderForRoom)
+
+router.get("/accesses/room/:id/readers", passport.authenticate('jwt'), authController.checkAdmin, accessController.getReadersForRoom)
+
+router.delete("/accesses/room/:roomID/reader/:readerID", passport.authenticate('jwt'), authController.checkAdmin, accessController.deleteReader)
+
+
 
 
 router.get("/accesses/my", passport.authenticate('jwt'), accessController.getMyAccesses)

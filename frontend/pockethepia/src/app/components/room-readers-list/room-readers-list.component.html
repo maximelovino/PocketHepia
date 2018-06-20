@@ -1,3 +1,47 @@
-<p>
-  room-readers-list works!
-</p>
+<div class="table-container mat-elevation-z1">
+  <div class="table-header">
+    <div class="table-search-bar">
+      <mat-form-field class="table-search-bar-input">
+        <input matInput id="filter" (keyup)="filterTable($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+      <div class="table-refresh-icon">
+        <button mat-icon-button (click)="refreshData()">
+          <mat-icon matTooltip="Click to refresh readers list" [matTooltipPosition]="'above'">refresh</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <mat-progress-bar mode="indeterminate" [hidden]="!isLoadingResults"></mat-progress-bar>
+
+  <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+
+    <!-- Identifier Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Identifier</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row}}</mat-cell>
+    </ng-container>
+
+    <!-- Delete column -->
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon style="visibility: hidden;">
+          delete
+        </mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="deleteReader(row)">
+          <mat-icon>
+            delete
+          </mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+
+
+
+</div>

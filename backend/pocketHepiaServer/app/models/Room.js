@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Access = mongoose.model('Access');
 
+
 const RoomSchema = new Schema({
 	name: {
 		type: String,

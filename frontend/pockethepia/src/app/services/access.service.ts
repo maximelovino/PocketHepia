@@ -18,6 +18,7 @@ const CREATE_ACCESS_ROUTE = '/api/access/giveAccess';
 const GET_ACCESS_FOR_ROOM_ROUTE = '/api/access/accesses/room';
 const DELETE_ACCESS_ROUTE = '/api/access/accesses';
 const DELETE_AREA_ROUTE = '/api/access/area';
+const CREATE_READER_ROUTE = '/api/access/accesses/room/reader';
 
 @Injectable({
   providedIn: 'root'
@@ -79,5 +80,21 @@ export class AccessService {
     startTime?: number,
     endTime?: number): Observable<void> {
     return this.http.post<void>(CREATE_ACCESS_ROUTE, { roomID, userID, startDate, endDate, startTime, endTime });
+  }
+
+  createReader(room: Room, readerID: String): Observable<void> {
+    return this.http.post<void>(CREATE_READER_ROUTE, { identifier: readerID, roomID: room.id });
+  }
+
+
+
+  getReadersForRoom(room: Room): Observable<String[]> {
+    const route = `/api/access/accesses/room/${room.id}/readers`;
+    return this.http.get<String[]>(route).pipe(map(res => res.map(r => String(r))));
+  }
+
+  deleteReader(room: Room, reader: String): Observable<void> {
+    const route = `/api/access//accesses/room/${room.id}/reader/${reader}`;
+    return this.http.delete<void>(route);
   }
 }

@@ -257,3 +257,46 @@ exports.getMyAccesses = async (req, res) => {
 
 	res.json(toReturn)
 }
+
+exports.createReaderForRoom = async (req, res) => {
+	if (!(req.body.identifier && req.body.roomID)) {
+		res.sendStatus(400);
+		return;
+	}
+
+	const room = await Room.findByIdAndUpdate(req.body.roomID, { $push: { accessReaders: req.body.identifier } });
+
+	if (room) {
+		res.status(200).end();
+	} else {
+		res.sendStatus(404);
+	}
+}
+exports.getReadersForRoom = async (req, res) => {
+	if (!req.params.id) {
+		res.sendStatus(400);
+		return;
+	}
+
+	const room = await Room.findById(req.params.id);
+
+	if (room) {
+		res.json(room.accessReaders);
+	} else {
+		res.sendStatus(404);
+	}
+}
+exports.deleteReader = async (req, res) => {
+	if (!(req.params.roomID && req.params.readerID)) {
+		res.sendStatus(400);
+	}
+
+	const room = await Room.findByIdAndUpdate(req.params.roomID, { $pull: { accessReaders: req.params.readerID } });
+
+	if (room) {
+		res.status(200).end();
+	} else {
+		res.sendStatus(404);
+	}
+
+}

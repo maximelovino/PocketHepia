@@ -1,4 +1,5 @@
 <div *ngIf="myAccesses$ | async as accesses">
+  <p *ngIf="accesses.length === 0" class="mat-display-2">You have no accesses yet</p>
   <div *ngFor="let access of accesses" class="spacing-bottom">
     <app-access-entry [access]="access"></app-access-entry>
   </div>
