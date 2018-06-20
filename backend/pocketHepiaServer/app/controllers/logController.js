@@ -190,13 +190,49 @@ exports.createRoom = (req, res) => {
 	res.status(200).end();
 }
 
-exports.giveAccess = (req, res) => {
+exports.deleteRoom = (req, res) => {
 	const entry = new Log({
-		category: categories.ADMIN_GIVES_ACCESS,
+		category: categories.ADMIN_DELETES_ROOM,
 		triggeringUser: req.user._id,
-		description: `${req.user.name} gave access to  ${req.room.name} to user ${req.user.name}`,
-		rawData: { access: req.access, room: req.room, user: req.user },
+		description: `${req.user.name} has deleted room ${req.room.name}`,
+		rawData: { room: req.room },
 	});
 	entry.save();
 	res.status(200).end();
 }
+
+
+exports.deleteArea = (req, res) => {
+	const entry = new Log({
+		category: categories.ADMIN_REMOVES_AREA,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} has deleted area ${req.area.name}`,
+		rawData: { area: req.area },
+	});
+	entry.save();
+	res.status(200).end();
+}
+
+exports.giveAccess = (req, res) => {
+	const entry = new Log({
+		category: categories.ADMIN_GIVES_ACCESS,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} gave access to  ${req.room.name} to user ${req.accessUser.name}`,
+		rawData: { access: req.access, room: req.room, user: req.accessUser },
+	});
+	entry.save();
+	res.status(200).end();
+}
+
+exports.deleteAccess = (req, res) => {
+	const entry = new Log({
+		category: categories.ADMIN_REMOVES_ACCESS,
+		triggeringUser: req.user._id,
+		description: `${req.user.name} deleted an access to ${req.access.room.name} for user ${req.access.user.name}`,
+		rawData: { access: req.access },
+	});
+	entry.save();
+	res.status(200).end();
+}
+
+

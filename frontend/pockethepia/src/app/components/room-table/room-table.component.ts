@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Room } from '../../models/room';
-import { MatSort, MatTable } from '@angular/material';
+import { MatSort, MatTable, MatDialog } from '@angular/material';
 import { AccessService } from '../../services/access.service';
+import { DeleteRoomModalComponent } from '../delete-room-modal/delete-room-modal.component';
 
 @Component({
   selector: 'app-room-table',
@@ -15,7 +16,7 @@ export class RoomTableComponent implements OnInit {
   data: Room[];
   dataSource: Room[] = [];
   displayedColumns = ['name', 'area', 'edit', 'delete'];
-  constructor(private accessService: AccessService) { }
+  constructor(private accessService: AccessService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.sort.disableClear = true;
@@ -60,7 +61,10 @@ export class RoomTableComponent implements OnInit {
   }
 
   deleteRoom(room: Room) {
-    // TODO pop modal for confirmation before sending
+    const openedDialog = this.dialog.open(DeleteRoomModalComponent, { data: room });
+    openedDialog.afterClosed().subscribe(d => {
+      this.refreshData();
+    });
   }
 
 }

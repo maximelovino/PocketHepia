@@ -1,0 +1,10 @@
+.actions{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+.actions > * {
+	flex: 1 1 auto;
+}
+

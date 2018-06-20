@@ -103,6 +103,75 @@ exports.getRoom = async (req, res) => {
 	res.json(toReturn)
 }
 
+exports.deleteArea = async (req, res, next) => {
+	if (!req.params.id) {
+		res.sendStatus(400);
+	}
+	const area = await Area.findByIdAndRemove(req.params.id);
+
+	console.log(area);
+
+	if (!area) {
+		res.sendStatus(404);
+		return;
+	}
+	const rooms = await Room.find({ area: area._id });
+
+	if (!rooms) {
+		next();
+		return;
+	}
+
+	console.log(rooms);
+
+	const deleteAllAccesses = rooms.map(room => Access.remove({ room: room._id }));
+
+	await Promise.all(deleteAllAccesses);
+
+	const deleteRooms = rooms.map(room => room.remove());
+
+	await Promise.all(deleteRooms);
+
+	req.area = area;
+
+	next()
+}
+
+exports.deleteRoom = async (req, res, next) => {
+	if (!req.params.id) {
+		res.sendStatus(400);
+	}
+	const room = await Room.findByIdAndRemove(req.params.id);
+
+	if (!room) {
+		res.sendStatus(404);
+		return;
+	}
+
+	await Access.remove({ room: room._id });
+
+	req.room = room;
+
+	next()
+}
+
+exports.deleteAccess = async (req, res, next) => {
+	//TODO if we want to populate, we have to find it first and then do a findAndremove
+	if (!req.params.id) {
+		res.sendStatus(400);
+	}
+	const access = await Access.findByIdAndRemove(req.params.id).populate('user').populate('room');
+
+	if (!access) {
+		res.sendStatus(404);
+		return;
+	}
+
+	req.access = access;
+
+	next()
+}
+
 exports.giveAccess = async (req, res, next) => {
 	if (!(req.body.userID && req.body.roomID)) {
 		res.status(400);
@@ -153,7 +222,7 @@ exports.giveAccess = async (req, res, next) => {
 	try {
 		await access.save();
 		req.access = access;
-		req.user = user;
+		req.accessUser = user;
 		req.room = room;
 		next()
 	} catch (e) {
@@ -161,10 +230,6 @@ exports.giveAccess = async (req, res, next) => {
 		res.sendStatus(500);
 	}
 
-}
-
-exports.removeAccess = async (req, res, next) => {
-	//TODO
 }
 
 exports.getAccessesForRoom = async (req, res) => {

@@ -13,16 +13,24 @@ router.post("/giveAccess", passport.authenticate('jwt'), authController.checkAdm
 
 router.get("/areas", passport.authenticate('jwt'), authController.checkAdmin, accessController.getAreas)
 
+router.delete("/area/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.deleteArea, logController.deleteArea)
+
 //TODO is this admin only or for everybody for completion?
 router.get("/rooms", passport.authenticate('jwt'), authController.checkAdmin, accessController.getRooms)
 
 router.get("/room/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.getRoom)
+
+router.delete("/room/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.deleteRoom, logController.deleteRoom)
 
 //TODO this should be /rooms/area/:id or area/:id/rooms
 router.get("/rooms/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.getRoomsForArea)
 
 router.get("/accesses/room/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.getAccessesForRoom)
 router.get("/accesses/user/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.getAccessesForUser)
+
+router.delete("/accesses/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.deleteAccess, logController.deleteAccess)
+
+
 
 router.get("/accesses/my", passport.authenticate('jwt'), accessController.getMyAccesses)
 

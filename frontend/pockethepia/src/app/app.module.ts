@@ -53,6 +53,9 @@ import { AccessCreationComponent } from './components/access-creation/access-cre
 import { RoomReaderCreationComponent } from './components/room-reader-creation/room-reader-creation.component';
 import { RoomAccessTableComponent } from './components/room-access-table/room-access-table.component';
 import { RoomReadersListComponent } from './components/room-readers-list/room-readers-list.component';
+import { DeleteAccessModalComponent } from './components/delete-access-modal/delete-access-modal.component';
+import { DeleteRoomModalComponent } from './components/delete-room-modal/delete-room-modal.component';
+import { DeleteAreaModalComponent } from './components/delete-area-modal/delete-area-modal.component';
 
 
 @NgModule({
@@ -94,7 +97,10 @@ import { RoomReadersListComponent } from './components/room-readers-list/room-re
     AccessCreationComponent,
     RoomReaderCreationComponent,
     RoomAccessTableComponent,
-    RoomReadersListComponent
+    RoomReadersListComponent,
+    DeleteAccessModalComponent,
+    DeleteRoomModalComponent,
+    DeleteAreaModalComponent
   ],
   imports: [
     BrowserModule,
@@ -104,7 +110,13 @@ import { RoomReadersListComponent } from './components/room-readers-list/room-re
     MaterialModule,
     ReactiveFormsModule
   ],
-  entryComponents: [ChangePasswordSheetComponent, DeleteUserModalComponent, EditUserModalComponent, RechargeModalComponent],
+  entryComponents: [ChangePasswordSheetComponent,
+    DeleteUserModalComponent,
+    EditUserModalComponent,
+    RechargeModalComponent,
+    DeleteAccessModalComponent,
+    DeleteRoomModalComponent,
+    DeleteAreaModalComponent],
   providers: [FormBuilder, TransactionService, UserService, AuthService, LogService, AuthGuard, AdminGuard, NotAuthGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpTokenInterceptorService,

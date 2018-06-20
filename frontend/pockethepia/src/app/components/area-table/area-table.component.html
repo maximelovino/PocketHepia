@@ -37,22 +37,6 @@
       </mat-cell>
     </ng-container>
 
-    <!-- Edit column -->
-    <ng-container matColumnDef="edit">
-      <mat-header-cell *matHeaderCellDef>
-        <mat-icon style="visibility: hidden;">
-          edit
-        </mat-icon>
-      </mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="editArea(row)">
-          <mat-icon>
-            edit
-          </mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
-
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>

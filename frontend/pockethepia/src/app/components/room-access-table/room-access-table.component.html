@@ -14,7 +14,6 @@
   <mat-progress-bar mode="indeterminate" [hidden]="!isLoadingResults"></mat-progress-bar>
 
   <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
-
     <!-- User Column -->
     <ng-container matColumnDef="user">
       <mat-header-cell *matHeaderCellDef mat-sort-header>User</mat-header-cell>

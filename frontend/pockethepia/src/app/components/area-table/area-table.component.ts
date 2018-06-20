@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { AccessService } from '../../services/access.service';
 import { Area } from '../../models/area';
-import { MatTable, MatSort } from '@angular/material';
+import { MatTable, MatSort, MatDialog } from '@angular/material';
+import { DeleteAreaModalComponent } from '../delete-area-modal/delete-area-modal.component';
 
 @Component({
   selector: 'app-area-table',
@@ -11,11 +12,12 @@ import { MatTable, MatSort } from '@angular/material';
 export class AreaTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<Area>;
+  @Output() removedArea = new EventEmitter<boolean>();
   isLoadingResults = false;
   data: Area[];
   dataSource: Area[] = [];
-  displayedColumns = ['name', 'edit', 'delete'];
-  constructor(private accessService: AccessService) { }
+  displayedColumns = ['name', 'delete'];
+  constructor(private accessService: AccessService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.sort.disableClear = true;
@@ -59,10 +61,10 @@ export class AreaTableComponent implements OnInit {
   }
 
   deleteArea(area: Area) {
-    // TODO pop modal for confirmation before sending
-  }
-
-  editArea(area: Area) {
-    // TODO here we would assign permissions for area
+    const openedDialog = this.dialog.open(DeleteAreaModalComponent, { data: area });
+    openedDialog.afterClosed().subscribe(d => {
+      this.refreshData();
+      this.removedArea.emit(true);
+    });
   }
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Room } from '../../models/room';
 import { AccessService } from '../../services/access.service';
-import { MatSort, MatTable } from '@angular/material';
+import { MatSort, MatTable, MatDialog } from '@angular/material';
 import { Access } from '../../models/access';
+import { DeleteAccessModalComponent } from '../delete-access-modal/delete-access-modal.component';
 
 @Component({
   selector: 'app-room-access-table',
@@ -17,7 +18,7 @@ export class RoomAccessTableComponent implements OnInit {
   dataSource: Access[] = [];
   displayedColumns = ['user', 'startDate', 'endDate', 'timeRange', 'delete'];
   room: Room;
-  constructor(private accessService: AccessService) { }
+  constructor(private accessService: AccessService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.sort.disableClear = true;
@@ -66,7 +67,10 @@ export class RoomAccessTableComponent implements OnInit {
   }
 
   deleteAccess(access: Access) {
-
+    const openedDialog = this.dialog.open(DeleteAccessModalComponent, { data: access });
+    openedDialog.afterClosed().subscribe(d => {
+      this.refreshData();
+    });
   }
 
 }

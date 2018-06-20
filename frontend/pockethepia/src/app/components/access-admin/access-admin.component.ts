@@ -29,4 +29,9 @@ export class AccessAdminComponent implements OnInit {
     this.roomTable.refreshData();
   }
 
+  onAreaRemoved(areaRemoved: boolean) {
+    this.roomTable.refreshData();
+    this.createRoom.refresh();
+  }
+
 }

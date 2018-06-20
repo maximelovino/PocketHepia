@@ -27,10 +27,10 @@ export class AccessCreationComponent implements OnInit {
   endDate = new FormControl({ value: '', disabled: true }, );
 
   startTimeCheckboxControl = new FormControl(false);
-  startTime = new FormControl({ value: '00:00', disabled: true }, [this.timeFormat]);
+  startTime = new FormControl({ value: '00:00', disabled: true }, [this.timeFormat()]);
 
   endTimeCheckboxControl = new FormControl(false);
-  endTime = new FormControl({ value: '23:59', disabled: true }, [this.timeFormat]);
+  endTime = new FormControl({ value: '23:59', disabled: true }, [this.timeFormat()]);
 
   @Output() accessCreated = new EventEmitter<boolean>();
 

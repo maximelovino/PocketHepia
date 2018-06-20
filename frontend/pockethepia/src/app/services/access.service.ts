@@ -12,9 +12,12 @@ const CREATE_ROOM_ROUTE = '/api/access/createRoom';
 const GET_AREAS_ROUTE = '/api/access/areas';
 const GET_ROOMS_ROUTE = '/api/access/rooms';
 const GET_SINGLE_ROOM_ROUTE = '/api/access/room';
+const DELETE_ROOM_ROUTE = '/api/access/room';
 const GET_MY_ACCESSES_ROUTE = '/api/access/accesses/my';
 const CREATE_ACCESS_ROUTE = '/api/access/giveAccess';
 const GET_ACCESS_FOR_ROOM_ROUTE = '/api/access/accesses/room';
+const DELETE_ACCESS_ROUTE = '/api/access/accesses';
+const DELETE_AREA_ROUTE = '/api/access/area';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +58,18 @@ export class AccessService {
 
   getAccessesForRoom(room: Room): Observable<Access[]> {
     return this.http.get<Access[]>(`${GET_ACCESS_FOR_ROOM_ROUTE}/${room.id}`).pipe(map(res => res.map(r => new Access(r))));
+  }
+
+  deleteRoom(room: Room): Observable<void> {
+    return this.http.delete<void>(`${DELETE_ROOM_ROUTE}/${room.id}`);
+  }
+
+  deleteAccess(access: Access): Observable<void> {
+    return this.http.delete<void>(`${DELETE_ACCESS_ROUTE}/${access.id}`);
+  }
+
+  deleteArea(area: Area): Observable<void> {
+    return this.http.delete<void>(`${DELETE_AREA_ROUTE}/${area.id}`);
   }
 
   createAccess(roomID: string,
