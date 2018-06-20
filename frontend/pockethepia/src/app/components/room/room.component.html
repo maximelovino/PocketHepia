@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-xl">
+    <div class="spacing-bottom">
+      <app-access-creation [room]="room" (accessCreated)="createdAccess($event)"></app-access-creation>
+    </div>
+    <div class="spacing-bottom">
+      <app-room-access-table #roomAccessTable></app-room-access-table>
+    </div>
+  </div>
+  <div class="col-xl">
+    <div class="spacing-bottom">
+      <app-room-reader-creation></app-room-reader-creation>
+    </div>
+    <div class="spacing-bottom">
+      <app-room-readers-list></app-room-readers-list>
+    </div>
+  </div>
+</div>

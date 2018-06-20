@@ -1,0 +1,66 @@
+<mat-card>
+  <mat-card-title>Create access for Room
+    <span *ngIf="room">{{room.name}}</span>
+  </mat-card-title>
+  <mat-card-content>
+    <form (ngSubmit)="createAccess()" [formGroup]="formGroup" autocomplete="off">
+      <mat-form-field class="full-width">
+        <input type="text" matInput [matAutocomplete]="userAutoComplete" placeholder="Pick a user" [formControl]="userFilterControl"
+          formControlName="user" required>
+      </mat-form-field>
+      <mat-autocomplete #userAutoComplete="matAutocomplete" [displayWith]="userAutoCompleteDisplay">
+        <mat-option *ngFor="let user of filteredUsers | async" [value]="user">{{user.name}}</mat-option>
+      </mat-autocomplete>
+
+
+      <mat-form-field class="full-width">
+        <input matInput [matDatepicker]="startPicker" placeholder="Choose a start date" [formControl]="startDate" required>
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+
+      <div class="row">
+        <div class="col-auto checkbox">
+          <mat-checkbox #endDateCheckbox color="primary" [formControl]="endDateCheckboxControl" (change)="checkboxChange($event)" name="endDateCheckbox"></mat-checkbox>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="endPicker" placeholder="Choose an end date" [required]="endDateCheckbox.checked" [min]="startDate.value"
+              [formControl]="endDate">
+            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-auto checkbox">
+          <mat-checkbox #startTimeCheckbox color="primary" [formControl]="startTimeCheckboxControl" (change)="checkboxChange($event)"
+            name="startTimeCheckbox"></mat-checkbox>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Choose a start time" type="text" [required]="startTimeCheckbox.checked" [formControl]="startTime">
+            <mat-hint>{{timeFormatHint}}</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-auto checkbox">
+          <mat-checkbox #endTimeCheckbox color="primary" [formControl]="endTimeCheckboxControl" (change)="checkboxChange($event)" name="endTimeCheckbox"></mat-checkbox>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Choose an end time" type="text" [required]="endTimeCheckbox.checked" [formControl]="endTime">
+            <mat-hint>{{timeFormatHint}}</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="spacing-top">
+        <button class="full-width" mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">Create access</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -4,11 +4,17 @@ import { Observable } from 'rxjs';
 import { Area } from '../models/area';
 import { map } from 'rxjs/operators';
 import { Room } from '../models/room';
+import { Access } from '../models/access';
+import { User } from '../models/user';
 
 const CREATE_AREA_ROUTE = '/api/access/createArea';
 const CREATE_ROOM_ROUTE = '/api/access/createRoom';
 const GET_AREAS_ROUTE = '/api/access/areas';
 const GET_ROOMS_ROUTE = '/api/access/rooms';
+const GET_SINGLE_ROOM_ROUTE = '/api/access/room';
+const GET_MY_ACCESSES_ROUTE = '/api/access/accesses/my';
+const CREATE_ACCESS_ROUTE = '/api/access/giveAccess';
+const GET_ACCESS_FOR_ROOM_ROUTE = '/api/access/accesses/room';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +41,28 @@ export class AccessService {
     return this.http.get<Room[]>(GET_ROOMS_ROUTE).pipe(map(res => {
       return res.map(r => new Room(r));
     }));
+  }
+
+  getMyAccesses(): Observable<Access[]> {
+    return this.http.get<Access[]>(GET_MY_ACCESSES_ROUTE).pipe(map(res => {
+      return res.map(r => new Access(r));
+    }));
+  }
+
+  getRoomByID(id: string): Observable<Room> {
+    return this.http.get<Room>(`${GET_SINGLE_ROOM_ROUTE}/${id}`).pipe(map(res => new Room(res)));
+  }
+
+  getAccessesForRoom(room: Room): Observable<Access[]> {
+    return this.http.get<Access[]>(`${GET_ACCESS_FOR_ROOM_ROUTE}/${room.id}`).pipe(map(res => res.map(r => new Access(r))));
+  }
+
+  createAccess(roomID: string,
+    userID: string,
+    startDate: number,
+    endDate?: number,
+    startTime?: number,
+    endTime?: number): Observable<void> {
+    return this.http.post<void>(CREATE_ACCESS_ROUTE, { roomID, userID, startDate, endDate, startTime, endTime });
   }
 }

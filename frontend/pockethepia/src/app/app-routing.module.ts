@@ -16,6 +16,7 @@ import { NotAuthGuard } from './guards/not-auth.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { AccessAdminComponent } from './components/access-admin/access-admin.component';
+import { RoomComponent } from './components/room/room.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
           { path: 'logs', component: LogsComponent },
           { path: 'users', component: UsersComponent },
           { path: 'access', component: AccessAdminComponent },
+          { path: 'access/room/:id', component: RoomComponent }
         ]
       },
     ]

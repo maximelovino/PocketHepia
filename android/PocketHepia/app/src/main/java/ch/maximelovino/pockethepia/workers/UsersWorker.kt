@@ -73,6 +73,7 @@ class UsersWorker : Worker() {
 
 
     private fun getCurrentUser(token: String): User? {
+        //TODO close connections
         try {
             val url = URL(Constants.CURRENT_USER_URL)
             val connection = url.openConnection() as HttpsURLConnection

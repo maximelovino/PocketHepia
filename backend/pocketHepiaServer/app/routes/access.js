@@ -16,6 +16,9 @@ router.get("/areas", passport.authenticate('jwt'), authController.checkAdmin, ac
 //TODO is this admin only or for everybody for completion?
 router.get("/rooms", passport.authenticate('jwt'), authController.checkAdmin, accessController.getRooms)
 
+router.get("/room/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.getRoom)
+
+//TODO this should be /rooms/area/:id or area/:id/rooms
 router.get("/rooms/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.getRoomsForArea)
 
 router.get("/accesses/room/:id", passport.authenticate('jwt'), authController.checkAdmin, accessController.getAccessesForRoom)

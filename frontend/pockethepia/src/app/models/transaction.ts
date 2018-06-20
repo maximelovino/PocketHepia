@@ -35,4 +35,8 @@ export class Transaction {
     }
   }
 
+  public amountString(): String {
+    return `${this.amount > 0 ? '+' : ''}${this.amount.toFixed(2)} CHF`;
+  }
+
 }

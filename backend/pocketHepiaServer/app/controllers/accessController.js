@@ -87,6 +87,22 @@ exports.getRooms = async (req, res) => {
 	res.json(toReturn)
 }
 
+exports.getRoom = async (req, res) => {
+	if (!req.params.id) {
+		res.sendStatus(400);
+	}
+	const room = await Room.findById(req.params.id).populate('area')
+
+	if (!room) {
+		res.sendStatus(404);
+		return;
+	}
+
+	const toReturn = room.toObject();
+
+	res.json(toReturn)
+}
+
 exports.giveAccess = async (req, res, next) => {
 	if (!(req.body.userID && req.body.roomID)) {
 		res.status(400);

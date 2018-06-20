@@ -46,6 +46,13 @@ import { AreaCreationComponent } from './components/area-creation/area-creation.
 import { RoomCreationComponent } from './components/room-creation/room-creation.component';
 import { RoomTableComponent } from './components/room-table/room-table.component';
 import { AreaTableComponent } from './components/area-table/area-table.component';
+import { AccessListComponent } from './components/access-list/access-list.component';
+import { AccessEntryComponent } from './components/access-entry/access-entry.component';
+import { RoomComponent } from './components/room/room.component';
+import { AccessCreationComponent } from './components/access-creation/access-creation.component';
+import { RoomReaderCreationComponent } from './components/room-reader-creation/room-reader-creation.component';
+import { RoomAccessTableComponent } from './components/room-access-table/room-access-table.component';
+import { RoomReadersListComponent } from './components/room-readers-list/room-readers-list.component';
 
 
 @NgModule({
@@ -80,7 +87,14 @@ import { AreaTableComponent } from './components/area-table/area-table.component
     AreaCreationComponent,
     RoomCreationComponent,
     RoomTableComponent,
-    AreaTableComponent
+    AreaTableComponent,
+    AccessListComponent,
+    AccessEntryComponent,
+    RoomComponent,
+    AccessCreationComponent,
+    RoomReaderCreationComponent,
+    RoomAccessTableComponent,
+    RoomReadersListComponent
   ],
   imports: [
     BrowserModule,

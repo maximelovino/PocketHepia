@@ -1,0 +1,10 @@
+<mat-card>
+  <mat-card-content>
+    <p class="mat-title normal-bottom-margin-text">{{access.room.name}}</p>
+    <p class="mat-subheading-2 normal-bottom-margin-text">
+      From {{access.startDate.toLocaleDateString()}}
+      <span *ngIf="access.endDate">to {{access.endDate.toLocaleDateString()}}</span>
+    </p>
+    <p class="mat-subheading-2 normal-bottom-margin-text">Between {{access.startTimeString()}} and {{access.endTimeString()}}</p>
+  </mat-card-content>
+</mat-card>

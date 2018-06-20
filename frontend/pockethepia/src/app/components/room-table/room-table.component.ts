@@ -63,8 +63,4 @@ export class RoomTableComponent implements OnInit {
     // TODO pop modal for confirmation before sending
   }
 
-  editRoom(room: Room) {
-    // TODO here we would assign permissions for area
-  }
-
 }
