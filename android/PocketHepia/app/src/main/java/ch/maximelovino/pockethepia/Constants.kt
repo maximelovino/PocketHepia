@@ -2,6 +2,9 @@ package ch.maximelovino.pockethepia
 
 
 object Constants {
+
+    const val SYNC_TAG = "SYNC"
+
     private const val URL = "https://pockethepia.maximelovino.ch"
     const val BACKEND_ROOT_URL = "$URL/api/"
     const val CURRENT_USER_URL = "${BACKEND_ROOT_URL}users/current"
@@ -14,4 +17,6 @@ object Constants {
     const val TRANSACTIONS_PAY_ROUTE = "${BACKEND_ROOT_URL}transactions/pay"
     const val TRANSACTIONS_GET_PAID_ROUTE = "${BACKEND_ROOT_URL}transactions/getPaid"
     const val TRANSACTIONS_GET_BALANCE_ROUTE = "${BACKEND_ROOT_URL}transactions/balance"
+
+    const val ACCESS_GET_ROUTE = "${BACKEND_ROOT_URL}access/accesses/my"
 }

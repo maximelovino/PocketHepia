@@ -12,7 +12,7 @@ data class Transaction(
         @PrimaryKey val id: String,
         val title: String,
         val amount: Double,
-        @Embedded(prefix = "to") val to: User,
+        @Embedded(prefix = "to") val to: User?,
         @Embedded(prefix = "from") val from: User?,
         val date: Calendar,
         val adminCharge: Boolean,
@@ -26,9 +26,9 @@ data class Transaction(
             "Admin Charge"
         } else {
             if (this.amount < 0) {
-                this.to.name
+                this.to?.name ?: "Deleted user"
             } else {
-                this.from?.name ?: "Name not found"
+                this.from?.name ?: "Deleted user"
             }
         }
     }
@@ -38,7 +38,11 @@ data class Transaction(
             val date = Calendar.getInstance()
             date.timeInMillis = jsonObject.getLong("date")
             val amount = jsonObject.getDouble("amount")
-            val to = User.fromJson(jsonObject.getJSONObject("to"))
+            val to = try {
+                User.fromJson(jsonObject.getJSONObject("to"))
+            }catch (e: Exception){
+                null
+            }
             val from = try {
                 User.fromJson(jsonObject.getJSONObject("from"))
             }catch (e: Exception){

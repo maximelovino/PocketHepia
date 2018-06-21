@@ -16,13 +16,12 @@ import android.view.MenuItem
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkContinuation
 import androidx.work.WorkManager
+import ch.maximelovino.pockethepia.Constants.SYNC_TAG
 import ch.maximelovino.pockethepia.data.AppDatabase
 import ch.maximelovino.pockethepia.data.models.User
 import ch.maximelovino.pockethepia.utils.ForegroundDispatchedActivity
-import ch.maximelovino.pockethepia.workers.TransactionsWorker
-import ch.maximelovino.pockethepia.workers.UsersWorker
+import ch.maximelovino.pockethepia.workers.SyncWorker
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -64,7 +63,7 @@ class MainActivity : ForegroundDispatchedActivity() {
         })
 
 
-        val status = workManager.getStatusesByTag("SYNC")
+        val status = workManager.getStatusesByTag(SYNC_TAG)
 
         status.observe(this, Observer {
             // If there are no matching work statuses, do nothing
@@ -98,11 +97,10 @@ class MainActivity : ForegroundDispatchedActivity() {
     }
 
     fun launchSync() {
+        //TODO setting to refreshing might not be needed because of the observation of the status
         swipe_refresh.isRefreshing = true
-        val request = OneTimeWorkRequest.Builder(UsersWorker::class.java).addTag("SYNC").build()
-        val transactionsRequest = OneTimeWorkRequest.Builder(TransactionsWorker::class.java).addTag("SYNC").build()
-        val continuation = this.workManager.beginWith(request).then(transactionsRequest)
-        continuation.enqueue()
+        val syncRequest = OneTimeWorkRequest.Builder(SyncWorker::class.java).addTag(SYNC_TAG).build()
+        this.workManager.enqueue(syncRequest)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:id="@+id/user_item_card">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/activity_horizontal_margin"
+            android:paddingVertical="@dimen/activity_vertical_margin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/access_room_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="A404"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+
+                <TextView
+                    android:id="@+id/access_date_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="From 17/09/2018 until 10/07/2019"
+                    android:textColor="@color/colorAccent"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+                <TextView
+                    android:id="@+id/access_time_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Between 08:00 and 19:00"
+                    android:textColor="@color/colorAccent"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

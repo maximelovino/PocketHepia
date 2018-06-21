@@ -28,9 +28,9 @@ export class Transaction {
       return 'Admin Charge';
     } else {
       if (this.amount < 0) {
-        return this.to.name;
+        return this.to ? this.to.name : 'Deleted user';
       } else {
-        return this.from.name;
+        return this.from ? this.from.name : 'Deleted user';
       }
     }
   }

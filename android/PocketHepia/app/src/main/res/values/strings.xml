@@ -47,4 +47,5 @@
     <string name="payment_description_hint">Payment description</string>
     <string name="problem_payment">There was a problem with the payment</string>
     <string name="payment_ok">Payment successful</string>
+    <string name="no_access">No access</string>
 </resources>

@@ -183,6 +183,9 @@ exports.giveAccess = async (req, res, next) => {
 		room: room._id
 	})
 
+	//TODO the problem here is the startDate and endDate we get here are with the time, not midnight and 23:59, we should do that instead => startDate is taken back to 00:00 and endDate taken to 23:59
+
+	//TODO create a date handler for this, because there's something similar in log controller
 	if (req.body.startDate) {
 		const start = new Date(parseInt(req.body.startDate));
 		access.startDate = start

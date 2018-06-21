@@ -5,17 +5,20 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
+import ch.maximelovino.pockethepia.data.dao.AccessDao
 import ch.maximelovino.pockethepia.data.dao.TransactionDao
 import ch.maximelovino.pockethepia.data.dao.UserDao
+import ch.maximelovino.pockethepia.data.models.Access
 import ch.maximelovino.pockethepia.data.models.Transaction
 import ch.maximelovino.pockethepia.data.models.User
 
 
-@Database(entities = arrayOf(User::class, Transaction::class), version = 5)
+@Database(entities = arrayOf(User::class, Transaction::class, Access::class), version = 7)
 @TypeConverters(DataTransformers::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun transactionDao(): TransactionDao
+    abstract fun accessDao(): AccessDao
 
     companion object {
         private var db: AppDatabase? = null
