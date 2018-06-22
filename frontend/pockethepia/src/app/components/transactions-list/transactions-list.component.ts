@@ -3,6 +3,9 @@ import { TransactionService } from '../../services/transaction.service';
 import { Transaction } from '../../models/transaction';
 import { Observable } from 'rxjs';
 
+// TODO add loading indicator
+
+
 @Component({
   selector: 'app-transactions-list',
   templateUrl: './transactions-list.component.html',

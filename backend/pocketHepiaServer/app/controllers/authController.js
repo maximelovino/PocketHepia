@@ -25,12 +25,12 @@ exports.login = (req, res) => {
 	console.log(req.user.toObject());
 	const user = req.user.toObject();
 	const token = jwt.sign(req.user.toObject(), process.env.JWT_SECRET);
-	res.json({ user, token });
+	res.json({ token });
 };
 
 exports.changePassword = (req, res, next) => {
 	console.log("Hello");
-	if (req.body.password !== req.body.password2) {
+	if (!(req.body.oldPassword && req.body.password && req.body.password2) || req.body.password !== req.body.password2) {
 		res.status(400);
 		res.send("New passwords don't match");
 		return;
@@ -73,16 +73,18 @@ exports.initFirstAdmin = async (req, res) => {
 	const users = await User.count();
 	if (users > 0) {
 		res.status(400);
-		res.send("You can't initiate the server if it's already been initiated");
+		res.send("You can't initialize the server if it's already been initiated");
 		return;
 	}
-	const user = new User({ email: "root@pockethepia.maximelovino.ch", name: "Default Root Account", isAdmin: true });
-	User.register(user, "root", (err, account) => {
+	const email = "root@pockethepia.maximelovino.ch"
+	const password = "root"
+	const user = new User({ email: email, name: "Default Root Account", isAdmin: true });
+	User.register(user, password, (err, account) => {
 		if (err) {
 			console.log(err);
 			res.sendStatus(500);
 		} else {
-			res.json({ email: "root@pockethepia.maximelovino.ch", password: "root" });
+			res.json({ email, password });
 		}
 	})
 }

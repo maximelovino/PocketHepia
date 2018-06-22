@@ -1,6 +1,5 @@
 \documentclass[11pt,a4paper]{report}
 \usepackage[utf8]{inputenc}
-\usepackage[francais]{babel}
 \usepackage{dirtree}
 \setlength{\parindent}{0pt}
 \addtolength{\hoffset}{-1cm}
@@ -11,6 +10,7 @@
 \usepackage{xcolor,graphicx}
 \usepackage[hidelinks]{hyperref}
 \usepackage{float}
+\title{PocketHepia}
 
 \usepackage{chngcntr}
 \counterwithout{figure}{chapter}
@@ -20,6 +20,8 @@
 \setcounter{secnumdepth}{5}
 \usepackage[nonumberlist]{glossaries}
 \makeglossaries
+%%TODO convert this to english
+%%TODO add RFID
 \newglossaryentry{nfc}
 {
 	name=NFC,
@@ -166,15 +168,15 @@ texcl=false,
 \begin{document}
 \begin{titlepage}
 	\centering
-	{\scshape \LARGE Projet de Bachelor ITI \par}
+	{\scshape \LARGE ITI Bachelor Project \par}
 	\vspace{1cm}
-	{\scshape\Large Août 2018\par}
+	{\scshape\Large August 2018\par}
 	\vspace{1.5cm}
-	{\huge\bfseries PocketHepia - Carte d’étudiant virtuelle basée sur la technologie NFC \par}
+	{\huge\bfseries PocketHepia\\A student card platform based on NFC \par}
 	\vspace{2cm}
 	{\Large\itshape Maxime Alexandre Lovino\par}
 	\vfill
-	Supervisé par\par
+	Supervised by\par
 	Prof. Mickaël Hoerdt
 	\vfill
 		\begin{minipage}{.5\textwidth}
@@ -192,12 +194,243 @@ texcl=false,
 \newpage
 \listoffigures
 \newpage
-\chapter*{Remerciements}
+\chapter*{Acknowledgements}
 \glsaddall
-\printglossary[title=Termes et définitions]
+\printglossary[title=Terms and Definitions]
 \newpage
 \shipout\null
 \pagenumbering{arabic}
 \chapter{Introduction}
+Since starting my studies at HEPIA almost three years ago after two years at EPFL, I've been shocked by the lack of commodities and study spaces for students. Some of this lack is due to the difference in scale between the two schools, one of them being composed of mainly three building in a constrained city environment and the other an almost-autonomous campus outside the city. But, actually, there isn't really a lack of space at HEPIA, but a lack of space that students can use to study. Most of the classrooms are locked when not in use by a teacher. When asking about why that is the case, I've been told that it was mainly for security concerns because of the equipment present inside the rooms. If the rooms stayed unlocked, there was no way of knowing who stole or broke something. I suggested the idea of giving access to select students to these classrooms to study and work on projects but it wasn't practical because copies of keys had to be made, the students had to make a money deposit to make sure that they didn't run away with the keys etc.\\ 
+
+The real solution would have been to use our student cards as an electronic door key to access the rooms, as well as enable other uses for the cards, such as using them as electronic wallets to simplify the payments at the canteen during lunch break. When I suggested the idea, people mostly laughed at me and said "[...] they're never going to do it, unless someone actually does it, presents it as a finished product and then they decide to use it." So, here I am, after 3 years studying at HEPIA and for my Bachelor Project I decided to work on this exact idea. A multi-function student card platform built on NFC technology with accompanying mobile and web application for administrators to manage the platform and for students to monitor their usage statistics.
+
+\section{Project inspiration - Camipro EPFL}
+\subsection{The card and the official core platform}
+The inspiration for this project mainly comes from my experience studying at EPFL. The EPFL student card, named Camipro\cite{camipro:homepage}, contains an RFID chip that allows to perform various tasks that simplify student life on campus. The use cases for the Camipro card are the following:
+\begin{itemize}
+    \item Electronic wallet to pay at every canteen on campus as well as select third-party retailers (for example the Migros shop present on campus)
+    \item Access key to unlock doors and buildings
+    \item Card to collect documents sent to the centralised printing pool system at any printer on campus
+    \item Rent public bicycles\footnote{All students have access to a free Publibike account on their card \url{https://www.publibike.ch/en/publibike/}} on campus and in the Lausanne area
+    \item Rent cars by linking a Mobility\footnote{\url{https://www.mobility.ch/en/}} subscription to the card
+    \item Borrow books at the library
+    \item Use electric car chargers on campus
+    \item Turn on booked electrical barbecues present on campus\footnote{The service PolyGrill allows students to book free barbecues on campus and access them with their camipro \url{https://camipro.epfl.ch/cms/site/camipro/lang/en/polygrill_electric_barbecues}}
+\end{itemize}
+
+An accompanying web platform called MyCamipro was built as part of the Camipro launch to manage and activate the different services on the card as well as see the recent transactions and the rooms we were given access to.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.6\textwidth]{assets/camipro_website.png}
+	\caption{Screenshot of the MyCamipro website}
+\end{center}
+\end{figure}
+
+\subsection{PocketCampus}
+With the increased usage of smartphones by students, in 2010 a team of 20 computer science students decided to build the PocketCampus application as part of a software engineering class. They continued working on the project after the academic project was finished and it became the official EPFL application in 2013. \cite{camipro:creation}. \\
+
+Initially you could mainly see the balance of your Camipro card on the app, but version after version, the development team added new integration in the app by collaborating with different services at EPFL.
+These functions include:
+\begin{itemize}
+    \item Accessing the menus of all canteens on campus
+    \item Searching through the whole EPFL directory
+    \item Having access to IS-Academia data to see course schedule and grades
+    \item Printing from your smartphone on the EPFL print system
+    \item Accessing Lausanne public transportation itineraries
+    \item Accessing Moodle documents
+\end{itemize}
+
+After having integrated every requested features, the team launched a beta web version of PocketCampus for EPFL in June 2018. They also started diversifying their business by working on PocketCampus as a platform that can be integrated in other companies and stopped working exclusively with EPFL. They announced plans on partnering with Lausanne University (UNIL) to integrate their platform there.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.8\textwidth]{assets/web_pocketcampus.png}
+	\caption{Screenshot of the web version of PocketCampus}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.5\textwidth]{assets/pocketcampus_mobile.png}
+	\caption{PocketCampus Android application}
+\end{center}
+\end{figure}
+
+\chapter{The project}
+The idea of this project is not to build as many features as the EPFL platform due to the time constraints inherent to the Bachelor Project, but rather to focus on some key aspects of the card at first, namely payments and access control. We are also building features on the payment side that are not available on the EPFL platform, for example the ability to send money between users. The project of course would be extensible with other features outside the scope of the Bachelor Project. \\
+
+The project is composed of three main components:
+\begin{itemize}
+    \item The physical student card
+    \item An administration component
+    \item An user facing component
+\end{itemize}
+
+A mobile app and a web app will be developed and both will offer the same user facing features as well as specific administrative features relevant to each app.
+
+\section{Features of the app}
+
+
+
+\section{Roles}
+We defined a set of roles for the users on the platform. At the base, every user of the platform is a simple user. This means that it has an account on the platform, can login to the web and android application and has read access to its payments, its accesses and its other information and can send money to other users.\\
+
+Then, there is the admin role that can be added to an user. This role enables the creation of users, attribution of roles, the consultation of administrative logs as well as the creation of access components (rooms, readers) and the attribution of accesses to users.\\
+
+While these two roles would have been enough to handle all our features. We decided to specify roles specific to different components of the platform.\\
+
+One of these roles is the "Accept payments" role. This is specific to a canteen or a shop that wants to handle payments using the student card. While every user can send money to another user from the mobile app by tapping the other user's card, this isn't very practical for a canteen or a shop where the transactions should go the other way around. So the shop creates the payment and taps the user's card to take money from it. At first, we wanted this feature to be available to everyone but we thought about security concerns with this solution because a student could create a payment from the app and start tapping his phone on lost cards or even on people's pocket and if the card was detected it would "steal" their money. So by enabling this feature as a role, we could only allow trusted people, such as canteen's owners to receive payments in that way. \\
+
+Furthermore, due to the introduction of GDPR recently, we created a specific role called "Auditor" to access sensitive logs concerning all users, mainly access logs and transaction history. Only a user with this role can view all transactions between users and access logs for every room.
+
+Then, there are two roles that will not be implemented as part of the Bachelor project, the "Can invite" and "Area admin" role. The first is to allow specific users to create temporary accounts without needing to contact an administrator. A use case for this would be a teacher creating a temporary account for a visiting colleague from another school. The "Area admin" role consists of delegating the administration of the accesses for an area to an user. Similar to the concept of DNS zones delegation, an administrator could for example give this role the ITI section dean to allow him to give access to the rooms present on his floor.
+
+\section{User stories}
+From the beginning, we wrote simple user stories as a roadmap for the project features we wanted to implement. All of these features are not part of this academic project but are part of the broader student card project. 
+%% TODO table of user stories with priority and specifying if a given feature should work offline
+%% TODO add HA and backup part to mongodb
+%% TODO Talk about apple student card initiative in introduction
+
+\section{Décisions prises}
+\section{User stories}
+\section{Realm vs. Express-MongoDB}
+\subsection{Avantages de Realm}
+\subsection{Cas d'utilisation}
+\section{Architecture choisie - Stack MEAN}
+\chapter{Le NFC et le format NDEF}
+\section{Introduction à la technologie NFC}
+\section{Le format NDEF}
+\subsection{Text payload}
+
+
+
+
+\chapter{Developing for Android}
+\label{android_chapter}
+Android is a mobile operating system developed by Google and launched in September 2008. The core of Android is open source and is known as the \emph{Android Open Source Program (AOSP)}. But nobody really knows or uses the AOSP version of Android, every phone manufacturer, even Google, forks the AOSP version to build its own for their devices. What is often referred as "pure Android" is the Google implementation of Android on their Nexus and Pixel lines of smartphones. Android runs on all kinds of platforms, from mobile phone to watches, as well as tablets and laptops. \\
+
+A SDK and an IDE are provided for developing Android applications. Those applications are written mainly in Java, with the ability to write native code in C++ using the Android NDK\footnote{This is used for example to use some C++ libraries, like OpenCV.} and interact with the Java code using JNI. The support for a second language named Kotlin was announced at Google I/O 2017 (see section \ref{kotlin}). Applications run in a virtual environment on Android called ART. You can think of ART as the equivalent of the JVM for desktop Java development.
+\section{Android Fragmentation}
+One of the biggest problems for developers is the fragmentation of OS versions running on Android devices. As of May 2018, only 62.3\% of devices were running Android Marshmallow (version 6) or later. Android Marshmallow was released in 2015, meaning that 37.7\% of devices were running software that was more than 3 years old without security updates or new features (see table \ref{android_os_table}).
+
+\begin{table}[H]
+\centering
+\bgroup
+\def\arraystretch{1.5}%  1 is the default, change whatever you need
+\begin{tabular}{|c|c|c|c|}
+\hline
+  \textbf{Year} & \textbf{Version Name} & \textbf{Usage of this version} & \textbf{Usage of this version or later}\\
+  \hline
+2010 & Gingerbread & 0.3\% & 100.0\% \\
+\hline
+2011 & Ice Cream Sandwich & 0.4\% & 99.7\% \\
+\hline
+2012 & Jelly Bean & 4.3\% & 99.3\% \\
+\hline
+2013 & Kit Kat & 10.3\% & 95.0\% \\
+\hline
+2014 & Lollipop & 22.4\% & 84.7\% \\
+\hline
+2015 & Marshmallow & 25.5\% & 62.3\% \\
+\hline
+2016 & Nougat & 31.1\% & 36.8\% \\
+\hline
+2017 & Oreo & 5.7\% & 5.7\% \\
+\hline
+\end{tabular}
+\egroup
+\label{android_os_table}
+\caption{Android OS Fragmentation (May 2018)\cite{android:dev:osfragmentation}}
+\end{table}
+
+\subsection{The problem with updates}
+This problem is inherent to the very nature of the Android operating system. Each phone manufacturer, or OEM, can fork its own version of Android and integrate its own skin and set of apps on top of it. When a new version of the operating system is released by Google, they can't just start using it. They have to first adapt and test all their apps and customisation with the new version before it can ship to the devices. This is a time (and by extension money) consuming process and many OEMs just don't care about maintaining their devices for more than one or two years. To make matters worse, in certain countries, such as the United States, mobile carriers have to validate and apply their own custom apps and settings on top of the OS, adding to the time needed to validate an update and causing a supplementary potential roadblock to the release of an update.
+
+\subsection{What Google is doing about this?}
+Google has in the recent years taken different actions to ensure that most of the devices run safe and up-to-date software on them without depending on the OEMs willingness to maintain their products.
+\subsubsection{Updating core apps through the Play Store}
+One of the most successful changes to Android in recent years has been to slowly move all Android core applications that are present on every Android device\footnote{Actually, not every Android device. Some Asian markets, mainly China don't have access to these apps because they don't have access to any Google services. This is an edge case that won't be discussed in this document. } to the Google Play Store. These apps include for example Gmail, Google Calendar, the browser (AOSP browser and Google Chrome) and even apps like the Phone Dialer and Contacts apps. This move to the Play Store allows Google to update these applications more frequently without needing a full operating system update. While it may be seen as a necessary evil at first, because it is the only way for them to update these apps if the OEM don't apply operating system updates, it is actually a very useful move because it allows for faster iteration on these applications and quicker response for bug fixes.\\
+
+If we compare this to the other major mobile operating system, iOS, all main applications on the platform are bundled with the OS. So, if Apple needs to update the Safari browser to support a new web API they have to release a full OS version and push it to all their devices instead of just updating the application that needs an update as Google would do on Android.
+\subsubsection{Android Support Library}
+%% TODO Android support library
+\subsubsection{Project Treble}
+%% TODO Project treble
+\subsubsection{Security updates}
+%% TODO Security updates
+
+%%TODO talk about android fragmentation, the support library naming scheme => move to AndroidX
+%% Then kotlin, architecture components, abstraction of jobscheduler etc through work manager because of versions
+\section{Kotlin}
+\label{kotlin}
+As discussed in chapter \ref{android_chapter}, Kotlin has become a primary Android language in 2017. After having used this language for a first Android project last year, I decided to build all my subsequent Android application in Kotlin. The simplifications and reductions in code length provided by this language compared to Java make developing Android applications more enjoyable. It also helps avoid many runtime errors by catching many error-prone scenarios at compile time. In this section, we will go in further details in some of the advantages provided by Kotlin and how Google is encouraging developers to use Kotlin by introducing new Kotlin-specific features in the Android SDK.
+\subsection{Full interoperability with Java}
+\subsection{Data classes}
+Java is often defined by its detractors as a very verbose language, requiring to write a lot of repetitive boilerplate code\footnote{Boilerplate code or boilerplate refers to sections of code that have to be included in many places with little or no alteration\cite{wiki:define:boilerplate}} for simple tasks. One of these tasks is the creation of classes with accessors and mutators for some of the class fields and overriding \verb+equals+ and \verb+toString+ methods. In Object Oriented Programming, we often have to write a lot of small classes just to match the Models in our applications. These are often referred as Beans or POJOs\footnote{Plain Old Java Object}. Kotlin introduces the concept of data classes\cite{kotlin:doc:data_classes} to simplify the implementation of these type of classes. By using a data class, you get "for free" an accessor (and mutator) for each field of the class, a correct overriding of the \verb+equals+ method, an overriding of the \verb+toString+ method listing the values of all fields in the instance and a \verb+copy+ method corresponding to a copy constructor in Java. For example, if we take a simple person class in Java:
+\javacode{assets/code/java/Person.java}
+And then the same class written using data classes in Kotlin:
+\kotlincode{assets/code/kotlin/Person.kt}
+\subsection{Constants first}
+\subsection{Class extensions}
+\subsection{Null safety}
+
+%%TODO: Good points about Kotlin:
+%% - Lifting return/assignments from try/catch blocks => assignment to constants instead of empty variable first to guarantee default value
+%% - Class extensions => often calling a static method of an helper class in a method-like syntax for the current class => "0.0".toDouble() instead of Double("0.0")
+\subsection{Android KTX}
+\section{Android Jetpack}
+\subsection{LiveData}
+\subsection{Room - Data persistence}
+\subsection{Work Manager - Background jobs}
+\subsection{Navigation}
+
+
+
+
+
+
+
+\chapter{Bases de données NoSQL - MongoDB}
+\chapter{NodeJS et Express}
+\section{JavaScript ES6}
+\section{Les modules}
+\section{Middlewares}
+\section{PassportJS}
+\chapter{Angular 6}
+\section{Single-page webapp}
+\section{Dependencies injection}
+\section{Architecture d'une application Angular}
+\subsection{Components}
+\subsubsection{Communication between components - Input/Output}
+\subsection{Services}
+\subsection{Handlers}
+\subsection{Guards}
+\section{RxJS - Observables}
+\section{TypeScript}
+\section{Angular Material}
+\chapter{Containers - Infrastructure as code}
+\section{Docker}
+\section{Orchestration avec Docker Compose}
+\section{Google Cloud}
+\subsection{Kubernetes}
+\subsection{Google Container Registry}
+\chapter{Implémentation}
+\section{Modules du projet}
+\section{Déploiement}
+\subsection{Architecture du projet}
+\subsection{Proxy Nginx}
+\section{Le backend commun}
+\subsection{Authentification}
+\subsection{Endpoints}
+\subsection{Interaction avec la base de données}
+\section{Le frontend Angular}
+\subsection{Le routage}
+\subsection{Les composants}
+\chapter{Résultats}
+\chapter{Conclusion}
+%%TODO talk about how to implement new features or sections inside the project
+\bibliographystyle{unsrt}
+\bibliography{bibliography}
 
 \end{document}

@@ -17,7 +17,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LogsComponent implements OnInit {
   startDate: Date = new Date();
   endDate: Date = new Date();
-  minDate = new Date(2018, 0, 3);
   categoriesList: String[] = [];
   categories: String[] = this.categoriesList;
   users: User[];
@@ -93,6 +92,7 @@ export class LogsComponent implements OnInit {
 
   public filterDate() {
     this.fetching = true;
+    // TODO Check if this is actually 00:00 (startDate) to 23:59 (endDate)
     const start = this.startDate.getTime();
     const end = this.endDate.getTime() + (24 * 3600 * 1000) - 1;
     this.logService.getLogs(start, end).subscribe(data => {

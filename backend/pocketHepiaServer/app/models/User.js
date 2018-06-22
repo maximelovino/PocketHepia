@@ -33,12 +33,6 @@ const UserSchema = new Schema({
 		type: String,
 		required: false
 	},
-	balance: {
-		type: Number,
-		required: true,
-		min: [0, 'No negative balance'],
-		default: 0
-	},
 	isLibrarian: {
 		type: Boolean,
 		required: true,
@@ -70,7 +64,8 @@ const UserSchema = new Schema({
 		default: false
 	},
 	importBatch: {
-		type: String
+		type: String,
+		required: false
 	}
 });
 
@@ -114,6 +109,7 @@ UserSchema.method('getBalance', async function () {
 if (!UserSchema.options.toObject) UserSchema.options.toObject = {};
 UserSchema.options.toObject.transform = function (doc, ret) {
 	// Sets the _id to id and remove the version tag, not useful
+	//TODO transform expiration in UNIX time
 	ret.id = ret._id;
 	delete ret._id;
 	delete ret.__v;

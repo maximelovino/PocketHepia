@@ -64,7 +64,8 @@ exports.delete = async (req, res, next) => {
 }
 
 exports.resetPassword = async (req, res, next) => {
-	if (!req.params.id || req.body.password !== req.body.password2) {
+	//TODO this test is wrong, we don't check that the passwords are set, they may be both undefined and it will work CHANGE THIS, THIS SHOULD DO IT
+	if (!(req.params.id && req.body.password && req.body.password2) || req.body.password !== req.body.password2) {
 		res.status(400);
 		res.send("New passwords don't match");
 		return;

@@ -5,7 +5,6 @@ export class User {
   isAdmin: boolean;
   cardId: String;
   virtualCard: String;
-  balance: Number;
   isLibrarian: boolean;
   acceptsPayments: boolean;
   // TODO this will actually be a list of areas
@@ -20,7 +19,6 @@ export class User {
     this.isAdmin = user.isAdmin;
     this.cardId = user.cardId;
     this.virtualCard = user.virtualCard;
-    this.balance = user.balance;
     this.isLibrarian = user.isLibrarian;
     this.acceptsPayments = user.acceptsPayments;
     this.adminForAreas = user.adminForAreas;
