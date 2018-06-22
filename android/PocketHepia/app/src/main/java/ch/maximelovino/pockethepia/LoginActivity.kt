@@ -141,6 +141,7 @@ class LoginActivity : AppCompatActivity() {
                 .addTag(Constants.SYNC_TAG)
                 .build()
 
+        //TODO here use enqueueUniquePeriodic stuff and KEEP so we can then do the same for the other one in main activity
         wm.enqueue(workRequest)
     }
 
@@ -208,12 +209,12 @@ class LoginActivity : AppCompatActivity() {
                     val inStream = BufferedReader(InputStreamReader(connection.inputStream))
                     val content = inStream.readText()
                     val jsonContent = JSONObject(content)
-                    val id = jsonContent.getJSONObject("user").getString("id")
+                    val id = jsonContent.getString("id")
                     PreferenceManager.saveUserID(applicationContext, id)
                     return jsonContent.getString("token")
                 }
             } catch (e: Exception) {
-                Log.e("LOGIN_ERROR", e.message);
+                Log.e("LOGIN_ERROR", e.message)
             }
 
             return null
@@ -238,6 +239,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     companion object {
+        //TODO move to Constants
         private const val AUTH_URL = "${Constants.BACKEND_ROOT_URL}auth/login"
     }
 }

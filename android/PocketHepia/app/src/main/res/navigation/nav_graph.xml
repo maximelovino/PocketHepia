@@ -23,11 +23,6 @@
         android:label="fragment_access"
         tools:layout="@layout/fragment_access" />
     <fragment
-        android:id="@+id/booksFragment"
-        android:name="ch.maximelovino.pockethepia.BooksFragment"
-        android:label="fragment_books"
-        tools:layout="@layout/fragment_books" />
-    <fragment
         android:id="@+id/adminFragment"
         android:name="ch.maximelovino.pockethepia.AdminFragment"
         android:label="fragment_admin"

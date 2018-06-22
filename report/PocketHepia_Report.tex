@@ -258,7 +258,12 @@ After having integrated every requested features, the team launched a beta web v
 \end{figure}
 
 \chapter{The project}
-The idea of this project is not to build as many features as the EPFL platform due to the time constraints inherent to the Bachelor Project, but rather to focus on some key aspects of the card at first, namely payments and access control. We are also building features on the payment side that are not available on the EPFL platform, for example the ability to send money between users. The project of course would be extensible with other features outside the scope of the Bachelor Project. \\
+The project is called PocketHepia, reminiscent of the name of the project at EPFL and will consist of the two parts of the EPFL project presented earlier. The student card platform, as well as the applicative platform to access information.\\
+
+
+The idea of this project is not to build as many features as the EPFL platform due to the time constraints inherent to the Bachelor Project, but rather to focus on some key aspects of the card at first, namely payments, access control and library. We are also building features on the payment side that are not available on the EPFL platform, for example the ability to send money between users. The project of course would be extensible with other features outside the scope of the Bachelor Project. \\
+
+In this chapter, we will present the main features, roles and user stories for the project as specified at the beginning of this one. All of these are part of the project, but not necessarily part of the Bachelor Project. The idea was to specify the entire project and to start implementing a subset of the functionality for the academic project and continue working on the rest as well as new features outside. For each element of this chapter, we will specify whether it is going to be implemented as part of the Bachelor Project.
 
 The project is composed of three main components:
 \begin{itemize}
@@ -267,14 +272,23 @@ The project is composed of three main components:
     \item An user facing component
 \end{itemize}
 
-A mobile app and a web app will be developed and both will offer the same user facing features as well as specific administrative features relevant to each app.
+A mobile application and a web application will be developed and both will offer the same user facing features as well as specific administrative features relevant to each application.
 
 \section{Features of the app}
+As stated before, we decided to limit the project to the three most important features in our opinion and, out of these, two are going to be implemented as part of the bachelor project.
 
+\subsection{Payments}
+
+The first feature is the electronic wallet functionality. We decided to start with this one because it would be bring the most benefits to the students and would not need specific hardware or collaboration with any school service. Every user has an electronic wallet linked to its account on the platform and can then send money to any other user by choosing the amount to send and tapping the user's card on his phone. Users can be assigned a specific role (see section \ref{roles_section}) to allow them to receive money directly from a card.\\
+
+There will be two main ways to add money to an user wallet. Either the user can give cash money to a person with administrative role that will then add money to the user's balance. Or the user will be able to add money to its account by using its credit card on the web application.\footnote{At the moment, the project is still in the development phase so no bank accounts have been linked to this project and you will be able to recharge your account only using a specific test credit card generated for development purposes}
+
+\subsection{Accesses}
 
 
 \section{Roles}
-We defined a set of roles for the users on the platform. At the base, every user of the platform is a simple user. This means that it has an account on the platform, can login to the web and android application and has read access to its payments, its accesses and its other information and can send money to other users.\\
+\label{roles_section}
+We defined a set of roles for the users on the platform. First, every member of the platform is a simple user. This means that the person has an account on the platform, can login to the web and android application and has read access to its payments, its accesses and its other information and can send money to other users.\\
 
 Then, there is the admin role that can be added to an user. This role enables the creation of users, attribution of roles, the consultation of administrative logs as well as the creation of access components (rooms, readers) and the attribution of accesses to users.\\
 
@@ -286,6 +300,8 @@ Furthermore, due to the introduction of GDPR recently, we created a specific rol
 
 Then, there are two roles that will not be implemented as part of the Bachelor project, the "Can invite" and "Area admin" role. The first is to allow specific users to create temporary accounts without needing to contact an administrator. A use case for this would be a teacher creating a temporary account for a visiting colleague from another school. The "Area admin" role consists of delegating the administration of the accesses for an area to an user. Similar to the concept of DNS zones delegation, an administrator could for example give this role the ITI section dean to allow him to give access to the rooms present on his floor.
 
+\section{Integration with existing user accounts}
+%%TODO why we didn't do LDAP + augmented database => time constraints, network infrastructure, iteration speed because network limitation
 \section{User stories}
 From the beginning, we wrote simple user stories as a roadmap for the project features we wanted to implement. All of these features are not part of this academic project but are part of the broader student card project. 
 %% TODO table of user stories with priority and specifying if a given feature should work offline

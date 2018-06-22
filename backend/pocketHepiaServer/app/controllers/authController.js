@@ -25,7 +25,9 @@ exports.login = (req, res) => {
 	console.log(req.user.toObject());
 	const user = req.user.toObject();
 	const token = jwt.sign(req.user.toObject(), process.env.JWT_SECRET);
-	res.json({ token });
+	// TODO here we have to send ID
+	//TODO change in apidoc here, change in LoginResponse Model and parse on Android
+	res.json({ token, id: user.id });
 };
 
 exports.changePassword = (req, res, next) => {

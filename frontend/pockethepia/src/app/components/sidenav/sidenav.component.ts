@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { ChangePasswordSheetComponent } from '../change-password-sheet/change-password-sheet.component';
 import { MatSnackBar, MatBottomSheet } from '@angular/material';
 import { User } from '../../models/user';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -14,11 +15,31 @@ import { User } from '../../models/user';
 export class SidenavComponent {
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
   user: Observable<User> = this.userService.retrieveUser();
+  isLoggedIn = false;
+  isAdmin = false;
 
   constructor(private breakpointObserver: BreakpointObserver,
     public userService: UserService,
     public sheet: MatBottomSheet,
-    public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar, private router: Router) {
+
+    this.router.events.subscribe(events => {
+      if (events instanceof NavigationEnd) {
+        this.refreshNavStatus();
+      }
+    });
+  }
+
+  refreshNavStatus() {
+    this.userService.isLoggedIn().subscribe(data => {
+      this.isLoggedIn = data;
+      if (data) {
+        this.userService.isAdmin().subscribe(admin => {
+          this.isAdmin = admin;
+        });
+      }
+    });
+  }
 
   public changePasswordDialog() {
 

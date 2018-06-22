@@ -1,17 +1,18 @@
-# TODO add back the build on each service for local deployment
+# TODO this is not correct way to do BUILD
 version: "3.1"
 services:
   mongo:
-    image: gcr.io/pockethepia/pockethepia_db:latest
+    build: db
+    image: pockethepia.azurecr.io/db
     container_name: mongo
     volumes:
     # TODO create one persistent volume on compute engine and fix it here, so it isn't recreated here
         - ./db/data/db:/data/db
-        - ./db/data/configdb:/data/configdb
     ports:
       - "27017:27017"
   backend:
-    image: gcr.io/pockethepia/pockethepia_backend:latest
+    build: backend
+    image: pockethepia.azurecr.io/backend
     container_name: backend
     depends_on:
       - "mongo"
@@ -20,7 +21,8 @@ services:
     environment: 
     - GET_HOSTS_FROM=dns
   frontend:
-    image: gcr.io/pockethepia/pockethepia_frontend:latest
+    build: frontend
+    image: pockethepia.azurecr.io/frontend
     container_name: frontend
     depends_on:
       - "mongo"

@@ -34,7 +34,7 @@ dependencies {
     implementation 'androidx.collection:collection-ktx:1.0.0-alpha3'*/
 
 
-    def room_version = "1.1.0"
+    def room_version = "1.1.1"
 
     implementation "android.arch.persistence.room:runtime:$room_version"
     kapt "android.arch.persistence.room:compiler:$room_version"
@@ -44,13 +44,13 @@ dependencies {
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
 
-    def nav_version = "1.0.0-alpha01"
+    def nav_version = "1.0.0-alpha02"
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version"
     // use -ktx for Kotlin
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version" // use -ktx for Kotlin
 
 
-    def work_version = "1.0.0-alpha02"
+    def work_version = "1.0.0-alpha03"
 
     implementation "android.arch.work:work-runtime-ktx:$work_version" // use -ktx for Kotlin
 

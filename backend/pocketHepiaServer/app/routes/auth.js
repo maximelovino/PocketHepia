@@ -19,6 +19,7 @@ router.post("/register", authController.register);
  * @apiParam  {String} password The password to login with
  * 
  * @apiSuccess (200) {String} token The JWT Token to use to access the rest of the API
+ * @apiSuccess (200) {String} id The ID of the user who logged in
  * 
  * @apiParamExample  {x-www-form-urlencoded} Request-Example:
  * {
@@ -30,6 +31,7 @@ router.post("/register", authController.register);
  * @apiSuccessExample {json} Success-Response:
  * {
  *     "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJiYWxhbmNlIjowLCJpc0xpYnJhcmlhbiI6ZmFsc2UsImFjY2VwdHNQYXltZW50cyI6ZmFsc2UsImFkbWluRm9yQXJlYXMiOltdLCJjYW5JbnZpdGUiOmZhbHNlLCJpc0F1ZGl0b3IiOmZhbHNlLCJlbWFpbCI6Im1heGltZWxvdmlub0BnbWFpbC5jb20iLCJuYW[...]"
+ *     "id" : "8008CAFE"
  * }
  * 
  * @apiError (400) BadRequest Error happens if the params are not set correctly

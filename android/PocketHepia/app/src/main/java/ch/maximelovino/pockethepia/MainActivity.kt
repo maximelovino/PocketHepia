@@ -17,6 +17,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
+import androidx.work.State
 import androidx.work.WorkManager
 import ch.maximelovino.pockethepia.Constants.SYNC_TAG
 import ch.maximelovino.pockethepia.data.AppDatabase
@@ -77,10 +78,9 @@ class MainActivity : ForegroundDispatchedActivity() {
             // Every continuation has only one worker tagged TAG_OUTPUT
             val workStatus = it[0]
 
-            val finished = workStatus.state.isFinished
 
-            if (finished)
-                swipe_refresh.isRefreshing = false
+            val running = workStatus.state == State.RUNNING
+            swipe_refresh.isRefreshing = running
         })
 
 
@@ -98,8 +98,6 @@ class MainActivity : ForegroundDispatchedActivity() {
     }
 
     fun launchSync() {
-        //TODO setting to refreshing might not be needed because of the observation of the status
-        swipe_refresh.isRefreshing = true
         val syncRequest = OneTimeWorkRequest.Builder(SyncWorker::class.java).addTag(SYNC_TAG).build()
         this.workManager.beginUniqueWork(SYNC_TAG, ExistingWorkPolicy.KEEP, syncRequest).enqueue()
     }
@@ -133,7 +131,6 @@ class MainActivity : ForegroundDispatchedActivity() {
     private fun cancelPeriodicSyncTask() {
         Log.v("LOGOUT", "Cancelling sync task")
         val wm = WorkManager.getInstance()
-
         wm.cancelAllWorkByTag(Constants.SYNC_TAG)
     }
 
@@ -172,7 +169,7 @@ class MainActivity : ForegroundDispatchedActivity() {
         return findNavController(R.id.nav_host_fragment).navigateUp()
     }
 
-    class ClearDatabaseTask(val db: AppDatabase) : AsyncTask<Void,Void,Unit>(){
+    class ClearDatabaseTask(val db: AppDatabase) : AsyncTask<Void, Void, Unit>() {
         override fun doInBackground(vararg p0: Void?) {
             db.clearAllTables()
         }

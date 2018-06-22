@@ -24,16 +24,16 @@ class SyncWorker : Worker() {
      * different value is returned, the result shall be defaulted to
      * [Worker.WorkerResult.FAILURE].
      */
-    override fun doWork(): WorkerResult {
+    override fun doWork(): Result {
 
         try {
 
 
             val context = applicationContext
 
-            val token = PreferenceManager.retrieveToken(context) ?: return WorkerResult.FAILURE
+            val token = PreferenceManager.retrieveToken(context) ?: return Result.FAILURE
 
-            val currentUser = getCurrentUser(token) ?: return WorkerResult.FAILURE
+            val currentUser = getCurrentUser(token) ?: return Result.FAILURE
 
             val db = AppDatabase.getInstance(context)
 
@@ -64,10 +64,10 @@ class SyncWorker : Worker() {
 
             accessDao.insert(*accesses.toTypedArray())
 
-            return WorkerResult.SUCCESS
+            return Worker.Result.SUCCESS
         } catch (e: Exception) {
             Log.e(SYNC_LOG_TAG, e.toString())
-            return WorkerResult.FAILURE
+            return Worker.Result.FAILURE
         }
     }
 

@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { AccessComponent } from './components/access/access.component';
-import { BooksComponent } from './components/books/books.component';
 import { HomeComponent } from './components/home/home.component';
 
 import { UserService } from './services/user.service';
@@ -64,7 +63,6 @@ import { DeleteReaderModalComponent } from './components/delete-reader-modal/del
     AppComponent,
     TransactionsComponent,
     AccessComponent,
-    BooksComponent,
     HomeComponent,
     LoginComponent,
     ChangePasswordSheetComponent,
