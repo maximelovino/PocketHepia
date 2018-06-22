@@ -15,6 +15,11 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
+import ch.maximelovino.pockethepia.workers.SyncWorker
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -22,6 +27,7 @@ import java.io.DataOutputStream
 import java.io.InputStreamReader
 import java.net.URL
 import java.nio.charset.StandardCharsets
+import java.util.concurrent.TimeUnit
 import javax.net.ssl.HttpsURLConnection
 
 
@@ -116,8 +122,26 @@ class LoginActivity : AppCompatActivity() {
     private fun loginCorrect(token: String) {
         //TODO here we should enable the sync task perhaps?
         PreferenceManager.saveToken(this, token)
+        createPeriodicSyncTask()
         startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    private fun createPeriodicSyncTask() {
+        Log.v("LOGIN", "Registering periodic sync task")
+        val wm = WorkManager.getInstance()
+
+        val workConstraints = Constraints.Builder()
+                .setRequiresBatteryNotLow(true)
+                .setRequiredNetworkType(NetworkType.UNMETERED)
+                .build()
+
+        val workRequest = PeriodicWorkRequest.Builder(SyncWorker::class.java, 1, TimeUnit.HOURS)
+                .setConstraints(workConstraints)
+                .addTag(Constants.SYNC_TAG)
+                .build()
+
+        wm.enqueue(workRequest)
     }
 
     /**

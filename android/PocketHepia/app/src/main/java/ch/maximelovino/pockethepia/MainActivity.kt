@@ -15,6 +15,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import ch.maximelovino.pockethepia.Constants.SYNC_TAG
@@ -100,7 +101,7 @@ class MainActivity : ForegroundDispatchedActivity() {
         //TODO setting to refreshing might not be needed because of the observation of the status
         swipe_refresh.isRefreshing = true
         val syncRequest = OneTimeWorkRequest.Builder(SyncWorker::class.java).addTag(SYNC_TAG).build()
-        this.workManager.enqueue(syncRequest)
+        this.workManager.beginUniqueWork(SYNC_TAG, ExistingWorkPolicy.KEEP, syncRequest).enqueue()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -116,6 +117,7 @@ class MainActivity : ForegroundDispatchedActivity() {
         val id = item.itemId
 
         if (id == R.id.logout_menu_item) {
+            cancelPeriodicSyncTask()
             val db = AppDatabase.getInstance(this)
             ClearDatabaseTask(db).execute()
             PreferenceManager.deleteAll(this)
@@ -126,6 +128,13 @@ class MainActivity : ForegroundDispatchedActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun cancelPeriodicSyncTask() {
+        Log.v("LOGOUT", "Cancelling sync task")
+        val wm = WorkManager.getInstance()
+
+        wm.cancelAllWorkByTag(Constants.SYNC_TAG)
     }
 
     @SuppressLint("RestrictedApi")

@@ -11,13 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import ch.maximelovino.pockethepia.data.AppDatabase
 import ch.maximelovino.pockethepia.data.adapters.TransactionListAdapter
-import ch.maximelovino.pockethepia.data.adapters.UserListAdapter
 import ch.maximelovino.pockethepia.data.viewmodels.TransactionViewModel
-import ch.maximelovino.pockethepia.data.viewmodels.UserViewModel
 import ch.maximelovino.pockethepia.utils.BaseFragment
-import kotlinx.android.synthetic.main.fragment_transactions.*
 
 
 /**
@@ -30,7 +26,11 @@ import kotlinx.android.synthetic.main.fragment_transactions.*
  *
  */
 class TransactionsFragment : BaseFragment() {
+
+    //TODO separate balance card in its own fragment so we can reuse it on homescreen
+    //TODO make transactions list scrollable with fixed balance card on top
     private lateinit var userID: String
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -39,23 +39,34 @@ class TransactionsFragment : BaseFragment() {
 
         userID = PreferenceManager.retrieveUserID(activity!!) ?: return v
 
-        // TODO since all of these fragments need the DB and all need the current user at least,
-        // put a public db field in MainActivity and a public user livedata as well
 
-        val activity =  (activity!! as MainActivity)
+        val activity = (activity!! as MainActivity)
 
-        activity.currentUser.observe(this, Observer {
-            if (it != null) {
-                hero_balance.text = "${it.balance ?: 0} CHF"
-            }
-        })
+        childFragmentManager.beginTransaction().replace(R.id.balance_fragment_container, BalanceFragment()).addToBackStack(null).commit()
 
         val viewAdapter = TransactionListAdapter(this.context!!)
         val viewManager = LinearLayoutManager(this.context!!)
-        v.findViewById<RecyclerView>(R.id.transactions_recycler_view).apply {
+        val recyclerView = v.findViewById<RecyclerView>(R.id.transactions_recycler_view)
+        recyclerView.apply {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            /**
+             * Callback method to be invoked when RecyclerView's scroll state changes.
+             *
+             * @param recyclerView The RecyclerView whose scroll state has changed.
+             * @param newState     The updated scroll state. One of [.SCROLL_STATE_IDLE],
+             * [.SCROLL_STATE_DRAGGING] or [.SCROLL_STATE_SETTLING].
+             */
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    activity.fab.show()
+                else
+                    activity.fab.hide()
+            }
+        })
 
         val transactionsViewModel = ViewModelProviders.of(this).get(TransactionViewModel::class.java)
 
