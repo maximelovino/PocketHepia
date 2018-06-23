@@ -23,6 +23,5 @@ class UserRepository(application: Application) {
             val user = users[0] ?: return
             dao.insert(user)
         }
-
     }
 }

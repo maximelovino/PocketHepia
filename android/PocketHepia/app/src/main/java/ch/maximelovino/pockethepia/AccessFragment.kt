@@ -34,8 +34,6 @@ class AccessFragment : BaseFragment() {
         val v = inflater.inflate(R.layout.fragment_access, container, false)
         handleFabDisplay()
 
-        val activity =  (activity!! as MainActivity)
-
         val viewAdapter = AccessListAdapter(this.context!!)
         val viewManager = LinearLayoutManager(this.context!!)
         v.findViewById<RecyclerView>(R.id.access_recycler_view).apply {
@@ -47,7 +45,6 @@ class AccessFragment : BaseFragment() {
 
         accessViewModel.accesses.observe(this, Observer {
 
-            Log.v("OBSERVER", "Yo, here's something new ${it.toString()}")
             if (it != null)
                 viewAdapter.submitList(it)
         })

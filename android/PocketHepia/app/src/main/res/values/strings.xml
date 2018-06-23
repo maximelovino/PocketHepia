@@ -24,8 +24,6 @@
     <string name="title_admin">Admin</string>
     <string name="no_user">No User</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_nfc_tag">Assign NFC Card</string>
     <string name="tap_tag_to_assign">Tap a tag to assign it</string>
     <string name="no_card_assigned">No card assigned</string>
@@ -48,4 +46,5 @@
     <string name="problem_payment">There was a problem with the payment</string>
     <string name="payment_ok">Payment successful</string>
     <string name="no_access">No access</string>
+    <string name="search">Search</string>
 </resources>

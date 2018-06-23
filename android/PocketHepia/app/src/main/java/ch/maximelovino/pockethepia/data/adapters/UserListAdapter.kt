@@ -9,69 +9,57 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filterable
 import android.widget.TextView
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import ch.maximelovino.pockethepia.AdminFragmentDirections
 import ch.maximelovino.pockethepia.R
-import ch.maximelovino.pockethepia.UserDetailFragmentArgs
 import ch.maximelovino.pockethepia.data.models.User
 
 
-class UserListAdapter(val context: Context) : ListAdapter<User, UserListAdapter.UserViewHolder>(object : DiffUtil.ItemCallback<User>() {
+class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapter.UserViewHolder>()
+{
     /**
-     * Called to check whether two objects represent the same item.
+     * Returns the total number of items in the data set held by the adapter.
      *
-     *
-     * For example, if your items have unique ids, this method should check their id equality.
-     *
-     *
-     * Note: `null` items in the list are assumed to be the same as another `null`
-     * item and are assumed to not be the same as a non-`null` item. This callback will
-     * not be invoked for either of those cases.
-     *
-     * @param oldItem The item in the old list.
-     * @param newItem The item in the new list.
-     * @return True if the two items represent the same object or false if they are different.
-     *
-     * @see Callback.areItemsTheSame
+     * @return The total number of items in this adapter.
      */
-    override fun areItemsTheSame(oldItem: User, newItem: User): Boolean = oldItem.id == newItem.id
-
-    /**
-     * Called to check whether two items have the same data.
-     *
-     *
-     * This information is used to detect if the contents of an item have changed.
-     *
-     *
-     * This method to check equality instead of [Object.equals] so that you can
-     * change its behavior depending on your UI.
-     *
-     *
-     * For example, if you are using DiffUtil with a
-     * [RecyclerView.Adapter][android.support.v7.widget.RecyclerView.Adapter], you should
-     * return whether the items' visual representations are the same.
-     *
-     *
-     * This method is called only if [.areItemsTheSame] returns `true` for
-     * these items.
-     *
-     *
-     * Note: Two `null` items are assumed to represent the same contents. This callback
-     * will not be invoked for this case.
-     *
-     * @param oldItem The item in the old list.
-     * @param newItem The item in the new list.
-     * @return True if the contents of the items are the same or false if they are different.
-     *
-     * @see Callback.areContentsTheSame
-     */
-    override fun areContentsTheSame(oldItem: User, newItem: User): Boolean = oldItem == newItem
-
-}) {
+    override fun getItemCount(): Int {
+        return filteredDataSet.size
+    }
 
     private val layoutInflater = LayoutInflater.from(context)
+    private val dataset = mutableListOf<User>()
+    private val filteredDataSet = mutableListOf<User>()
+    private var query = ""
+
+
+    private fun filterData(){
+        this.filteredDataSet.clear()
+        if (query.isEmpty()){
+            this.filteredDataSet.addAll(dataset)
+        }else{
+            this.filteredDataSet.addAll(this.dataset.filter { it.name.startsWith(query, true) })
+        }
+        Log.v("Filter", this.filteredDataSet.toString())
+        notifyDataSetChanged()
+    }
+
+    fun setData(users: List<User>){
+        dataset.clear()
+        dataset.addAll(users)
+        filterData()
+    }
+
+    fun filter(query: String){
+        this.query = query
+        filterData()
+    }
+
+    fun clearFilter(){
+        this.query = ""
+        filterData()
+    }
 
 
     /**
@@ -125,7 +113,7 @@ class UserListAdapter(val context: Context) : ListAdapter<User, UserListAdapter.
      */
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         if (position < itemCount) {
-            val current: User = getItem(position)
+            val current: User = filteredDataSet[position]
             holder.nameText.text = current.name
             holder.emailText.text = current.email
             holder.parentCard.setOnClickListener {

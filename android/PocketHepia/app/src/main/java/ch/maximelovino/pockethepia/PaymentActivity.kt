@@ -21,8 +21,8 @@ class PaymentActivity : ForegroundDispatchedActivity() {
     private lateinit var nfcDialog: AlertDialog
     private lateinit var token: String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreate(savedState: Bundle?) {
+        super.onCreate(savedState)
         setContentView(R.layout.activity_payment)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

@@ -19,6 +19,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.State
 import androidx.work.WorkManager
+import ch.maximelovino.pockethepia.Constants.MANUAL_SYNC_TAG
 import ch.maximelovino.pockethepia.Constants.SYNC_TAG
 import ch.maximelovino.pockethepia.data.AppDatabase
 import ch.maximelovino.pockethepia.data.models.User
@@ -83,6 +84,24 @@ class MainActivity : ForegroundDispatchedActivity() {
             swipe_refresh.isRefreshing = running
         })
 
+        val manualStatus = workManager.getStatusesByTag(MANUAL_SYNC_TAG)
+
+        manualStatus.observe(this, Observer {
+            // If there are no matching work statuses, do nothing
+            Log.v("STATUS", "Change of status, ${it.toString()}")
+            if (it == null || it.isEmpty()) {
+                return@Observer
+            }
+
+            // We only care about the one output status.
+            // Every continuation has only one worker tagged TAG_OUTPUT
+            val workStatus = it[0]
+
+
+            val running = workStatus.state == State.RUNNING
+            swipe_refresh.isRefreshing = running
+        })
+
 
         swipe_refresh.setOnRefreshListener {
             launchSync()
@@ -98,8 +117,8 @@ class MainActivity : ForegroundDispatchedActivity() {
     }
 
     fun launchSync() {
-        val syncRequest = OneTimeWorkRequest.Builder(SyncWorker::class.java).addTag(SYNC_TAG).build()
-        this.workManager.beginUniqueWork(SYNC_TAG, ExistingWorkPolicy.KEEP, syncRequest).enqueue()
+        val syncRequest = OneTimeWorkRequest.Builder(SyncWorker::class.java).addTag(MANUAL_SYNC_TAG).build()
+        this.workManager.beginUniqueWork(MANUAL_SYNC_TAG, ExistingWorkPolicy.KEEP, syncRequest).enqueue()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -115,23 +134,28 @@ class MainActivity : ForegroundDispatchedActivity() {
         val id = item.itemId
 
         if (id == R.id.logout_menu_item) {
-            cancelPeriodicSyncTask()
-            val db = AppDatabase.getInstance(this)
-            ClearDatabaseTask(db).execute()
-            PreferenceManager.deleteAll(this)
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+            logout()
             return true
         }
 
         return super.onOptionsItemSelected(item)
     }
 
+    fun logout(){
+        cancelPeriodicSyncTask()
+        val db = AppDatabase.getInstance(this)
+        ClearDatabaseTask(db).execute()
+        PreferenceManager.deleteAll(this)
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private fun cancelPeriodicSyncTask() {
         Log.v("LOGOUT", "Cancelling sync task")
         val wm = WorkManager.getInstance()
         wm.cancelAllWorkByTag(Constants.SYNC_TAG)
+        wm.cancelUniqueWork(Constants.SYNC_TAG)
     }
 
     @SuppressLint("RestrictedApi")

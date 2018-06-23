@@ -6,7 +6,6 @@ import android.arch.persistence.room.PrimaryKey
 import org.json.JSONObject
 import java.util.*
 
-//TODO embedded users is DIRTY AF
 @Entity
 data class Transaction(
         @PrimaryKey val id: String,

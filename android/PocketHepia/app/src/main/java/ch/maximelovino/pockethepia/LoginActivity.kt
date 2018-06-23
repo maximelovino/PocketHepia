@@ -15,10 +15,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
+import androidx.work.*
 import ch.maximelovino.pockethepia.workers.SyncWorker
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
@@ -120,7 +117,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginCorrect(token: String) {
-        //TODO here we should enable the sync task perhaps?
         PreferenceManager.saveToken(this, token)
         createPeriodicSyncTask()
         startActivity(Intent(this, MainActivity::class.java))
@@ -141,8 +137,7 @@ class LoginActivity : AppCompatActivity() {
                 .addTag(Constants.SYNC_TAG)
                 .build()
 
-        //TODO here use enqueueUniquePeriodic stuff and KEEP so we can then do the same for the other one in main activity
-        wm.enqueue(workRequest)
+        wm.enqueueUniquePeriodicWork(Constants.SYNC_TAG, ExistingPeriodicWorkPolicy.KEEP, workRequest)
     }
 
     /**
@@ -191,7 +186,7 @@ class LoginActivity : AppCompatActivity() {
 
         override fun doInBackground(vararg params: Void): String? {
             try {
-                val url = URL(AUTH_URL)
+                val url = URL(Constants.AUTH_URL)
                 val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "POST"
                 connection.doOutput = true
@@ -236,10 +231,5 @@ class LoginActivity : AppCompatActivity() {
             mAuthTask = null
             showProgress(false)
         }
-    }
-
-    companion object {
-        //TODO move to Constants
-        private const val AUTH_URL = "${Constants.BACKEND_ROOT_URL}auth/login"
     }
 }

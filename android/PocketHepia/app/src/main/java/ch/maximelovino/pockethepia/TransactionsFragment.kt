@@ -27,8 +27,6 @@ import ch.maximelovino.pockethepia.utils.BaseFragment
  */
 class TransactionsFragment : BaseFragment() {
 
-    //TODO separate balance card in its own fragment so we can reuse it on homescreen
-    //TODO make transactions list scrollable with fixed balance card on top
     private lateinit var userID: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -72,7 +70,6 @@ class TransactionsFragment : BaseFragment() {
 
         transactionsViewModel.transactions.observe(this, Observer {
 
-            Log.v("OBSERVER", "Yo, here's something new ${it.toString()}")
             if (it != null)
                 viewAdapter.submitList(it)
         })

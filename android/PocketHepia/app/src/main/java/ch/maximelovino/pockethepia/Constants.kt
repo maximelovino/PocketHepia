@@ -4,9 +4,11 @@ package ch.maximelovino.pockethepia
 object Constants {
 
     const val SYNC_TAG = "SYNC"
+    const val MANUAL_SYNC_TAG = "MANUAL_SYNC"
 
     private const val URL = "https://pockethepia.maximelovino.ch"
-    const val BACKEND_ROOT_URL = "$URL/api/"
+    private const val BACKEND_ROOT_URL = "$URL/api/"
+    const val AUTH_URL = "${BACKEND_ROOT_URL}auth/login"
     const val CURRENT_USER_URL = "${BACKEND_ROOT_URL}users/current"
     const val GET_ALL_USERS_ROUTE = "${BACKEND_ROOT_URL}users/all"
 
