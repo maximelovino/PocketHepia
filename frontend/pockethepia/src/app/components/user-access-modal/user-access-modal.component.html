@@ -1,0 +1,9 @@
+<p mat-dialog-title>Accesses for {{data.name}} </p>
+<mat-dialog-content>
+  <div *ngIf="accesses$ | async as accesses">
+    <p *ngIf="accesses.length === 0">{{data.name}} has no accesses yet</p>
+    <div *ngFor="let access of accesses" class="spacing-bottom">
+      <app-access-entry [access]="access"></app-access-entry>
+    </div>
+  </div>
+</mat-dialog-content>

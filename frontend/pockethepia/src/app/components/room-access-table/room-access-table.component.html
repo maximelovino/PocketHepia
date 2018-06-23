@@ -46,7 +46,7 @@
         </mat-icon>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="deleteAccess(row)">
+        <button matTooltip="Remove this access" [matTooltipPosition]="'above'" mat-icon-button (click)="deleteAccess(row)">
           <mat-icon>
             delete
           </mat-icon>

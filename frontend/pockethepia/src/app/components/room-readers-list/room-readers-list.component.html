@@ -29,7 +29,7 @@
         </mat-icon>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="deleteReader(row)">
+        <button matTooltip="Delete this reader" [matTooltipPosition]="'above'" mat-icon-button (click)="deleteReader(row)">
           <mat-icon>
             delete
           </mat-icon>

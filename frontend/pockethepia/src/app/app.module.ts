@@ -56,6 +56,7 @@ import { DeleteAccessModalComponent } from './components/delete-access-modal/del
 import { DeleteRoomModalComponent } from './components/delete-room-modal/delete-room-modal.component';
 import { DeleteAreaModalComponent } from './components/delete-area-modal/delete-area-modal.component';
 import { DeleteReaderModalComponent } from './components/delete-reader-modal/delete-reader-modal.component';
+import { UserAccessModalComponent } from './components/user-access-modal/user-access-modal.component';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { DeleteReaderModalComponent } from './components/delete-reader-modal/del
     DeleteAccessModalComponent,
     DeleteRoomModalComponent,
     DeleteAreaModalComponent,
-    DeleteReaderModalComponent
+    DeleteReaderModalComponent,
+    UserAccessModalComponent
   ],
   imports: [
     BrowserModule,
@@ -117,7 +119,8 @@ import { DeleteReaderModalComponent } from './components/delete-reader-modal/del
     DeleteAccessModalComponent,
     DeleteRoomModalComponent,
     DeleteAreaModalComponent,
-    DeleteReaderModalComponent],
+    DeleteReaderModalComponent,
+    UserAccessModalComponent],
   providers: [FormBuilder, TransactionService, UserService, AuthService, LogService, AuthGuard, AdminGuard, NotAuthGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpTokenInterceptorService,

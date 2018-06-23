@@ -32,6 +32,22 @@
       <mat-cell *matCellDef="let row">{{row.permissions.join(', ')}}</mat-cell>
     </ng-container>
 
+    <!-- Accesses column -->
+    <ng-container matColumnDef="accesses">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon style="visibility: hidden;">
+          vpn_key
+        </mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button matTooltip="View user access list" [matTooltipPosition]="'above'" mat-icon-button (click)="viewAccesses(row)">
+          <mat-icon>
+            vpn_key
+          </mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
     <!-- Edit column -->
     <ng-container matColumnDef="edit">
       <mat-header-cell *matHeaderCellDef>
@@ -40,7 +56,7 @@
         </mat-icon>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="editUser(row)">
+        <button matTooltip="Edit user" [matTooltipPosition]="'above'" mat-icon-button (click)="editUser(row)">
           <mat-icon>
             edit
           </mat-icon>
@@ -56,7 +72,8 @@
         </mat-icon>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="deleteUser(row)" [disabled]="(currentUser | async).id == row.id">
+        <button matTooltip="Delete this user" [matTooltipPosition]="'above'" mat-icon-button (click)="deleteUser(row)" [matTooltipDisabled]="(currentUser | async).id == row.id"
+          [disabled]="(currentUser | async).id == row.id">
           <mat-icon>
             delete
           </mat-icon>

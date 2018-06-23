@@ -35,7 +35,7 @@
         </mat-icon>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="deleteRoom(row)">
+        <button matTooltip="Delete this room" [matTooltipPosition]="'above'" mat-icon-button (click)="deleteRoom(row)">
           <mat-icon>
             delete
           </mat-icon>
@@ -51,7 +51,7 @@
         </mat-icon>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button [routerLink]="'/admin/access/room/'+row.id">
+        <button matTooltip="Edit accesses for this room" [matTooltipPosition]="'above'" mat-icon-button [routerLink]="'/admin/access/room/'+row.id">
           <mat-icon>
             edit
           </mat-icon>

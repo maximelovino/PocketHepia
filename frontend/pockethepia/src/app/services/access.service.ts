@@ -16,6 +16,7 @@ const DELETE_ROOM_ROUTE = '/api/access/room';
 const GET_MY_ACCESSES_ROUTE = '/api/access/accesses/my';
 const CREATE_ACCESS_ROUTE = '/api/access/giveAccess';
 const GET_ACCESS_FOR_ROOM_ROUTE = '/api/access/accesses/room';
+const GET_ACCESS_FOR_USER_ROUTE = '/api/access/accesses/user';
 const DELETE_ACCESS_ROUTE = '/api/access/accesses';
 const DELETE_AREA_ROUTE = '/api/access/area';
 const CREATE_READER_ROUTE = '/api/access/accesses/room/reader';
@@ -59,6 +60,10 @@ export class AccessService {
 
   getAccessesForRoom(room: Room): Observable<Access[]> {
     return this.http.get<Access[]>(`${GET_ACCESS_FOR_ROOM_ROUTE}/${room.id}`).pipe(map(res => res.map(r => new Access(r))));
+  }
+
+  getAccessesForUser(user: User): Observable<Access[]> {
+    return this.http.get<Access[]>(`${GET_ACCESS_FOR_USER_ROUTE}/${user.id}`).pipe(map(res => res.map(r => new Access(r))));
   }
 
   deleteRoom(room: Room): Observable<void> {

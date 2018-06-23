@@ -18,7 +18,7 @@
           </button>
           <mat-progress-bar mode="indeterminate" [hidden]="!sending"></mat-progress-bar>
         </div>
-        <div class="upload-btn-wrapper col-auto">
+        <div matTooltip="Click to select a file" [matTooltipPosition]="'above'" class="upload-btn-wrapper col-auto">
           <button mat-icon-button color="primary">
             <mat-icon>attachment</mat-icon>
           </button>

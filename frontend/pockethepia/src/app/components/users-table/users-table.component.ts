@@ -9,6 +9,7 @@ import { BreakpointObserver, BreakpointState, Breakpoints } from '@angular/cdk/l
 import { EditUserModalComponent } from '../edit-user-modal/edit-user-modal.component';
 import { DeleteUserModalComponent } from '../delete-user-modal/delete-user-modal.component';
 import { EditUserModalReturn } from '../../models/edit-user-modal-return';
+import { UserAccessModalComponent } from '../user-access-modal/user-access-modal.component';
 
 const initialSelection = [];
 const allowMultiSelect = false;
@@ -28,7 +29,7 @@ export class UsersTableComponent implements OnInit {
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(Breakpoints.Handset);
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['name', 'email', 'permissions', 'edit', 'delete'];
+  displayedColumns = ['name', 'email', 'permissions', 'accesses', 'edit', 'delete'];
 
   constructor(private dialog: MatDialog,
     private userService: UserService,
@@ -43,7 +44,7 @@ export class UsersTableComponent implements OnInit {
     this.refresh();
     this.isHandset.subscribe((match) => {
       if (match.matches) {
-        this.displayedColumns = this.displayedColumns.includes('email') ? ['name', 'edit', 'delete'] : ['name', 'email', 'permissions', 'edit', 'delete'];
+        this.displayedColumns = this.displayedColumns.includes('email') ? ['name', 'edit', 'delete'] : ['name', 'email', 'permissions', 'accesses', 'edit', 'delete'];
         this.table.renderRows();
       }
     });
@@ -62,6 +63,10 @@ export class UsersTableComponent implements OnInit {
 
   public filterTable(filter: string) {
     this.dataSource = this.data.filter(u => u.name.toLowerCase().includes(filter.toLowerCase()));
+  }
+
+  public viewAccesses(user: User) {
+    this.dialog.open(UserAccessModalComponent, { data: user, minWidth: 600 });
   }
 
   public editUser(user: User) {

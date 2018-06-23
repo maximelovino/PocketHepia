@@ -29,7 +29,7 @@
         </mat-icon>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button (click)="deleteArea(row)">
+        <button matTooltip="Delete this area" [matTooltipPosition]="'above'" mat-icon-button (click)="deleteArea(row)">
           <mat-icon>
             delete
           </mat-icon>
