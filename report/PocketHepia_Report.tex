@@ -258,12 +258,12 @@ After having integrated every requested features, the team launched a beta web v
 \end{figure}
 
 \chapter{The project}
-The project is called PocketHepia, reminiscent of the name of the project at EPFL and will consist of the two parts of the EPFL project presented earlier. The student card platform, as well as the applicative platform to access information.\\
+The project is called PocketHepia, reminiscent of the name of the project at EPFL and will consist of the two parts of the EPFL project presented earlier: the student card platform, as well as the applicative platform to access information.\\
 
 
-The idea of this project is not to build as many features as the EPFL platform due to the time constraints inherent to the Bachelor Project, but rather to focus on some key aspects of the card at first, namely payments, access control and library. We are also building features on the payment side that are not available on the EPFL platform, for example the ability to send money between users. The project of course would be extensible with other features outside the scope of the Bachelor Project. \\
+The idea of this project is not to build as many features as the EPFL platform due to the time constraints inherent to the Bachelor Project, but rather to focus on some key aspects of the card at first, namely payments, access control and library. We are also building features on the payment side that are not available on the EPFL platform, for example the ability to send money between users. The project of course will be extensible with other features outside the scope of the Bachelor Project. \\
 
-In this chapter, we will present the main features, roles and user stories for the project as specified at the beginning of this one. All of these are part of the project, but not necessarily part of the Bachelor Project. The idea was to specify the entire project and to start implementing a subset of the functionality for the academic project and continue working on the rest as well as new features outside. For each element of this chapter, we will specify whether it is going to be implemented as part of the Bachelor Project.
+In this chapter, we will present the main features, roles and user stories for the project as specified at the beginning of this one. All of these are part of the project, but not necessarily part of the Bachelor Project. The idea was to specify the entire project and to start implementing a subset of the functionality for the academic project and continue working on the rest as well as new features outside this scope. Mainly we wanted to remain independent of other school services and infrastructure because of the associated time it would take to get permissions and setup integrations, as well as restrictions to development environments to secure access to these services. For each element of this chapter, we will specify whether it is going to be implemented as part of the Bachelor Project.\\
 
 The project is composed of three main components:
 \begin{itemize}
@@ -285,7 +285,19 @@ There will be two main ways to add money to an user wallet. Either the user can 
 
 \subsection{Accesses}
 
+To continue, the second element of the project is the handling of access control through the platform. This was the original pain point we noticed at HEPIA with the lack of an easy way to handle accesses to the available classrooms. We will be able to create different areas to group rooms inside them. For example, an area could be an entire floor or labs for a specific section of HEPIA.\\
 
+As far as giving access to users, we can give access to a room from a given date and specify if needed an end date for the access. For example, we can setup access for a user until the end of the current semester. We also decided to introduce an optional time range during the day during which the given access is active, so we can for example allow a student to enter a room only between 8am and 7pm. \\
+
+We also specified the ability to delegate the administration of an area to a user, so that access to rooms can be handled at a department or section level in the school for example (see section \ref{roles_section}). This feature is planned but will not be implemented as part of the Bachelor Project.
+
+\subsection{Library books}
+\label{books_feature}
+Finally, the last feature of the project would be an integration with the library to be able to use the card as a library card. Our approach at first was to think about creating the book loans on our platform with the ISBN to identify the book and integrate with the REST API built for BibApp but it wouldn't have been very effective because the library already handles the loans through the NEBIS platform.\\
+
+The correct way to handle this would be to link the library NEBIS identifier for every user with their account on our platform and then ask NEBIS for API Access to their platform to retrieve book loans for all users and display them on the mobile and web application. This would also benefit people working at the library as they would not need to change their current workflow to accommodate.\\
+
+We don't have the time during the bachelor project to start a discussion with NEBIS to get access to the required information so this feature will have to be implemented later on.
 \section{Roles}
 \label{roles_section}
 We defined a set of roles for the users on the platform. First, every member of the platform is a simple user. This means that the person has an account on the platform, can login to the web and android application and has read access to its payments, its accesses and its other information and can send money to other users.\\
@@ -296,27 +308,57 @@ While these two roles would have been enough to handle all our features. We deci
 
 One of these roles is the "Accept payments" role. This is specific to a canteen or a shop that wants to handle payments using the student card. While every user can send money to another user from the mobile app by tapping the other user's card, this isn't very practical for a canteen or a shop where the transactions should go the other way around. So the shop creates the payment and taps the user's card to take money from it. At first, we wanted this feature to be available to everyone but we thought about security concerns with this solution because a student could create a payment from the app and start tapping his phone on lost cards or even on people's pocket and if the card was detected it would "steal" their money. So by enabling this feature as a role, we could only allow trusted people, such as canteen's owners to receive payments in that way. \\
 
-Furthermore, due to the introduction of GDPR recently, we created a specific role called "Auditor" to access sensitive logs concerning all users, mainly access logs and transaction history. Only a user with this role can view all transactions between users and access logs for every room.
+Furthermore, due to the introduction of GDPR recently, we created a specific role called "Auditor" to access sensitive logs concerning all users, mainly access logs and transaction history. Only a user with this role can view all transactions between users and access logs for every room.\\
 
-Then, there are two roles that will not be implemented as part of the Bachelor project, the "Can invite" and "Area admin" role. The first is to allow specific users to create temporary accounts without needing to contact an administrator. A use case for this would be a teacher creating a temporary account for a visiting colleague from another school. The "Area admin" role consists of delegating the administration of the accesses for an area to an user. Similar to the concept of DNS zones delegation, an administrator could for example give this role the ITI section dean to allow him to give access to the rooms present on his floor.
+Then, there are two roles that will not be implemented as part of the Bachelor project, the "Can invite" and "Area admin" role. The first is to allow specific users to create temporary accounts without needing to contact an administrator. A use case for this would be a teacher creating a temporary account for a visiting colleague from another school. The "Area admin" role consists of delegating the administration of the accesses for an area to an user. Similar to the concept of DNS zones delegation, an administrator could for example give this role to the ITI section dean to allow him to give access to the rooms present on his floor.\\
 
-\section{Integration with existing user accounts}
-%%TODO why we didn't do LDAP + augmented database => time constraints, network infrastructure, iteration speed because network limitation
+Finally, the last role is the "Librarian" role that as its name implies is attributed to users working for the library. This role enables the creation of books loans at the library for users. As stated in section \ref{books_feature}, this role will certainly be removed completely because there is already a system in place to handle book loans at the library.
+
+\section{The models}
+\subsection{User Accounts}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.4\textwidth]{assets/user_model}
+	\caption{User Model}
+\end{center}
+\end{figure}
+
+The first of our models is the User. A user collection is created to store all users on the platform. Users are identified by their email address and will login with their email and password, their full name is also stored. The authentication specific fields will be added to the model by Passport.JS (see section \ref{technological choices}). A boolean field is also stored for each permission.\\
+
+The expiration date, the virtual card and the delegation of admin zones are not implemented as part of this bachelor project.
+\subsubsection{Integration with existing AAI user accounts}
+If this project is put in production at HEPIA, we will have to only change this model to integrate it with an existing authentication service, such as AAI or with a directory LDAP service.\\
+
+In that case, we would remove information already present in the authentication service such as name and email and just store the unique identifier from the authentication service in our model. This model would act as an augmented database on top of the existing service. We would then forward all login/password authentication request to the authentication service and would create the entry for the user in our database after the first login.\\
+
+This is inspired by the way Nextcloud\footnote{\url{https://nextcloud.com/}} for example stores user accounts that are linked to a directory service, for example an Active Directory. It stores the full Distinguished Name from the directory service as the unique identifier for the account to link the local account to the directory account.\\
+
+While we could have asked Switch-AAI to integrate AAI authentication in our application, the time constraints of the project were too tight to launch a discussion and we wanted to stay independent of other services in this phase to avoid being slowed down by for example needing to run our servers on the HEPIA network exclusively to access the directory.
+\subsection{Payments}
+\subsection{Accesses}
+
 \section{User stories}
 From the beginning, we wrote simple user stories as a roadmap for the project features we wanted to implement. All of these features are not part of this academic project but are part of the broader student card project. 
 %% TODO table of user stories with priority and specifying if a given feature should work offline
-%% TODO add HA and backup part to mongodb
-%% TODO Talk about apple student card initiative in introduction
+\section{Technological choices}
+\label{technological choices}
+\subsection{The data and backend}
+%%TODO talk about JWT
+\subsubsection{Realm vs. Express-MongoDB}
+\paragraph{Advantages of Realm}
+\paragraph{Specific use cases}
 
-\section{Décisions prises}
-\section{User stories}
-\section{Realm vs. Express-MongoDB}
-\subsection{Avantages de Realm}
-\subsection{Cas d'utilisation}
-\section{Architecture choisie - Stack MEAN}
-\chapter{Le NFC et le format NDEF}
-\section{Introduction à la technologie NFC}
-\section{Le format NDEF}
+\subsection{Mobile application}
+\subsubsection{Why the need for an application?}
+\subsubsection{Why go native?}
+
+\subsection{Web Frontend}
+%%TODO Angular (the most well-known) vs React (younger than NG, but good reviews, would have been good if react native as well, "a la mode") and Vue (very young, bad documentation)
+
+
+\chapter{NFC and NDEF}
+\section{Introduction to NFC}
+\section{NDEF Format}
 \subsection{Text payload}
 
 
@@ -396,41 +438,62 @@ And then the same class written using data classes in Kotlin:
 %% - Class extensions => often calling a static method of an helper class in a method-like syntax for the current class => "0.0".toDouble() instead of Double("0.0")
 \subsection{Android KTX}
 \section{Android Jetpack}
+%%TODO talk about former name, goal was to provide a set of "good behaviors" etc
 \subsection{LiveData}
+%%TODO talk about lifecycle observers and lifecycle aware
 \subsection{Room - Data persistence}
 \subsection{Work Manager - Background jobs}
 \subsection{Navigation}
 
+\chapter{NoSQL Database - MongoDB}
+\section{Storage as JSON/BSON documents}
+%%TODO verify this is true
+\section{How to handle references}
+%%TODO add source on mongo site https://docs.mongodb.com/manual/applications/data-models-relationships/
+%%TODO talk about embedding documents vs ids of childrens vs ids of parent for different sizes
+\section{Mongoose}
 
-
-
-
-
-
-\chapter{Bases de données NoSQL - MongoDB}
+\subsection{Schemas}
+\subsection{Promises with Mongoose}
+%%TODO find function, insert etc with await => talk about command than talk directly to mongo without passing by mongoose
+\subsection{Populating references}
+\subsection{Hooks}
+%%TODO talk about pre('remove') for example
 \chapter{NodeJS et Express}
 \section{JavaScript ES6}
-\section{Les modules}
+\section{NPM Modules}
+\section{Promises}
 \section{Middlewares}
 \section{PassportJS}
+
 \chapter{Angular 6}
+%%runs with npm, talk about ng-cli and generation etc of component 
 \section{Single-page webapp}
 \section{Dependencies injection}
-\section{Architecture d'une application Angular}
+\section{Architecture of an Angular Application}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.8\textwidth]{assets/angular_architecture}
+	\caption{Architecture of an Angular application\cite{angular:ref:architecture}}
+\end{center}
+\end{figure}
 \subsection{Components}
+\subsubsection{Templates}
 \subsubsection{Communication between components - Input/Output}
 \subsection{Services}
-\subsection{Handlers}
-\subsection{Guards}
+\subsection{Routing and Guards}
 \section{RxJS - Observables}
 \section{TypeScript}
 \section{Angular Material}
+
 \chapter{Containers - Infrastructure as code}
 \section{Docker}
 \section{Orchestration avec Docker Compose}
 \section{Google Cloud}
 \subsection{Kubernetes}
 \subsection{Google Container Registry}
+\section{Azure}
+
 \chapter{Implémentation}
 \section{Modules du projet}
 \section{Déploiement}
