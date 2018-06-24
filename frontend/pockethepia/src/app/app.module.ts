@@ -16,7 +16,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { ChangePasswordSheetComponent } from './components/change-password-sheet/change-password-sheet.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { LogsComponent } from './components/logs/logs.component';
 import { UsersComponent } from './components/users/users.component';
 import { AdminGuard } from './guards/admin.guard';
@@ -67,7 +66,6 @@ import { UserAccessModalComponent } from './components/user-access-modal/user-ac
     HomeComponent,
     LoginComponent,
     ChangePasswordSheetComponent,
-    NavbarComponent,
     LogsComponent,
     UsersComponent,
     LogEntryComponent,

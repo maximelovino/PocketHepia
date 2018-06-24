@@ -1,0 +1,44 @@
+User story name,Priority,Implemented in Bachelor Project
+User must be able to login using username and password (then using JWT to communicate with backend),Essential,Yes
+User can view its total balance and a summary of its information on the homepage (web and application),Important,Yes
+User can view all its transactions on the transactions page (web and application),Important,Yes
+User can view its total balance on the transactions page (web and application),Important,Yes
+User can view all its accesses to rooms on the access page (web and application),Important,Yes
+User can view all its borrowed books on the books page,Nice to have,No
+User can change its password,Normal,Yes
+All accesses should be logged,Nice to have,No
+User can add money to its account using its credit card (using Stripe),Nice to have,Implemented during the summer between report and presentation
+User can send money to another user,Normal,Yes
+User can create a virtual card from the application and use it,Nice to have,Implemented during the summer between report and presentation
+User can request access to a room from the website,Nice to have,Implemented during the summer between report and presentation
+Admin can create users from the website,Essential,Yes
+Admin can delete users from the website,Important,Yes
+Admin can reset password for all users from the website,Important,Yes
+Admin can create users in batch by importing a CSV file,Important,Yes
+Admin can undo a user batch import,Normal,Yes
+Admin can create areas from the website,Important,Yes
+Admin can create rooms from the website,Important,Yes
+Admin can give access to a room for a user from the website (start/end date and timerange),Important,Yes
+Admin can delete areas from the website,Normal,Yes
+Admin can delete rooms from the website,Normal,Yes
+Admin can remove an access,Important,Yes
+Admin can view all accesses for a user,Important,Yes
+Admin can view all accesses for a room,Important,Yes
+Admin can delegate admin rights for an area to a user,Nice to have,No
+Admin can change permissions of users from the website,Normal,Yes
+Admin can view and mark as done room access requests,Nice to have,Implemented during the summer between report and presentation
+Admin can add money to a user account,Normal,Yes
+Admin can assign a physical card to a user from the Android app,Important,Yes
+Admin can remove a physical card for a user from the Android app,Important,Yes
+Admin can view all administrative logs from the website and filter them,Important,Yes
+All administrative actions should be logged,Important,Yes
+Auditor should be able to view access logs,Nice to have,No
+Auditor should be able to view all payments logs,Nice to have,No
+User having the “Accept Payment” permission can create a payment from the Android app with an amount and description and scan a user card to validate the payment,Important,Yes
+User having the “can invite” permission can create a temporary user from the Android app and the website,Nice to have,No
+Librarian can create a loan for a book for a user from the Android app,Not relevant,No
+Librarian can view current bookings for all users from the website and Android app and mark the borrowing as Complete (all history on website),Not relevant,No
+User having admin rights for an area can give access to an user to a room in that area (start/end date and start/end hour),Nice to have,No
+User having admin rights for an area can view and mark as done room access requests for that area,Nice to have,No
+Onboarding setup process in web frontend to create first user when no users exists in the DB,Nice to have,Implemented during the summer between report and presentation
+Ability to connect to LDAP (Active Directory for example) for users and authentication,Nice to have,No

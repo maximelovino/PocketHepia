@@ -10,6 +10,7 @@
 \usepackage{xcolor,graphicx}
 \usepackage[hidelinks]{hyperref}
 \usepackage{float}
+\usepackage{longtable}
 \title{PocketHepia}
 
 \usepackage{chngcntr}
@@ -325,7 +326,9 @@ Finally, the last role is the "Librarian" role that as its name implies is attri
 
 The first of our models is the User. A user collection is created to store all users on the platform. Users are identified by their email address and will login with their email and password, their full name is also stored. The authentication specific fields will be added to the model by Passport.JS (see section \ref{technological choices}). A boolean field is also stored for each permission.\\
 
-The expiration date, the virtual card and the delegation of admin zones are not implemented as part of this bachelor project.
+The expiration date, the virtual card and the delegation of admin zones are not implemented as part of this bachelor project. \\
+
+Finally, the \verb+importBatch+ is set if the user is imported with a CSV file so that we can group all users imported together and undo the import if necessary.
 \subsubsection{Integration with existing AAI user accounts}
 If this project is put in production at HEPIA, we will have to only change this model to integrate it with an existing authentication service, such as AAI or with a directory LDAP service.\\
 
@@ -351,12 +354,116 @@ The balance of a user is calculated from the list of transactions in which the u
 	\caption{The three models handling accesses}
 \end{center}
 \end{figure}
-\subsection{Logs}
-%%TODO WE DIDN'T TALK ABOUT LOGS ANYWHERE, we have to explain why we log etc
 
+The access part of PocketHepia is composed of three models. We defined Areas, Rooms and Accesses. An area contains multiple rooms and each room has a specific set of accesses. Similarly to the payments model, we reference from the child to the parent with the ID of the parent. The room has the id of the area it is part of, and the access stores the id of the user and the room. \\
+
+When deleting an area, we delete all rooms contained in that area. When deleting a room, we delete all accesses associated with the room. This is done using Mongoose hooks (see section \ref{mongoose_hooks}) to ensure that on every removal, we cascade it through the children.
+\subsubsection{Access requests}
+%%TODO talk about this and not implementing them
+\subsubsection{Access logs}
+%%TODO talk about this and not implementing them
+\subsection{Logs}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.6\textwidth]{assets/log_model}
+	\caption{Log Model}
+\end{center}
+\end{figure}
+Finally, we decided to log all administrative actions and make the logs visible to all admins on the website. Giving access to a room or creating a new account can be sensitive, so we have to keep an historic of those actions.\\
+
+We defined a Log model to store the logs in the DB and several log categories to distinguish the different logs and filter them.
+
+The log categories are:
+\begin{itemize}
+\item User creation
+\item User changes its password
+\item User deleted
+\item Admin imports users
+\item Admin cancels an import
+\item Admin assigns a NFC Tag
+\item Admin removes a NFC Tag
+\item Admin adds money to a user balance
+\item Admin resets a user password
+\item Admin changes a user permissions
+\item Admin creates an area
+\item Admin deletes an area
+\item Admin creates a room
+\item Admin deletes a room
+\item Admin gives an access
+\item Admin removes an access
+\end{itemize}
+As well as categories for features we will not implement yet:
+\begin{itemize}
+\item Admin delegates an area
+\item Admin removes an area delegation
+\item Admin completes an access request
+\item Admin deletes an access request
+\end{itemize}
+
+The category for a log entry is stored as a \verb+string+ and we setup validation on the model to ensure the \verb+string+ used corresponds to a category.\\
+
+We also store an embedded object we call \verb+rawData+, this allows us to store additional information specific to each category. For example for a permission change, we store the user before and after the changes. \\
+
+Finally, the field \verb+triggeringUser+ stores the id of the user that did the action, we can then filter the logs to find out everything a specific person did.
 \section{User stories}
 From the beginning, we wrote simple user stories as a roadmap for the project features we wanted to implement. All of these features are not part of this academic project but are part of the broader student card project. 
-%% TODO table of user stories with priority and specifying if a given feature should work offline
+%% TODO Continue text, references the table
+%% TODO talk about features implemented during the summer, they will be explained in the report how to implement them and then implemented outside the project for the demo
+
+\renewcommand*{\arraystretch}{1.5}
+\begin{longtable}[c]{|p{0.33\linewidth}|l|p{0.33\linewidth}|}
+\hline
+\textbf{User story name}                                                                                                                                          & \textbf{Priority} & \textbf{Implemented in Bachelor Project}                      \\ \hline
+\endhead
+%
+User must be able to login using username and password (then using JWT to communicate with backend)                                                               & Essential         & Yes                                                           \\ \hline
+User can view its total balance and a summary of its information on the homepage (web and application)                                                            & Important         & Yes                                                           \\ \hline
+User can view all its transactions on the transactions page (web and application)                                                                                 & Important         & Yes                                                           \\ \hline
+User can view its total balance on the transactions page (web and application)                                                                                    & Important         & Yes                                                           \\ \hline
+User can view all its accesses to rooms on the access page (web and application)                                                                                  & Important         & Yes                                                           \\ \hline
+User can view all its borrowed books on the books page                                                                                                            & Nice to have      & No                                                            \\ \hline
+User can change its password                                                                                                                                      & Normal            & Yes                                                           \\ \hline
+All accesses should be logged                                                                                                                                     & Nice to have      & No                                                            \\ \hline
+User can add money to its account using its credit card (using Stripe)                                                                                            & Nice to have      & Implemented during the summer between report and presentation \\ \hline
+User can send money to another user                                                                                                                               & Normal            & Yes                                                           \\ \hline
+User can create a virtual card from the application and use it                                                                                                    & Nice to have      & Implemented during the summer between report and presentation \\ \hline
+User can request access to a room from the website                                                                                                                & Nice to have      & Implemented during the summer between report and presentation \\ \hline
+Admin can create users from the website                                                                                                                           & Essential         & Yes                                                           \\ \hline
+Admin can delete users from the website                                                                                                                           & Important         & Yes                                                           \\ \hline
+Admin can reset password for all users from the website                                                                                                           & Important         & Yes                                                           \\ \hline
+Admin can create users in batch by importing a CSV file                                                                                                           & Important         & Yes                                                           \\ \hline
+Admin can undo a user batch import                                                                                                                                & Normal            & Yes                                                           \\ \hline
+Admin can create areas from the website                                                                                                                           & Important         & Yes                                                           \\ \hline
+Admin can create rooms from the website                                                                                                                           & Important         & Yes                                                           \\ \hline
+Admin can give access to a room for a user from the website (start/end date and timerange)                                                                        & Important         & Yes                                                           \\ \hline
+Admin can delete areas from the website                                                                                                                           & Normal            & Yes                                                           \\ \hline
+Admin can delete rooms from the website                                                                                                                           & Normal            & Yes                                                           \\ \hline
+Admin can remove an access                                                                                                                                        & Important         & Yes                                                           \\ \hline
+Admin can view all accesses for a user                                                                                                                            & Important         & Yes                                                           \\ \hline
+Admin can view all accesses for a room                                                                                                                            & Important         & Yes                                                           \\ \hline
+Admin can delegate admin rights for an area to a user                                                                                                             & Nice to have      & No                                                            \\ \hline
+Admin can change permissions of users from the website                                                                                                            & Normal            & Yes                                                           \\ \hline
+Admin can view and mark as done room access requests                                                                                                              & Nice to have      & Implemented during the summer between report and presentation \\ \hline
+Admin can add money to a user account                                                                                                                             & Normal            & Yes                                                           \\ \hline
+Admin can assign a physical card to a user from the Android app                                                                                                   & Important         & Yes                                                           \\ \hline
+Admin can remove a physical card for a user from the Android app                                                                                                  & Important         & Yes                                                           \\ \hline
+Admin can view all administrative logs from the website and filter them                                                                                           & Important         & Yes                                                           \\ \hline
+All administrative actions should be logged                                                                                                                       & Important         & Yes                                                           \\ \hline
+Auditor should be able to view access logs                                                                                                                        & Nice to have      & No                                                            \\ \hline
+Auditor should be able to view all payments logs                                                                                                                  & Nice to have      & No                                                            \\ \hline
+User having the “Accept Payment” permission can create a payment from the Android app with an amount and description and scan a user card to validate the payment & Important         & Yes                                                           \\ \hline
+User having the “can invite” permission can create a temporary user from the Android app and the website                                                          & Nice to have      & No                                                            \\ \hline
+Librarian can create a loan for a book for a user from the Android app                                                                                            & Not relevant      & No                                                            \\ \hline
+Librarian can view current bookings for all users from the website and Android app and mark the borrowing as Complete (all history on website)                    & Not relevant      & No                                                            \\ \hline
+User having admin rights for an area can give access to an user to a room in that area (start/end date and start/end hour)                                        & Nice to have      & No                                                            \\ \hline
+User having admin rights for an area can view and mark as done room access requests for that area                                                                 & Nice to have      & No                                                            \\ \hline
+Onboarding setup process in web frontend to create first user when no users exists in the DB                                                                      & Nice to have      & Implemented during the summer between report and presentation \\ \hline
+Ability to connect to LDAP (Active Directory for example) for users and authentication                                                                            & Nice to have      & No                                                            \\ \hline
+\caption{User stories}
+\label{user_stories_table}\\
+\end{longtable}
+
+
 \section{Technological choices}
 \label{technological choices}
 \subsection{The data and backend}
@@ -367,6 +474,7 @@ From the beginning, we wrote simple user stories as a roadmap for the project fe
 
 \subsection{Mobile application}
 \subsubsection{Why the need for an application?}
+%%TODO why not a PWA
 \subsubsection{Why go native?}
 
 \subsection{Web Frontend}
@@ -456,9 +564,17 @@ And then the same class written using data classes in Kotlin:
 \subsection{Android KTX}
 \section{Android Jetpack}
 %%TODO talk about former name, goal was to provide a set of "good behaviors" etc
-\subsection{LiveData}
-%%TODO talk about lifecycle observers and lifecycle aware
 \subsection{Room - Data persistence}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.8\textwidth]{assets/viewmodel}
+	\caption{View model interactions\cite{android:doc:viewmodel}}
+\end{center}
+\end{figure}
+\subsubsection{VieModel}
+\subsubsection{LiveData}
+%%TODO talk about lifecycle observers and lifecycle aware
+
 \subsection{Work Manager - Background jobs}
 \subsection{Navigation}
 
@@ -476,6 +592,7 @@ And then the same class written using data classes in Kotlin:
 %%TODO find function, insert etc with await => talk about command than talk directly to mongo without passing by mongoose
 \subsection{Populating references}
 \subsection{Hooks}
+\label{mongoose_hooks}
 %%TODO talk about pre('remove') for example
 \chapter{NodeJS et Express}
 \section{JavaScript ES6}
