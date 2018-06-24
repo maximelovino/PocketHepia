@@ -5,7 +5,7 @@ import android.arch.lifecycle.AndroidViewModel
 import ch.maximelovino.pockethepia.data.repositories.TransactionRepository
 
 
-class TransactionViewModel(application: Application): AndroidViewModel(application) {
+class TransactionViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: TransactionRepository = TransactionRepository(application)
     val transactions = this.repository.allTransactions
 }

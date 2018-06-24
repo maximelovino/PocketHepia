@@ -1,7 +1,6 @@
 package ch.maximelovino.pockethepia.data.adapters
 
 import android.content.Context
-import android.graphics.Color
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
@@ -9,11 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.navigation.findNavController
-import ch.maximelovino.pockethepia.AdminFragmentDirections
 import ch.maximelovino.pockethepia.R
 import ch.maximelovino.pockethepia.data.models.Transaction
-import ch.maximelovino.pockethepia.data.models.User
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -131,7 +127,7 @@ class TransactionListAdapter(val context: Context) : ListAdapter<Transaction, Tr
             holder.personText.text = current.nameToDisplay()
             holder.dateText.text = simpleDateFormat.format(current.date.time)
             holder.amountText.text = current.amount.toString()
-            holder.amountText.setTextColor(if(current.amount < 0) context.resources.getColor(R.color.negativeAmount) else context.resources.getColor(R.color.positiveAmount))
+            holder.amountText.setTextColor(if (current.amount < 0) context.resources.getColor(R.color.negativeAmount) else context.resources.getColor(R.color.positiveAmount))
         } else {
             // Covers the case of data not being ready yet.
             holder.titleText.setText(R.string.no_transaction)

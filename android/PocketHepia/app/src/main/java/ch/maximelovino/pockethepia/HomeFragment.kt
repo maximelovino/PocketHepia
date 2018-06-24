@@ -2,10 +2,13 @@ package ch.maximelovino.pockethepia
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.design.card.MaterialCardView
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.navigation.fragment.findNavController
 import ch.maximelovino.pockethepia.utils.BaseFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -31,6 +34,14 @@ class HomeFragment : BaseFragment() {
         val activity = (activity!! as MainActivity)
 
         childFragmentManager.beginTransaction().replace(R.id.home_balance_fragment_container, BalanceFragment()).addToBackStack(null).commit()
+
+        v.findViewById<FrameLayout>(R.id.home_balance_fragment_container).setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.homeToTransactions())
+        }
+
+        v.findViewById<MaterialCardView>(R.id.virtual_card).setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.homeToVirtualCard())
+        }
 
         activity.currentUser.observe(this, Observer {
             if (it != null) {

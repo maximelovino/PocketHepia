@@ -31,20 +31,21 @@ data class Transaction(
             }
         }
     }
-    companion object {
-        fun fromJson(jsonObject: JSONObject): Transaction {
+
+    companion object : JsonParsable<Transaction> {
+        override fun fromJson(jsonObject: JSONObject): Transaction {
             val id = jsonObject.getString("id")
             val date = Calendar.getInstance()
             date.timeInMillis = jsonObject.getLong("date")
             val amount = jsonObject.getDouble("amount")
             val to = try {
                 User.fromJson(jsonObject.getJSONObject("to"))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 null
             }
             val from = try {
                 User.fromJson(jsonObject.getJSONObject("from"))
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 null
             }
             val title = jsonObject.getString("title")

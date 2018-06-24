@@ -3,9 +3,11 @@ package ch.maximelovino.pockethepia.data.models
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import android.content.Context
+import ch.maximelovino.pockethepia.R
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
 
 @Entity
 data class Access(
@@ -17,25 +19,43 @@ data class Access(
         val startTime: Int,
         val endTime: Int
 ) {
-    fun startTimeString(): String {
-        return minutesPastMidnightToTimeString(this.startTime);
+    private val startTimeString: String
+        get() {
+            return minutesPastMidnightToTimeString(this.startTime)
+        }
+
+    private val endTimeString: String
+        get() {
+            return minutesPastMidnightToTimeString(this.endTime)
+        }
+
+    fun timeRangeString(context: Context): String {
+        return context.getString(R.string.timeRangeTemplate, startTimeString, endTimeString)
     }
 
-    fun endTimeString(): String {
-        return minutesPastMidnightToTimeString(this.endTime);
+    fun dateRangeString(context: Context): String {
+        val sb = StringBuilder()
+        sb.append(context.getString(R.string.fromDateTemplate, simpleDateFormat.format(this.startDate.time)))
+        if (this.endDate != null) {
+            sb.append(" ")
+            sb.append(context.getString(R.string.toDateTemplate, simpleDateFormat.format(this.endDate.time)))
+        }
+        return sb.toString()
     }
 
-    companion object {
 
+    companion object : JsonParsable<Access> {
+
+        private val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
         private fun minutesPastMidnightToTimeString(time: Int): String {
             val hours = time / 60
             val minutes = time % 60
-            val hoursString = String.format("%02d",hours)
+            val hoursString = String.format("%02d", hours)
             val minutesString = String.format("%02d", minutes)
             return "$hoursString:$minutesString"
         }
 
-        fun fromJson(jsonObject: JSONObject): Access {
+        override fun fromJson(jsonObject: JSONObject): Access {
             val id = jsonObject.getString("id")
             val user = User.fromJson(jsonObject.getJSONObject("user"))
             val room = Room.fromJson(jsonObject.getJSONObject("room"))

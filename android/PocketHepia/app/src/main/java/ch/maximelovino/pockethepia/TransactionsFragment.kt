@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import ch.maximelovino.pockethepia.data.adapters.TransactionListAdapter
 import ch.maximelovino.pockethepia.data.viewmodels.TransactionViewModel
@@ -45,6 +45,7 @@ class TransactionsFragment : BaseFragment() {
         val viewAdapter = TransactionListAdapter(this.context!!)
         val viewManager = LinearLayoutManager(this.context!!)
         val recyclerView = v.findViewById<RecyclerView>(R.id.transactions_recycler_view)
+        val noTransactionsText = v.findViewById<TextView>(R.id.no_transactions_text)
         recyclerView.apply {
             layoutManager = viewManager
             adapter = viewAdapter
@@ -70,8 +71,17 @@ class TransactionsFragment : BaseFragment() {
 
         transactionsViewModel.transactions.observe(this, Observer {
 
-            if (it != null)
+            if (it != null){
+                if(it.isEmpty()){
+                    noTransactionsText.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                }else{
+                    recyclerView.visibility = View.VISIBLE
+                    noTransactionsText.visibility = View.GONE
+                }
                 viewAdapter.submitList(it)
+            }
+
         })
 
         return v
@@ -81,7 +91,6 @@ class TransactionsFragment : BaseFragment() {
         val fab = (activity!! as MainActivity).fab
         fab.visibility = View.VISIBLE
         fab.setOnClickListener {
-            Log.v("TRANSACTION", "Clicked on transactions FAB")
             val directions = TransactionsFragmentDirections.transactionsToPayment(userID)
             findNavController().navigate(directions)
         }

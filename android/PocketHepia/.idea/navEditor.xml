@@ -13,8 +13,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-28" />
-                            <option name="y" value="350" />
+                            <option name="x" value="-285" />
+                            <option name="y" value="663" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -25,8 +25,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="260" />
-                            <option name="y" value="198" />
+                            <option name="x" value="-283" />
+                            <option name="y" value="960" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -41,26 +41,28 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="booksFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="134" />
-                            <option name="y" value="536" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="homeFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-34" />
-                            <option name="y" value="66" />
+                            <option name="x" value="-568" />
+                            <option name="y" value="169" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="homeToTransactions">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="homeToVirtualCard">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -70,8 +72,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="782" />
-                            <option name="y" value="-131" />
+                            <option name="x" value="222" />
+                            <option name="y" value="962" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -82,8 +84,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="265" />
-                            <option name="y" value="-238" />
+                            <option name="x" value="-42" />
+                            <option name="y" value="371" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -94,8 +96,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-4" />
-                            <option name="y" value="-253" />
+                            <option name="x" value="-285" />
+                            <option name="y" value="367" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -115,8 +117,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="586" />
-                            <option name="y" value="163" />
+                            <option name="x" value="-30" />
+                            <option name="y" value="962" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -127,6 +129,18 @@
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="virtualCardActivity">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-287" />
+                            <option name="y" value="15" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

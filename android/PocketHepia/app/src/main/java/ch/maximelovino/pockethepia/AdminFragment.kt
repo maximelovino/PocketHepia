@@ -1,19 +1,14 @@
 package ch.maximelovino.pockethepia
 
-import android.app.SearchManager
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import ch.maximelovino.pockethepia.data.adapters.UserListAdapter
-import ch.maximelovino.pockethepia.data.models.User
 import ch.maximelovino.pockethepia.data.viewmodels.UserViewModel
 import ch.maximelovino.pockethepia.utils.BaseFragment
 
@@ -61,7 +56,6 @@ class AdminFragment : BaseFragment(), SearchView.OnQueryTextListener {
         usersViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
 
         usersViewModel.users.observe(this, Observer {
-            Log.v("OBSERVER", "Yo, here's something new ${it.toString()}")
             if (it != null)
                 viewAdapter.setData(it)
         })

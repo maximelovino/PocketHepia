@@ -47,4 +47,10 @@
     <string name="payment_ok">Payment successful</string>
     <string name="no_access">No access</string>
     <string name="search">Search</string>
+    <string name="timeRangeTemplate">Between %1$s and %2$s</string>
+    <string name="fromDateTemplate">From %1$s</string>
+    <string name="toDateTemplate">to %1$s</string>
+    <string name="you_have_no_accesses">You have no accesses</string>
+    <string name="you_have_no_transactions">You have no transactions</string>
+
 </resources>

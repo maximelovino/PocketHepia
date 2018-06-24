@@ -7,7 +7,14 @@
         android:id="@+id/homeFragment"
         android:name="ch.maximelovino.pockethepia.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/homeToTransactions"
+            app:destination="@id/transactionsFragment" />
+        <action
+            android:id="@+id/homeToVirtualCard"
+            app:destination="@id/virtualCardActivity" />
+    </fragment>
     <fragment
         android:id="@+id/transactionsFragment"
         android:name="ch.maximelovino.pockethepia.TransactionsFragment"
@@ -62,4 +69,9 @@
             android:name="userID"
             app:type="string" />
     </activity>
+    <activity
+        android:id="@+id/virtualCardActivity"
+        android:name="ch.maximelovino.pockethepia.VirtualCardActivity"
+        android:label="activity_virtual_card"
+        tools:layout="@layout/activity_virtual_card" />
 </navigation>

@@ -28,6 +28,7 @@ import javax.net.ssl.HttpsURLConnection
  */
 class UserDetailFragment : BaseFragment() {
     private var dialog: AlertDialog? = null
+    private lateinit var id: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +40,10 @@ class UserDetailFragment : BaseFragment() {
         // Inflate the layout for this fragment
         val v: View = inflater.inflate(R.layout.fragment_user_detail, container, false)
 
-        // TODO this should be instance member
-        val id = arguments?.let {
+        //Here we can safely force unwrap because navigation provides compile check of argument presence
+        id = arguments?.let {
             UserDetailFragmentArgs.fromBundle(it).userID
-        } ?: return v
-        Log.v("USER_ID", id)
-
+        }!!
 
         val userDetailName: TextView = v.findViewById(R.id.user_detail_name)
         val userDetailEmail: TextView = v.findViewById(R.id.user_detail_email)
@@ -60,7 +59,6 @@ class UserDetailFragment : BaseFragment() {
         val user = userDao.findById(id)
 
         user.observe(this, Observer {
-            Log.v("User detail", it.toString())
             if (it != null) {
                 userDetailName.text = it.name
                 userDetailEmail.text = it.email
@@ -84,7 +82,7 @@ class UserDetailFragment : BaseFragment() {
         removeNFCButton.setOnClickListener {
             val token = PreferenceManager.retrieveToken(activity!!)
             if (token != null)
-                DeleteTagTask(token, id).execute()
+                DeleteTagTask(token).execute()
         }
 
         handleFabDisplay()
@@ -108,10 +106,10 @@ class UserDetailFragment : BaseFragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
-    inner class DeleteTagTask(val token: String, val userID: String) : AsyncTask<Void, Void, Boolean>() {
+    inner class DeleteTagTask(private val token: String) : AsyncTask<Void, Void, Boolean>() {
         override fun doInBackground(vararg p0: Void?): Boolean {
             try {
-                val url = URL("${Constants.NFC_DELETE_ROUTE}/$userID")
+                val url = URL("${Constants.NFC_DELETE_ROUTE}/$id")
                 val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "DELETE"
                 connection.setRequestProperty("Authorization", "Bearer $token")
@@ -121,10 +119,10 @@ class UserDetailFragment : BaseFragment() {
                 if (statusCode == 200) {
                     return true
                 } else {
-                    Log.e("STATUS CODE", statusCode.toString())
+                    Log.e(this::class.java.name, "Status code: $statusCode")
                 }
             } catch (e: Exception) {
-                Log.e("NFC_DELETE", e.message)
+                Log.e(this::class.java.name, "Error deleting tag: $e")
             }
             return false
         }

@@ -9,9 +9,8 @@ data class Area(
         @PrimaryKey val id: String,
         val name: String
 ) {
-    companion object {
-
-        fun fromJson(jsonObject: JSONObject): Area {
+    companion object : JsonParsable<Area> {
+        override fun fromJson(jsonObject: JSONObject): Area {
             val id = jsonObject.getString("id")
             val name = jsonObject.getString("name")
             return Area(id, name)

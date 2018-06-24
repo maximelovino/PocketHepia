@@ -1,15 +1,11 @@
 package ch.maximelovino.pockethepia.data.adapters
 
 import android.content.Context
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filterable
 import android.widget.TextView
 import androidx.navigation.findNavController
 import ch.maximelovino.pockethepia.AdminFragmentDirections
@@ -17,8 +13,7 @@ import ch.maximelovino.pockethepia.R
 import ch.maximelovino.pockethepia.data.models.User
 
 
-class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapter.UserViewHolder>()
-{
+class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
     /**
      * Returns the total number of items in the data set held by the adapter.
      *
@@ -34,29 +29,28 @@ class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapt
     private var query = ""
 
 
-    private fun filterData(){
+    private fun filterData() {
         this.filteredDataSet.clear()
-        if (query.isEmpty()){
+        if (query.isEmpty()) {
             this.filteredDataSet.addAll(dataset)
-        }else{
+        } else {
             this.filteredDataSet.addAll(this.dataset.filter { it.name.startsWith(query, true) })
         }
-        Log.v("Filter", this.filteredDataSet.toString())
         notifyDataSetChanged()
     }
 
-    fun setData(users: List<User>){
+    fun setData(users: List<User>) {
         dataset.clear()
         dataset.addAll(users)
         filterData()
     }
 
-    fun filter(query: String){
+    fun filter(query: String) {
         this.query = query
         filterData()
     }
 
-    fun clearFilter(){
+    fun clearFilter() {
         this.query = ""
         filterData()
     }

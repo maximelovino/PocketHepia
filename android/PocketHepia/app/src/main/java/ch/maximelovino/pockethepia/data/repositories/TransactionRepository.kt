@@ -6,10 +6,9 @@ import android.os.AsyncTask
 import ch.maximelovino.pockethepia.data.AppDatabase
 import ch.maximelovino.pockethepia.data.dao.TransactionDao
 import ch.maximelovino.pockethepia.data.models.Transaction
-import ch.maximelovino.pockethepia.data.models.User
 
 
-class TransactionRepository(application: Application){
+class TransactionRepository(application: Application) {
     private val db: AppDatabase = AppDatabase.getInstance(application.applicationContext)
     private val transactionDao = db.transactionDao()
     val allTransactions = transactionDao.getAll()

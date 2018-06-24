@@ -21,7 +21,7 @@
 \usepackage[nonumberlist]{glossaries}
 \makeglossaries
 %%TODO convert this to english
-%%TODO add RFID
+%%TODO add RFID, add JWT, add SDK, add JS, add JSON, add BSON
 \newglossaryentry{nfc}
 {
 	name=NFC,
@@ -335,7 +335,18 @@ This is inspired by the way Nextcloud\footnote{\url{https://nextcloud.com/}} for
 
 While we could have asked Switch-AAI to integrate AAI authentication in our application, the time constraints of the project were too tight to launch a discussion and we wanted to stay independent of other services in this phase to avoid being slowed down by for example needing to run our servers on the HEPIA network exclusively to access the directory.
 \subsection{Payments}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.4\textwidth]{assets/transaction_model}
+	\caption{Transaction Model}
+\end{center}
+\end{figure}
+
+%%TODO talk about how balance is calculated from transactions
 \subsection{Accesses}
+
+\subsection{Logs}
+%%TODO WE DIDNT TALK ABOUT LOGS ANYWHERE?
 
 \section{User stories}
 From the beginning, we wrote simple user stories as a roadmap for the project features we wanted to implement. All of these features are not part of this academic project but are part of the broader student card project. 
@@ -483,6 +494,7 @@ And then the same class written using data classes in Kotlin:
 \subsection{Services}
 \subsection{Routing and Guards}
 \section{RxJS - Observables}
+\section{Reactive Forms}
 \section{TypeScript}
 \section{Angular Material}
 

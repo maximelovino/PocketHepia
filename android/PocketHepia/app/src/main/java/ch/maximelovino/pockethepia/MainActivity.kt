@@ -70,7 +70,7 @@ class MainActivity : ForegroundDispatchedActivity() {
 
         status.observe(this, Observer {
             // If there are no matching work statuses, do nothing
-            Log.v("STATUS", "Change of status, ${it.toString()}")
+            Log.v(SYNC_TAG, "Change of status, ${it.toString()}")
             if (it == null || it.isEmpty()) {
                 return@Observer
             }
@@ -88,7 +88,7 @@ class MainActivity : ForegroundDispatchedActivity() {
 
         manualStatus.observe(this, Observer {
             // If there are no matching work statuses, do nothing
-            Log.v("STATUS", "Change of status, ${it.toString()}")
+            Log.v(MANUAL_SYNC_TAG, "Change of status, ${it.toString()}")
             if (it == null || it.isEmpty()) {
                 return@Observer
             }
@@ -141,7 +141,7 @@ class MainActivity : ForegroundDispatchedActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun logout(){
+    fun logout() {
         cancelPeriodicSyncTask()
         val db = AppDatabase.getInstance(this)
         ClearDatabaseTask(db).execute()
@@ -152,7 +152,6 @@ class MainActivity : ForegroundDispatchedActivity() {
     }
 
     private fun cancelPeriodicSyncTask() {
-        Log.v("LOGOUT", "Cancelling sync task")
         val wm = WorkManager.getInstance()
         wm.cancelAllWorkByTag(Constants.SYNC_TAG)
         wm.cancelUniqueWork(Constants.SYNC_TAG)

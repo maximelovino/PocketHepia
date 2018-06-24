@@ -35,7 +35,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".PaymentActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".VirtualCardActivity"></activity>
     </application>
 
 </manifest>

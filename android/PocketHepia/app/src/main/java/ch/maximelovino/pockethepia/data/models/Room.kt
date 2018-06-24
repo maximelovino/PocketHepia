@@ -12,8 +12,8 @@ data class Room(
         val name: String,
         @Embedded(prefix = "area") val area: Area
 ) {
-    companion object {
-        fun fromJson(jsonObject: JSONObject): Room {
+    companion object : JsonParsable<Room> {
+        override fun fromJson(jsonObject: JSONObject): Room {
             val id = jsonObject.getString("id")
             val name = jsonObject.getString("name")
             val area = Area.fromJson(jsonObject.getJSONObject("area"))

@@ -124,7 +124,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun createPeriodicSyncTask() {
-        Log.v("LOGIN", "Registering periodic sync task")
         val wm = WorkManager.getInstance()
 
         val workConstraints = Constraints.Builder()
@@ -209,7 +208,7 @@ class LoginActivity : AppCompatActivity() {
                     return jsonContent.getString("token")
                 }
             } catch (e: Exception) {
-                Log.e("LOGIN_ERROR", e.message)
+                Log.e(this::class.java.name, e.message)
             }
 
             return null

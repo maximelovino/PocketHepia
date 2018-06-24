@@ -82,24 +82,24 @@ class PaymentActivity : ForegroundDispatchedActivity() {
             try {
                 PaymentTask(token, payment_title.text.toString(), payment_amount.text.toString().toDouble(), sending_money_switch.isChecked, id).execute()
             } catch (e: Exception) {
-                Log.e("NFC Payment", e.toString())
+                Log.e(this::class.java.name, e.toString())
             }
-            Log.v("NFC Payment", "Id discovered: $id")
+            Log.v(this::class.java.name, "Payment id discovered: $id")
         } else {
             super.onNewIntent(intent)
         }
     }
 
-    fun handlePaymentResult(success: Boolean){
-        val message = if(success){
+    fun handlePaymentResult(success: Boolean) {
+        val message = if (success) {
             getString(R.string.payment_ok)
-        }else {
+        } else {
             getString(R.string.problem_payment)
         }
-        Toast.makeText(this,message,Toast.LENGTH_LONG).show()
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         nfcDialog.dismiss()
 
-        if(success){
+        if (success) {
             finish()
         }
     }
@@ -129,7 +129,7 @@ class PaymentActivity : ForegroundDispatchedActivity() {
         }
 
         override fun onPostExecute(result: Boolean?) {
-            if(result != null){
+            if (result != null) {
                 handlePaymentResult(result)
             }
         }

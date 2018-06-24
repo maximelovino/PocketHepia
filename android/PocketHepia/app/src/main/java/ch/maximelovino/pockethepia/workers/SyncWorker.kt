@@ -187,7 +187,6 @@ class SyncWorker : Worker() {
     }
 
 
-
     companion object {
         const val SYNC_LOG_TAG = "SYNC_THREAD"
     }

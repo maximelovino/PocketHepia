@@ -42,7 +42,7 @@ open class ForegroundDispatchedActivity : AppCompatActivity() {
         try {
             intentFilterNDEF.addDataType("text/plain")
         } catch (e: IntentFilter.MalformedMimeTypeException) {
-            Log.w("Dispatcher", "Failed to build intent filter")
+            Log.w(this::class.java.name, "Failed to build intent filter")
         }
 
         val intentFilterTech = IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED)
@@ -61,7 +61,7 @@ open class ForegroundDispatchedActivity : AppCompatActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
-        Log.i("Foreground dispatch", "Tag discovered, ignoring because not NFC activity")
+        Log.i(this::class.java.name, "Tag discovered, ignoring because not NFC activity")
     }
 
     override fun onPause() {

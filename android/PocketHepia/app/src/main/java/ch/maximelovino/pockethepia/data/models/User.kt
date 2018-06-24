@@ -13,15 +13,15 @@ data class User(
         val isAdmin: Boolean,
         val cardId: String?,
         val virtualCard: String?,
-        val balance: Double?,
+        var balance: Double?,
         val isLibrarian: Boolean,
         val acceptsPayments: Boolean,
         val canInvite: Boolean,
         val isAuditor: Boolean
 ) {
 
-    companion object {
-        fun fromJson(jsonObject: JSONObject, balance: Double? = null): User {
+    companion object : JsonParsable<User> {
+        override fun fromJson(jsonObject: JSONObject): User {
             val id = jsonObject.getString("id")
             val isAdmin = jsonObject.getBoolean("isAdmin")
             val isLibrarian = jsonObject.getBoolean("isLibrarian")
@@ -43,7 +43,13 @@ data class User(
                 null
             }
 
-            return User(id, name, email, isAdmin, cardId, virtualCard, balance, isLibrarian, acceptsPayments, canInvite, isAuditor)
+            return User(id, name, email, isAdmin, cardId, virtualCard, null, isLibrarian, acceptsPayments, canInvite, isAuditor)
+        }
+
+        fun fromJson(jsonObject: JSONObject, balance: Double): User {
+            val user = fromJson(jsonObject)
+            user.balance = balance
+            return user
         }
     }
 }

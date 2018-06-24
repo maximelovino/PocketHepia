@@ -13,7 +13,7 @@ import ch.maximelovino.pockethepia.data.models.Transaction
 import ch.maximelovino.pockethepia.data.models.User
 
 
-@Database(entities = arrayOf(User::class, Transaction::class, Access::class), version = 7)
+@Database(entities = arrayOf(User::class, Transaction::class, Access::class), version = 8)
 @TypeConverters(DataTransformers::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
@@ -27,7 +27,6 @@ abstract class AppDatabase : RoomDatabase() {
             return if (db != null) {
                 db!!
             } else {
-                //TODO problem with destructive approach is when it's run, it closes the db
                 db = Room.databaseBuilder(context, AppDatabase::class.java, "pockethepia-db").fallbackToDestructiveMigration().build()
                 db!!
             }

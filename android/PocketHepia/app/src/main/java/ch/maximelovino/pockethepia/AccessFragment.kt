@@ -6,14 +6,12 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import ch.maximelovino.pockethepia.data.adapters.AccessListAdapter
-import ch.maximelovino.pockethepia.data.adapters.UserListAdapter
 import ch.maximelovino.pockethepia.data.viewmodels.AccessViewModel
-import ch.maximelovino.pockethepia.data.viewmodels.TransactionViewModel
 import ch.maximelovino.pockethepia.utils.BaseFragment
 
 
@@ -36,7 +34,11 @@ class AccessFragment : BaseFragment() {
 
         val viewAdapter = AccessListAdapter(this.context!!)
         val viewManager = LinearLayoutManager(this.context!!)
-        v.findViewById<RecyclerView>(R.id.access_recycler_view).apply {
+
+        val recyclerView =  v.findViewById<RecyclerView>(R.id.access_recycler_view)
+        val noAccessText = v.findViewById<TextView>(R.id.no_access_text)
+
+        recyclerView.apply {
             layoutManager = viewManager
             adapter = viewAdapter
         }
@@ -45,8 +47,16 @@ class AccessFragment : BaseFragment() {
 
         accessViewModel.accesses.observe(this, Observer {
 
-            if (it != null)
+            if (it != null){
+                if(it.isEmpty()){
+                    noAccessText.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                }else{
+                    recyclerView.visibility = View.VISIBLE
+                    noAccessText.visibility = View.GONE
+                }
                 viewAdapter.submitList(it)
+            }
         })
 
         return v

@@ -3,11 +3,7 @@ package ch.maximelovino.pockethepia
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.nfc.NdefMessage
-import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
-import android.nfc.Tag
-import android.nfc.tech.Ndef
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
@@ -49,13 +45,8 @@ class NfcAssignmentActivity : ForegroundDispatchedActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
-        // TODO this is not good for the tags, change it
         val tagID = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)
         val hexTagID = tagID.toHex()
-        val tag: Tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
-        val ndefTag = Ndef.get(tag)
-        ndefTag.connect()
-        ndefTag.writeNdefMessage(NdefMessage(NdefRecord(NdefRecord.TNF_EMPTY, null, null, null)))
         AssignNFCTask(token).execute(hexTagID)
     }
 
@@ -97,10 +88,10 @@ class NfcAssignmentActivity : ForegroundDispatchedActivity() {
                 } else {
                     val inStream = BufferedReader(InputStreamReader(connection.errorStream))
                     response = inStream.readText()
-                    Log.e("STATUS CODE", statusCode.toString())
+                    Log.e(this::class.java.name, "Status code: $statusCode")
                 }
             } catch (e: Exception) {
-                Log.e("NFC_Assignment", "There was a problem $e")
+                Log.e(this::class.java.name, "There was a problem assigning tag: $e")
             }
 
             return false

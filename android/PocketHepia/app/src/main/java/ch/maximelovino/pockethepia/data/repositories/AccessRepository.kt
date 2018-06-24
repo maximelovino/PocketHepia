@@ -6,10 +6,9 @@ import android.os.AsyncTask
 import ch.maximelovino.pockethepia.data.AppDatabase
 import ch.maximelovino.pockethepia.data.dao.AccessDao
 import ch.maximelovino.pockethepia.data.models.Access
-import ch.maximelovino.pockethepia.data.models.Transaction
 
 
-class AccessRepository(application: Application){
+class AccessRepository(application: Application) {
     private val db: AppDatabase = AppDatabase.getInstance(application.applicationContext)
     private val accessDao = db.accessDao()
     val allAccesses = accessDao.getAll()

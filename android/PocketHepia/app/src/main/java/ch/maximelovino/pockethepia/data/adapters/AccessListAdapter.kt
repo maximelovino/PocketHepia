@@ -10,9 +10,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import ch.maximelovino.pockethepia.R
 import ch.maximelovino.pockethepia.data.models.Access
-import ch.maximelovino.pockethepia.data.models.Transaction
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class AccessListAdapter(val context: Context) : ListAdapter<Access, AccessListAdapter.AccessViewHolder>(object : DiffUtil.ItemCallback<Access>() {
@@ -71,7 +68,6 @@ class AccessListAdapter(val context: Context) : ListAdapter<Access, AccessListAd
     }
 }) {
     private val layoutInflater = LayoutInflater.from(context)
-    private val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
      * an item.
@@ -125,9 +121,8 @@ class AccessListAdapter(val context: Context) : ListAdapter<Access, AccessListAd
         if (position < itemCount) {
             val current: Access = getItem(position)
             holder.roomNameText.text = current.room.name
-            //TODO should we move these strings creations to the model
-            holder.dateRangeText.text = "From ${simpleDateFormat.format(current.startDate.time)}${if (current.endDate != null) " to ${simpleDateFormat.format(current.endDate.time)}" else ""}"
-            holder.timeRangeText.text = "Between ${current.startTimeString()} and ${current.endTimeString()}"
+            holder.dateRangeText.text = current.dateRangeString(context)
+            holder.timeRangeText.text = current.timeRangeString(context)
         } else {
             // Covers the case of data not being ready yet.
             holder.roomNameText.setText(R.string.no_access)

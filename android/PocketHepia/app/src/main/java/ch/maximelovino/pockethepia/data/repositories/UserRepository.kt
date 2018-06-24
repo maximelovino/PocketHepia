@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.os.AsyncTask
 import ch.maximelovino.pockethepia.data.AppDatabase
-import ch.maximelovino.pockethepia.data.models.User
 import ch.maximelovino.pockethepia.data.dao.UserDao
+import ch.maximelovino.pockethepia.data.models.User
 
 
 class UserRepository(application: Application) {
