@@ -341,12 +341,18 @@ While we could have asked Switch-AAI to integrate AAI authentication in our appl
 	\caption{Transaction Model}
 \end{center}
 \end{figure}
+To handle payments, we defined a Transaction model that represents a money transaction. We store the id of the \verb+to+ and \verb+from+ users instead of embedding the users document inside the transaction in order to avoid using too much space in the database. The number of transactions can grow very high and it is a waste of space to store two full user documents in each transaction\footnote{For more on that, see section \ref{mongo_references} on Mongo References}. Finally, we handle the two type of recharges for the user account by setting the \verb+from+ user to \verb+null+ because the money does not come from any user account and set the corresponding \verb+stripe+ or \verb+adminCharge+ field to true. \\
 
-%%TODO talk about how balance is calculated from transactions
+The balance of a user is calculated from the list of transactions in which the user takes part. It is calculated as the sum of the transactions in which the user is the beneficiary minus the sum of transactions in which he makes the payment.
 \subsection{Accesses}
-
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.8\textwidth]{assets/access_model}
+	\caption{The three models handling accesses}
+\end{center}
+\end{figure}
 \subsection{Logs}
-%%TODO WE DIDNT TALK ABOUT LOGS ANYWHERE?
+%%TODO WE DIDN'T TALK ABOUT LOGS ANYWHERE, we have to explain why we log etc
 
 \section{User stories}
 From the beginning, we wrote simple user stories as a roadmap for the project features we wanted to implement. All of these features are not part of this academic project but are part of the broader student card project. 
@@ -460,6 +466,7 @@ And then the same class written using data classes in Kotlin:
 \section{Storage as JSON/BSON documents}
 %%TODO verify this is true
 \section{How to handle references}
+\label{mongo_references}
 %%TODO add source on mongo site https://docs.mongodb.com/manual/applications/data-models-relationships/
 %%TODO talk about embedding documents vs ids of childrens vs ids of parent for different sizes
 \section{Mongoose}
