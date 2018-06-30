@@ -23,6 +23,7 @@
 \makeglossaries
 %%TODO convert this to english
 %%TODO add RFID, add JWT, add SDK, add JS, add JSON, add BSON
+%%TODO use all these acronyms in text
 \newglossaryentry{nfc}
 {
 	name=NFC,
@@ -476,7 +477,7 @@ Librarian can view current bookings for all users from the website and Android a
 \label{technological choices}
 \subsection{The data and backend}
 %%TODO talk about JWT
-For the data and backend part of the project, we decided to build a unique backend for both the web and mobile clients. We would need a database to store the data of our models and a service to access to access that data. The easier solution would be to build a REST API in front of a database. To do this, we saw two main possibilities: a PHP REST API coupled with a SQL Database or a Node.JS Express REST API coupled with a Mongo DB. While we could mix these and use a SQL Database with Node.JS, we wanted to use the better affinity possible between the two. With the increase in popularity in Javascript based backends, we decided to rule out the PHP option and keep the Express/Mongo option.\\
+For the data and backend part of the project, we decided to build a unique backend for both the web and mobile clients. We would need a database to store the data of our models and a service to access to access that data. The easier solution would be to build a REST API in front of a database. To do this, we saw two main possibilities: a PHP REST API coupled with a SQL Database or a Node.JS Express REST API coupled with a Mongo DB. While we could mix these and use a SQL Database with Node.JS, we wanted to use the better affinity possible between the two. With the increase in popularity in Javascript based backends, we decided to rule out the PHP option and keep the Express/Mongo option. This is also due to the fact that PHP feels dated and does not provide a clear structure unless you use a PHP Framework to complement it. \\
 
 %%TODO PHP less modern => node js better => why nosql is better => php without frameworks is a mess
 
@@ -487,6 +488,7 @@ The second solution that was suggested was to use an object syncing platform to 
 \begin{center}
 	\includegraphics[width=.8\textwidth]{assets/realm_architecture}
 	\caption{Saving an object in Realm}
+	\label{realm_object_saving_figure}
 \end{center}
 \end{figure}
 
@@ -494,11 +496,28 @@ The second solution that was suggested was to use an object syncing platform to 
 \begin{center}
 	\includegraphics[width=.8\textwidth]{assets/expressmongo_architecture.png}
 	\caption{Saving an object in Express/Mongo}
+		\label{mongo_object_saving_figure}
 \end{center}
 \end{figure}
+The Realm platform integrates the database directly within an object server that takes care of providing access and sending data to all the clients connected to it. This is possible thanks to the Realm runtime that you need to integrate in your client-side application and will replicate the database server on your local client.\\
+
+On the contrary, using the Express/Mongo approach, we have the Mongo database and we built a REST API in front of it to provide access to the data. We do not need any particular runtime on the client-side and we can just handle data how we want. \\
+
+As we can see in figures \ref{realm_object_saving_figure} and \ref{mongo_object_saving_figure}, when we create a new object on a client in Realm and save it locally, it is directly sent to the server and then pushed to other devices without needing any action. On the Express/Mongo side, you save the new object to the server and then other clients can retrieve it. \\
 \paragraph{Advantages of Realm}
-\paragraph{Specific use cases}
-%%TODO no web because GraphQL is pain in the ass and no users access for example => limitation of user collection
+The advantages of Realm apply mainly on the mobile front. Realm is built to the ground up for the constrained resources and connectivity of mobile devices. It is offline first and will cache changes to be sent to the Realm server when the connection is back. Moreover, the push synchronisation of data back to the clients is the most efficient way to retrieve new data as opposed to polling data from a server at a regular interval.
+\paragraph{Only for specific use cases}
+The problem with Realm is that, beyond mobile, it is not very appropriate for our project. There are many pain points and small decisions that were taken by the Realm team that impose a way of doing things that may not be compatible with every project.\\
+
+For example, one of these problems is the user authentication part and the user collection. In Realm, a user is not an object like others. It is a special object that is also used to connect to the Realm engine to handle sync. So you are limited to using Realm authentication to use the platform. Moreover, there is no way for a user with admin rights to retrieve a list of users on the client-side. This data is not accessible, unless you use the Realm Studio GUI client.\\
+
+Another point is that, since you directly interact with the database/object server on the client-side, the code can easily be changed to access other people's information unlike a REST API where access to the database is regulated by the API. To avoid this, Realm has a system of permissions that are assigned to saved objects, but you need to assign the permissions every time you create a new object. Admins do not have direct access to everything, so you also have to add a permission for every admin every time. We wouldn't even imagine trying to add multiple set of roles here, it would be too cumbersome to handle.\\
+
+Finally, the final point that made us abandon Realm for this project is the lack of clear solution to use it on the web. You have two ways to access the data from a web client. Either activate the GraphQL integration and write GraphQL queries to interact with the data from the web frontend. Or use the Node.JS Realm runtime to connect to the object server and serve as an API to access the data. So, even if we used Realm, we would still need to write an API. We're better off just going with the Express/Mongo option in that case. \\
+
+It is a shame because the product provide real advantages on mobile that would take time to implement with a custom data solution, but it just isn't flexible enough and is really mobile-first while the web seems a bit like an after-thought for them. Even in their marketing material, they only present mobile-only applications such as chat or photo-sharing applications.
+
+%%TODO add ref for Realm Studio and GraphQL explanation with footnote and ref
 \subsection{Mobile application}
 \subsubsection{Why the need for an application?}
 %%TODO why not a PWA
@@ -669,11 +688,12 @@ And then the same class written using data classes in Kotlin:
 \subsection{Endpoints}
 \subsection{Interaction avec la base de données}
 \section{Le frontend Angular}
-\subsection{Le routage}
-\subsection{Les composants}
+\subsection{Routing}
+\subsection{Components}
 \chapter{Résultats}
 \chapter{Conclusion}
 %%TODO talk about how to implement new features or sections inside the project
+\section{Future works}
 \bibliographystyle{unsrt}
 \bibliography{bibliography}
 
