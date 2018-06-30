@@ -22,7 +22,7 @@
 \usepackage[nonumberlist]{glossaries}
 \makeglossaries
 %%TODO convert this to english
-%%TODO add RFID, add JWT, add SDK, add JS, add JSON, add BSON
+%%TODO add RFID, add JWT, add SDK, add JS, add JSON, add BSON, add API, add PWA, add REST, add EPFL
 %%TODO use all these acronyms in text
 \newglossaryentry{nfc}
 {
@@ -519,12 +519,27 @@ It is a shame because the product provide real advantages on mobile that would t
 
 %%TODO add ref for Realm Studio and GraphQL explanation with footnote and ref
 \subsection{Mobile application}
+We needed to create a mobile client to access the information and status of a users' data from a smartphone as well as complete some administrative tasks. \\
+
+We decided to build an Android application as well as coding the website to be responsive so it can be used on any smartphone. For the standard user, the mobile application is the one to use as it will provide access to all information, sync data offline and enable payments to other users. For the administrators, the mobile application will allow them to manage physical cards for users and for the rest of the administration, they can use the website on their smartphone.
 \subsubsection{Why the need for an application?}
-%%TODO why not a PWA
+While we could have achieved most of the functionality with a web application, there are still some elements that require building a full mobile application. Mainly, access to device features such as NFC. With a mobile web app, we cannot have access to the NFC chip on the smartphone and thus we cannot manage physical cards or make payments through the app. This is also the reason why we only built an Android app and not an iOS one. The API for NFC on iOS\cite{apple:ios:nfc} is basic and was released in 2017, it does not allow writing on NFC tags\footnote{Unless you are a big company partnering directly with Apple} and only supported a subset of the formats of the Android API.\\
+
+Apart from this limitation, all the other functionality could have been incorporated in a web application, for example by making a Progressive Web App (PWA). PWA are an hybrid between a mobile application and a web application and they run on desktop and mobile operating systems. Their main advantages compared to traditional web app is that they can be "installed" on the device and act like a normal application and that they generally store data offline and can sync data in the background through the user of Service Workers.
+%%TODO add PWA reference
 \subsubsection{Why go native?}
-%%TODO because of cutting edge Android features
+We could have also found a middle ground between the mobile web application and the native web application by using a mobile application framework such as Ionic or React Native to build our mobile application using web technologies. This would have allowed us to reuse some components built for the web in our mobile application.\\
+
+We decided to opt out of that route and build our application using native Android technologies to better take advantages of the cutting-edge features announced during Google I/O 2018 \footnote{Google I/O is the annual Google developer conference held in June for developers using Google technologies (Chrome, web, Android, iOS,...)} aiming to modernise and improve the Android development workflow (see section \ref{android_chapter}).
+%%TODO add ref Google I/O 2018
 \subsection{Web Frontend}
-%%TODO Angular (the most well-known) vs React (younger than NG, but good reviews, would have been good if react native as well, "a la mode") and Vue (very young, bad documentation)
+Finally, we opted to use a frontend framework to provide a good structure to our client-side web application instead of relying on static custom HTML/CSS/JS.\\
+
+The three main frameworks available at the moment are Angular\footnote{There is a distinction to be made between AngularJS (Javascript) and Angular.io (Typescript). While both coexist, you should use Angular.io as it is the version that is developed going forward. In this document, we will be talking about Angular.io when mentioning Angular}, React and Vue. \\
+
+Vue is the youngest of the three and, while it is already growing a big community, its documentation is not as complete as the two others and its also growing rapidly which means that some of our code might become obsolete rapidly. \\
+
+React and Angular are more mature, with Angular being the oldest of the three and are both baked by big companies: Facebook for React and Google for Angular. The biggest difference between the two is that React is Javascript-based and Angular is Typescript-based. We decided then to use Angular to take advantage of the typed nature of Typescript as well as to use Typescript for the first time in a project.
 
 \chapter{Technologies}
 \section{NFC and NDEF}
