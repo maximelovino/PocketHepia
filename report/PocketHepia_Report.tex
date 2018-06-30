@@ -206,6 +206,11 @@ Since starting my studies at HEPIA almost three years ago after two years at EPF
 
 The real solution would have been to use our student cards as an electronic door key to access the rooms, as well as enable other uses for the cards, such as using them as electronic wallets to simplify the payments at the canteen during lunch break. When I suggested the idea, people mostly laughed at me and said "[...] they're never going to do it, unless someone actually does it, presents it as a finished product and then they decide to use it." So, here I am, after 3 years studying at HEPIA and for my Bachelor Project I decided to work on this exact idea. A multi-function student card platform built on NFC technology with accompanying mobile and web application for administrators to manage the platform and for students to monitor their usage statistics.
 
+%% TODO %%MH : One solution, plutôt que The Real solution
+%%MH : separer la deuxieme partie de phrase "as well" dans une autre phrase
+%%MH : => La solution de l'acces aux portes et le porte monnaie sont deux features 
+%%MH : separee.
+
 \section{Project inspiration - Camipro EPFL}
 \subsection{The card and the official core platform}
 The inspiration for this project mainly comes from my experience studying at EPFL. The EPFL student card, named Camipro\cite{camipro:homepage}, contains an RFID chip that allows to perform various tasks that simplify student life on campus. The use cases for the Camipro card are the following:
@@ -310,12 +315,14 @@ While these two roles would have been enough to handle all our features. We deci
 One of these roles is the "Accept payments" role. This is specific to a canteen or a shop that wants to handle payments using the student card. While every user can send money to another user from the mobile app by tapping the other user's card, this isn't very practical for a canteen or a shop where the transactions should go the other way around. So the shop creates the payment and taps the user's card to take money from it. At first, we wanted this feature to be available to everyone but we thought about security concerns with this solution because a student could create a payment from the app and start tapping his phone on lost cards or even on people's pocket and if the card was detected it would "steal" their money. So by enabling this feature as a role, we could only allow trusted people, such as canteen's owners to receive payments in that way. \\
 
 Furthermore, due to the introduction of GDPR recently, we created a specific role called "Auditor" to access sensitive logs concerning all users, mainly access logs and transaction history. Only a user with this role can view all transactions between users and access logs for every room.\\
+%%TODO add reference for GDPR and footnote to explain why
 
 Then, there are two roles that will not be implemented as part of the Bachelor project, the "Can invite" and "Area admin" role. The first is to allow specific users to create temporary accounts without needing to contact an administrator. A use case for this would be a teacher creating a temporary account for a visiting colleague from another school. The "Area admin" role consists of delegating the administration of the accesses for an area to an user. Similar to the concept of DNS zones delegation, an administrator could for example give this role to the ITI section dean to allow him to give access to the rooms present on his floor.\\
 
 Finally, the last role is the "Librarian" role that as its name implies is attributed to users working for the library. This role enables the creation of books loans at the library for users. As stated in section \ref{books_feature}, this role will certainly be removed completely because there is already a system in place to handle book loans at the library.
 
 \section{The models}
+%%TODO Add global relational database schema with multiplicities (UML)
 \subsection{User Accounts}
 \begin{figure}[H]
 \begin{center}
@@ -413,54 +420,55 @@ From the beginning, we wrote simple user stories as a roadmap for the project fe
 \renewcommand*{\arraystretch}{1.5}
 \begin{longtable}[c]{|p{0.33\linewidth}|l|p{0.33\linewidth}|}
 \hline
-\textbf{User story name}                                                                                                                                          & \textbf{Priority} & \textbf{Implemented in Bachelor Project}                      \\ \hline
+\textbf{User story name}                                                                                                                       & \textbf{Priority} & \textbf{Status as of July 11th 2018}                \\ \hline
 \endhead
 %
-User must be able to login using username and password (then using JWT to communicate with backend)                                                               & Essential         & Yes                                                           \\ \hline
-User can view its total balance and a summary of its information on the homepage (web and application)                                                            & Important         & Yes                                                           \\ \hline
-User can view all its transactions on the transactions page (web and application)                                                                                 & Important         & Yes                                                           \\ \hline
-User can view its total balance on the transactions page (web and application)                                                                                    & Important         & Yes                                                           \\ \hline
-User can view all its accesses to rooms on the access page (web and application)                                                                                  & Important         & Yes                                                           \\ \hline
-User can view all its borrowed books on the books page                                                                                                            & Nice to have      & No                                                            \\ \hline
-User can change its password                                                                                                                                      & Normal            & Yes                                                           \\ \hline
-All accesses should be logged                                                                                                                                     & Nice to have      & No                                                            \\ \hline
-User can add money to its account using its credit card (using Stripe)                                                                                            & Nice to have      & Implemented during the summer between report and presentation \\ \hline
-User can send money to another user                                                                                                                               & Normal            & Yes                                                           \\ \hline
-User can create a virtual card from the application and use it                                                                                                    & Nice to have      & Implemented during the summer between report and presentation \\ \hline
-User can request access to a room from the website                                                                                                                & Nice to have      & Implemented during the summer between report and presentation \\ \hline
-Admin can create users from the website                                                                                                                           & Essential         & Yes                                                           \\ \hline
-Admin can delete users from the website                                                                                                                           & Important         & Yes                                                           \\ \hline
-Admin can reset password for all users from the website                                                                                                           & Important         & Yes                                                           \\ \hline
-Admin can create users in batch by importing a CSV file                                                                                                           & Important         & Yes                                                           \\ \hline
-Admin can undo a user batch import                                                                                                                                & Normal            & Yes                                                           \\ \hline
-Admin can create areas from the website                                                                                                                           & Important         & Yes                                                           \\ \hline
-Admin can create rooms from the website                                                                                                                           & Important         & Yes                                                           \\ \hline
-Admin can give access to a room for a user from the website (start/end date and timerange)                                                                        & Important         & Yes                                                           \\ \hline
-Admin can delete areas from the website                                                                                                                           & Normal            & Yes                                                           \\ \hline
-Admin can delete rooms from the website                                                                                                                           & Normal            & Yes                                                           \\ \hline
-Admin can remove an access                                                                                                                                        & Important         & Yes                                                           \\ \hline
-Admin can view all accesses for a user                                                                                                                            & Important         & Yes                                                           \\ \hline
-Admin can view all accesses for a room                                                                                                                            & Important         & Yes                                                           \\ \hline
-Admin can delegate admin rights for an area to a user                                                                                                             & Nice to have      & No                                                            \\ \hline
-Admin can change permissions of users from the website                                                                                                            & Normal            & Yes                                                           \\ \hline
-Admin can view and mark as done room access requests                                                                                                              & Nice to have      & Implemented during the summer between report and presentation \\ \hline
-Admin can add money to a user account                                                                                                                             & Normal            & Yes                                                           \\ \hline
-Admin can assign a physical card to a user from the Android app                                                                                                   & Important         & Yes                                                           \\ \hline
-Admin can remove a physical card for a user from the Android app                                                                                                  & Important         & Yes                                                           \\ \hline
-Admin can view all administrative logs from the website and filter them                                                                                           & Important         & Yes                                                           \\ \hline
-All administrative actions should be logged                                                                                                                       & Important         & Yes                                                           \\ \hline
-Auditor should be able to view access logs                                                                                                                        & Nice to have      & No                                                            \\ \hline
-Auditor should be able to view all payments logs                                                                                                                  & Nice to have      & No                                                            \\ \hline
-User having the “Accept Payment” permission can create a payment from the Android app with an amount and description and scan a user card to validate the payment & Important         & Yes                                                           \\ \hline
-User having the “can invite” permission can create a temporary user from the Android app and the website                                                          & Nice to have      & No                                                            \\ \hline
-Librarian can create a loan for a book for a user from the Android app                                                                                            & Not relevant      & No                                                            \\ \hline
-Librarian can view current bookings for all users from the website and Android app and mark the borrowing as Complete (all history on website)                    & Not relevant      & No                                                            \\ \hline
-User having admin rights for an area can give access to an user to a room in that area (start/end date and start/end hour)                                        & Nice to have      & No                                                            \\ \hline
-User having admin rights for an area can view and mark as done room access requests for that area                                                                 & Nice to have      & No                                                            \\ \hline
-Onboarding setup process in web frontend to create first user when no users exists in the DB                                                                      & Nice to have      & Implemented during the summer between report and presentation \\ \hline
-Ability to connect to LDAP (Active Directory for example) for users and authentication                                                                            & Nice to have      & No                                                            \\ \hline
+User must be able to login using username and password (then using JWT to communicate with backend)                                            & 1 - Essential     & Done                                             \\ \hline
+Admin can create users from the website                                                                                                        & 1 - Essential     & Done                                             \\ \hline
+User can view its total balance and a summary of its information on the homepage (web and application)                                         & 2 - Important     & Done                                             \\ \hline
+User can view all its transactions on the transactions page (web and application)                                                              & 2 - Important     & Done                                             \\ \hline
+User can view its total balance on the transactions page (web and application)                                                                 & 2 - Important     & Done                                             \\ \hline
+User can view all its accesses to rooms on the access page (web and application)                                                               & 2 - Important     & Done                                             \\ \hline
+Admin can delete users from the website                                                                                                        & 2 - Important     & Done                                             \\ \hline
+Admin can reset password for all users from the website                                                                                        & 2 - Important     & Done                                             \\ \hline
+Admin can create users in batch by importing a CSV file                                                                                        & 2 - Important     & Done                                             \\ \hline
+Admin can create areas from the website                                                                                                        & 2 - Important     & Done                                             \\ \hline
+Admin can create rooms from the website                                                                                                        & 2 - Important     & Done                                             \\ \hline
+Admin can give access to a room for a user from the website (start/end date and timerange)                                                     & 2 - Important     & Done                                             \\ \hline
+Admin can remove an access from the website                                                                                                    & 2 - Important     & Done                                             \\ \hline
+Admin can view all accesses for a user                                                                                                         & 2 - Important     & Done                                             \\ \hline
+Admin can view all accesses for a room                                                                                                         & 2 - Important     & Done                                             \\ \hline
+Admin can assign a physical card to a user from the Android app                                                                                & 2 - Important     & Done                                             \\ \hline
+Admin can remove a physical card for a user from the Android app                                                                               & 2 - Important     & Done                                             \\ \hline
+Admin can view all administrative logs from the website and filter them                                                                        & 2 - Important     & Done                                             \\ \hline
+All administrative actions should be logged                                                                                                    & 2 - Important     & In progress (all implemented actions are logged) \\ \hline
+User having the “Accept Payment” permission can create a payment from the Android app and scan a user card to validate the payment             & 2 - Important     & Done                                             \\ \hline
+User can change its password                                                                                                                   & 3 - Normal        & Done                                             \\ \hline
+User can send money to another user from the Android app                                                                                       & 3 - Normal        & Done                                             \\ \hline
+Admin can undo a user batch import                                                                                                             & 3 - Normal        & Done                                             \\ \hline
+Admin can delete areas from the website                                                                                                        & 3 - Normal        & Done                                             \\ \hline
+Admin can delete rooms from the website                                                                                                        & 3 - Normal        & Done                                             \\ \hline
+Admin can change permissions of users from the website                                                                                         & 3 - Normal        & Done                                             \\ \hline
+Admin can add money to a user account                                                                                                          & 3 - Normal        & Done                                             \\ \hline
+User can view all its borrowed books on the books page                                                                                         & 4- Nice to have   & Not started                                      \\ \hline
+All accesses should be logged                                                                                                                  & 4- Nice to have   & Not started                                      \\ \hline
+User can add money to its account using its credit card (using Stripe)                                                                         & 4- Nice to have   & Frontend in progress                             \\ \hline
+User can create a virtual card from the application and use it                                                                                 & 4- Nice to have   & Placeholder and navigation on Android only       \\ \hline
+User can request access to a room from the website                                                                                             & 4- Nice to have   & Not started                                      \\ \hline
+Admin can delegate admin rights for an area to a user                                                                                          & 4- Nice to have   & Not started                                      \\ \hline
+Admin can view and mark as done room access requests                                                                                           & 4- Nice to have   & Not started                                      \\ \hline
+Auditor should be able to view access logs                                                                                                     & 4- Nice to have   & Not started                                      \\ \hline
+Auditor should be able to view all payments logs                                                                                               & 4- Nice to have   & Not started                                      \\ \hline
+User having the “can invite” permission can create a temporary user from the Android app and the website                                       & 4- Nice to have   & Not started                                      \\ \hline
+User having admin rights for an area can give access to an user to a room in that area (start/end date and start/end hour)                     & 4- Nice to have   & Not started                                      \\ \hline
+User having admin rights for an area can view and mark as done room access requests for that area                                              & 4- Nice to have   & Not started                                      \\ \hline
+Onboarding setup process in web frontend to create first user when no users exists in the DB                                                   & 4- Nice to have   & Not started                                      \\ \hline
+Ability to connect to LDAP (Active Directory for example) for users and authentication                                                         & 4- Nice to have   & Not started                                      \\ \hline
+Librarian can create a loan for a book for a user from the Android app                                                                         & 5 - Not relevant  & Removed                                          \\ \hline
+Librarian can view current bookings for all users from the website and Android app and mark the borrowing as Complete (all history on website) & 5 - Not relevant  & Removed                                          \\ \hline
 \caption{User stories}
 \label{user_stories_table}\\
+%%TODO sort the table by priority
 \end{longtable}
 
 
@@ -468,33 +476,53 @@ Ability to connect to LDAP (Active Directory for example) for users and authenti
 \label{technological choices}
 \subsection{The data and backend}
 %%TODO talk about JWT
+For the data and backend part of the project, we decided to build a unique backend for both the web and mobile clients. We would need a database to store the data of our models and a service to access to access that data. The easier solution would be to build a REST API in front of a database. To do this, we saw two main possibilities: a PHP REST API coupled with a SQL Database or a Node.JS Express REST API coupled with a Mongo DB. While we could mix these and use a SQL Database with Node.JS, we wanted to use the better affinity possible between the two. With the increase in popularity in Javascript based backends, we decided to rule out the PHP option and keep the Express/Mongo option.\\
+
+%%TODO PHP less modern => node js better => why nosql is better => php without frameworks is a mess
+
+The second solution that was suggested was to use an object syncing platform to directly synchronise data with all of our clients. One of these platforms is \emph{Realm Platform\footnote{\url{https://realm.io/products/realm-platform}}} and we decided to study the advantages of it for our project and decide if we should use it over the Express/Mongo option.
+%%TODO talk about realm
 \subsubsection{Realm vs. Express-MongoDB}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.8\textwidth]{assets/realm_architecture}
+	\caption{Saving an object in Realm}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.8\textwidth]{assets/expressmongo_architecture.png}
+	\caption{Saving an object in Express/Mongo}
+\end{center}
+\end{figure}
 \paragraph{Advantages of Realm}
 \paragraph{Specific use cases}
-
+%%TODO no web because GraphQL is pain in the ass and no users access for example => limitation of user collection
 \subsection{Mobile application}
 \subsubsection{Why the need for an application?}
 %%TODO why not a PWA
 \subsubsection{Why go native?}
-
+%%TODO because of cutting edge Android features
 \subsection{Web Frontend}
 %%TODO Angular (the most well-known) vs React (younger than NG, but good reviews, would have been good if react native as well, "a la mode") and Vue (very young, bad documentation)
 
+\chapter{Technologies}
+\section{NFC and NDEF}
+%%TODO put this in intro instead
+\subsection{Introduction to NFC}
+\subsection{NDEF Format}
+\subsubsection{Text payload}
 
-\chapter{NFC and NDEF}
-\section{Introduction to NFC}
-\section{NDEF Format}
-\subsection{Text payload}
 
 
 
-
-\chapter{Developing for Android}
+\section{Developing for Android}
 \label{android_chapter}
 Android is a mobile operating system developed by Google and launched in September 2008. The core of Android is open source and is known as the \emph{Android Open Source Program (AOSP)}. But nobody really knows or uses the AOSP version of Android, every phone manufacturer, even Google, forks the AOSP version to build its own for their devices. What is often referred as "pure Android" is the Google implementation of Android on their Nexus and Pixel lines of smartphones. Android runs on all kinds of platforms, from mobile phone to watches, as well as tablets and laptops. \\
 
 A SDK and an IDE are provided for developing Android applications. Those applications are written mainly in Java, with the ability to write native code in C++ using the Android NDK\footnote{This is used for example to use some C++ libraries, like OpenCV.} and interact with the Java code using JNI. The support for a second language named Kotlin was announced at Google I/O 2017 (see section \ref{kotlin}). Applications run in a virtual environment on Android called ART. You can think of ART as the equivalent of the JVM for desktop Java development.
-\section{Android Fragmentation}
+\subsection{Android Fragmentation}
 One of the biggest problems for developers is the fragmentation of OS versions running on Android devices. As of May 2018, only 62.3\% of devices were running Android Marshmallow (version 6) or later. Android Marshmallow was released in 2015, meaning that 37.7\% of devices were running software that was more than 3 years old without security updates or new features (see table \ref{android_os_table}).
 
 \begin{table}[H]
@@ -527,108 +555,109 @@ One of the biggest problems for developers is the fragmentation of OS versions r
 \caption{Android OS Fragmentation (May 2018)\cite{android:dev:osfragmentation}}
 \end{table}
 
-\subsection{The problem with updates}
+\subsubsection{The problem with updates}
 This problem is inherent to the very nature of the Android operating system. Each phone manufacturer, or OEM, can fork its own version of Android and integrate its own skin and set of apps on top of it. When a new version of the operating system is released by Google, they can't just start using it. They have to first adapt and test all their apps and customisation with the new version before it can ship to the devices. This is a time (and by extension money) consuming process and many OEMs just don't care about maintaining their devices for more than one or two years. To make matters worse, in certain countries, such as the United States, mobile carriers have to validate and apply their own custom apps and settings on top of the OS, adding to the time needed to validate an update and causing a supplementary potential roadblock to the release of an update.
 
-\subsection{What Google is doing about this?}
+\subsubsection{What Google is doing about this?}
 Google has in the recent years taken different actions to ensure that most of the devices run safe and up-to-date software on them without depending on the OEMs willingness to maintain their products.
-\subsubsection{Updating core apps through the Play Store}
+\paragraph{Updating core apps through the Play Store}
 One of the most successful changes to Android in recent years has been to slowly move all Android core applications that are present on every Android device\footnote{Actually, not every Android device. Some Asian markets, mainly China don't have access to these apps because they don't have access to any Google services. This is an edge case that won't be discussed in this document. } to the Google Play Store. These apps include for example Gmail, Google Calendar, the browser (AOSP browser and Google Chrome) and even apps like the Phone Dialer and Contacts apps. This move to the Play Store allows Google to update these applications more frequently without needing a full operating system update. While it may be seen as a necessary evil at first, because it is the only way for them to update these apps if the OEM don't apply operating system updates, it is actually a very useful move because it allows for faster iteration on these applications and quicker response for bug fixes.\\
 
 If we compare this to the other major mobile operating system, iOS, all main applications on the platform are bundled with the OS. So, if Apple needs to update the Safari browser to support a new web API they have to release a full OS version and push it to all their devices instead of just updating the application that needs an update as Google would do on Android.
-\subsubsection{Android Support Library}
+\paragraph{Android Support Library}
 %% TODO Android support library
-\subsubsection{Project Treble}
+\paragraph{Project Treble}
 %% TODO Project treble
-\subsubsection{Security updates}
+\paragraph{Security updates}
 %% TODO Security updates
 
 %%TODO talk about android fragmentation, the support library naming scheme => move to AndroidX
 %% Then kotlin, architecture components, abstraction of jobscheduler etc through work manager because of versions
-\section{Kotlin}
+%%TODO add NFC on Android
+\subsection{Kotlin}
 \label{kotlin}
 As discussed in chapter \ref{android_chapter}, Kotlin has become a primary Android language in 2017. After having used this language for a first Android project last year, I decided to build all my subsequent Android application in Kotlin. The simplifications and reductions in code length provided by this language compared to Java make developing Android applications more enjoyable. It also helps avoid many runtime errors by catching many error-prone scenarios at compile time. In this section, we will go in further details in some of the advantages provided by Kotlin and how Google is encouraging developers to use Kotlin by introducing new Kotlin-specific features in the Android SDK.
-\subsection{Full interoperability with Java}
-\subsection{Data classes}
+\subsubsection{Full interoperability with Java}
+\subsubsection{Data classes}
 Java is often defined by its detractors as a very verbose language, requiring to write a lot of repetitive boilerplate code\footnote{Boilerplate code or boilerplate refers to sections of code that have to be included in many places with little or no alteration\cite{wiki:define:boilerplate}} for simple tasks. One of these tasks is the creation of classes with accessors and mutators for some of the class fields and overriding \verb+equals+ and \verb+toString+ methods. In Object Oriented Programming, we often have to write a lot of small classes just to match the Models in our applications. These are often referred as Beans or POJOs\footnote{Plain Old Java Object}. Kotlin introduces the concept of data classes\cite{kotlin:doc:data_classes} to simplify the implementation of these type of classes. By using a data class, you get "for free" an accessor (and mutator) for each field of the class, a correct overriding of the \verb+equals+ method, an overriding of the \verb+toString+ method listing the values of all fields in the instance and a \verb+copy+ method corresponding to a copy constructor in Java. For example, if we take a simple person class in Java:
 \javacode{assets/code/java/Person.java}
 And then the same class written using data classes in Kotlin:
 \kotlincode{assets/code/kotlin/Person.kt}
-\subsection{Constants first}
-\subsection{Class extensions}
-\subsection{Null safety}
+\subsubsection{Constants first}
+\subsubsection{Class extensions}
+\subsubsection{Null safety}
 
 %%TODO: Good points about Kotlin:
 %% - Lifting return/assignments from try/catch blocks => assignment to constants instead of empty variable first to guarantee default value
 %% - Class extensions => often calling a static method of an helper class in a method-like syntax for the current class => "0.0".toDouble() instead of Double("0.0")
-\subsection{Android KTX}
-\section{Android Jetpack}
+\subsubsection{Android KTX}
+\subsection{Android Jetpack}
 %%TODO talk about former name, goal was to provide a set of "good behaviors" etc
-\subsection{Room - Data persistence}
+\subsubsection{Room - Data persistence}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=.8\textwidth]{assets/viewmodel}
 	\caption{View model interactions\cite{android:doc:viewmodel}}
 \end{center}
 \end{figure}
-\subsubsection{VieModel}
-\subsubsection{LiveData}
+\paragraph{VieModel}
+\paragraph{LiveData}
 %%TODO talk about lifecycle observers and lifecycle aware
 
-\subsection{Work Manager - Background jobs}
-\subsection{Navigation}
+\subsubsection{Work Manager - Background jobs}
+\subsubsection{Navigation}
 
-\chapter{NoSQL Database - MongoDB}
-\section{Storage as JSON/BSON documents}
+\section{NoSQL Database - MongoDB}
+\subsection{Storage as JSON/BSON documents}
 %%TODO verify this is true
-\section{How to handle references}
+\subsection{How to handle references}
 \label{mongo_references}
 %%TODO add source on mongo site https://docs.mongodb.com/manual/applications/data-models-relationships/
 %%TODO talk about embedding documents vs ids of childrens vs ids of parent for different sizes
-\section{Mongoose}
+\subsection{Mongoose}
 
-\subsection{Schemas}
-\subsection{Promises with Mongoose}
+\subsubsection{Schemas}
+\subsubsection{Promises with Mongoose}
 %%TODO find function, insert etc with await => talk about command than talk directly to mongo without passing by mongoose
-\subsection{Populating references}
-\subsection{Hooks}
+\subsubsection{Populating references}
+\subsubsection{Hooks}
 \label{mongoose_hooks}
 %%TODO talk about pre('remove') for example
-\chapter{NodeJS et Express}
-\section{JavaScript ES6}
-\section{NPM Modules}
-\section{Promises}
-\section{Middlewares}
-\section{PassportJS}
+\section{NodeJS et Express}
+\subsection{JavaScript ES6}
+\subsection{NPM Modules}
+\subsection{Promises}
+\subsection{Middlewares}
+\subsection{PassportJS}
 
-\chapter{Angular 6}
+\section{Angular 6}
 %%runs with npm, talk about ng-cli and generation etc of component 
-\section{Single-page webapp}
-\section{Dependencies injection}
-\section{Architecture of an Angular Application}
+\subsection{Single-page webapp}
+\subsection{Dependencies injection}
+\subsection{Architecture of an Angular Application}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=.8\textwidth]{assets/angular_architecture}
 	\caption{Architecture of an Angular application\cite{angular:ref:architecture}}
 \end{center}
 \end{figure}
-\subsection{Components}
-\subsubsection{Templates}
-\subsubsection{Communication between components - Input/Output}
-\subsection{Services}
-\subsection{Routing and Guards}
-\section{RxJS - Observables}
-\section{Reactive Forms}
-\section{TypeScript}
-\section{Angular Material}
+\subsubsection{Components}
+\paragraph{Templates}
+\paragraph{Communication between components - Input/Output}
+\subsubsection{Services}
+\subsubsection{Routing and Guards}
+\subsection{RxJS - Observables}
+\subsection{Reactive Forms}
+\subsection{TypeScript}
+\subsection{Angular Material}
 
-\chapter{Containers - Infrastructure as code}
-\section{Docker}
-\section{Orchestration avec Docker Compose}
-\section{Google Cloud}
-\subsection{Kubernetes}
-\subsection{Google Container Registry}
-\section{Azure}
+\section{Containers - Infrastructure as code}
+\subsection{Docker}
+\subsection{Orchestration avec Docker Compose}
+\subsection{Google Cloud}
+\subsubsection{Kubernetes}
+\subsubsection{Google Container Registry}
+\subsection{Azure}
 
 \chapter{Implémentation}
 \section{Modules du projet}
