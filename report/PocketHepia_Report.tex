@@ -21,8 +21,12 @@
 \setcounter{secnumdepth}{5}
 \usepackage[nonumberlist]{glossaries}
 \makeglossaries
+
+%%TODO make a list of code listings
+
+
 %%TODO convert this to english
-%%TODO add RFID, add JWT, add SDK, add JS, add JSON, add BSON, add API, add PWA, add REST, add EPFL
+%%TODO add RFID, add JWT, add SDK, add JS, add JSON, add BSON, add API, add PWA, add REST, add EPFL, add RTD, add ASCII, add UTF
 %%TODO use all these acronyms in text
 \newglossaryentry{nfc}
 {
@@ -205,12 +209,71 @@ texcl=false,
 \chapter{Introduction}
 Since starting my studies at HEPIA almost three years ago after two years at EPFL, I've been shocked by the lack of commodities and study spaces for students. Some of this lack is due to the difference in scale between the two schools, one of them being composed of mainly three building in a constrained city environment and the other an almost-autonomous campus outside the city. But, actually, there isn't really a lack of space at HEPIA, but a lack of space that students can use to study. Most of the classrooms are locked when not in use by a teacher. When asking about why that is the case, I've been told that it was mainly for security concerns because of the equipment present inside the rooms. If the rooms stayed unlocked, there was no way of knowing who stole or broke something. I suggested the idea of giving access to select students to these classrooms to study and work on projects but it wasn't practical because copies of keys had to be made, the students had to make a money deposit to make sure that they didn't run away with the keys etc.\\ 
 
-The real solution would have been to use our student cards as an electronic door key to access the rooms, as well as enable other uses for the cards, such as using them as electronic wallets to simplify the payments at the canteen during lunch break. When I suggested the idea, people mostly laughed at me and said "[...] they're never going to do it, unless someone actually does it, presents it as a finished product and then they decide to use it." So, here I am, after 3 years studying at HEPIA and for my Bachelor Project I decided to work on this exact idea. A multi-function student card platform built on NFC technology with accompanying mobile and web application for administrators to manage the platform and for students to monitor their usage statistics.
+One solution would have been to use our student cards as an electronic door key to access the rooms. We could also enable other uses for the cards, such as using them as electronic wallets to simplify the payments at the canteen during lunch break. When I suggested the idea, people mostly laughed at me and said "[...] they're never going to do it, unless someone actually does it, presents it as a finished product and then they decide to use it." So, here I am, after 3 years studying at HEPIA and for my Bachelor Project I decided to work on this exact idea. A multi-function student card platform built on NFC technology with accompanying mobile and web application for administrators to manage the platform and for students to monitor their usage statistics.
 
-%% TODO %%MH : One solution, plutôt que The Real solution
-%%MH : separer la deuxieme partie de phrase "as well" dans une autre phrase
-%%MH : => La solution de l'acces aux portes et le porte monnaie sont deux features 
-%%MH : separee.
+
+\section{NFC and NDEF}
+%% TODO write small part segway here to NFC section
+\subsection{Introduction to NFC}
+NFC (Near Field Communication) technology is a low range wireless communication technology based on electromagnetic induction. Its usages are widespread, ranging from access control to contactless credit card payments and public transportation tickets. The range of a NFC communication is more or less 4cm. NFC can be implemented in a physical chip on a card, in a discrete reader or in a smartphone. Most Android smartphones and all iPhones after 2016 have a NFC chip. \\
+
+There are three operating modes for NFC devices. A device is considered a \emph{Full-NFC} device if it can operate in the three modes, but most of the NFC devices we interact with only support some of the modes:
+\begin{itemize}
+	\item The "card emulation" model, also called passive mode enables a device to be used as NFC tag containing data similar to the ones present in physical NFC cards. This mode is the only one available on devices with no power, for example credit cards. This mode is called passive because it uses power from the active NFC reader to power it and enable access to its information. It can also be used on a smartphone to emulate a physical card. It is for example the mode used by mobile payments application such as Apple Pay and Google Pay. The NFC reader simply detects a standard NFC card, without knowing that is in fact emulated by a smartphone.
+	\item The reader mode, also called active mode. This mode allows reading NFC tags data with a smartphone or a specific reader, for example in an electronic doorknob or a metro station gate.
+	\item The peer-to-peer mode is used by two smartphones to exchange information between them. This mode is used on Android by the Android Beam service which allows to send pictures or other data between two Android devices by placing them back to back. In this case, the NFC peer-to-peer mode is used to initiate the connection and pair the device and then the data transfer is carried over Bluetooth or Wi-Fi Direct.
+\end{itemize}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.6\textwidth]{assets/oyster_reader.jpg}
+	\caption[NFC reader and Oyster Card]{A NFC card reader on the London Underground (active mode) and a Oyster Transport Card (passive mode) \cite{img:oyster}}
+\end{center}
+\end{figure}
+
+\subsection{NDEF Format}
+The NDEF (NFC Data Exchange Format) format is a standardised format used to encode data on NFC tags. By using a standard format, it allows for easier exchange of information between NFC devices. A NDEF message is composed of NDEF records. Each of these records contains metadata that provides information to help decode the data payload contained in the message.\\
+
+The format of a NDEF record is the following\cite{nfc:ndef:adafruit:article}:
+\begin{verbatim}
+	Bit 7     6       5       4       3       2       1       0
+------  ------  ------  ------  ------  ------  ------  ------ 
+[ MB ]  [ ME ]  [ CF ]  [ SR ]  [ IL ]  [        TNF         ]  
+
+[                         TYPE LENGTH                        ]
+
+[                       PAYLOAD LENGTH                       ]
+
+[                          ID LENGTH                         ]
+
+[                         RECORD TYPE                        ]
+
+[                              ID                            ]
+
+[                           PAYLOAD                          ]
+\end{verbatim}
+The first byte form the header of the NDEF record, the fields composed the header are:
+\begin{itemize}
+	\item The \verb+TNF+ (Type Name Format) is a 3 bits value used to identify the record type. The most common are "Empty record" and "Well-Known-Record" to define a record for which the data type is defined by a RTD (Record Type Definition) in the NDEF format, for example plain text or URI.
+	\item The \verb+IL+ (ID LENGTH field) is a boolean 1 bit value to tell if the \verb+ID LENGTH+ field is present or not in the record.
+	\item The \verb+SR+ (Short Record Bit) is a boolean 1 bit value to tell if the \verb+PAYLOAD LENGTH+ has a size of 1 byte or less.
+	\item The \verb+CF+ (Chunk flag) is a boolean 1 bit value to tell if the record is the first part or a chunk of a bigger record. The value will be 0 if it is the only part or the last chunk of a record.
+	\item The \verb+ME+ (Message End) is a boolean 1 bit value to indicate that the record is the last of the NDEF message.
+	\item The \verb+MB+ (Message Begin) is a boolean 1 bit value to indicate that the record is the first of the NDEF message.
+\end{itemize}
+\subsubsection{Text payload}
+To give an example of a data payload contained in a NDEF record, we are going to take a closer look at a plain text payload.
+
+The text payload format is defined like this\cite{nfc:ndef:doc:text_record} :
+\begin{verbatim}
+	Bit 7     6       5       4       3       2       1       0
+------  ------  ------  ------  ------  ------  ------  ------ 
+[ ENC]  [RFU ]  [                IANA LENGTH                 ]  
+
+[                       IANA LANGUAGE CODE                   ]
+
+[                           TEXT                             ]
+\end{verbatim}
+The first byte is called \verb+Status Byte+ and contains \verb+ENC+ which stores the value of the encoding used in the payload (0 for UTF-8, 1 for UTF-16) and \verb+IANA LENGTH+ which stores the length of the \verb+IANA LANGUAGE CODE+ field found afterwards. The \verb+RFU+ bit is always set to 0. In the \verb+IANA LANGUAGE CODE+ is stored the ISO/IANA language code specifying the language of the text stored in the payload as defined in RFC 3066\cite{rfc:language}, for example "en-US" for American English. The encoding of the language code is always ASCII. Finally we have the text whose length is the length of the payload minus 1 byte and the length of the language code field. The text can be decoded using the encoding specified in \verb+ENC+
 
 \section{Project inspiration - Camipro EPFL}
 \subsection{The card and the official core platform}
@@ -542,15 +605,6 @@ Vue is the youngest of the three and, while it is already growing a big communit
 React and Angular are more mature, with Angular being the oldest of the three and are both baked by big companies: Facebook for React and Google for Angular. The biggest difference between the two is that React is Javascript-based and Angular is Typescript-based. We decided then to use Angular to take advantage of the typed nature of Typescript as well as to use Typescript for the first time in a project.
 
 \chapter{Technologies}
-\section{NFC and NDEF}
-%%TODO put this in intro instead
-\subsection{Introduction to NFC}
-\subsection{NDEF Format}
-\subsubsection{Text payload}
-
-
-
-
 \section{Developing for Android}
 \label{android_chapter}
 Android is a mobile operating system developed by Google and launched in September 2008. The core of Android is open source and is known as the \emph{Android Open Source Program (AOSP)}. But nobody really knows or uses the AOSP version of Android, every phone manufacturer, even Google, forks the AOSP version to build its own for their devices. What is often referred as "pure Android" is the Google implementation of Android on their Nexus and Pixel lines of smartphones. Android runs on all kinds of platforms, from mobile phone to watches, as well as tablets and laptops. \\
@@ -600,31 +654,46 @@ One of the most successful changes to Android in recent years has been to slowly
 If we compare this to the other major mobile operating system, iOS, all main applications on the platform are bundled with the OS. So, if Apple needs to update the Safari browser to support a new web API they have to release a full OS version and push it to all their devices instead of just updating the application that needs an update as Google would do on Android.
 \paragraph{Android Support Library}
 %% TODO Android support library
+%% TODO the support library naming scheme => move to AndroidX
 \paragraph{Project Treble}
 %% TODO Project treble
 \paragraph{Security updates}
 %% TODO Security updates
 
-%%TODO talk about android fragmentation, the support library naming scheme => move to AndroidX
 %% Then kotlin, architecture components, abstraction of jobscheduler etc through work manager because of versions
 %%TODO add NFC on Android
 \subsection{Kotlin}
 \label{kotlin}
-As discussed in chapter \ref{android_chapter}, Kotlin has become a primary Android language in 2017. After having used this language for a first Android project last year, I decided to build all my subsequent Android application in Kotlin. The simplifications and reductions in code length provided by this language compared to Java make developing Android applications more enjoyable. It also helps avoid many runtime errors by catching many error-prone scenarios at compile time. In this section, we will go in further details in some of the advantages provided by Kotlin and how Google is encouraging developers to use Kotlin by introducing new Kotlin-specific features in the Android SDK.
+As discussed in section \ref{android_chapter}, Kotlin has become a primary Android language in 2017. After having used this language for a first Android project last year, I decided to build all my subsequent Android application in Kotlin. The simplifications and reductions in code length provided by this language compared to Java make developing Android applications more enjoyable. It also helps avoid many runtime errors by catching many error-prone scenarios at compile time. In this section, we will go in further details in some of the advantages provided by Kotlin and how Google is encouraging developers to use Kotlin by introducing new Kotlin-specific features in the Android SDK.
 \subsubsection{Full interoperability with Java}
+%%TODO write this
 \subsubsection{Data classes}
 Java is often defined by its detractors as a very verbose language, requiring to write a lot of repetitive boilerplate code\footnote{Boilerplate code or boilerplate refers to sections of code that have to be included in many places with little or no alteration\cite{wiki:define:boilerplate}} for simple tasks. One of these tasks is the creation of classes with accessors and mutators for some of the class fields and overriding \verb+equals+ and \verb+toString+ methods. In Object Oriented Programming, we often have to write a lot of small classes just to match the Models in our applications. These are often referred as Beans or POJOs\footnote{Plain Old Java Object}. Kotlin introduces the concept of data classes\cite{kotlin:doc:data_classes} to simplify the implementation of these type of classes. By using a data class, you get "for free" an accessor (and mutator) for each field of the class, a correct overriding of the \verb+equals+ method, an overriding of the \verb+toString+ method listing the values of all fields in the instance and a \verb+copy+ method corresponding to a copy constructor in Java. For example, if we take a simple person class in Java:
 \javacode{assets/code/java/Person.java}
 And then the same class written using data classes in Kotlin:
 \kotlincode{assets/code/kotlin/Person.kt}
 \subsubsection{Constants first}
+%%TODO write this
 \subsubsection{Class extensions}
+%%TODO write this
+Another advantage of Kotlin is the ability to write class extensions. This is useful to add methods to classes present in libraries for example and is used extensively as part of the Android KTX project (see section \ref{ktx_section}).\\
+
+For example, if we are using the \verb+ByteArray+ class and we want to convert the value to a hexadecimal \verb+String+, we can write a class extension method or property for the \verb+ByteArray+ class that we can then call on any instance of the class.
+
+This is done in this way:
+\kotlincode{assets/code/kotlin/Extensions.kt}
+
+And can then be called like any methods or properties:
+\kotlincode{assets/code/kotlin/ExtensionsUsage.kt}
+
 \subsubsection{Null safety}
+%%TODO write
 
 %%TODO: Good points about Kotlin:
 %% - Lifting return/assignments from try/catch blocks => assignment to constants instead of empty variable first to guarantee default value
-%% - Class extensions => often calling a static method of an helper class in a method-like syntax for the current class => "0.0".toDouble() instead of Double("0.0")
 \subsubsection{Android KTX}
+\label{ktx_section}
+\subsection{NFC on Android}
 \subsection{Android Jetpack}
 %%TODO talk about former name, goal was to provide a set of "good behaviors" etc
 \subsubsection{Room - Data persistence}
@@ -634,7 +703,7 @@ And then the same class written using data classes in Kotlin:
 	\caption{View model interactions\cite{android:doc:viewmodel}}
 \end{center}
 \end{figure}
-\paragraph{VieModel}
+\paragraph{ViewModel}
 \paragraph{LiveData}
 %%TODO talk about lifecycle observers and lifecycle aware
 
@@ -642,6 +711,7 @@ And then the same class written using data classes in Kotlin:
 \subsubsection{Navigation}
 
 \section{NoSQL Database - MongoDB}
+%%TODO advantages, why nosql
 \subsection{Storage as JSON/BSON documents}
 %%TODO verify this is true
 \subsection{How to handle references}
