@@ -23,7 +23,7 @@
 \makeglossaries
 
 %%TODO make a list of code listings
-
+%%TODO replace \verb by \mintinline when possible
 
 %%TODO convert this to english
 %%TODO add RFID, add JWT, add SDK, add JS, add JSON, add BSON, add API, add PWA, add REST, add EPFL, add RTD, add ASCII, add UTF
@@ -661,21 +661,32 @@ If we compare this to the other major mobile operating system, iOS, all main app
 %% TODO Security updates
 
 %% Then kotlin, architecture components, abstraction of jobscheduler etc through work manager because of versions
-%%TODO add NFC on Android
 \subsection{Kotlin}
+%%TODO add ref for kotlin sections?
 \label{kotlin}
 As discussed in section \ref{android_chapter}, Kotlin has become a primary Android language in 2017. After having used this language for a first Android project last year, I decided to build all my subsequent Android application in Kotlin. The simplifications and reductions in code length provided by this language compared to Java make developing Android applications more enjoyable. It also helps avoid many runtime errors by catching many error-prone scenarios at compile time. In this section, we will go in further details in some of the advantages provided by Kotlin and how Google is encouraging developers to use Kotlin by introducing new Kotlin-specific features in the Android SDK.
 \subsubsection{Full interoperability with Java}
-%%TODO write this
+First of all, the fact that Kotlin is fully compatible with Java and runs on the Java Virtual Machine (JVM) allows it to be easily integrated in an existing project or interact with existing Java libraries. You can just start writing classes in Kotlin and call existing Java classes from it and vice-versa. Then, when you want to convert Java code to Kotlin, Android Studio integrates a tool to convert a file to Kotlin almost perfectly. There are just some small changes to write afterwards, for example concerning the conversions of variables to constants. The IDE will even suggest converting Java code pasted inside a Kotlin file to the Kotlin version of the code.
 \subsubsection{Data classes}
 Java is often defined by its detractors as a very verbose language, requiring to write a lot of repetitive boilerplate code\footnote{Boilerplate code or boilerplate refers to sections of code that have to be included in many places with little or no alteration\cite{wiki:define:boilerplate}} for simple tasks. One of these tasks is the creation of classes with accessors and mutators for some of the class fields and overriding \verb+equals+ and \verb+toString+ methods. In Object Oriented Programming, we often have to write a lot of small classes just to match the Models in our applications. These are often referred as Beans or POJOs\footnote{Plain Old Java Object}. Kotlin introduces the concept of data classes\cite{kotlin:doc:data_classes} to simplify the implementation of these type of classes. By using a data class, you get "for free" an accessor (and mutator) for each field of the class, a correct overriding of the \verb+equals+ method, an overriding of the \verb+toString+ method listing the values of all fields in the instance and a \verb+copy+ method corresponding to a copy constructor in Java. For example, if we take a simple person class in Java:
 \javacode{assets/code/java/Person.java}
 And then the same class written using data classes in Kotlin:
 \kotlincode{assets/code/kotlin/Person.kt}
 \subsubsection{Constants first}
-%%TODO write this
+As in Java, you can define variables and constants in Kotlin but, in the later you will be more inclined to use constants because you can use them in more cases and the compiler suggests using constants when it detects that a variable is never assigned a new value. To use a constant, you use the keyword \verb+val+ instead of \verb+var+. \\
+
+One example of a case where you can use a constant in Kotlin but not in Java is when using blocks such as try/catch or control flow blocks. In Kotlin, these blocks return a value so you can assign the value returned by the block to a constant. The value returned by a block is the last line of the block or the last line of the taken branch of a control flow block.\\
+
+For example, let's say that we are parsing a \verb+String+ as an \verb+Integer+ and we want to check if the value is between a given range. When parsing, an Exception can be returned if the value is not a number, so we have to be aware of that.\\
+
+In Kotlin, we can directly assign the value of the whole try/catch block to the constant:
+
+\kotlincode{assets/code/kotlin/ConstantsFirsts.kt}
+
+However, in Java, we have to define a variable first and then we have to reassign it according to the branch we are in:
+\javacode{assets/code/java/ConstantsDemo.java}
+
 \subsubsection{Class extensions}
-%%TODO write this
 Another advantage of Kotlin is the ability to write class extensions. This is useful to add methods to classes present in libraries for example and is used extensively as part of the Android KTX project (see section \ref{ktx_section}).\\
 
 For example, if we are using the \verb+ByteArray+ class and we want to convert the value to a hexadecimal \verb+String+, we can write a class extension method or property for the \verb+ByteArray+ class that we can then call on any instance of the class.
@@ -687,12 +698,27 @@ And can then be called like any methods or properties:
 \kotlincode{assets/code/kotlin/ExtensionsUsage.kt}
 
 \subsubsection{Null safety}
-%%TODO write
+In terms of safety, Kotlin introduces concepts already seen in other languages such as Scala or Swift but not present in Java, mainly around the handling of \mintinline{java}{null} values\cite{kotlin:doc:null}.\\
 
-%%TODO: Good points about Kotlin:
-%% - Lifting return/assignments from try/catch blocks => assignment to constants instead of empty variable first to guarantee default value
+In Java, if a function returns a \mintinline{java}{String} or another \mintinline{java}{Object}, it can also return a \mintinline{java}{null} value and if we forget to check if the value is not \mintinline{java}{null} and try to access it, the program will throw a \mintinline{java}{NullPointerException} at runtime and it will certainly crash. Runtime errors are unexpected and can happen at anytime so they should be avoided at any cost. \\
+
+In Kotlin, they introduce the concept of optional types, denoted by a \verb+?+. This allows for compile time check of \mintinline{java}{null} values risks. First of all, a function that returns a \mintinline{java}{String} can't return a \mintinline{java}{null} value. To return a \mintinline{java}{null} value you specifically have to return an optional type, in this case a \mintinline{kotlin}{String?}. This optional type can only be accessed after checking if it contains a non \mintinline{java}{null} value. After the check, it will be \emph{smart-casted} as \mintinline{kotlin}{String} in the corresponding code block. The program will not compile if an optional type is used without checking if it contains a value first which avoids the possibility of having \mintinline{java}{NullPointerException} at runtime\footnote{This is valid for Kotlin code. When interacting with existing Java code, the Java code can use annotations \mintinline{java}{@Nullable} and \mintinline{java}{@NotNull} to mimic optional types but they are not required annotations so you can still run into problems depending on the Java library. An error could also happen if we bypass the \mintinline{java}{null} safety check by using the \emph{not-null assertion operator}, see paragraph \ref{optional_operators_kt}} \\
+
+For example, an usage of the optional types is a function that finds an element in a list and returns the index of the element in the list. If the element is not contained in the list, it will return a \mintinline{java}{null} value. The function should then return a \mintinline{kotlin}{Int?} and this value can only be used after specifically checking that the value is not \mintinline{java}{null}:
+\kotlincode{assets/code/kotlin/optional.kt}
+
+\paragraph{Optionals-related operators}
+\label{optional_operators_kt}
+Kotlin also introduces a number of specific operators to handle optional types:
+\begin{itemize}
+	\item The \emph{not-null assertion operator}: This operator is \verb+!!+ and is used to tell the compiler that we unwrap the value from an optional without checking if it contains a value first. This is the \emph{living dangerously} operator.
+	\item The \emph{safe call operator}: This operator is \verb+?+ and can be used when trying to access members and methods for optional types instances. It will return an optional type as well, for example if we have a \mintinline{kotlin}{user: User?} and we want to get its name, we can use \mintinline[breaklines]{kotlin}{val name = user?.name} and this will return the name of the user if the user is not \mintinline{java}{null} and otherwise will return \mintinline{java}{null}.
+	\item The \emph{Elvis operator}: This operator is \verb+?:+ and is used to indicate a value to use if the value is \mintinline{java}{null}. For example, with the user's name before, \mintinline[breaklines]{kotlin}{val name = user?.name ?: "Paul"}. The "Paul" name will be used if the expression returns a \mintinline{java}{null} value
+\end{itemize}
+
 \subsubsection{Android KTX}
 \label{ktx_section}
+%%TODO write ktx section
 \subsection{NFC on Android}
 \subsection{Android Jetpack}
 %%TODO talk about former name, goal was to provide a set of "good behaviors" etc
