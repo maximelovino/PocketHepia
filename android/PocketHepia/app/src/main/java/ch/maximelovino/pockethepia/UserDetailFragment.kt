@@ -55,7 +55,7 @@ class UserDetailFragment : BaseFragment() {
 
         val userDao = AppDatabase.getInstance(context!!).userDao()
 
-
+        //TODO shouldn't we use the ViewModel and Repository too here? and elsewhere where we have single elements
         val user = userDao.findById(id)
 
         user.observe(this, Observer {

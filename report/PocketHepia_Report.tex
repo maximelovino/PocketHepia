@@ -668,11 +668,13 @@ As discussed in section \ref{android_chapter}, Kotlin has become a primary Andro
 \subsubsection{Full interoperability with Java}
 First of all, the fact that Kotlin is fully compatible with Java and runs on the Java Virtual Machine (JVM) allows it to be easily integrated in an existing project or interact with existing Java libraries. You can just start writing classes in Kotlin and call existing Java classes from it and vice-versa. Then, when you want to convert Java code to Kotlin, Android Studio integrates a tool to convert a file to Kotlin almost perfectly. There are just some small changes to write afterwards, for example concerning the conversions of variables to constants. The IDE will even suggest converting Java code pasted inside a Kotlin file to the Kotlin version of the code.
 \subsubsection{Data classes}
+%%TODO add ref data classes
 Java is often defined by its detractors as a very verbose language, requiring to write a lot of repetitive boilerplate code\footnote{Boilerplate code or boilerplate refers to sections of code that have to be included in many places with little or no alteration\cite{wiki:define:boilerplate}} for simple tasks. One of these tasks is the creation of classes with accessors and mutators for some of the class fields and overriding \verb+equals+ and \verb+toString+ methods. In Object Oriented Programming, we often have to write a lot of small classes just to match the Models in our applications. These are often referred as Beans or POJOs\footnote{Plain Old Java Object}. Kotlin introduces the concept of data classes\cite{kotlin:doc:data_classes} to simplify the implementation of these type of classes. By using a data class, you get "for free" an accessor (and mutator) for each field of the class, a correct overriding of the \verb+equals+ method, an overriding of the \verb+toString+ method listing the values of all fields in the instance and a \verb+copy+ method corresponding to a copy constructor in Java. For example, if we take a simple person class in Java:
 \javacode{assets/code/java/Person.java}
 And then the same class written using data classes in Kotlin:
 \kotlincode{assets/code/kotlin/Person.kt}
 \subsubsection{Constants first}
+%%TODO add ref lifting returns out of blocks
 As in Java, you can define variables and constants in Kotlin but, in the later you will be more inclined to use constants because you can use them in more cases and the compiler suggests using constants when it detects that a variable is never assigned a new value. To use a constant, you use the keyword \verb+val+ instead of \verb+var+. \\
 
 One example of a case where you can use a constant in Kotlin but not in Java is when using blocks such as try/catch or control flow blocks. In Kotlin, these blocks return a value so you can assign the value returned by the block to a constant. The value returned by a block is the last line of the block or the last line of the taken branch of a control flow block.\\
@@ -687,6 +689,7 @@ However, in Java, we have to define a variable first and then we have to reassig
 \javacode{assets/code/java/ConstantsDemo.java}
 
 \subsubsection{Class extensions}
+%%TODO add ref class extensions
 Another advantage of Kotlin is the ability to write class extensions. This is useful to add methods to classes present in libraries for example and is used extensively as part of the Android KTX project (see section \ref{ktx_section}).\\
 
 For example, if we are using the \verb+ByteArray+ class and we want to convert the value to a hexadecimal \verb+String+, we can write a class extension method or property for the \verb+ByteArray+ class that we can then call on any instance of the class.
@@ -716,25 +719,85 @@ Kotlin also introduces a number of specific operators to handle optional types:
 	\item The \emph{Elvis operator}: This operator is \verb+?:+ and is used to indicate a value to use if the value is \mintinline{java}{null}. For example, with the user's name before, \mintinline[breaklines]{kotlin}{val name = user?.name ?: "Paul"}. The "Paul" name will be used if the expression returns a \mintinline{java}{null} value
 \end{itemize}
 
+\subsection{NFC on Android}
+%%TODO write NFC on Android part from semester project
+\subsection{Android Jetpack}
+Android Jetpack is a set of tools and libraries designed to improve the quality of Android applications by providing guidelines and code to implement common behaviours. Initially launched as \emph{Android Architecture Components} at Google I/O 2017, it has been renamed in 2018 and gained new features. The main goals of Android Jetpack are to accelerate development by providing adaptable common features, to help with tedious activities such as background work and lifecycle management that require a lot of boilerplate code\cite{wiki:define:boilerplate} and to improve the quality of applications by providing modern and robust core libraries.\cite{android:doc:jetpack}. You do not have to use Android Jetpack libraries but they can be seen as a set of good practices and tools to help development.
 \subsubsection{Android KTX}
 \label{ktx_section}
-%%TODO write ktx section
-\subsection{NFC on Android}
-\subsection{Android Jetpack}
-%%TODO talk about former name, goal was to provide a set of "good behaviors" etc
+Android KTX is a Kotlin-specific part of Android Jetpack. It provides Kotlin extensions for Android and Jetpack libraries to take advantage of Kotlin features and make code more concise\cite{android:doc:ktx}. It is composed of different modules, each related to a library or use case on Android. KTX is also open source and actively developed on GitHub\cite{github:android:ktx}. You can contribute to it by creating new extensions or just suggesting them to the development team.\\
+
+An example of Kotlin features used in KTX is the improvement to the usage of Lambdas and anonymous functions as well as the usage of these functions to avoid chaining calls.\\
+
+For example, when replacing a fragment in a view, you can use a block with KTX in which you write the replacement operation and the block will begin and commit the transaction automatically:
+\kotlincode{assets/code/kotlin/fragmentsKTX.kt}
+
+Similarly when working with a SQLite Database and writing a transaction, the KTX version will take care of catching the exception and cancelling the commit if an exception is raised:
+\kotlincode{assets/code/kotlin/dbKTX.kt}
 \subsubsection{Room - Data persistence}
+%%TODO add ref for all parts, room, viewmodel and livedata and when putting all together add codelab "room with a view"
+There are three main ways to store persistent data in an Android application. First, you can use files, either user accessible files or files only available from the app code. Secondly, you can use \verb+SharedPreferences+ to store key/value pairs. And finally, you can use a database. Databases on Android are built on SQLite and have always been the best way to store data on Android. The problem though was that the code to write to use databases was too long and complex and you could easily run into errors due to the usage of bad practices or wrong SQL syntax for example. Moreover, you always had to parse the data returned from the database into models and vice-versa so it always felt like you had to do the work twice.\\
+
+With Room\cite{android:doc:jetpack:room}, part of the Architecture section of Android Jetpack, the goal is to simplify the usage of SQLite databases by providing an abstraction layer on top of it. Used in conjunction with ViewModel and LiveData, it simplifies the handling and presentation of data on Android.\\
+
+As seen in figure \ref{room_architecture_img}, the application interacts with the Room Database to get an instance of Data Access Objects (DAO) and retrieve Entities. All of these are generated by the library, we just have to provide simple "configuration" classes and interfaces.\\
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.8\textwidth]{assets/room_architecture}
+	\caption[Room architecture]{Room architecture\cite{android:training:jetpack:room}}
+	\label{room_architecture_img}
+\end{center}
+\end{figure}
+
+The Entity\cite{android:training:jetpack:room:entities} is the model that we are saving in the database. The advantage here is that we do not need to build a model and a separate table, we can just annotate our model with \mintinline{kotlin}{@Entity} and other annotations to define the database table automatically.
+
+For example, a \verb+User+ entity is just a data class in Kotlin:
+\kotlincode{assets/code/kotlin/userEntity.kt}
+
+Then, we have to write a DAO\cite{android:training:jetpack:room:dao} interface for the entity to create methods to interact with the entity in the database. There are methods automatically created for us, such as insertion and deletion of single entries. Queries returning elements from the database have to be written in SQL, but the IDE provides completion and there is compile time check of SQL syntax with table and column names. Finally, we can easily ask for returning LiveData for a query simply by specifying in the signature function.
+
+For example, for the \verb+User+ DAO, we can just wrap all the return values from \verb+SELECT+ queries in \verb+LiveData+ and we will get them in that format:
+\kotlincode{assets/code/kotlin/userDao.kt}
+
+Finally, you can then write the Database\cite{android:training:jetpack:room:db} class by providing an array of the entities and creating an abstract fun to retrieve each DAO. It is also suggested to make the Database class a Singleton\cite{android:training:jetpack:room}:
+\kotlincode{assets/code/kotlin/userDb.kt}
+
+%%TODO do we talk about typeconverters?
+\paragraph{ViewModel}
+The ViewModel\cite{android:doc:viewmodel} bridges the gap between the data and the UI data in a lifecycle aware way. As opposed to storing data in variables in an activity, data in a ViewModel will remain persistent when configuration changes, for example when rotating the screen.
+
+It is suggested to also implement a Repository behind the ViewModel to abstract the source of the data, database or network for example. In the Repository, we can also write wrapper around insertion tasks to run them on separate threads because you can't run database operations on the main thread\footnote{Queries returning LiveData already run on a background thread, due to the LiveData returning value asynchronously}.
+
+The user Repository and ViewModel look like this:
+\kotlincode{assets/code/kotlin/userViewModel.kt}
+
+\paragraph{LiveData}
+LiveData\cite{android:doc:jetpack:livedata} is an observable holder class that allows to react to data changes. The advantage of LiveData is that it is lifecycle aware, so you can observe the data by passing it an Activity or Fragment and will pause and resume accordingly when the Activity is paused or resumed. Otherwise, we could try refreshing the UI when the data changes and if the Activity is not in the foreground, the application would crash. LiveData allows us to always update our UI with the latest data, for example data from a Room Database.\\
+
+You can just call the \verb+observe+ method on a LiveData instance and pass a lifecycle component, in this case a Fragment and an Observer callback to handle the data.
+\kotlincode{assets/code/kotlin/userLiveData.kt}
+%%TODO perhaps change this code sample to just do a sample code without the fragment and all
+
+\paragraph{Putting everything together}
+When putting everything together, we can see the interactions in figure \ref{viewmodel_interactions_img} with the ViewModel providing LiveData to the Fragment or Activity that can update the UI by observing it. The \verb+ViewModelProviders.of()+ is used to retrieve the requested ViewModel from the system.
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=.8\textwidth]{assets/viewmodel}
-	\caption{View model interactions\cite{android:doc:viewmodel}}
+	\caption[View model interactions]{View model interactions\cite{android:doc:viewmodel}}
+	\label{viewmodel_interactions_img}
 \end{center}
 \end{figure}
-\paragraph{ViewModel}
-\paragraph{LiveData}
-%%TODO talk about lifecycle observers and lifecycle aware
+
+If for example, we couple this with a RecyclerView and decide to get a list of all users from the database to display it, it gives us the following code:
+\kotlincode{assets/code/kotlin/userRoomComplete.kt}
 
 \subsubsection{Work Manager - Background jobs}
+%%TODO \cite{android:doc:jetpack:work_manager}
+%% TODO write about the 
+%% Needing to find the version to use depending on OS: JobScheduler, Firebase etc
 \subsubsection{Navigation}
+%%TODO \cite{android:doc:jetpack:navigation}
+%% Deep links, populating backstack => link video
 
 \section{NoSQL Database - MongoDB}
 %%TODO advantages, why nosql
@@ -768,7 +831,7 @@ Kotlin also introduces a number of specific operators to handle optional types:
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=.8\textwidth]{assets/angular_architecture}
-	\caption{Architecture of an Angular application\cite{angular:ref:architecture}}
+	\caption[Architecture of an Angular application]{Architecture of an Angular application\cite{angular:ref:architecture}}
 \end{center}
 \end{figure}
 \subsubsection{Components}
