@@ -20,9 +20,9 @@ class SyncWorker : Worker() {
     /**
      * Override this method to do your actual background processing.
      *
-     * @return The result of the work, corresponding to a [WorkerResult] value.  If a
+     * @return The result of the work, corresponding to a [Worker.Result] value.  If a
      * different value is returned, the result shall be defaulted to
-     * [Worker.WorkerResult.FAILURE].
+     * [Worker.Result.FAILURE].
      */
     override fun doWork(): Result {
 

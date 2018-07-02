@@ -22,11 +22,14 @@
 \usepackage[nonumberlist]{glossaries}
 \makeglossaries
 
-%%TODO make a list of code listings
+\usepackage{caption}
+\newenvironment{code}{\captionsetup{type=listing}}{}
+
+%%TODO add caption and \begin{code} to each code listing
 %%TODO replace \verb by \mintinline when possible
 
 %%TODO convert this to english
-%%TODO add RFID, add JWT, add SDK, add JS, add JSON, add BSON, add API, add PWA, add REST, add EPFL, add RTD, add ASCII, add UTF
+%%TODO add RFID, add JWT, add SDK, add JS, add JSON, add BSON, add API, add PWA, add REST, add EPFL, add RTD, add ASCII, add UTF, add GDPR, add OS
 %%TODO use all these acronyms in text
 \newglossaryentry{nfc}
 {
@@ -64,7 +67,7 @@ funcnamehighlighting=true,
 tabsize=2,
 obeytabs=false,
 mathescape=false
-samepage=true, %with this setting you can force the list to appear on the same page
+samepage=true,
 showspaces=false,
 showtabs =false,
 texcl=false,
@@ -199,6 +202,9 @@ texcl=false,
 \tableofcontents
 \newpage
 \listoffigures
+\newpage
+\renewcommand\listoflistingscaption{Source code listings}
+\listoflistings
 \newpage
 \chapter*{Acknowledgements}
 \glsaddall
@@ -386,7 +392,7 @@ Then, there are two roles that will not be implemented as part of the Bachelor p
 Finally, the last role is the "Librarian" role that as its name implies is attributed to users working for the library. This role enables the creation of books loans at the library for users. As stated in section \ref{books_feature}, this role will certainly be removed completely because there is already a system in place to handle book loans at the library.
 
 \section{The models}
-%%TODO Add global relational database schema with multiplicities (UML)
+%%TODO IMPORTANT Add global relational database schema with multiplicities (UML)
 \subsection{User Accounts}
 \begin{figure}[H]
 \begin{center}
@@ -532,7 +538,6 @@ Librarian can create a loan for a book for a user from the Android app          
 Librarian can view current bookings for all users from the website and Android app and mark the borrowing as Complete (all history on website) & 5 - Not relevant  & Removed                                          \\ \hline
 \caption{User stories}
 \label{user_stories_table}\\
-%%TODO sort the table by priority
 \end{longtable}
 
 
@@ -545,7 +550,6 @@ For the data and backend part of the project, we decided to build a unique backe
 %%TODO PHP less modern => node js better => why nosql is better => php without frameworks is a mess
 
 The second solution that was suggested was to use an object syncing platform to directly synchronise data with all of our clients. One of these platforms is \emph{Realm Platform\footnote{\url{https://realm.io/products/realm-platform}}} and we decided to study the advantages of it for our project and decide if we should use it over the Express/Mongo option.
-%%TODO talk about realm
 \subsubsection{Realm vs. Express-MongoDB}
 \begin{figure}[H]
 \begin{center}
@@ -593,8 +597,7 @@ Apart from this limitation, all the other functionality could have been incorpor
 \subsubsection{Why go native?}
 We could have also found a middle ground between the mobile web application and the native web application by using a mobile application framework such as Ionic or React Native to build our mobile application using web technologies. This would have allowed us to reuse some components built for the web in our mobile application.\\
 
-We decided to opt out of that route and build our application using native Android technologies to better take advantages of the cutting-edge features announced during Google I/O 2018 \footnote{Google I/O is the annual Google developer conference held in June for developers using Google technologies (Chrome, web, Android, iOS,...)} aiming to modernise and improve the Android development workflow (see section \ref{android_chapter}).
-%%TODO add ref Google I/O 2018
+We decided to opt out of that route and build our application using native Android technologies to better take advantages of the cutting-edge features announced during Google I/O 2018 \footnote{Google I/O is the annual Google developer conference held in June for developers using Google technologies (Chrome, web, Android, iOS,...), \url{https://events.google.com/io/}} aiming to modernise and improve the Android development workflow (see section \ref{android_chapter}).
 \subsection{Web Frontend}
 Finally, we opted to use a frontend framework to provide a good structure to our client-side web application instead of relying on static custom HTML/CSS/JS.\\
 
@@ -659,38 +662,43 @@ If we compare this to the other major mobile operating system, iOS, all main app
 %% TODO Project treble
 \paragraph{Security updates}
 %% TODO Security updates
-
-%% Then kotlin, architecture components, abstraction of jobscheduler etc through work manager because of versions
 \subsection{Kotlin}
-%%TODO add ref for kotlin sections?
 \label{kotlin}
 As discussed in section \ref{android_chapter}, Kotlin has become a primary Android language in 2017. After having used this language for a first Android project last year, I decided to build all my subsequent Android application in Kotlin. The simplifications and reductions in code length provided by this language compared to Java make developing Android applications more enjoyable. It also helps avoid many runtime errors by catching many error-prone scenarios at compile time. In this section, we will go in further details in some of the advantages provided by Kotlin and how Google is encouraging developers to use Kotlin by introducing new Kotlin-specific features in the Android SDK.
 \subsubsection{Full interoperability with Java}
 First of all, the fact that Kotlin is fully compatible with Java and runs on the Java Virtual Machine (JVM) allows it to be easily integrated in an existing project or interact with existing Java libraries. You can just start writing classes in Kotlin and call existing Java classes from it and vice-versa. Then, when you want to convert Java code to Kotlin, Android Studio integrates a tool to convert a file to Kotlin almost perfectly. There are just some small changes to write afterwards, for example concerning the conversions of variables to constants. The IDE will even suggest converting Java code pasted inside a Kotlin file to the Kotlin version of the code.
 \subsubsection{Data classes}
-%%TODO add ref data classes
 Java is often defined by its detractors as a very verbose language, requiring to write a lot of repetitive boilerplate code\footnote{Boilerplate code or boilerplate refers to sections of code that have to be included in many places with little or no alteration\cite{wiki:define:boilerplate}} for simple tasks. One of these tasks is the creation of classes with accessors and mutators for some of the class fields and overriding \verb+equals+ and \verb+toString+ methods. In Object Oriented Programming, we often have to write a lot of small classes just to match the Models in our applications. These are often referred as Beans or POJOs\footnote{Plain Old Java Object}. Kotlin introduces the concept of data classes\cite{kotlin:doc:data_classes} to simplify the implementation of these type of classes. By using a data class, you get "for free" an accessor (and mutator) for each field of the class, a correct overriding of the \verb+equals+ method, an overriding of the \verb+toString+ method listing the values of all fields in the instance and a \verb+copy+ method corresponding to a copy constructor in Java. For example, if we take a simple person class in Java:
+\begin{code}
 \javacode{assets/code/java/Person.java}
+\caption{Person class implementation in Java}	
+\end{code}
+
 And then the same class written using data classes in Kotlin:
+\begin{code}
 \kotlincode{assets/code/kotlin/Person.kt}
+\caption{Person class implementation in Kotlin using Data Classes}	
+\end{code}
 \subsubsection{Constants first}
-%%TODO add ref lifting returns out of blocks
 As in Java, you can define variables and constants in Kotlin but, in the later you will be more inclined to use constants because you can use them in more cases and the compiler suggests using constants when it detects that a variable is never assigned a new value. To use a constant, you use the keyword \verb+val+ instead of \verb+var+. \\
 
-One example of a case where you can use a constant in Kotlin but not in Java is when using blocks such as try/catch or control flow blocks. In Kotlin, these blocks return a value so you can assign the value returned by the block to a constant. The value returned by a block is the last line of the block or the last line of the taken branch of a control flow block.\\
+One example of a case where you can use a constant in Kotlin but not in Java is when using blocks such as try/catch or control flow blocks. In Kotlin, these blocks return a value so you can assign the value returned by the block to a constant. The value returned by a block is the last line of the block or the last line of the taken branch of a control flow block\cite{kotlin:doc:controlflow}. \\
 
 For example, let's say that we are parsing a \verb+String+ as an \verb+Integer+ and we want to check if the value is between a given range. When parsing, an Exception can be returned if the value is not a number, so we have to be aware of that.\\
 
 In Kotlin, we can directly assign the value of the whole try/catch block to the constant:
-
+\begin{code}
 \kotlincode{assets/code/kotlin/ConstantsFirsts.kt}
+\caption{Assigning values returned by control blocks in Kotlin}	
+\end{code}
 
 However, in Java, we have to define a variable first and then we have to reassign it according to the branch we are in:
+\begin{code}
 \javacode{assets/code/java/ConstantsDemo.java}
-
+\caption{Assigning values with control blocks in Java}	
+\end{code}
 \subsubsection{Class extensions}
-%%TODO add ref class extensions
-Another advantage of Kotlin is the ability to write class extensions. This is useful to add methods to classes present in libraries for example and is used extensively as part of the Android KTX project (see section \ref{ktx_section}).\\
+Another advantage of Kotlin is the ability to write class extensions\cite{kotlin:doc:extensions}. This is useful to add methods to classes present in libraries for example and is used extensively as part of the Android KTX project (see section \ref{ktx_section}).\\
 
 For example, if we are using the \verb+ByteArray+ class and we want to convert the value to a hexadecimal \verb+String+, we can write a class extension method or property for the \verb+ByteArray+ class that we can then call on any instance of the class.
 
@@ -735,7 +743,6 @@ For example, when replacing a fragment in a view, you can use a block with KTX i
 Similarly when working with a SQLite Database and writing a transaction, the KTX version will take care of catching the exception and cancelling the commit if an exception is raised:
 \kotlincode{assets/code/kotlin/dbKTX.kt}
 \subsubsection{Room - Data persistence}
-%%TODO add ref for all parts, room, viewmodel and livedata and when putting all together add codelab "room with a view"
 There are three main ways to store persistent data in an Android application. First, you can use files, either user accessible files or files only available from the app code. Secondly, you can use \verb+SharedPreferences+ to store key/value pairs. And finally, you can use a database. Databases on Android are built on SQLite and have always been the best way to store data on Android. The problem though was that the code to write to use databases was too long and complex and you could easily run into errors due to the usage of bad practices or wrong SQL syntax for example. Moreover, you always had to parse the data returned from the database into models and vice-versa so it always felt like you had to do the work twice.\\
 
 With Room\cite{android:doc:jetpack:room}, part of the Architecture section of Android Jetpack, the goal is to simplify the usage of SQLite databases by providing an abstraction layer on top of it. Used in conjunction with ViewModel and LiveData, it simplifies the handling and presentation of data on Android.\\
@@ -776,10 +783,9 @@ LiveData\cite{android:doc:jetpack:livedata} is an observable holder class that a
 
 You can just call the \verb+observe+ method on a LiveData instance and pass a lifecycle component, in this case a Fragment and an Observer callback to handle the data.
 \kotlincode{assets/code/kotlin/userLiveData.kt}
-%%TODO perhaps change this code sample to just do a sample code without the fragment and all
 
 \paragraph{Putting everything together}
-When putting everything together, we can see the interactions in figure \ref{viewmodel_interactions_img} with the ViewModel providing LiveData to the Fragment or Activity that can update the UI by observing it. The \verb+ViewModelProviders.of()+ is used to retrieve the requested ViewModel from the system.
+When putting everything together\cite{android:codelab:room}, we can see the interactions in figure \ref{viewmodel_interactions_img} with the ViewModel providing LiveData to the Fragment or Activity that can update the UI by observing it. The \verb+ViewModelProviders.of()+ is used to retrieve the requested ViewModel from the system.
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=.8\textwidth]{assets/viewmodel}
@@ -792,12 +798,87 @@ If for example, we couple this with a RecyclerView and decide to get a list of a
 \kotlincode{assets/code/kotlin/userRoomComplete.kt}
 
 \subsubsection{Work Manager - Background jobs}
-%%TODO \cite{android:doc:jetpack:work_manager}
-%% TODO write about the 
-%% Needing to find the version to use depending on OS: JobScheduler, Firebase etc
+WorkManager\cite{android:doc:jetpack:work_manager} allows running background asynchronous tasks, for example downloading data from a backend. The advantage behind using WorkManager is that it will choose the correct implementation depending on the Android version it is running on and the available APIs. It will also adapt to the state of the app, running or not. Android has several background work mechanisms depending on the platform and WorkManager provides a way to avoid choosing one of them.\\
+
+To use WorkManager, you have to create a class that extends the \verb+Worker+ class and implement the method \mintinline[breaklines]{kotlin}{fun doWork(): Result}. This function returns a \verb+Worker.Result+ that can be either a success, a failure or a request to retry. You have access to the application context from this class, so you can save data to a database for example or access SharedPreferences.\\
+
+For example, if we want to write a Worker to retrieve a \verb+User+ from the backend, we can do it this way\cite{android:codelab:work_manager}:
+\kotlincode{assets/code/kotlin/workmanager.kt}
 \subsubsection{Navigation}
-%%TODO \cite{android:doc:jetpack:navigation}
-%% Deep links, populating backstack => link video
+\label{jetpack_navigation}
+Navigation inside an application has always been more complicated on Android than on iOS. For example, all Android devices have a "back" button in the OS navigation bar at the bottom and the Android guidelines also define an "up" button in the application toolbar that most applications implement. The "up" button looks exactly like the "back" button and most user think it does exactly the same thing but that is not the case (see figure \ref{twitter_up_back_img}). The "up" button should move to the hierarchical parent screen of the current screen, so let's say that we are inside a messaging conversation, the "up" button brings us back to the conversations list. Pressing the "back" button brings us back to the screen that was used before arriving to the current screen. For example, if we were browsing the web and clicked on a notification that brought us to the messaging conversation, pressing "back" brings us back to the web browser.\\
+
+The problem here is that when deep linking in a screen directly, for example from a notification, we had to fill in ourselves in the backstack the hierarchical parents so that the "up" button behaved correctly. Some apps do not implement this in the correct way and by default the "up" button destroys the activity or acts as a "back" button. This does not guarantee an excepted behaviour of those buttons for the user.\\
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.5\textwidth]{assets/twitter_app_up_back}
+	\caption[Up and Back buttons in Twitter app]{In the Twitter app, the "up" and "back" buttons have the correct behaviour, "up" brings you back to your timeline and "back" to the precedent screen}
+	\label{twitter_up_back_img}
+\end{center}
+\end{figure}
+
+What Google aims to do with the new Navigation Architecture Component\cite{android:doc:jetpack:navigation} is simplifying the life of developers and the implementation of complex navigations with clear hierarchy of screen and automatic handling of the backstack\cite{android:video:io2018:navigation}. It also aims to move away from writing an Activity for every screen and instead handling navigation by switching Fragments inside the same Activity. It is introducing a new library to handle Navigation as well as a graphical editor to more easily setup relations between screens\footnote{The graphical navigation editor is available as an experimental feature in Android Studio 3.2 (Beta at the time of this writing). You can use the navigation feature in XML as well}.\\
+
+
+\paragraph{Visual editor}
+As we can see in figure \ref{navigation_editor}, we have a view of all our screens and the links between them. If a link exists between two screens, it means we can call the corresponding method to create a transition between the two screens and pass it to the Navigation Controller.\\
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.8\textwidth]{assets/navEditor}
+	\caption[Navigation visual editor]{The new Navigation visual editor}
+	\label{navigation_editor}
+\end{center}
+\end{figure}
+
+\paragraph{Integrating with Bottom Navigation View}
+%% TODO add ref for bottom nav view
+In most cases, what you want do is integrate the top level screens with a Navigation UI element, for example a Bottom Navigation View\cite{android:doc:material:bottom_nav}. To do this, first of all you need to define the menu for the bottom navigation by specifying an ID for each entry in your Bottom Navigation menu (see source code \ref{bottom_nav_menu}). Then you have to create a Fragment in the layout of the Activity, link it to the Navigation XML file and specify that it is a \verb+NavHostFragment+ (see source code \ref{activity_nav_host}).
+\begin{code}
+	\xmlcode{assets/code/xml/bottomNav.xml}
+	\caption{Menu defining the bottom navigation}
+	\label{bottom_nav_menu}
+\end{code}
+
+\begin{code}
+	\xmlcode{assets/code/xml/activityNavHost.xml}
+	\caption{The container Fragment to define that will host the Navigation selected screen}
+	\label{activity_nav_host}
+\end{code}
+
+Afterwards, when populating the Navigation using the visual editor, use the same ID used in the menu on the corresponding screen in the navigation. Finally, when created the Activity, you can find the Navigation Controller which, on Kotlin, integrates a method to directly link to the Bottom Navigation View. This will link active states on each button corresponding to the active screen and enable switching between the screens with the Bottom Navigation (see source code \ref{linking_nav}).
+
+\begin{code}
+	\kotlincode{assets/code/kotlin/setupBottomNav.kt}
+	\caption{Linking Bottom Navigation View with Navigation Controller}
+	\label{linking_nav}
+\end{code}
+\paragraph{Safe arguments}
+Another pain point that the Navigation Controller solves is the passing of arguments between screens. Until now, if you wanted to pass arguments to another screen, you had to add them to the \verb+Intent+ bundle that you were starting or in the Fragment constructor. These were just key/value pairs and there was no verification that the arguments were correctly passed.\\
+
+In the Navigation Controller, you can define input arguments for the screen. For example, a screen presenting the details for a \verb+User+ can take the ID of the \verb+User+ as a \verb+String+ argument. Then, if we want to navigate to that screen, we have to pass the corresponding argument otherwise the application will not compile. The arguments are type-checked as well. \\
+
+When setting up a transition between two screens, you give it an ID (see figure \ref{transition_nav}) and then the library will generate a \verb+<sourceScreenName>Directions+ class that contains methods for each outgoing transitions available from the \verb+sourceScreenName+. These methods take the required arguments as parameters and create a \verb+NavDirection+ instance that can be passed to the Navigation Controller.
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.5\textwidth]{assets/transition_nav}
+	\caption[Transition between screens]{Setting up a transition between screens in Navigation Editor}
+	\label{transition_nav}
+\end{center}
+\end{figure}
+
+For example, if we want to navigate from a users list (\verb+AdminFragment+) to the user detail screen(\verb+UserDetailFragment+), we can use the following code:
+\begin{code}
+	\kotlincode{assets/code/kotlin/navExampleArgs.kt}
+	\caption{Navigating from a screen to another by passing arguments}
+\end{code}
+
+Then in the destination screen, we can unwrap the passed arguments by using the generated \verb+<destinationScreenName>Args+ class like this:
+\begin{code}
+	\kotlincode{assets/code/kotlin/navExampleArgsReceiving.kt}
+	\caption{Receiving input arguments when navigating}
+\end{code}
 
 \section{NoSQL Database - MongoDB}
 %%TODO advantages, why nosql
