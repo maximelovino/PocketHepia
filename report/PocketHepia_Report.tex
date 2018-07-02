@@ -206,6 +206,8 @@ texcl=false,
 \renewcommand\listoflistingscaption{Source code listings}
 \listoflistings
 \newpage
+\listoftables
+\newpage
 \chapter*{Acknowledgements}
 \glsaddall
 \printglossary[title=Terms and Definitions]
@@ -392,6 +394,7 @@ Then, there are two roles that will not be implemented as part of the Bachelor p
 Finally, the last role is the "Librarian" role that as its name implies is attributed to users working for the library. This role enables the creation of books loans at the library for users. As stated in section \ref{books_feature}, this role will certainly be removed completely because there is already a system in place to handle book loans at the library.
 
 \section{The models}
+%%TODO should we talk about books
 %%TODO IMPORTANT Add global relational database schema with multiplicities (UML)
 \subsection{User Accounts}
 \begin{figure}[H]
@@ -643,7 +646,7 @@ One of the biggest problems for developers is the fragmentation of OS versions r
 \end{tabular}
 \egroup
 \label{android_os_table}
-\caption{Android OS Fragmentation (May 2018)\cite{android:dev:osfragmentation}}
+\caption[Android OS Fragmentation]{Android OS Fragmentation (May 2018)\cite{android:dev:osfragmentation}}
 \end{table}
 
 \subsubsection{The problem with updates}
@@ -728,7 +731,26 @@ Kotlin also introduces a number of specific operators to handle optional types:
 \end{itemize}
 
 \subsection{NFC on Android}
-%%TODO write NFC on Android part from semester project
+If an Android device contains a NFC chip, you can use the chip capabilities in an application. To do so, first of all, you have to add the request for permission to access it in the Android Manifest. The Manifest is the configuration file for the application from the OS point of view. It contains the listing of permissions, activities and other configuration. To use NFC, you have to add the line \mintinline[breaklines]{xml}{<uses-permission android:name="android.permission.NFC" />}. \\
+
+From there, you have two different possibilities that can also be combined. You can either register yourself to the OS to listen for any incoming NFC actions (touching a tag for example) no matter if your app is running or not. You can also intercept NFC actions when your app is in the foreground. In most cases, the latter solution is the one needed, unless you want your app to be launched when a specific NFC accessory is detected. The foreground method is called \emph{Foreground dispatch}, it means we are filtering the intent that are received by our foreground Activity to include NFC related intents and passing them to the Activity.
+
+\subsubsection{Setting up \emph{Foreground Dispatch}}
+You have to setup \emph{Foreground Dispatch}\cite{android:doc:nfc_foregroundDispatch} at the Activity level, preferably in the \mintinline[breaklines]{kotlin}{fun onCreate(savedState: Bundle?)} method and then enable it and disable on resume and pause of the Activity respectively. If you need to use it in multiple activities, it is easier to setup a superclass Activity and extends all other Activities from it. We can then just override the \mintinline[breaklines]{kotlin}{fun onNewIntent(intent: Intent)} in the specific Activity for which we need to handle NFC specifically. In the superclass Activity, we can just discard the received NFC intent.\\
+
+As we can see in source code \ref{foreground_dispatch_code}, we have to register all technologies and intent types that we need to filter and create a pendingIntent to be sent by it. We activate the filter when the Activity is resumed and disable it when it is destroyed. This is to avoid blocking all other apps after our application quits and avoid crashes as well because if a NFC action happens and our app gets it in the background, it will crash. When we get the NFC intent, we just log a message by default and discard the intent.
+
+\begin{code}
+	\kotlincode{assets/code/kotlin/ForegroundDispatchActivity.kt}
+	\caption{Foreground Dispatched superclass Activity}
+	\label{foreground_dispatch_code}
+\end{code}
+\subsubsection{Getting a Tag ID}
+Now, if we want to read a NFC Tag inside an Activity, we just need to override the \mintinline[breaklines]{kotlin}{fun onNewIntent(intent: Intent)} method. For example, when assigning a Tag to a new \verb+User+, we have to get the NFC Tag unique identifier and send it to our backend. To do that, we can use the following code:
+\begin{code}
+	\kotlincode{assets/code/kotlin/ReadNFCid.kt}
+	\caption{Reading ID from NFC Tag}
+\end{code}
 \subsection{Android Jetpack}
 Android Jetpack is a set of tools and libraries designed to improve the quality of Android applications by providing guidelines and code to implement common behaviours. Initially launched as \emph{Android Architecture Components} at Google I/O 2017, it has been renamed in 2018 and gained new features. The main goals of Android Jetpack are to accelerate development by providing adaptable common features, to help with tedious activities such as background work and lifecycle management that require a lot of boilerplate code\cite{wiki:define:boilerplate} and to improve the quality of applications by providing modern and robust core libraries.\cite{android:doc:jetpack}. You do not have to use Android Jetpack libraries but they can be seen as a set of good practices and tools to help development.
 \subsubsection{Android KTX}
@@ -771,7 +793,7 @@ Finally, you can then write the Database\cite{android:training:jetpack:room:db} 
 
 %%TODO do we talk about typeconverters?
 \paragraph{ViewModel}
-The ViewModel\cite{android:doc:viewmodel} bridges the gap between the data and the UI data in a lifecycle aware way. As opposed to storing data in variables in an activity, data in a ViewModel will remain persistent when configuration changes, for example when rotating the screen.
+The ViewModel\cite{android:doc:viewmodel} bridges the gap between the data and the UI data in a lifecycle aware way. As opposed to storing data in variables in an Activity, data in a ViewModel will remain persistent when configuration changes, for example when rotating the screen.
 
 It is suggested to also implement a Repository behind the ViewModel to abstract the source of the data, database or network for example. In the Repository, we can also write wrapper around insertion tasks to run them on separate threads because you can't run database operations on the main thread\footnote{Queries returning LiveData already run on a background thread, due to the LiveData returning value asynchronously}.
 
@@ -808,7 +830,7 @@ For example, if we want to write a Worker to retrieve a \verb+User+ from the bac
 \label{jetpack_navigation}
 Navigation inside an application has always been more complicated on Android than on iOS. For example, all Android devices have a "back" button in the OS navigation bar at the bottom and the Android guidelines also define an "up" button in the application toolbar that most applications implement. The "up" button looks exactly like the "back" button and most user think it does exactly the same thing but that is not the case (see figure \ref{twitter_up_back_img}). The "up" button should move to the hierarchical parent screen of the current screen, so let's say that we are inside a messaging conversation, the "up" button brings us back to the conversations list. Pressing the "back" button brings us back to the screen that was used before arriving to the current screen. For example, if we were browsing the web and clicked on a notification that brought us to the messaging conversation, pressing "back" brings us back to the web browser.\\
 
-The problem here is that when deep linking in a screen directly, for example from a notification, we had to fill in ourselves in the backstack the hierarchical parents so that the "up" button behaved correctly. Some apps do not implement this in the correct way and by default the "up" button destroys the activity or acts as a "back" button. This does not guarantee an excepted behaviour of those buttons for the user.\\
+The problem here is that when deep linking in a screen directly, for example from a notification, we had to fill in ourselves in the backstack the hierarchical parents so that the "up" button behaved correctly. Some apps do not implement this in the correct way and by default the "up" button destroys the Activity or acts as a "back" button. This does not guarantee an excepted behaviour of those buttons for the user.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -833,8 +855,7 @@ As we can see in figure \ref{navigation_editor}, we have a view of all our scree
 \end{figure}
 
 \paragraph{Integrating with Bottom Navigation View}
-%% TODO add ref for bottom nav view
-In most cases, what you want do is integrate the top level screens with a Navigation UI element, for example a Bottom Navigation View\cite{android:doc:material:bottom_nav}. To do this, first of all you need to define the menu for the bottom navigation by specifying an ID for each entry in your Bottom Navigation menu (see source code \ref{bottom_nav_menu}). Then you have to create a Fragment in the layout of the Activity, link it to the Navigation XML file and specify that it is a \verb+NavHostFragment+ (see source code \ref{activity_nav_host}).
+In most cases, what you want do is integrate the top level screens with a Navigation UI element, for example a Bottom Navigation View\cite{android:doc:material:bottom_nav}. To do this, first of all you need to define the menu for the bottom navigation by specifying an ID for each entry in your Bottom Navigation menu (see source code \ref{bottom_nav_menu}). Then you have to create a Fragment in the layout of the Activity, link it to the Navigation XML file and specify that it is a \verb+NavHostFragment+ (see source code \ref{Activity_nav_host}).
 \begin{code}
 	\xmlcode{assets/code/xml/bottomNav.xml}
 	\caption{Menu defining the bottom navigation}
@@ -842,9 +863,9 @@ In most cases, what you want do is integrate the top level screens with a Naviga
 \end{code}
 
 \begin{code}
-	\xmlcode{assets/code/xml/activityNavHost.xml}
+	\xmlcode{assets/code/xml/ActivityNavHost.xml}
 	\caption{The container Fragment to define that will host the Navigation selected screen}
-	\label{activity_nav_host}
+	\label{Activity_nav_host}
 \end{code}
 
 Afterwards, when populating the Navigation using the visual editor, use the same ID used in the menu on the corresponding screen in the navigation. Finally, when created the Activity, you can find the Navigation Controller which, on Kotlin, integrates a method to directly link to the Bottom Navigation View. This will link active states on each button corresponding to the active screen and enable switching between the screens with the Bottom Navigation (see source code \ref{linking_nav}).
