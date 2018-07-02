@@ -153,6 +153,26 @@ showtabs =false,
 texcl=false,
 }
 
+\newmintedfile[htmlcode]{html}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true,
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
 \newmintedfile[xmlcode]{xml}{
 breaklines,
 bgcolor=mintedbackground,
@@ -395,7 +415,13 @@ Finally, the last role is the "Librarian" role that as its name implies is attri
 
 \section{The models}
 %%TODO should we talk about books
-%%TODO IMPORTANT Add global relational database schema with multiplicities (UML)
+%%TODO should we add not implement models to the schema, for example access requests
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/models_relation}
+	\caption{Entity Relationship Diagram of the models}
+\end{center}
+\end{figure}
 \subsection{User Accounts}
 \begin{figure}[H]
 \begin{center}
@@ -926,6 +952,8 @@ Then in the destination screen, we can unwrap the passed arguments by using the 
 \subsection{PassportJS}
 
 \section{Angular 6}
+%%TODO \cite{github:angular}
+%%TODO \cite{angular:website}
 %%runs with npm, talk about ng-cli and generation etc of component 
 \subsection{Single-page webapp}
 \subsection{Dependencies injection}
@@ -944,11 +972,15 @@ Then in the destination screen, we can unwrap the passed arguments by using the 
 \subsection{RxJS - Observables}
 \subsection{Reactive Forms}
 \subsection{TypeScript}
+%%TODO \cite{github:typescript}
 \subsection{Angular Material}
-
-\section{Containers - Infrastructure as code}
+%%TODO \cite{angular:material:website}
+%%TODO \cite{github:angular:material}
+\section{Containers}
+%%TODO talk about basis linux container distribution
+%%TODO talk about portability
 \subsection{Docker}
-\subsection{Orchestration avec Docker Compose}
+\subsection{Orchestration with Docker Compose}
 \subsection{Google Cloud}
 \subsubsection{Kubernetes}
 \subsubsection{Google Container Registry}
