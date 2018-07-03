@@ -1,0 +1,8 @@
+<ng-container *ngIf="users.length===0; else usersAvailable">
+	<p>There are no users</p>
+</ng-container>
+<ng-template #usersAvailable>
+	<ul>
+		<li *ngFor="let user of users">{{user.name}}</li>
+	</ul>
+</ng-template>

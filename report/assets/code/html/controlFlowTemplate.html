@@ -1,0 +1,4 @@
+<p *ngIf="users.length === 0">There are no users</p>
+<ul *ngIf="users.length !== 0">
+	<li *ngFor="let user of users">{{user.name}}</li>
+</ul>

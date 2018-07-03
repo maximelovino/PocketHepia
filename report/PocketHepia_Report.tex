@@ -51,7 +51,7 @@
 
 \usepackage[section]{minted}
 \definecolor{mintedbackground}{rgb}{0.95,0.95,0.95}
-\usemintedstyle{colorful}
+\usemintedstyle{tango}
 
 \newmintedfile[javacode]{java}{
 breaklines,
@@ -74,6 +74,66 @@ texcl=false,
 }
 
 \newmintedfile[jsoncode]{json}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true,
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+\newmintedfile[htmlcode]{html}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true,
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+\newminted[inlinets]{ts}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true,
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+\newminted[inlinehtml]{html}{
 breaklines,
 bgcolor=mintedbackground,
 linenos=true,
@@ -153,7 +213,7 @@ showtabs =false,
 texcl=false,
 }
 
-\newminted[shell]{shell}{
+\newminted[shell]{bash}{
 breaklines,
 bgcolor=mintedbackground,
 linenos=true,
@@ -192,6 +252,14 @@ showspaces=false,
 showtabs =false,
 texcl=false,
 }
+
+\usepackage{xpatch}
+
+\makeatletter
+\AtBeginEnvironment{minted}{\dontdofcolorbox}
+\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+\xpatchcmd{\inputminted}{\minted@fvset}{\minted@fvset\dontdofcolorbox}{}{}
+\makeatother
 
 
 \begin{document}
@@ -1081,12 +1149,94 @@ The content of the TypeScript file of the component is the following:
 \begin{code}
 	\tscode{assets/code/typescript/defaultComponent.ts}
 	\caption{Empty Component TypeScript file}
+	\label{component_code}
 \end{code}
 
-%%TODO talk about selector and linking between TS and HTML with property and event binding. Talk about how to integrate component in other component
+Here in source code \ref{component_code}, we can see the Component metadata. The \verb+templateUrl+ and \verb+styleUrls+ are pretty self-explanatory, they reference the corresponding two other files and should keep their default value. The \verb+selector+ is the value of the HTML selector you can use in other HTML templates to insert your component. So, if we have another higher level, for example an homepage and we want to insert our users component, we can insert it using this selector (see source code \ref{integrating_component_selector}). The selector by convention should start with \verb+app-*+ in order to avoid clashing with HTML default selectors.
+\begin{code}
+	\htmlcode{assets/code/html/integratingComponent.html}
+	\caption{Integrating Component in template with selector}
+	\label{integrating_component_selector}
+\end{code}
 
+Afterwards, you can create methods and properties in the Component TypeScript file that can then be called and mapped to the templates. 
 \paragraph{Templates}
-\paragraph{Communication between components - Input/Output}
+Templates are just HTML files on the surface with additional features inherent to Angular. One of these is the property binding. If you have a public property in the TypeScript file, you can access it and display it in the Template by using curly braces.
+
+For example, let's say we had a \verb+name+ property to the User component and we want to display it in the template, we can do so by using the \verb+{{name}}+ text in our template.\\
+
+Moreover, we can define HTML elements properties with TypeScript code.For example, if we want to disable an input in HTML, we can use:
+\begin{code}
+\begin{inlinehtml}
+<input type="text" disabled>
+\end{inlinehtml}
+\caption{Static disabling input in HTML}	
+\end{code}
+Now, if we want to have a boolean property in the TypeScript file that decides if the input is enabled or disabled, we can do this using the brackets notation \verb+[]+. This is useful for example if we want to enable according to a form validity. By putting the \verb+disabled+ properties in square brackets, the compiler will interpret the text passed as TypeScript code. So if we have a boolean \verb+formValid+ that states if the input is enabled or not, we can use:
+\begin{code}
+\begin{inlinehtml}
+<input type="text" [disabled]="formValid">
+\end{inlinehtml}
+\caption{Enabling/disabling input in HTML with TypeScript}	
+\end{code}
+
+Finally, we have access to control flow inside the Template. This is useful for example if we want to display all elements from a list. Let's take a property \verb+users+ in our template that is a list of User with each User having a name and we want to display each User has a bulletpoint with a simple message to tell that there are no users if the list is empty. We can use \verb+ngFor+ and \verb+ngIf+ control flow operators to accomplish this:
+\begin{code}
+	\htmlcode{assets/code/html/controlFlowTemplate.html}
+	\caption{Control flow inside Angular Templates}
+\end{code}
+We can also use \verb+ng-container+ and \verb+ng-template+ to more visually separate our two branches with an \verb+if-else+ in the template:
+\begin{code}
+	\htmlcode{assets/code/html/controlFlowTemplateAlt.html}
+	\caption{Alternative control flow inside Angular Templates}
+\end{code}
+\paragraph{Communication between components - Event emission}
+\label{communication_components}
+Communication is useful between Components because often you have a parent Component handling a whole screen with children Components inside the view. In this case, the parent component can act as an intermediary in the communication between two children Components (see figure \ref{communication_figure}). \\
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=.8\textwidth]{assets/componentsComm}
+	\caption{Event emission and communication between components}
+	\label{communication_figure}
+\end{center}
+\end{figure}
+
+The parent Component can have properties for each child Component by selecting it as a property using the \verb+@ViewChild()+ annotation. As an example, we can take a \verb+UsersComponent+ which integrate a \verb+UserCreationComponent+ and a \verb+UserTableComponent+. The goal here is to refresh the table when a new User is created. To accomplish this, the \verb+UserCreationComponent+ must emit an event when a new User is created and the parent Component will catch it and call a method on the table to refresh it. \\
+
+From the parent component point of view, it looks like this:
+\begin{code}
+	\htmlcode{assets/code/html/usersInteractionParent.html}
+	\tscode{assets/code/typescript/usersInteractionParent.ts}
+	\caption{Template and logic files of the parent component}
+	\label{parent_component_files}
+\end{code}
+When looking at source code \ref{parent_component_files} Template file, we can see \verb+(created)+ that is assigned to a function call and passing \verb+$event+ to that function. This is called event binding.\\
+
+Inside the \verb+UserCreationComponent+, the \verb+created+ property is defined as an \mintinline[breaklines]{ts}{@Output() created = new EventEmitter<boolean>();}. With this event emitter, we can call the method \verb+emit()+ on it to emit a value of the specified type, in our case \verb+boolean+. The \verb+$event+ passed to the function call in the parent component is the value passed at the emission of the event.
+
+From there, we can just call any public method in the table component, in this case \verb+refreshData()+.
+
+\paragraph{Communication between components - Input parameters}
+Finally, you can also have parametric Components. These Components can be integrated inside other Components through their selector but you also have to specify a set of inputs for the Component. In the Component, these inputs are properties with \verb+@Input()+. \\
+
+For example, if we have a Component displaying a single User, this Component would take the User to display as a parameter. So in the Component, we can write the User property like this and it will behave like any other property:
+\begin{code}
+	\begin{inlinets}
+@Input() user: User;
+	\end{inlinets}
+	\caption{Input property in Component}
+\end{code}
+
+To set this property when integrating the Component in a parent Component, we can simply specify it like this:
+\begin{code}
+	\begin{inlinehtml}
+<app-user-entry [user]="User('toto')"></app-user-entry>
+	\end{inlinehtml}
+	\caption{Setting an input property in Component}
+\end{code}
+
+%%TODO talk about parametric components with @Input()
 \subsubsection{Services}
 \paragraph{Dependency injection}
 %%TODO show passing a service as a parameter to a component
