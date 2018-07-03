@@ -29,7 +29,7 @@
 %%TODO replace \verb by \mintinline when possible
 
 %%TODO convert this to english
-%%TODO add RFID, add JWT, add SDK, add JS, add JSON, add BSON, add API, add PWA, add REST, add EPFL, add RTD, add ASCII, add UTF, add GDPR, add OS
+%%TODO add RFID, add JWT, add SDK, add JS, add JSON, add BSON, add API, add PWA, add REST, add EPFL, add RTD, add ASCII, add UTF, add GDPR, add OS, add CLI, add NPM
 %%TODO use all these acronyms in text
 \newglossaryentry{nfc}
 {
@@ -133,7 +133,7 @@ showtabs =false,
 texcl=false,
 }
 
-\newmintedfile[tscode]{typescript}{
+\newmintedfile[tscode]{ts}{
 breaklines,
 bgcolor=mintedbackground,
 linenos=true,
@@ -153,7 +153,7 @@ showtabs =false,
 texcl=false,
 }
 
-\newmintedfile[htmlcode]{html}{
+\newminted[shell]{shell}{
 breaklines,
 bgcolor=mintedbackground,
 linenos=true,
@@ -952,22 +952,145 @@ Then in the destination screen, we can unwrap the passed arguments by using the 
 \subsection{PassportJS}
 
 \section{Angular 6}
-%%TODO \cite{github:angular}
-%%TODO \cite{angular:website}
-%%runs with npm, talk about ng-cli and generation etc of component 
+%%TODO should we talk about the main module file?
+%%TODO talk about ng serve
+%%TODO talk about exporting and running with Nginx
+
+Angular\cite{angular:website} is a web application frontend framework. It is opne source and developed actively on GitHub\cite{github:angular} by the Angular team at Google and other individual contributors. Angular 1 was originally built in JavaScript (now AngularJS) and has now been replaced since version 2 by a new version of Angular (commonly called Angular 2, even though version 6 is out) built in TypeScript. \\
+
+The main advantages of using a frontend framework are modularity and a clear code structure compared to not using any frameworks. \\
+
+Angular provides a CLI tool called \emph{Angular CLI} and used with the \verb+ng+ command that helps initialising and updating projects. The CLI also handles code generation, for example when creating a component, it will create all required files and register the component in the application module, more on that later. All Angular CLI commands should be run from the root directory of the Angular project. \\
+
+Angular projects are usually installed and run through NPM, although Yarn can be used as well.
 \subsection{Single-page webapp}
-\subsection{Dependencies injection}
+Angular is used to build web applications, as opposed to websites. While for most users the differences between these two are not noticeable, web applications behave more like native applications and allow interactions from the user.\\
+
+Often, web applications are single-page applications. That does not mean that the application only has a single screen but it means that you only need to load one page and then all other navigation is handled by the page itself.
+
+In the case of Angular web applications, you only have one entry point page and then the internal Angular Router in the web application will take care of the rest, without needing to load new pages or refresh the browser.
 \subsection{Architecture of an Angular Application}
+An Angular application is built around Modules (called \emph{NgModules})\cite{angular:doc:modules} that contain Components and Services. Each application has at least one root Module, called the AppModule. You can create additional Modules to group related Services and Components together and then import these Modules inside the AppModule.
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=.8\textwidth]{assets/angular_architecture}
 	\caption[Architecture of an Angular application]{Architecture of an Angular application\cite{angular:ref:architecture}}
 \end{center}
 \end{figure}
+\subsubsection{Folder structure}
+When initiating a new project with the Angular CLI, it will setup the default folder structure and a set of initial files to work with.
+
+To create a new "demo" project, you can use the following command:
+\begin{code}
+	\begin{shell}
+ng new demo
+	\end{shell}
+	\caption{Command to create a new Angular project}
+\end{code}
+And it will present you with this starting architecture:
+\dirtree{%
+.1 demo. 
+.2 README.md.
+.2 angular.json.
+.2 e2e.
+.3 protractor.conf.js.
+.3 src.
+.4 app.e2e-spec.ts.
+.4 app.po.ts.
+.3 tsconfig.e2e.json.
+.2 node\_modules/.
+.2 package-lock.json.
+.2 package.json.
+.2 src.
+.3 app.
+.4 app.component.css.
+.4 app.component.html.
+.4 app.component.spec.ts.
+.4 app.component.ts.
+.4 app.module.ts.
+.3 assets.
+.3 browserslist.
+.3 environments.
+.4 environment.prod.ts.
+.4 environment.ts.
+.3 favicon.ico.
+.3 index.html.
+.3 karma.conf.js.
+.3 main.ts.
+.3 polyfills.ts.
+.3 styles.css.
+.3 test.ts.
+.3 tsconfig.app.json.
+.3 tsconfig.spec.json.
+.3 tslint.json.
+.2 tsconfig.json.
+.2 tslint.json.
+}
+
+The main application files are contained in the \verb+src/+ directory.The \verb+src/app/+ contains the AppModule and an initial App Component created for us. The main \verb+index.html+ template file and the main stylesheet are also created. The \verb+e2e+ is used for testing using the \verb+e2e+ testing framework. The \verb+tslint.json+ files provides a configuration and code conventions for us to run TSLint with. The \verb+tsconfig.json+ contains the TypeScript compiler configuration for the project.
+\paragraph{angular.json}
+This is the main configuration file for the Angular project. It contains directory and path configurations for the project as well as options on whether to use CSS or SASS for stylesheets. It also contains the configuration about hostnames and ports to use as well as SSL configuration for the built-in development web server.
+
+\paragraph{package.json}
+As in all NPM projects, this files contains all the NPM module dependencies of our application with their respective version as well as define commands to be run with the \verb+npm run+ command. To update our application dependencies, for example when a new Angular version comes out, we can use the Angular CLI with the command and then follow the on-screen instructions:
+\begin{code}
+	\begin{shell}
+ng update
+	\end{shell}
+	\caption{Command to check for available Angular updates}
+\end{code}
+
+When updating dependencies, the Angular CLI will update the \verb+package.json+ file with the new packages versions and then install the new dependencies.
+
 \subsubsection{Components}
+A Component\cite{angular:doc:components} is used to control a subset of a view in the application. By creating small single-purpose Components, for example a Component showing only a User detail, you can easily reuse Components in multiple views. \\
+
+To generate a new Component using the Angular CLI, you can use the following command:
+\begin{code}
+	\begin{shell}
+ng generate component <componentName>
+	\end{shell}
+	\caption{Command to generate a new Angular Component}
+\end{code}
+
+This will create a folder containing four Component files:
+\begin{itemize}
+	\item A stylesheet file (CSS or SASS depending on the project configuration)
+	\item A HTML template file
+	\item A TypeScript file for the logic
+	\item A specification TypeScript file (used by the compiler and autocomplete tools for typings)
+\end{itemize}
+
+If we generate a Users component for example, we can use the command:
+\begin{code}
+	\begin{shell}
+ng generate component users
+	\end{shell}
+	\caption{Command to generate a Users Component}
+\end{code}
+This will generate the following hierarchy in the \verb+src/app/+ folder:
+\dirtree{%
+.1 users. 
+.2 users.component.html. 
+.2 users.component.scss. 
+.2 users.component.spec.ts. 
+.2 users.component.ts. 
+}
+
+The content of the TypeScript file of the component is the following:
+\begin{code}
+	\tscode{assets/code/typescript/defaultComponent.ts}
+	\caption{Empty Component TypeScript file}
+\end{code}
+
+%%TODO talk about selector and linking between TS and HTML with property and event binding. Talk about how to integrate component in other component
+
 \paragraph{Templates}
 \paragraph{Communication between components - Input/Output}
 \subsubsection{Services}
+\paragraph{Dependency injection}
+%%TODO show passing a service as a parameter to a component
+%%TODo part of service perhaps
 \subsubsection{Routing and Guards}
 \subsection{RxJS - Observables}
 \subsection{Reactive Forms}
