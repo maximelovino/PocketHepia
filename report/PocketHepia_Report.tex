@@ -296,6 +296,8 @@ texcl=false,
 \newpage
 \listoftables
 \newpage
+%%TODO add executive summary
+%%TODO add typographic conventions
 \chapter*{Acknowledgements}
 \glsaddall
 \printglossary[title=Terms and Definitions]
@@ -303,9 +305,9 @@ texcl=false,
 \shipout\null
 \pagenumbering{arabic}
 \chapter{Introduction}
-Since starting my studies at HEPIA almost three years ago after two years at EPFL, I've been shocked by the lack of commodities and study spaces for students. Some of this lack is due to the difference in scale between the two schools, one of them being composed of mainly three building in a constrained city environment and the other an almost-autonomous campus outside the city. But, actually, there isn't really a lack of space at HEPIA, but a lack of space that students can use to study. Most of the classrooms are locked when not in use by a teacher. When asking about why that is the case, I've been told that it was mainly for security concerns because of the equipment present inside the rooms. If the rooms stayed unlocked, there was no way of knowing who stole or broke something. I suggested the idea of giving access to select students to these classrooms to study and work on projects but it wasn't practical because copies of keys had to be made, the students had to make a money deposit to make sure that they didn't run away with the keys etc.\\ 
+Since starting my studies at hepia almost three years ago after two years at EPFL, I've been shocked by the lack of commodities and study spaces for students. Some of this lack is due to the difference in scale between the two schools, one of them being composed of mainly three building in a constrained city environment and the other an almost-autonomous campus outside the city. But, actually, there isn't really a lack of space at hepia, but a lack of space that students can use to study. Most of the classrooms are locked when not in use by a teacher. When asking about why that is the case, I've been told that it was mainly for security concerns because of the equipment present inside the rooms. If the rooms stayed unlocked, there was no way of knowing who stole or broke something. I suggested the idea of giving access to select students to these classrooms to study and work on projects but it wasn't practical because copies of keys had to be made, the students had to make a money deposit to make sure that they didn't run away with the keys etc.\\ 
 
-One solution would have been to use our student cards as an electronic door key to access the rooms. We could also enable other uses for the cards, such as using them as electronic wallets to simplify the payments at the canteen during lunch break. When I suggested the idea, people mostly laughed at me and said "[...] they're never going to do it, unless someone actually does it, presents it as a finished product and then they decide to use it." So, here I am, after 3 years studying at HEPIA and for my Bachelor Project I decided to work on this exact idea. A multi-function student card platform built on NFC technology with accompanying mobile and web application for administrators to manage the platform and for students to monitor their usage statistics.
+One solution would have been to use our student cards as an electronic door key to access the rooms. We could also enable other uses for the cards, such as using them as electronic wallets to simplify the payments at the canteen during lunch break. When I suggested the idea, people mostly laughed at me and said "[...] they're never going to do it, unless someone actually does it, presents it as a finished product and then they decide to use it." So, here I am, after 3 years studying at hepia and for my Bachelor Project I decided to work on this exact idea. A multi-function student card platform built on NFC technology with accompanying mobile and web application for administrators to manage the platform and for students to monitor their usage statistics.
 
 
 \section{NFC and NDEF}
@@ -451,7 +453,7 @@ There will be two main ways to add money to an user wallet. Either the user can 
 
 \subsection{Accesses}
 
-To continue, the second element of the project is the handling of access control through the platform. This was the original pain point we noticed at HEPIA with the lack of an easy way to handle accesses to the available classrooms. We will be able to create different areas to group rooms inside them. For example, an area could be an entire floor or labs for a specific section of HEPIA.\\
+To continue, the second element of the project is the handling of access control through the platform. This was the original pain point we noticed at hepia with the lack of an easy way to handle accesses to the available classrooms. We will be able to create different areas to group rooms inside them. For example, an area could be an entire floor or labs for a specific section of hepia.\\
 
 As far as giving access to users, we can give access to a room from a given date and specify if needed an end date for the access. For example, we can setup access for a user until the end of the current semester. We also decided to introduce an optional time range during the day during which the given access is active, so we can for example allow a student to enter a room only between 8am and 7pm. \\
 
@@ -504,13 +506,13 @@ The expiration date, the virtual card and the delegation of admin zones are not 
 
 Finally, the \verb+importBatch+ is set if the user is imported with a CSV file so that we can group all users imported together and undo the import if necessary.
 \subsubsection{Integration with existing AAI user accounts}
-If this project is put in production at HEPIA, we will have to only change this model to integrate it with an existing authentication service, such as AAI or with a directory LDAP service.\\
+If this project is put in production at hepia, we will have to only change this model to integrate it with an existing authentication service, such as AAI or with a directory LDAP service.\\
 
 In that case, we would remove information already present in the authentication service such as name and email and just store the unique identifier from the authentication service in our model. This model would act as an augmented database on top of the existing service. We would then forward all login/password authentication request to the authentication service and would create the entry for the user in our database after the first login.\\
 
 This is inspired by the way Nextcloud\footnote{\url{https://nextcloud.com/}} for example stores user accounts that are linked to a directory service, for example an Active Directory. It stores the full Distinguished Name from the directory service as the unique identifier for the account to link the local account to the directory account.\\
 
-While we could have asked Switch-AAI to integrate AAI authentication in our application, the time constraints of the project were too tight to launch a discussion and we wanted to stay independent of other services in this phase to avoid being slowed down by for example needing to run our servers on the HEPIA network exclusively to access the directory.
+While we could have asked Switch-AAI to integrate AAI authentication in our application, the time constraints of the project were too tight to launch a discussion and we wanted to stay independent of other services in this phase to avoid being slowed down by for example needing to run our servers on the hepia network exclusively to access the directory.
 \subsection{Payments}
 \begin{figure}[H]
 \begin{center}
@@ -1161,7 +1163,7 @@ Here in source code \ref{component_code}, we can see the Component metadata. The
 
 Afterwards, you can create methods and properties in the Component TypeScript file that can then be called and mapped to the templates. 
 \paragraph{Templates}
-Templates are just HTML files on the surface with additional features inherent to Angular. One of these is the property binding. If you have a public property in the TypeScript file, you can access it and display it in the Template by using curly braces.
+Templates\cite{angular:doc:templates} are just HTML files on the surface with additional features inherent to Angular. One of these is interpolation of template expressions. If you have a public property in the TypeScript file or you want to display the output of TypeScript code, you can do so in the Template by wrapping it in curly braces.
 
 For example, let's say we had a \verb+name+ property to the User component and we want to display it in the template, we can do so by using the \verb+{{name}}+ text in our template.\\
 
@@ -1172,7 +1174,7 @@ Moreover, we can define HTML elements properties with TypeScript code.For exampl
 \end{inlinehtml}
 \caption{Static disabling input in HTML}	
 \end{code}
-Now, if we want to have a boolean property in the TypeScript file that decides if the input is enabled or disabled, we can do this using the brackets notation \verb+[]+. This is useful for example if we want to enable according to a form validity. By putting the \verb+disabled+ properties in square brackets, the compiler will interpret the text passed as TypeScript code. So if we have a boolean \verb+formValid+ that states if the input is enabled or not, we can use:
+Now, if we want to have a boolean property in the TypeScript file that decides if the input is enabled or disabled, we can do this using the brackets notation \verb+[]+. This is useful for example if we want to enable according to a form validity. By putting the \verb+disabled+ properties in square brackets, the compiler will interpret the text passed as TypeScript code, this is called property binding. So if we have a boolean \verb+formValid+ that states if the input is enabled or not, we can use:
 \begin{code}
 \begin{inlinehtml}
 <input type="text" [disabled]="formValid">
@@ -1202,7 +1204,7 @@ Communication is useful between Components because often you have a parent Compo
 \end{center}
 \end{figure}
 
-The parent Component can have properties for each child Component by selecting it as a property using the \verb+@ViewChild()+ annotation. As an example, we can take a \verb+UsersComponent+ which integrate a \verb+UserCreationComponent+ and a \verb+UserTableComponent+. The goal here is to refresh the table when a new User is created. To accomplish this, the \verb+UserCreationComponent+ must emit an event when a new User is created and the parent Component will catch it and call a method on the table to refresh it. \\
+The parent Component can have properties for each child Component by selecting it as a property using the \verb+@ViewChild()+ annotation. As an example, we can take a \verb+UsersComponent+ which integrate a \verb+CreateUserComponent+ and a \verb+UserTableComponent+. The goal here is to refresh the table when a new User is created. To accomplish this, the \verb+CreateUserComponent+ must emit an event when a new User is created and the parent Component will catch it and call a method on the table to refresh it. \\
 
 From the parent component point of view, it looks like this:
 \begin{code}
@@ -1213,7 +1215,7 @@ From the parent component point of view, it looks like this:
 \end{code}
 When looking at source code \ref{parent_component_files} Template file, we can see \verb+(created)+ that is assigned to a function call and passing \verb+$event+ to that function. This is called event binding.\\
 
-Inside the \verb+UserCreationComponent+, the \verb+created+ property is defined as an \mintinline[breaklines]{ts}{@Output() created = new EventEmitter<boolean>();}. With this event emitter, we can call the method \verb+emit()+ on it to emit a value of the specified type, in our case \verb+boolean+. The \verb+$event+ passed to the function call in the parent component is the value passed at the emission of the event.
+Inside the \verb+CreateUserComponent+, the \verb+created+ property is defined as an \mintinline[breaklines]{ts}{@Output() created = new EventEmitter<boolean>();}. With this event emitter, we can call the method \verb+emit()+ on it to emit a value of the specified type, in our case \verb+boolean+. The \verb+$event+ passed to the function call in the parent component is the value passed at the emission of the event.
 
 From there, we can just call any public method in the table component, in this case \verb+refreshData()+.
 
@@ -1235,14 +1237,89 @@ To set this property when integrating the Component in a parent Component, we ca
 	\end{inlinehtml}
 	\caption{Setting an input property in Component}
 \end{code}
-
-%%TODO talk about parametric components with @Input()
 \subsubsection{Services}
+Services\cite{angular:doc:services} are a broader category than Component and can be seen as code that is not directly related to user interaction or user experience. Services are also often shared and used by different Components using Dependency Injection\cite{angular:doc:dependency_injection} (see \ref{dependency_injection}). Services can contain methods to manage and save data, to fetch data from a server, validate inputs. All those methods can then be called by all Components simply by injecting the Service. You can use other Services inside a Service simply by injecting them in the Service (see \ref{dependency_injection}).\\
+
+To generate a new Service, you can use the Angular CLI:
+\begin{code}
+\begin{shell}
+ng generate service <serviceName>
+\end{shell}
+	\caption{Creating a new Service using the Angular CLI}
+\end{code}
+This will create a TypeScript file and a specification file in the \verb+src/app/+ directory. 
 \paragraph{Dependency injection}
-%%TODO show passing a service as a parameter to a component
-%%TODo part of service perhaps
-\subsubsection{Routing and Guards}
+\label{dependency_injection}
+When you create a Service using the Angular CLI, it is annotated with the \verb+@Injectable(...)+ annotation. You then have to import it in the AppModule file and add it to the \verb+providers+ array of the Module. From then on, you can use it in any other Service or Component simply by adding it to the Component or Service constructor. \\
+
+For example, if we have a \verb+UserService+ that we want to use in our \verb+CreateUserComponent+, we can just use the following code to access the Service inside the Component:
+\begin{code}
+	\tscode{assets/code/typescript/injectingService.ts}
+	\caption{Injecting a Service inside a Component}
+\end{code}
+\subsubsection{Routing}
+Routing\cite{angular:doc:router} inside the application is handled by the Angular Router. Even though our web application is a single-page application from the browser point of view, it is important to use a Router and not just load and unload content in a single URL. This enables for example deep linking to directly access a page of the application. \\
+
+To generate a Router, you need to generate a new Module to contain the Router. To do so, you can use the Angular CLI:
+\begin{code}
+	\begin{shell}
+ng generate module app-routing --flat --module=app
+	\end{shell}
+	\caption{Generating a routing module with the Angular CLI}
+	\label{router_gen}
+\end{code}
+In source code \ref{router_gen}, the \verb+--flat+ parameter tells the CLI to put the new Module at the root of the \verb+src/app/+ without creating a separate folder and the \verb+--module=app+ parameter imports the newly created Module in the AppModule. \\
+
+Then, we need to create the Router inside our Module. To do this, first you need to import the \verb+RouterModule+ and \verb+Routes+ class from Angular:
+\begin{code}
+	\begin{inlinets}
+import { RouterModule, Routes } from '@angular/router';
+	\end{inlinets}
+	\caption{Importing required elements for Routing}
+\end{code}
+
+Then, we have to define the routes. Routes are defined as an array of Route, for each entry, we can specify several properties, such as a path, a redirection, a set of Guards (see \ref{guards}) to pass to activate the Route and a Component to load. There are more properties, but these are the main ones and we will not dive further into the others. \\
+
+The finality of each Route is to load a Component on screen, be it directly or through a redirection to another Route that loads a Component. \\
+
+For example, if we have a \verb+HomePageComponent+ to load for the homepage and a \verb+UsersComponent+ to load for the \verb+/users+ and we want to redirect everything else to the homepage, we can use the following Routes:
+\begin{code}
+	\tscode{assets/code/typescript/simpleRoutes.ts}
+	\caption{Two pages Routes setup in Angular}
+	\label{simple_routes}
+\end{code}
+
+Then, in the Module that we created for routing, after defining the routes, we have to link the \verb+RouterModule+ with the Routes and export the Router as part of our Module:
+\begin{code}
+	\tscode{assets/code/typescript/exportingRouter.ts}
+	\caption{Setting up Router and exporting it in Angular}
+\end{code}
+
+Finally, we can also create a hierarchy of Routes by adding children to Route entries. This is particularly useful if we want to protect a set of routes (admin routes for example) behind a Guard (see \ref{guards}).If we take the example from source code \ref{simple_routes} and want to add a \verb+/users/create+ create under the \verb+/users+, we can refactor it this way:
+\begin{code}
+	\tscode{assets/code/typescript/nestedRoutes.ts}
+	\caption{Nested Routes in Angular}
+	\label{nested_routes}
+\end{code}
+
+\paragraph{Router outlet}
+Finally, to display the routed component in our page, we have to provide a Router Outlet. The Router Outlet is often inserted as the only element directly in the main \verb+index.html+ file but can also be inserted in a more complex layout or in another Component. The Router will attach itself to the first encountered Router Outlet from a hierarchical standpoint.\\
+
+To insert the Router outlet in a template, you can use its selector:
+\begin{code}
+\begin{inlinehtml}
+<router-outlet></router-outlet>
+\end{inlinehtml}
+	\caption{Using a Router Outlet in Angular}
+\end{code}
+
+%%Router-link and router.navigate()?
+
+\paragraph{Guards}
+\label{guards}
+
 \subsection{RxJS - Observables}
+%%TODO talk about httpclient returning this, update on change => similar to LiveData => ref livedata
 \subsection{Reactive Forms}
 \subsection{TypeScript}
 %%TODO \cite{github:typescript}
