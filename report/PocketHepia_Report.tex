@@ -1,9 +1,7 @@
-\documentclass[11pt,a4paper]{report}
+\documentclass[twoside, openright,11pt,a4paper]{book}
 \usepackage[utf8]{inputenc}
 \usepackage{dirtree}
 \setlength{\parindent}{0pt}
-\addtolength{\hoffset}{-1cm}
-\addtolength{\textwidth}{2cm}
 \usepackage{fontspec}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -11,6 +9,44 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{float}
 \usepackage{longtable}
+
+\usepackage{fancyhdr}
+\usepackage[bindingoffset=2cm,centering,includeheadfoot,margin=3cm]{geometry}
+
+\makeatletter
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+\hbox{}
+\vspace*{\fill}
+\vspace{\fill}
+\thispagestyle{empty}
+\newpage
+\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother
+
+\fancypagestyle{plain}{ %
+\fancyhf{}
+\fancyfoot[RE,LO]{Maxime Alexandre Lovino}
+\fancyfoot[LE,RO]{Page \thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.5pt}
+}
+
+\fancypagestyle{hepia-fancy}{ %
+\fancyhf{}
+\fancyhead[LE,RO]{PocketHepia}
+\fancyhead[RE,LO]{\leftmark}
+\fancyfoot[RE,LO]{Maxime Alexandre Lovino}
+\fancyfoot[LE,RO]{Page \thepage}
+
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+}
+
+
+
+
+
 \title{PocketHepia}
 
 \usepackage{chngcntr}
@@ -49,7 +85,7 @@
 	description={est un acronyme pour Integrated Development Environment. Il s'agit d'un programme intégrant un éditeur de texte avec coloration syntaxique et autocomplétion du code pour un ou plusieurs langages de programmation ainsi que des fonctions de compilation, débogage et tout autre fonctionnalité permettant de faciliter et fluidifier le travail du développeur}
 }
 
-\usepackage[section]{minted}
+\usepackage{minted}
 \definecolor{mintedbackground}{rgb}{0.95,0.95,0.95}
 \usemintedstyle{tango}
 
@@ -261,6 +297,10 @@ texcl=false,
 \xpatchcmd{\inputminted}{\minted@fvset}{\minted@fvset\dontdofcolorbox}{}{}
 \makeatother
 
+\makeatletter
+\def\l@lstlisting#1#2{\@dottedtocline{1}{1.5em}{3em}{#1}{#2}}
+\makeatother
+
 
 \begin{document}
 \begin{titlepage}
@@ -285,24 +325,22 @@ texcl=false,
 		\includegraphics[width=.7\linewidth]{assets/logo_hes.png}
 	\end{minipage}
 \end{titlepage}
-\shipout\null
-\pagenumbering{roman}
+\frontmatter
+\pagestyle{plain}
+\pagenumbering{Roman}
 \tableofcontents
-\newpage
 \listoffigures
-\newpage
 \renewcommand\listoflistingscaption{Source code listings}
 \listoflistings
-\newpage
 \listoftables
-\newpage
 %%TODO add executive summary
 %%TODO add typographic conventions
 \chapter*{Acknowledgements}
 \glsaddall
 \printglossary[title=Terms and Definitions]
 \newpage
-\shipout\null
+\mainmatter
+\pagestyle{hepia-fancy}
 \pagenumbering{arabic}
 \chapter{Introduction}
 Since starting my studies at hepia almost three years ago after two years at EPFL, I've been shocked by the lack of commodities and study spaces for students. Some of this lack is due to the difference in scale between the two schools, one of them being composed of mainly three building in a constrained city environment and the other an almost-autonomous campus outside the city. But, actually, there isn't really a lack of space at hepia, but a lack of space that students can use to study. Most of the classrooms are locked when not in use by a teacher. When asking about why that is the case, I've been told that it was mainly for security concerns because of the equipment present inside the rooms. If the rooms stayed unlocked, there was no way of knowing who stole or broke something. I suggested the idea of giving access to select students to these classrooms to study and work on projects but it wasn't practical because copies of keys had to be made, the students had to make a money deposit to make sure that they didn't run away with the keys etc.\\ 
@@ -897,6 +935,7 @@ The user Repository and ViewModel look like this:
 \kotlincode{assets/code/kotlin/userViewModel.kt}
 
 \paragraph{LiveData}
+\label{livedata}
 LiveData\cite{android:doc:jetpack:livedata} is an observable holder class that allows to react to data changes. The advantage of LiveData is that it is lifecycle aware, so you can observe the data by passing it an Activity or Fragment and will pause and resume accordingly when the Activity is paused or resumed. Otherwise, we could try refreshing the UI when the data changes and if the Activity is not in the foreground, the application would crash. LiveData allows us to always update our UI with the latest data, for example data from a Room Database.\\
 
 You can just call the \verb+observe+ method on a LiveData instance and pass a lifecycle component, in this case a Fragment and an Observer callback to handle the data.
@@ -959,7 +998,7 @@ In most cases, what you want do is integrate the top level screens with a Naviga
 \end{code}
 
 \begin{code}
-	\xmlcode{assets/code/xml/ActivityNavHost.xml}
+	\xmlcode{assets/code/xml/activityNavHost.xml}
 	\caption{The container Fragment to define that will host the Navigation selected screen}
 	\label{Activity_nav_host}
 \end{code}
@@ -1313,12 +1352,60 @@ To insert the Router outlet in a template, you can use its selector:
 	\caption{Using a Router Outlet in Angular}
 \end{code}
 
-%%Router-link and router.navigate()?
+%%TODO Router-link and router.navigate()?
 
 \paragraph{Guards}
 \label{guards}
+Finally, another important part of Routing are Guards. By default, anyone can navigate to all the Routes in the application but in many real use cases, you have to be logged in to access specific sections of an application or even have special permissions. Guards allow to perform checks before activating a Route and multiple Guards can also be chained to enable a Route activation. \\
 
+The most basic will return a \verb+Boolean+ to specify if the user can pass the Guard or not. Inside the guard, you can also access the Router by Dependency Injection to provide a redirection in case the check does not pass for example. \\
+
+As an example, we can take a look at one of the most common Guard used. This Guard is used to protect a Route only available to logged-in users and will redirect to the \verb+/login+ page if the user is not logged-in.\\
+
+First of all, we can generate the Guard that we're going to call the \verb+AuthGuard+ using the Angular CLI, we have to add it to the \verb+providers+ array in the AppModule as well:
+\begin{code}
+	\begin{shell}
+ng generate guard auth
+	\end{shell}
+	\caption{Generating a guard using Angular CLI}
+\end{code}
+Then, we can add the Guard to our Route. If we take the Routes from source code \ref{simple_routes} and add a \verb+/login+ Route, we will then protect all other Routes behind the guard:
+\begin{code}
+	\tscode{assets/code/typescript/simpleRoutesGuard.ts}
+	\caption{Routes protected by a Guard}
+\end{code}
+
+Then we have to write the logic of the Guard itself with the redirection. To do so, we have a service that will returns an \verb+Observable+ that specifies if the user is logged-in (more info on \verb+Observable+ operators \verb+pipe+ and \verb+tap+ in section \ref{observables}) and we are gonna return the logged-in value to the guard and redirect if it's false:
+\begin{code}
+	\tscode{assets/code/typescript/guard.ts}
+	\caption{Guard redirecting not logged-in users to login page}
+\end{code}
 \subsection{RxJS - Observables}
+\label{observables}
+RxJS Observables\cite{angular:doc:observables} are similar in concept to LiveData on Android (see section \ref{livedata}). The idea behind Observable is to return a value that can change over time and on which you can "listen" for new changes and update the UI accordingly for example. It is used for changing data, for example when subscribing to breakpoint changes in browser window (resizing the window) or for data that is not yet available and is being loaded asynchronously from memory or another server. \\
+
+In most project, RxJS Observables are mainly used by the Angular HTTPClient\cite{angular:doc:http}. Since HTTP requests are asynchronous, when making a request the client returns an Observable on which you can subscribe to get the parsed result once it comes back from the server.\\
+
+\subsubsection{The HTTP Client}
+The HTTP Client is used to retrieve JSON Data from a backend API. It returns an Observable of the data already parsed to the correct type. Its recommended to use the HTTP Client in a Service and you can access it by Dependency Injection in any Service.\\
+
+If we want to retrieve the list of all users from the backend, we have to create a \verb+User+ TypeScript class in our Angular project to match the data returned from the backend. Then we can simply use the HTTP Client to make a request and it will return an \verb+Observable<User[]>+:
+\begin{code}
+	\tscode{assets/code/typescript/httpUsers.ts}
+	\caption{Using the HTTP Client to retrieve data}
+\end{code}
+
+Then, when calling this method from a Component for example, we can \verb+subscribe+ to the Observable and get two branches: one if data is available and another if an error happens, we can supply functions for each case:
+\begin{code}
+	\tscode{assets/code/typescript/gettingObservable.ts}
+	\caption{Subscribing to data from an Observable}
+\end{code}
+
+%%TODO do we talk about async pipe?
+
+
+\subsubsection{Pipe and other operators}
+%%TODO talk about pipe, tap, map, flatmap
 %%TODO talk about httpclient returning this, update on change => similar to LiveData => ref livedata
 \subsection{Reactive Forms}
 \subsection{TypeScript}
@@ -1346,6 +1433,8 @@ To insert the Router outlet in a template, you can use its selector:
 \subsection{Endpoints}
 \subsection{Interaction avec la base de données}
 \section{Le frontend Angular}
+\subsection{Authentication}
+%%TODO http interceptor that adds JWT, JWT stored in LocalStorage
 \subsection{Routing}
 \subsection{Components}
 \chapter{Résultats}
