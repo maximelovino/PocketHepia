@@ -9,6 +9,7 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{float}
 \usepackage{longtable}
+\usepackage{pdfpages}
 
 \usepackage{fancyhdr}
 \usepackage[bindingoffset=2cm,centering,includeheadfoot,margin=3cm]{geometry}
@@ -328,6 +329,7 @@ texcl=false,
 \frontmatter
 \pagestyle{plain}
 \pagenumbering{Roman}
+\includepdf[pages=1, pagecommand={}, scale=.9, offset=1cm 0]{assets/pdf/enonce}
 \tableofcontents
 \listoffigures
 \renewcommand\listoflistingscaption{Source code listings}
@@ -456,6 +458,8 @@ After having integrated every requested features, the team launched a beta web v
 	\caption{Screenshot of the web version of PocketCampus}
 \end{center}
 \end{figure}
+
+
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=.5\textwidth]{assets/pocketcampus_mobile.png}
@@ -1379,6 +1383,7 @@ Then we have to write the logic of the Guard itself with the redirection. To do 
 \begin{code}
 	\tscode{assets/code/typescript/guard.ts}
 	\caption{Guard redirecting not logged-in users to login page}
+	\label{authGuard}
 \end{code}
 \subsection{RxJS - Observables}
 \label{observables}
@@ -1402,11 +1407,18 @@ Then, when calling this method from a Component for example, we can \verb+subscr
 \end{code}
 
 %%TODO do we talk about async pipe?
-
-
 \subsubsection{Pipe and other operators}
-%%TODO talk about pipe, tap, map, flatmap
-%%TODO talk about httpclient returning this, update on change => similar to LiveData => ref livedata
+Sometimes it can be useful to handle the data of an Observable before the subscribers are notified of new data. This is done using the \verb+pipe+ operator. When returning an Observable, you can append a call to \verb+pipe+ at the end of it and insert operations that will be run as part of the Observable before it triggers the subscribers. These operations are function calls that take a \verb+function(data)+ as parameter. \\
+
+One of the operations that can be run is the \verb+tap+ operation. This operation does not make any change to the data being sent to the subscribers but allows to use it before sending it untouched. For example, it is used in the the \verb+AuthGuard+ presented before (source code \ref{authGuard}) to access the returned data so that it can redirect to the \verb+/login+ page if the user was not logged in. Basically, we pass the value to the function caller, but we can use it too when it comes back.\\
+
+Another useful operator is the \verb+map+ operator. This is used to transform data before it triggers the subscribers. It will return an Observable of the type of the returned value in the map function. For example, if we need to return an \verb+Observable<boolean>+ to say if the user is logged-in and we have a \verb+getToken+ function that sends us the authentication token or \verb+null+ if no user is logged in, we can use the \verb+map+ operator to transform our \verb+Observable<String>+ in an \verb+Observable<boolean>+. We can do this by using the following code:
+\begin{code}
+\tscode{assets/code/typescript/observableMap.ts}
+	\caption{Transforming an Observable using the map operator}
+\end{code}
+
+%%TODO talk about flatmap?
 \subsection{Reactive Forms}
 \subsection{TypeScript}
 %%TODO \cite{github:typescript}
