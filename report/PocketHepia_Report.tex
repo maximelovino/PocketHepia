@@ -1,3 +1,4 @@
+%%TODO try going back to report and remove frontmatter, mainmatter and backmatter
 \documentclass[twoside, openright,11pt,a4paper]{book}
 \usepackage[utf8]{inputenc}
 \usepackage{dirtree}
@@ -1040,30 +1041,6 @@ Then in the destination screen, we can unwrap the passed arguments by using the 
 	\caption{Receiving input arguments when navigating}
 \end{code}
 
-\section{NoSQL Database - MongoDB}
-%%TODO advantages, why nosql
-\subsection{Storage as JSON/BSON documents}
-%%TODO verify this is true
-\subsection{How to handle references}
-\label{mongo_references}
-%%TODO add source on mongo site https://docs.mongodb.com/manual/applications/data-models-relationships/
-%%TODO talk about embedding documents vs ids of childrens vs ids of parent for different sizes
-\subsection{Mongoose}
-
-\subsubsection{Schemas}
-\subsubsection{Promises with Mongoose}
-%%TODO find function, insert etc with await => talk about command than talk directly to mongo without passing by mongoose
-\subsubsection{Populating references}
-\subsubsection{Hooks}
-\label{mongoose_hooks}
-%%TODO talk about pre('remove') for example
-\section{NodeJS et Express}
-\subsection{JavaScript ES6}
-\subsection{NPM Modules}
-\subsection{Promises}
-\subsection{Middlewares}
-\subsection{PassportJS}
-
 \section{Angular 6}
 %%TODO should we talk about the main module file?
 %%TODO talk about ng serve
@@ -1420,11 +1397,51 @@ Another useful operator is the \verb+map+ operator. This is used to transform da
 
 %%TODO talk about flatmap?
 \subsection{Reactive Forms}
+%%TODO talk about reactive forms
 \subsection{TypeScript}
-%%TODO \cite{github:typescript}
+TypeScript\cite{github:typescript} is an open source language developed by Microsoft. It adds optional static typing and classes to JavaScript as well as implementing its own module import syntax. TypeScript files can be "compiled" to JavaScript to be used on the web or on the server-side using Node.JS for example. TypeScript is regarded by Microsoft and others as the way to build large scale JavaScript application thanks to the ease of mind provided by statically typed languages. \\
+
+TypeScript also includes the ability to write definition files to add typing information to existing JavaScript code to provide completion in code editor as well as compile-time check when using third-party libraries. \\
+
+The whole static typing logic is checked when "compiling" (actually transpiling) to JavaScript. The generated JavaScript files are plain JavaScript files and can be configured to use ES6 syntax or earlier by providing compatibility code for older JavaScript standards. \\
+
+The syntax of TypeScript is similar to JavaScript with the main addition being the ability to specify the type of a variable or the return type of a method by appending \verb+: <type>+ to its declaration, for example:
+\begin{code}
+	\begin{inlinets}
+let age: number = 10;
+	\end{inlinets}
+	\code{Defining the type of a variable in TypeScript}
+\end{code}
 \subsection{Angular Material}
-%%TODO \cite{angular:material:website}
-%%TODO \cite{github:angular:material}
+Angular Material\cite{angular:material:website} is an open source\cite{github:angular:material} Components library built by the Angular team to be used with Angular. The library provides Angular Components that follow the Material Design Language\cite{material:website} used by Google on Android and the web.\\
+
+Contrary to a simple stylesheet library, Angular Material provides Angular Components that incorporate their own logic and not only look but also behave according to the Material Design specification. These Components range from side navigation drawers to tables complete with sorting and filtering. It also provides extensive theming capabilities with the ability to change theme colors globally or on a component basis. \\
+
+Finally, a Component Development Kit is provided to simplify building custom Material-inspired Components.
+\section{NoSQL Database - MongoDB}
+%%TODO advantages, why nosql
+\subsection{Storage as JSON/BSON documents}
+%%TODO verify this is true
+\subsection{How to handle references}
+\label{mongo_references}
+%%TODO add source on mongo site https://docs.mongodb.com/manual/applications/data-models-relationships/
+%%TODO talk about embedding documents vs ids of childrens vs ids of parent for different sizes
+\subsection{Mongoose}
+
+\subsubsection{Schemas}
+\subsubsection{Promises with Mongoose}
+%%TODO find function, insert etc with await => talk about command than talk directly to mongo without passing by mongoose
+\subsubsection{Populating references}
+\subsubsection{Hooks}
+\label{mongoose_hooks}
+%%TODO talk about pre('remove') for example
+\section{NodeJS et Express}
+\subsection{JavaScript ES6}
+\subsection{NPM Modules}
+\subsection{Promises}
+\subsection{Middlewares}
+\subsection{PassportJS}
+
 \section{Containers}
 %%TODO talk about basis linux container distribution
 %%TODO talk about portability
@@ -1453,6 +1470,9 @@ Another useful operator is the \verb+map+ operator. This is used to transform da
 \chapter{Conclusion}
 %%TODO talk about how to implement new features or sections inside the project
 \section{Future works}
+\backmatter
+\pagenumbering{Roman}
+\pagestyle{plain}
 \bibliographystyle{unsrt}
 \bibliography{bibliography}
 
