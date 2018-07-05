@@ -1425,7 +1425,7 @@ Contrary to a simple stylesheet library, Angular Material provides Angular Compo
 
 Finally, a Component Development Kit is provided to simplify building custom Material-inspired Components.
 \section{NoSQL Database - MongoDB}
-%%TODO add wikipedia ref for noSQL, mongo, cap principle
+%%TODO add wikipedia ref for noSQL, mongo from wikipedia
 NoSQL databases have existed for a long time, since the late 1960s but only recently have they started become more and more popular, due to the advent of Big Data and real-time applications. While most people believe that NoSQL databases are named this way because they are \emph{NOT} SQL, it actually should mean \emph{Not-Only SQL} as some NoSQL system support SQL-like syntaxes for queries. \\
 
 According to the \emph{CAP Theorem}\cite{wiki:cap_theorem}, it is impossible for a distributed data store to provide more than two out of: Consistency, Availability and Partition tolerance. NoSQL stores often compromises some consistency in favour of better availability and speed as well as simplified scaling. \\ 
@@ -1442,8 +1442,16 @@ MongoDB is a document-oriented database\cite{wiki:document_oriented_db} launched
 
 \subsection{Schemas}
 %%TODO by default flexible schema
+By default, MongoDB does not impose a strict Schema inside a collection, meaning all documents inside the collection can have a different structure. While it is not a best practice, it provides flexibility when the project is still in development phase because you can modify the schema and save new documents with newly added or modified fields while already present keep their structure. When running in production, the schema should be strict in all collections. \\
 \subsubsection{How to handle references}
 \label{mongo_references}
+Often documents you save in the database will have a relation with other documents from another schema. These relations would be stored in a SQL Database as a Foreign Key linked to the Primary Key of the entry we want to reference. In MongoDB, there are three solutions to handle references depending on the number of references that are necessary from one document to another. You should think from the beginning about the maximum number of references you can have between two documents before choosing one of three references design. The limitations of the designs come from the maximum size of a MongoDB document, that is capped at 16Mb, and if you need to update referenced documents often. \\
+
+
+
+
+%%TODO talk about max document size of 16mb and make example with a person having multiple cars by embedding the car, car ID list in user and user id in car
+
 %%TODO add source on mongo site https://docs.mongodb.com/manual/applications/data-models-relationships/
 %%TODO talk about embedding documents vs ids of childrens vs ids of parent for different sizes
 \subsection{Mongoose}
