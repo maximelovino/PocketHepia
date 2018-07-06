@@ -1,0 +1,18 @@
+{
+	"id": "user001",
+	"name": "Mickael Hoerdt",
+	"job": "Teacher",
+	"employer": "hepia",
+	"cars": [
+		{
+			"brand": "Ferrari",
+			"model": "458",
+			"plate": "CAFE"
+		},
+		{
+			"brand": "Lamborghini",
+			"model": "Huracan",
+			"plate": "DEADC0DE"
+		}
+	]
+}

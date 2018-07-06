@@ -307,6 +307,7 @@ texcl=false,
 
 
 \begin{document}
+%%TODO change titlepage to ressemble in text and form the official titlepage of other documents
 \begin{titlepage}
 	\centering
 	{\scshape \LARGE ITI Bachelor Project \par}
@@ -338,7 +339,7 @@ texcl=false,
 \renewcommand\listoflistingscaption{Source code listings}
 \listoflistings
 \listoftables
-%%TODO add executive summary
+%%TODO add executive summary in FRENCH AND ENGLISH in word document
 %%TODO add typographic conventions
 \chapter*{Acknowledgements}
 \glsaddall
@@ -1447,18 +1448,34 @@ By default, MongoDB does not impose a strict Schema inside a collection, meaning
 \label{mongo_references}
 Often documents you save in the database will have a relation with other documents from another schema. These relations would be stored in a SQL Database as a Foreign Key linked to the Primary Key of the entry we want to reference. In MongoDB, there are three solutions to handle references depending on the number of references that are necessary from one document to another. You should think from the beginning about the maximum number of references you can have between two documents before choosing one of three references design. The limitations of the designs come from the maximum size of a MongoDB document, that is capped at 16Mb, and if you need to update referenced documents often. \\
 
+To illustrate the three options, we are gonna take an example where we people and cars. There is one schema for a person and one schema for a car and a person can have multiple cars but a car is only owned by a single person. \\
 
+The first option to store this information is to embed the car documents in the person document. We don't need to have a car collection, we can just store in the person document an array of cars. We should make sure that a person will not have a lot of cars because by embedding entire car documents we will take more space and we could more easily reach the MongoDB document size limit. This option though provides the easiest way to retrieve the person and all its cars and to remove all cars when the person is removed. \\
+\begin{code}
+	\jsoncode{assets/code/json/userCarsEmbedding.json}
+	\caption{Embedding referenced documents in MongoDB}
+\end{code}
 
+To reduce the size taken by embedding full car documents in a user's document, we can store an array of car IDs in the person's document instead of full cars and store the cars in their own collection as standalone documents. This is more efficient in term of document size but it means that we have to retrieve the referenced information when accessing a person (see \ref{populating_refs}) as well as deleting all linked cars' documents when we remove a person. \\
 
-%%TODO talk about max document size of 16mb and make example with a person having multiple cars by embedding the car, car ID list in user and user id in car
+\begin{code}
+	\jsoncode{assets/code/json/userCarsLinkingChildren.json}
+	\caption{Storing children references in MongoDB}
+\end{code}
 
+Finally, the last option is the most similar to the SQL Foreign Key idea and is also the one that will scale better to a big number of references. Instead of storing an array of the IDs of the cars in the person's document, we store the owner person ID in the car 's document. While it is the most complicated design to quickly retrieve information or delete all cars when we delete a person, it is the most space predictable design because no documents can individually grow as the number of references increase.\\
+
+\begin{code}
+	\jsoncode{assets/code/json/userCarsLinkingParents.json}
+	\caption{Storing parent references in MongoDB}
+\end{code}
 %%TODO add source on mongo site https://docs.mongodb.com/manual/applications/data-models-relationships/
-%%TODO talk about embedding documents vs ids of childrens vs ids of parent for different sizes
 \subsection{Mongoose}
 \subsubsection{Defining a Schema}
 \subsubsection{Promises with Mongoose}
 %%TODO find function, insert etc with await => talk about command than talk directly to mongo without passing by mongoose
 \subsubsection{Populating references}
+\label{populating_refs}
 \subsubsection{Hooks}
 \label{mongoose_hooks}
 %%TODO talk about pre('remove') for example
@@ -1470,6 +1487,7 @@ Often documents you save in the database will have a relation with other documen
 \subsection{PassportJS}
 
 \section{Containers}
+%%TODO REMOVE CONTAINER FROM TECHNOLOGIES AND PUT THEM ONLY IN DEPLOYMENT
 %%TODO talk about basis linux container distribution
 %%TODO talk about portability
 \subsection{Docker}
@@ -1480,6 +1498,7 @@ Often documents you save in the database will have a relation with other documen
 \subsection{Azure}
 
 \chapter{Implémentation}
+%%TODO add full architecture diagram of interaction between all technologies and modules
 \section{Modules du projet}
 \section{Déploiement}
 \subsection{Architecture du projet}
