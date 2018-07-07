@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>TransactionListAdapter - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">ch.maximelovino.pockethepia.data.adapters</a>&nbsp;/&nbsp;<a href="./index.html">TransactionListAdapter</a><br/>
+<br/>
+<h1>TransactionListAdapter</h1>
+<code><span class="keyword">class </span><span class="identifier">TransactionListAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ListAdapter</span><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-transaction/index.html"><span class="identifier">Transaction</span></a><span class="symbol">,</span>&nbsp;<a href="-transaction-view-holder/index.html"><span class="identifier">TransactionViewHolder</span></a><span class="symbol">&gt;</span></code>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-transaction-view-holder/index.html">TransactionViewHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">TransactionViewHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">TransactionListAdapter</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.TransactionListAdapter$<init>(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="context.html">context</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">context</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="layout-inflater.html">layoutInflater</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">layoutInflater</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/view/LayoutInflater.html"><span class="identifier">LayoutInflater</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="simple-date-format.html">simpleDateFormat</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">simpleDateFormat</span><span class="symbol">: </span><a href="https://developer.android.com/reference/java/text/SimpleDateFormat.html"><span class="identifier">SimpleDateFormat</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="on-bind-view-holder.html">onBindViewHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onBindViewHolder</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.TransactionListAdapter$onBindViewHolder(ch.maximelovino.pockethepia.data.adapters.TransactionListAdapter.TransactionViewHolder, kotlin.Int)/holder">holder</span><span class="symbol">:</span>&nbsp;<a href="-transaction-view-holder/index.html"><span class="identifier">TransactionViewHolder</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.TransactionListAdapter$onBindViewHolder(ch.maximelovino.pockethepia.data.adapters.TransactionListAdapter.TransactionViewHolder, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called by RecyclerView to display the data at the specified position. This method should
+update the contents of the <a href="#">ViewHolder.itemView</a> to reflect the item at the given
+position.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-create-view-holder.html">onCreateViewHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onCreateViewHolder</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.TransactionListAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.TransactionListAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/viewType">viewType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-transaction-view-holder/index.html"><span class="identifier">TransactionViewHolder</span></a></code>
+<p>Called when RecyclerView needs a new <a href="#">ViewHolder</a> of the given type to represent
+an item.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

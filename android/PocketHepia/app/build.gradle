@@ -8,6 +8,8 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: "androidx.navigation.safeargs"
 
+apply plugin: 'org.jetbrains.dokka-android'
+
 android {
     compileSdkVersion 'android-P'
     defaultConfig {
@@ -25,6 +27,14 @@ android {
         }
     }
 }
+
+task myDokka(type: org.jetbrains.dokka.gradle.DokkaAndroidTask) {
+    outputFormat = 'html'
+    outputDirectory = "$rootDir/../../docs/android"
+    includeNonPublic = true
+}
+
+
 
 dependencies {
     // Android KTX extensions

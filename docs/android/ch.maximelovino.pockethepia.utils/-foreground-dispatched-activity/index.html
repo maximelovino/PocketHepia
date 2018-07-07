@@ -1,0 +1,128 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ForegroundDispatchedActivity - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">ch.maximelovino.pockethepia.utils</a>&nbsp;/&nbsp;<a href="./index.html">ForegroundDispatchedActivity</a><br/>
+<br/>
+<h1>ForegroundDispatchedActivity</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ForegroundDispatchedActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatActivity</span></code>
+<p>Base activity extended by the activities in the app, handles foreground dispatch for NFC</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">ForegroundDispatchedActivity</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Base activity extended by the activities in the app, handles foreground dispatch for NFC</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="intent-filters.html">intentFilters</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">intentFilters</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/android/content/IntentFilter.html"><span class="identifier">IntentFilter</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></code>
+<p>An array of the intent filters forward dispatched</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="nfc-adapter.html">nfcAdapter</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">nfcAdapter</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/nfc/NfcAdapter.html"><span class="identifier">NfcAdapter</span></a><span class="symbol">?</span></code>
+<p>The NFC System Adapter</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pending-intent.html">pendingIntent</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">pendingIntent</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/app/PendingIntent.html"><span class="identifier">PendingIntent</span></a><span class="symbol">?</span></code>
+<p>A generic pending intent to be delivered to the activity</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="tech-lists.html">techLists</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">techLists</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">?</span></code>
+<p>An array of the sets of technologies checked</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="on-create.html">onCreate</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.utils.ForegroundDispatchedActivity$onCreate(android.os.Bundle)/savedState">savedState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-new-intent.html">onNewIntent</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onNewIntent</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.utils.ForegroundDispatchedActivity$onNewIntent(android.content.Intent)/intent">intent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Intent.html"><span class="identifier">Intent</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-pause.html">onPause</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onPause</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-resume.html">onResume</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onResume</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../ch.maximelovino.pockethepia/-main-activity/index.html">MainActivity</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">MainActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ForegroundDispatchedActivity</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../../ch.maximelovino.pockethepia/-nfc-assignment-activity/index.html">NfcAssignmentActivity</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">NfcAssignmentActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ForegroundDispatchedActivity</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../../ch.maximelovino.pockethepia/-payment-activity/index.html">PaymentActivity</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">PaymentActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ForegroundDispatchedActivity</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

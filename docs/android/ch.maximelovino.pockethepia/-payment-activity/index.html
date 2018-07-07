@@ -1,0 +1,156 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>PaymentActivity - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">ch.maximelovino.pockethepia</a>&nbsp;/&nbsp;<a href="./index.html">PaymentActivity</a><br/>
+<br/>
+<h1>PaymentActivity</h1>
+<code><span class="keyword">class </span><span class="identifier">PaymentActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/index.html"><span class="identifier">ForegroundDispatchedActivity</span></a></code>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-payment-task/index.html">PaymentTask</a></p>
+</td>
+<td>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">PaymentTask</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/AsyncTask.html"><span class="identifier">AsyncTask</span></a><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">,</span>&nbsp;<a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">PaymentActivity</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="nfc-dialog.html">nfcDialog</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">nfcDialog</span><span class="symbol">: </span><span class="identifier">AlertDialog</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="token.html">token</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">token</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/intent-filters.html">intentFilters</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">intentFilters</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/android/content/IntentFilter.html"><span class="identifier">IntentFilter</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></code>
+<p>An array of the intent filters forward dispatched</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/nfc-adapter.html">nfcAdapter</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">nfcAdapter</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/nfc/NfcAdapter.html"><span class="identifier">NfcAdapter</span></a><span class="symbol">?</span></code>
+<p>The NFC System Adapter</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/pending-intent.html">pendingIntent</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">pendingIntent</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/app/PendingIntent.html"><span class="identifier">PendingIntent</span></a><span class="symbol">?</span></code>
+<p>A generic pending intent to be delivered to the activity</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/tech-lists.html">techLists</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">techLists</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span><span class="symbol">?</span></code>
+<p>An array of the sets of technologies checked</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="handle-payment-result.html">handlePaymentResult</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">handlePaymentResult</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PaymentActivity$handlePaymentResult(kotlin.Boolean)/success">success</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-create.html">onCreate</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PaymentActivity$onCreate(android.os.Bundle)/savedState">savedState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-new-intent.html">onNewIntent</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onNewIntent</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PaymentActivity$onNewIntent(android.content.Intent)/intent">intent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Intent.html"><span class="identifier">Intent</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-support-navigate-up.html">onSupportNavigateUp</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onSupportNavigateUp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="update-switch-text.html">updateSwitchText</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">updateSwitchText</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PaymentActivity$updateSwitchText(android.widget.CompoundButton)/switch">switch</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/CompoundButton.html"><span class="identifier">CompoundButton</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/on-pause.html">onPause</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onPause</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/on-resume.html">onResume</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onResume</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -45,8 +45,7 @@ class NfcAssignmentActivity : ForegroundDispatchedActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
-        val tagID = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID)
-        val hexTagID = tagID.toHex()
+        val hexTagID = NFCTools.retrieveIDFromCard(intent)
         AssignNFCTask(token).execute(hexTagID)
     }
 

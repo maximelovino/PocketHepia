@@ -1,0 +1,12 @@
+$dokka.format:html
+$dokka.linkExtension:html
+$dokka.location:ch.maximelovino.pockethepia.utils$toHex(kotlin.ByteArray)ch.maximelovino.pockethepia.utils/kotlin.-byte-array/to-hex.html
+ch.maximelovino.pockethepia
+ch.maximelovino.pockethepia.data
+ch.maximelovino.pockethepia.data.adapters
+ch.maximelovino.pockethepia.data.dao
+ch.maximelovino.pockethepia.data.models
+ch.maximelovino.pockethepia.data.repositories
+ch.maximelovino.pockethepia.data.viewmodels
+ch.maximelovino.pockethepia.utils
+ch.maximelovino.pockethepia.workers

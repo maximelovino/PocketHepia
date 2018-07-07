@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LoginActivity - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">ch.maximelovino.pockethepia</a>&nbsp;/&nbsp;<a href="./index.html">LoginActivity</a><br/>
+<br/>
+<h1>LoginActivity</h1>
+<code><span class="keyword">class </span><span class="identifier">LoginActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatActivity</span></code>
+<p>A login screen that offers login via email/password.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-user-login-task/index.html">UserLoginTask</a></p>
+</td>
+<td>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">UserLoginTask</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/AsyncTask.html"><span class="identifier">AsyncTask</span></a><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">,</span>&nbsp;<a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code>
+<p>Represents an asynchronous login/registration task used to authenticate
+the user.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">LoginActivity</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>A login screen that offers login via email/password.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="m-auth-task.html">mAuthTask</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">mAuthTask</span><span class="symbol">: </span><a href="-user-login-task/index.html"><span class="identifier">UserLoginTask</span></a><span class="symbol">?</span></code>
+<p>Keep track of the login task to ensure we can cancel it if requested.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="attempt-login.html">attemptLogin</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">attemptLogin</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Attempts to sign in or register the account specified by the login form.
+If there are form errors (invalid email, missing fields, etc.), the
+errors are presented and no actual login attempt is made.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="create-periodic-sync-task.html">createPeriodicSyncTask</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createPeriodicSyncTask</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-email-valid.html">isEmailValid</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">isEmailValid</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.LoginActivity$isEmailValid(kotlin.String)/email">email</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-password-valid.html">isPasswordValid</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">isPasswordValid</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.LoginActivity$isPasswordValid(kotlin.String)/password">password</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="login-correct.html">loginCorrect</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">loginCorrect</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.LoginActivity$loginCorrect(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-create.html">onCreate</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.LoginActivity$onCreate(android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="show-progress.html">showProgress</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">showProgress</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.LoginActivity$showProgress(kotlin.Boolean)/show">show</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Shows the progress UI and hides the login form.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

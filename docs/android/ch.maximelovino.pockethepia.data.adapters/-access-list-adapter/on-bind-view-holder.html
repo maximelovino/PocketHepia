@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AccessListAdapter.onBindViewHolder - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">ch.maximelovino.pockethepia.data.adapters</a>&nbsp;/&nbsp;<a href="index.html">AccessListAdapter</a>&nbsp;/&nbsp;<a href="./on-bind-view-holder.html">onBindViewHolder</a><br/>
+<br/>
+<h1>onBindViewHolder</h1>
+<a name="ch.maximelovino.pockethepia.data.adapters.AccessListAdapter$onBindViewHolder(ch.maximelovino.pockethepia.data.adapters.AccessListAdapter.AccessViewHolder, kotlin.Int)"></a>
+<code><span class="keyword">fun </span><span class="identifier">onBindViewHolder</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.AccessListAdapter$onBindViewHolder(ch.maximelovino.pockethepia.data.adapters.AccessListAdapter.AccessViewHolder, kotlin.Int)/holder">holder</span><span class="symbol">:</span>&nbsp;<a href="-access-view-holder/index.html"><span class="identifier">AccessViewHolder</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.AccessListAdapter$onBindViewHolder(ch.maximelovino.pockethepia.data.adapters.AccessListAdapter.AccessViewHolder, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called by RecyclerView to display the data at the specified position. This method should
+update the contents of the <a href="#">ViewHolder.itemView</a> to reflect the item at the given
+position.</p>
+<p>Note that unlike <a href="https://developer.android.com/reference/android/widget/ListView.html">android.widget.ListView</a>, RecyclerView will not call this method
+again if the position of the item changes in the data set unless the item itself is
+invalidated or the new position cannot be determined. For this reason, you should only
+use the <code>position</code> parameter while acquiring the related data item inside
+this method and should not keep a copy of it. If you need the position of an item later
+on (e.g. in a click listener), use <a href="#">ViewHolder.getAdapterPosition</a> which will
+have the updated adapter position.</p>
+<p>Override <a href="#">.onBindViewHolder</a> instead if Adapter can
+handle efficient partial bind.</p>
+<h3>Parameters</h3>
+<p><a name="holder"></a>
+<code>holder</code> - The ViewHolder which should be updated to represent the contents of the
+item at the given position in the data set.</p>
+<p><a name="position"></a>
+<code>position</code> - The position of the item within the adapter's data set.</p>
+</BODY>
+</HTML>
