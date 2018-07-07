@@ -1450,29 +1450,42 @@ Often documents you save in the database will have a relation with other documen
 
 To illustrate the three options, we are gonna take an example where we people and cars. There is one schema for a person and one schema for a car and a person can have multiple cars but a car is only owned by a single person. \\
 
-The first option to store this information is to embed the car documents in the person document. We don't need to have a car collection, we can just store in the person document an array of cars. We should make sure that a person will not have a lot of cars because by embedding entire car documents we will take more space and we could more easily reach the MongoDB document size limit. This option though provides the easiest way to retrieve the person and all its cars and to remove all cars when the person is removed. \\
+The first option to store this information is to embed the car documents in the person document\cite{mongo:doc:refs:embeddingRefs}. We don't need to have a car collection, we can just store in the person document an array of cars. We should make sure that a person will not have a lot of cars because by embedding entire car documents we will take more space and we could more easily reach the MongoDB document size limit. This option though provides the easiest way to retrieve the person and all its cars and to remove all cars when the person is removed. \\
 \begin{code}
 	\jsoncode{assets/code/json/userCarsEmbedding.json}
 	\caption{Embedding referenced documents in MongoDB}
 \end{code}
 
-To reduce the size taken by embedding full car documents in a user's document, we can store an array of car IDs in the person's document instead of full cars and store the cars in their own collection as standalone documents. This is more efficient in term of document size but it means that we have to retrieve the referenced information when accessing a person (see \ref{populating_refs}) as well as deleting all linked cars' documents when we remove a person. \\
+To reduce the size taken by embedding full car documents in a user's document, we can store an array of car IDs in the person's document\cite{mongo:doc:refs:linkingRefs} instead of full cars and store the cars in their own collection as standalone documents. This is more efficient in term of document size but it means that we have to retrieve the referenced information when accessing a person (see \ref{populating_refs}) as well as deleting all linked cars' documents when we remove a person (see \ref{mongoose_hooks}). \\
 
 \begin{code}
 	\jsoncode{assets/code/json/userCarsLinkingChildren.json}
 	\caption{Storing children references in MongoDB}
 \end{code}
 
-Finally, the last option is the most similar to the SQL Foreign Key idea and is also the one that will scale better to a big number of references. Instead of storing an array of the IDs of the cars in the person's document, we store the owner person ID in the car 's document. While it is the most complicated design to quickly retrieve information or delete all cars when we delete a person, it is the most space predictable design because no documents can individually grow as the number of references increase.\\
+Finally, the last option\cite{mongo:doc:refs:linkingRefs} is the most similar to the SQL Foreign Key idea and is also the one that will scale better to a big number of references. Instead of storing an array of the IDs of the cars in the person's document, we store the owner person ID in the car 's document. While it is the most complicated design to quickly retrieve information or delete all cars when we delete a person (see \ref{mongoose_hooks}), it is the most space predictable design because no documents can individually grow as the number of references increase.\\
 
 \begin{code}
 	\jsoncode{assets/code/json/userCarsLinkingParents.json}
 	\caption{Storing parent references in MongoDB}
 \end{code}
-%%TODO add source on mongo site https://docs.mongodb.com/manual/applications/data-models-relationships/
+%%TODO talk about lack of transactions?
 \subsection{Mongoose}
+When using MongoDB, you will often integrate it in a MEAN\cite{mean:website} stack and so you will access MongoDB with a Node library called Mongoose\cite{mongoose:website}. Mongoose allows to connect to MongoDB databases, define schemas and create, update and delete documents. Mongoose can be integrated with JavaScript ES6 Promises (see section \ref{promises_mongoose}).
 \subsubsection{Defining a Schema}
+You can define Schemas\cite{mongoose:doc:schemas} for the database by using the \verb+Mongoose.Schema+ class constructor and specifying the field names and types as well as adding validators on fields. Some default validators are already included, for example the \verb+required+ validator or a \verb+max+ validator for fields of type \verb+Number+. \\
+
+Hooks (see \ref{mongoose_hooks}) can also be added to the Schema to be triggered before creating or removing documents for example, and it is possible to override the \verb+toObject()+ method that defines the fields returned when converting a returned document to a JavaScript object. \\
+
+Finally, you have to register the Schema with a name in Mongoose and require the Schema file once in the main file of the server for the registration to take place.\\
+
+An example of a simple \verb+Person+ Schema can be seen in the following code:
+\begin{code}
+	\jscode{assets/code/js/PersonSchema.js}
+	\caption{Person MongoDB Schema using Mongoose}
+\end{code}
 \subsubsection{Promises with Mongoose}
+\label{promises_mongoose}
 %%TODO find function, insert etc with await => talk about command than talk directly to mongo without passing by mongoose
 \subsubsection{Populating references}
 \label{populating_refs}
@@ -1480,6 +1493,7 @@ Finally, the last option is the most similar to the SQL Foreign Key idea and is 
 \label{mongoose_hooks}
 %%TODO talk about pre('remove') for example
 \section{NodeJS et Express}
+\label{node}
 \subsection{JavaScript ES6}
 \subsection{NPM Modules}
 \subsection{Promises}
@@ -1497,21 +1511,41 @@ Finally, the last option is the most similar to the SQL Foreign Key idea and is 
 \subsubsection{Google Container Registry}
 \subsection{Azure}
 
-\chapter{Implémentation}
+\chapter{Implementation}
+\section{Project modules}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/implementation}
+	\caption{Interactions between the components}
+\end{center}
+\end{figure}
+%%TODO add explanation of figure
 %%TODO add full architecture diagram of interaction between all technologies and modules
-\section{Modules du projet}
-\section{Déploiement}
-\subsection{Architecture du projet}
-\subsection{Proxy Nginx}
-\section{Le backend commun}
-\subsection{Authentification}
+\section{Deployment}
+\subsection{Deployment architecture}
+\subsection{Nginx Proxy}
+\section{Backend}
+\subsection{Authentication}
 \subsection{Endpoints}
-\subsection{Interaction avec la base de données}
-\section{Le frontend Angular}
+\subsection{Interaction with MongoDB}
+\section{Angular frontend}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/angular_implementation}
+	\caption[Interactions in the Angular Frontend]{Interactions in the Angular Frontend (Components in red, services in green)}
+\end{center}
+\end{figure}
 \subsection{Authentication}
 %%TODO http interceptor that adds JWT, JWT stored in LocalStorage
 \subsection{Routing}
 \subsection{Components}
+\section{Android application}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/android_implementation}
+	\caption{Interactions in the Android application}
+\end{center}
+\end{figure}
 \chapter{Résultats}
 \chapter{Conclusion}
 %%TODO talk about how to implement new features or sections inside the project
