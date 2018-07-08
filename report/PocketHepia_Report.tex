@@ -481,7 +481,7 @@ One solution would have been to use our student cards as an electronic door key 
 
 
 \section{NFC and NDEF}
-%% TODO write small part segway here to NFC section
+We decided to build the student card around \gls{nfc} technology because it is practical to use for the end user and it provides everything we need to identify users with their card. Many personal identification solutions are built with \gls{nfc} for these same reasons.
 \subsection{Introduction to NFC}
 \gls{nfc} technology is a low range wireless communication technology based on electromagnetic induction. Its usages are widespread, ranging from access control to contactless credit card payments and public transportation tickets. The range of a \gls{nfc} communication is more or less 4cm. \gls{nfc} can be implemented in a physical chip on a card, in a discrete reader or in a smartphone. Most Android smartphones and all iPhones after 2016 have a \gls{nfc} chip. \\
 
@@ -927,12 +927,11 @@ One of the most successful changes to Android in recent years has been to slowly
 
 If we compare this to the other major mobile operating system, iOS, all main applications on the platform are bundled with the \gls{os}. So, if Apple needs to update the Safari browser to support a new web \gls{api} they have to release a full \gls{os} version and push it to all their devices instead of just updating the application that needs an update as Google would do on Android.
 \paragraph{Android Support Library}
-%% TODO Android support library
-%% TODO the support library naming scheme => move to AndroidX
+The Android Support Library is a set of libraries used to build applications on Android. Due to the \gls{os} fragmentation problem, the Support Libraries have been created to built features and add support for older versions of the \gls{os}. For example, you should prefer using \verb+AppCompatActivity+ instead of \verb+Activity+ when defining new Activities as the compatibility version, as its name suggests, will support a wider range of devices.\\
+
+The Support Libraries packages were originally named using the earliest \gls{sdk} level supported by the library, such as \verb+android.support.v7.app+, but they never got updated to new names even after compatibility was dropped in order not to break imports in existing apps. This creates a confusion, because \verb+v7+ does not actually support API 7 minimum, but API 14. Starting in 2018, the Android team has decided to rename the packages from these libraries to remove a version support number using the \verb+AndroidX+\cite{android:doc:androidx} naming scheme. A refactoring tool will be integrate in Android Studio to convert a project to the new naming scheme.
 \paragraph{Project Treble}
-%% TODO Project treble
-\paragraph{Security updates}
-%% TODO Security updates
+Another project designed to improve the adoption of new updates is \emph{Project Treble}. The idea behind the project was to split the \gls{os} from the manufacturer customisations so that the \gls{os} could be updated without needing to upgrade the customisations and they would run automatically on the new \gls{os}. While some small OEMs started integrating \emph{Project Treble}, most big manufacturers, including Samsung, simply do not care about its benefits.
 \subsection{Kotlin}
 \label{kotlin}
 As discussed in section \ref{android_chapter}, Kotlin has become a primary Android language in 2017. After having used this language for a first Android project last year, I decided to build all my subsequent Android application in Kotlin. The simplifications and reductions in code length provided by this language compared to Java make developing Android applications more enjoyable. It also helps avoid many runtime errors by catching many error-prone scenarios at compile time. In this section, we will go in further details in some of the advantages provided by Kotlin and how Google is encouraging developers to use Kotlin by introducing new Kotlin-specific features in the Android \gls{sdk}.
@@ -1508,9 +1507,6 @@ To insert the Router outlet in a template, you can use its selector:
 \end{inlinehtml}
 	\caption{Using a Router Outlet in Angular}
 \end{code}
-
-%%TODO Router-link and router.navigate()?
-
 \paragraph{Guards}
 \label{guards}
 Finally, another important part of Routing are Guards. By default, anyone can navigate to all the Routes in the application but in many real use cases, you have to be logged in to access specific sections of an application or even have special permissions. Guards allow to perform checks before activating a Route and multiple Guards can also be chained to enable a Route activation. \\
@@ -1558,8 +1554,6 @@ Then, when calling this method from a Component for example, we can \verb+subscr
 	\tscode{assets/code/typescript/gettingObservable.ts}
 	\caption{Subscribing to data from an Observable}
 \end{code}
-
-%%TODO do we talk about async pipe?
 \subsubsection{Pipe and other operators}
 Sometimes it can be useful to handle the data of an Observable before the subscribers are notified of new data. This is done using the \verb+pipe+ operator. When returning an Observable, you can append a call to \verb+pipe+ at the end of it and insert operations that will be run as part of the Observable before it triggers the subscribers. These operations are function calls that take a \verb+function(data)+ as parameter. \\
 
@@ -1570,10 +1564,6 @@ Another useful operator is the \verb+map+ operator. This is used to transform da
 \tscode{assets/code/typescript/observableMap.ts}
 	\caption{Transforming an Observable using the map operator}
 \end{code}
-
-%%TODO talk about flatmap?
-%%TODO \subsection{Reactive Forms}?
-%%TODO talk about reactive forms?
 \subsection{TypeScript}
 TypeScript\cite{github:typescript} is an open source language developed by Microsoft. It adds optional static typing and classes to JavaScript as well as implementing its own module import syntax. TypeScript files can be "compiled" to JavaScript to be used on the web or on the server-side using Node.JS for example. TypeScript is regarded by Microsoft and others as the way to build large scale JavaScript application thanks to the ease of mind provided by statically typed languages. \\
 
