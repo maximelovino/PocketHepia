@@ -341,12 +341,13 @@ Logiciels et Systèmes Complexes \par}
 \pagestyle{plain}
 \pagenumbering{Roman}
 \includepdf[pages=1, pagecommand={}, scale=.9, offset=1cm 0]{assets/pdf/enonce}
+\includepdf[pages=1, pagecommand={}, scale=.9, offset=1cm 0]{ITI_Resume_PocketHepia}
+\includepdf[pages=1, pagecommand={}, scale=.9, offset=1cm 0]{ITI_Abstract_PocketHepia}
 \tableofcontents
 \listoffigures
 \renewcommand\listoflistingscaption{Source code listings}
 \listoflistings
 \listoftables
-%%TODO add executive summary in FRENCH AND ENGLISH in word document
 %%TODO add typographic conventions
 \chapter*{Acknowledgements}
 \glsaddall
@@ -1478,7 +1479,8 @@ Finally, the last option\cite{mongo:doc:refs:linkingRefs} is the most similar to
 \end{code}
 %%TODO talk about lack of transactions?
 \subsection{Mongoose}
-When using MongoDB, you will often integrate it in a MEAN\cite{mean:website} stack and so you will access MongoDB with a Node library called Mongoose\cite{mongoose:website}. Mongoose allows to connect to MongoDB databases, define schemas and create, update and delete documents. Mongoose can be integrated with JavaScript ES6 Promises (see section \ref{promises_mongoose}).
+When using MongoDB, you will often integrate it in a MEAN\cite{mean:website} stack and so you will access MongoDB with a Node library called Mongoose\cite{mongoose:website}. Mongoose allows to connect to MongoDB databases, define schemas and create, update and delete documents. Mongoose can be integrated with JavaScript ES6 Promises (see section \ref{promises}).
+%%TODO check if we keep the ref to promises
 \subsubsection{Defining a Schema}
 You can define Schemas\cite{mongoose:doc:schemas} for the database by using the \verb+Mongoose.Schema+ class constructor and specifying the field names and types as well as adding validators on fields. Some default validators are already included, for example the \verb+required+ validator or a \verb+max+ validator for fields of type \verb+Number+. \\
 
@@ -1491,19 +1493,38 @@ An example of a simple \verb+Person+ Schema can be seen in the following code:
 	\jscode{assets/code/js/PersonSchema.js}
 	\caption{Person MongoDB Schema using Mongoose}
 \end{code}
-\subsubsection{Promises with Mongoose}
-\label{promises_mongoose}
-%%TODO find function, insert etc with await => talk about command than talk directly to mongo without passing by mongoose
 \subsubsection{Populating references}
 \label{populating_refs}
+As stated before in section \ref{mongo_references}, when using references to link two documents, it means that we have to specifically retrieve the referenced documents when finding documents in the database. This can be easily done with Mongoose. First of all, when creating the Schema that contains a reference, we need to specify what Schema is the reference linked to and then when making query we can just \verb+populate+ this field. \\
+
+First of all, if we're using the third design option, where children link back to parents, we would need to write the Car Schema in this way:
+\begin{code}
+	\jscode{assets/code/js/CarSchema.js}
+	\caption{Car MongoDB Schema with references}
+\end{code}
+
+Then, when finding a Car, we can just append the query with \verb+populate(owner)+ to retrieve the linked Person from the Person Collection:
+\begin{code}
+	\jscode{assets/code/js/populating.js}
+	\caption{Populating a reference with Mongoose}
+\end{code}
 \subsubsection{Hooks}
 \label{mongoose_hooks}
-%%TODO talk about pre('remove') for example
+Finally, sometimes we need to take actions before we create or remove a document for example. In the case of references for example, if we want to \emph{cascade} the deletion of the references like we would do it in SQL, we need to do this inside a \emph{Hook} that we can set to run before an action, in this case \verb+pre('remove')+.\\
+
+If we remove a Person and we want to delete all the Cars he owns, we need to remove the Cars in the \verb+pre('remove')+ of the Person so that it will run when we delete the person. In the \emph{Hook} we can run:
+\begin{code}
+	\jscode{assets/code/js/hook.js}
+	\caption{Removing referenced documents using a \emph{Hook}}
+\end{code}
 \section{NodeJS et Express}
 \label{node}
 \subsection{JavaScript ES6}
 \subsection{NPM Modules}
 \subsection{Promises}
+\label{promises}
+%%TODO do we need this part? Yes but very quick
+%%TODO find function, insert etc with await => talk about command than talk directly to mongo without passing by mongoose
 \subsection{Middlewares}
 \subsection{PassportJS}
 
