@@ -1,4 +1,3 @@
-%%TODO try going back to report and remove frontmatter, mainmatter and backmatter
 \documentclass[twoside, openright,11pt,a4paper]{book}
 \usepackage[utf8]{inputenc}
 \usepackage{dirtree}
@@ -515,7 +514,7 @@ We also specified the ability to delegate the administration of an area to a use
 
 \subsection{Library books}
 \label{books_feature}
-Finally, the last feature of the project would be an integration with the library to be able to use the card as a library card. Our approach at first was to think about creating the book loans on our platform with the ISBN to identify the book and integrate with the REST API built for BibApp but it wouldn't have been very effective because the library already handles the loans through the NEBIS platform.\\
+Finally, the last feature of the project would be an integration with the library to be able to use the card as a library card. Our approach at first was to think about creating the book loans on our platform with the ISBN to identify the book and integrate with the REST API built for BibApp\cite{playstore:bibapp} but it wouldn't have been very effective because the library already handles the loans through the NEBIS platform.\\
 
 The correct way to handle this would be to link the library NEBIS identifier for every user with their account on our platform and then ask NEBIS for API Access to their platform to retrieve book loans for all users and display them on the mobile and web application. This would also benefit people working at the library as they would not need to change their current workflow to accommodate.\\
 
@@ -530,8 +529,7 @@ While these two roles would have been enough to handle all our features. We deci
 
 One of these roles is the "Accept payments" role. This is specific to a canteen or a shop that wants to handle payments using the student card. While every user can send money to another user from the mobile app by tapping the other user's card, this isn't very practical for a canteen or a shop where the transactions should go the other way around. So the shop creates the payment and taps the user's card to take money from it. At first, we wanted this feature to be available to everyone but we thought about security concerns with this solution because a student could create a payment from the app and start tapping his phone on lost cards or even on people's pocket and if the card was detected it would "steal" their money. So by enabling this feature as a role, we could only allow trusted people, such as canteen's owners to receive payments in that way. \\
 
-Furthermore, due to the introduction of GDPR recently, we created a specific role called "Auditor" to access sensitive logs concerning all users, mainly access logs and transaction history. Only a user with this role can view all transactions between users and access logs for every room.\\
-%%TODO add reference for GDPR and footnote to explain why
+Furthermore, due to the introduction of GDPR\footnote{GDPR stands for \emph{General Data Protection Regulation} and is a new regulation implemented as of May 25 2018 in the European Union and Switzerland to improve data protection and privacy\cite{gdpr}} recently, we created a specific role called "Auditor" to access sensitive logs concerning all users, mainly access logs and transaction history. Only a user with this role can view all transactions between users and access logs for every room.\\
 
 Then, there are two roles that will not be implemented as part of the Bachelor project, the "Can invite" and "Area admin" role. The first is to allow specific users to create temporary accounts without needing to contact an administrator. A use case for this would be a teacher creating a temporary account for a visiting colleague from another school. The "Area admin" role consists of delegating the administration of the accesses for an area to an user. Similar to the concept of DNS zones delegation, an administrator could for example give this role to the ITI section dean to allow him to give access to the rooms present on his floor.\\
 
@@ -588,10 +586,8 @@ The balance of a user is calculated from the list of transactions in which the u
 The access part of PocketHepia is composed of three models. We defined Areas, Rooms and Accesses. An area contains multiple rooms and each room has a specific set of accesses. Similarly to the payments model, we reference from the child to the parent with the ID of the parent. The room has the id of the area it is part of, and the access stores the id of the user and the room. \\
 
 When deleting an area, we delete all rooms contained in that area. When deleting a room, we delete all accesses associated with the room. This is done using Mongoose hooks (see section \ref{mongoose_hooks}) to ensure that on every removal, we cascade it through the children.
-\subsubsection{Access requests}
-%%TODO talk about this and not implementing them
-\subsubsection{Access logs}
-%%TODO talk about this and not implementing them
+%%\subsubsection{Access requests}
+%%\subsubsection{Access logs}
 \subsection{Logs}
 \begin{figure}[H]
 \begin{center}
@@ -745,8 +741,7 @@ We decided to build an Android application as well as coding the website to be r
 \subsubsection{Why the need for an application?}
 While we could have achieved most of the functionality with a web application, there are still some elements that require building a full mobile application. Mainly, access to device features such as NFC. With a mobile web app, we cannot have access to the NFC chip on the smartphone and thus we cannot manage physical cards or make payments through the app. This is also the reason why we only built an Android app and not an iOS one. The API for NFC on iOS\cite{apple:ios:nfc} is basic and was released in 2017, it does not allow writing on NFC tags\footnote{Unless you are a big company partnering directly with Apple} and only supported a subset of the formats of the Android API.\\
 
-Apart from this limitation, all the other functionality could have been incorporated in a web application, for example by making a Progressive Web App (PWA). PWA are an hybrid between a mobile application and a web application and they run on desktop and mobile operating systems. Their main advantages compared to traditional web app is that they can be "installed" on the device and act like a normal application and that they generally store data offline and can sync data in the background through the user of Service Workers.
-%%TODO add PWA reference
+Apart from this limitation, all the other functionality could have been incorporated in a web application, for example by making a Progressive Web App (PWA)\cite{google:pwa:website}. PWA are an hybrid between a mobile application and a web application and they run on desktop and mobile operating systems. Their main advantages compared to traditional web app is that they can be "installed" on the device and act like a normal application and that they generally store data offline and can sync data in the background through the user of Service Workers.
 \subsubsection{Why go native?}
 We could have also found a middle ground between the mobile web application and the native web application by using a mobile application framework such as Ionic or React Native to build our mobile application using web technologies. This would have allowed us to reuse some components built for the web in our mobile application.\\
 
@@ -761,7 +756,6 @@ Vue is the youngest of the three and, while it is already growing a big communit
 React and Angular are more mature, with Angular being the oldest of the three and are both baked by big companies: Facebook for React and Google for Angular. The biggest difference between the two is that React is Javascript-based and Angular is Typescript-based. We decided then to use Angular to take advantage of the typed nature of Typescript as well as to use Typescript for the first time in a project. \\
 
 \subsection{MEAN Stack}
-%%TODO add ref for MEAN stack, LAMP stack
 By using MongoDB with Express/Node.js and Angular, we are effectively using the \emph{MEAN}\footnote{Stands for Mongo-Express-Angular-Node}\cite{mean:website} development stack which is regarded as the more modern equivalent to the \emph{LAMP}\footnote{Stands for Linux-Apache-MySQL-PHP}\cite{wiki:lamp} stack. The \emph{MEAN} stack also has several variants where Angular is replaced by another frontend framework like React or Vue.
 
 \chapter{Technologies}
@@ -1583,5 +1577,13 @@ If we remove a Person and we want to delete all the Cars he owns, we need to rem
 \pagestyle{plain}
 \bibliographystyle{unsrt}
 \bibliography{bibliography}
+\begin{appendices}
+\appendixpage
+\chapter{Deployment guide}
+\chapter{Backend API Documentation}
+\chapter{Android Documentation}
+\end{appendices}
+
+
 
 \end{document}
