@@ -58,35 +58,136 @@
 \usepackage[titletoc,title]{appendix}
 
 \setcounter{secnumdepth}{5}
-\usepackage[nonumberlist]{glossaries}
+\usepackage{glossaries}
 \makeglossaries
 
 \usepackage{caption}
 \newenvironment{code}{\captionsetup{type=listing}}{}
-
-%%TODO add caption and \begin{code} to each code listing
 %%TODO replace \verb by \mintinline when possible
 
-%%TODO convert this to english
-%%TODO add RFID, add JWT, add SDK, add JS, add JSON, add BSON, add API, add PWA, add REST, add EPFL, add RTD, add ASCII, add UTF, add GDPR, add OS, add CLI, add NPM, add SQL, add TS
-%%TODO use all these acronyms in text
+%%TODO add JS, add PWA, add RTD, add ASCII, add UTF, add GDPR, add NPM, add SQL, add TS, add DAO?
+
+%%TODO we have to list the full name here as well
+\newglossaryentry{api}
+{
+    name={API},
+    description={A set of protocol, method calls and communication methods between two software components},
+    first={Application Programming Interface (API)},
+    long={Application Programming Interface}
+}
+
+\newglossaryentry{rest}
+{
+    name={REST},
+    description={An architectural style that defines a set of constraints to be used for creating web services. Web Services that conform to the REST architectural style are called RESTful web services},
+    first={Representational State Transfer (REST)},
+    long={Representational State Transfer}
+}
+
+\newglossaryentry{os}
+{
+    name={OS},
+    description={Software layer nested between the hardware and the user application. It is responsible for process management as well as file access and peripherals interactions},
+    first={Operating System (OS)},
+    long={Operating System}
+}
+
+\newglossaryentry{rfid}
+{
+    name={RFID},
+    description={A method using electromagnetic fields to detect and track tags as well read electronically stored information on them},
+    first={Radio-Frequency Identification (RFID)},
+    long={Radio-Frequency Identification}
+}
+
+\newglossaryentry{jwt}
+{
+    name={JWT},
+    description={JSON Web Token are an authentication method for HTTP requests that are often used to authenticate REST API calls},
+    first={JSON Web Token (JSON)},
+    long={JSON Web Token}
+}
+
+\newglossaryentry{epfl}
+{
+    name={EPFL},
+    description={Also known as \emph{Swiss Federal Institute of Technology}, it is one of two institutes of technologies in Switzerland, the other being in Zurich.},
+    first={Ecole Polytechnique Fédérale de Lausanne (EPFL)},
+    long={Ecole Polytechnique Fédérale de Lausanne}
+}
+
+\newglossaryentry{json}
+{
+    name={JSON},
+    description={A human-readable text format used to transmit data objects similar to the object notation in JavaScript},
+    first={JavaScript Object Notation (JSON)},
+    long={JavaScript Object Notation}
+}
+
+\newglossaryentry{cli}
+{
+    name={CLI},
+    description={A mean of interacting with a computer using text commands typed inside a terminal, in opposition to GUI},
+    first={Command Line Interface (CLI)},
+    long={Command Line Interface}
+}
+
+\newglossaryentry{gui}
+{
+    name={GUI},
+    description={A mean of interacting with a computer in an interactive way using a pointing device, such as a mouse or a touchscreen to interact with elements like buttons or windows},
+    first={Graphical User Interface (GUI)},
+    long={Graphical User Interface}
+}
+
+\newglossaryentry{ide}
+{
+    name={IDE},
+    description={A computer program that incorporates a text editor with syntax highlighting and autocompletion for one or more programming languages as well as compilation, execution and debugging functionnality},
+    first={Integrated Development Environment (IDE)},
+    long={Integrated Development Environment}
+}
+
+\newglossaryentry{sdk}
+{
+    name={SDK},
+    description={A set of software development tools and libraries used to create applications for a given software platform},
+    first={Software Development Kit (SDK)},
+    long={Software Development Kit}
+}
+
+\newglossaryentry{jvm}
+{
+    name={JVM},
+    description={A virtual machine allowing to run programs compiled as Java Bytecode on a computer or mobile terminal. JVM languages are programming languages that can be compiled as Java Bytecode to be run on the JVM},
+    first={Java Virtual Machine (JVM)},
+    long={Java Virtual Machine}
+}
+
 \newglossaryentry{nfc}
 {
-	name=NFC,
-	description={est un acronyme pour Near Field Communication qui représente un ensemble de protocoles de communication permettant de communiquer à des distances de quelques centimètres en utilisant l'induction électromagnétique}
+    name={NFC},
+    description={NFC stands for Near Field Communication and is a set of communication protocols to communicate in short ranges using electromagnetic induction},
+    first={Near Field Communication (NFC)},
+    long={Near Field Communication}
 }
 
-\newglossaryentry{JVM}
+\newglossaryentry{ndef}
 {
-	name=JVM,
-	description={est un acronyme pour Java Virtual Machine. Il s'agit d'une machine virtuelle permettant d'executer un programme compilé en bytecode Java sur un ordinateur ou un terminal mobile. On parle de langage fonctionnant sur la JVM lorsque la compilation du langage produit du bytecode Java.}
+    name={NDEF},
+    description={The NFC Data Exchange Format is a standardised format used to encode data on NFC tags},
+    first={NFC Data Exchange Format (NDEF)},
+    long={NFC Data Exchange Format}
 }
 
-\newglossaryentry{IDE}
-{
-	name=IDE,
-	description={est un acronyme pour Integrated Development Environment. Il s'agit d'un programme intégrant un éditeur de texte avec coloration syntaxique et autocomplétion du code pour un ou plusieurs langages de programmation ainsi que des fonctions de compilation, débogage et tout autre fonctionnalité permettant de faciliter et fluidifier le travail du développeur}
-}
+
+
+
+
+
+
+
+%%TODO use all these acronyms in text
 
 \usepackage{minted}
 \definecolor{mintedbackground}{rgb}{0.95,0.95,0.95}
@@ -306,7 +407,6 @@ texcl=false,
 
 
 \begin{document}
-%%TODO change titlepage to ressemble in text and form the official titlepage of other documents
 \begin{titlepage}
 	\centering
 	\begin{minipage}{.5\textwidth}
@@ -347,42 +447,61 @@ Logiciels et Systèmes Complexes \par}
 \renewcommand\listoflistingscaption{Source code listings}
 \listoflistings
 \listoftables
-%%TODO add typographic conventions
+\chapter*{Typographic conventions}
+In this document, the following typographic conventions have been used:
+\begin{itemize}
+	\item All variables, classes or file names as well as function calls a are written using a monospace font, for example: \verb+User+
+	\item All source code listings are written in blocks with syntax highlighting and a caption, for example:
+	\bigbreak
+	\begin{code}
+		\begin{inlinets}
+const username = 'Mickael';
+console.log(`Hello world ${username}`);
+		\end{inlinets}
+		\caption*{This is the caption for the example source code}
+	\end{code}
+	\item Filesystem hierarchies are described using the \verb+dirtree+ package, for example:
+\dirtree{%
+.1 parent. 
+.2 child\_1. 
+.2 child\_2. 
+.2 child\_3. 
+}
+\end{itemize}
 \chapter*{Acknowledgements}
-\glsaddall
 \printglossary[title=Terms and Definitions]
 \newpage
 \mainmatter
 \pagestyle{hepia-fancy}
 \pagenumbering{arabic}
 \chapter{Introduction}
-Since starting my studies at hepia almost three years ago after two years at EPFL, I've been shocked by the lack of commodities and study spaces for students. Some of this lack is due to the difference in scale between the two schools, one of them being composed of mainly three building in a constrained city environment and the other an almost-autonomous campus outside the city. But, actually, there isn't really a lack of space at hepia, but a lack of space that students can use to study. Most of the classrooms are locked when not in use by a teacher. When asking about why that is the case, I've been told that it was mainly for security concerns because of the equipment present inside the rooms. If the rooms stayed unlocked, there was no way of knowing who stole or broke something. I suggested the idea of giving access to select students to these classrooms to study and work on projects but it wasn't practical because copies of keys had to be made, the students had to make a money deposit to make sure that they didn't run away with the keys etc.\\ 
+Since starting my studies at hepia almost three years ago after two years at \gls{epfl}, I've been shocked by the lack of commodities and study spaces for students. Some of this lack is due to the difference in scale between the two schools, one of them being composed of mainly three buildings in a constrained city environment and the other an almost-autonomous campus outside the city. But, actually, there isn't really a lack of space at hepia, but a lack of space that students can use to study. Most of the classrooms are locked when not in use by a teacher. When asking about why that is the case, I've been told that it was mainly for security concerns because of the equipment present inside the rooms. If the rooms stayed unlocked, there was no way of knowing who stole or broke something. I suggested the idea of giving access to select students to these classrooms to study and work on projects but it wasn't practical because copies of keys had to be made, the students had to make a money deposit to make sure that they didn't run away with the keys etc.\\ 
 
-One solution would have been to use our student cards as an electronic door key to access the rooms. We could also enable other uses for the cards, such as using them as electronic wallets to simplify the payments at the canteen during lunch break. When I suggested the idea, people mostly laughed at me and said "[...] they're never going to do it, unless someone actually does it, presents it as a finished product and then they decide to use it." So, here I am, after 3 years studying at hepia and for my Bachelor Project I decided to work on this exact idea. A multi-function student card platform built on NFC technology with accompanying mobile and web application for administrators to manage the platform and for students to monitor their usage statistics.
+One solution would have been to use our student cards as an electronic door key to access the rooms. We could also enable other uses for the cards, such as using them as electronic wallets to simplify the payments at the canteen during lunch break. When I suggested the idea, people mostly laughed at me and said "[...] they're never going to do it, unless someone actually does it, presents it as a finished product and then they decide to use it." So, here I am, after 3 years studying at hepia and for my Bachelor Project I decided to work on this exact idea. A multi-function student card platform built on \gls{nfc} technology with accompanying mobile and web application for administrators to manage the platform and for students to monitor their usage statistics.
 
 
 \section{NFC and NDEF}
 %% TODO write small part segway here to NFC section
 \subsection{Introduction to NFC}
-NFC (Near Field Communication) technology is a low range wireless communication technology based on electromagnetic induction. Its usages are widespread, ranging from access control to contactless credit card payments and public transportation tickets. The range of a NFC communication is more or less 4cm. NFC can be implemented in a physical chip on a card, in a discrete reader or in a smartphone. Most Android smartphones and all iPhones after 2016 have a NFC chip. \\
+\gls{nfc} technology is a low range wireless communication technology based on electromagnetic induction. Its usages are widespread, ranging from access control to contactless credit card payments and public transportation tickets. The range of a \gls{nfc} communication is more or less 4cm. \gls{nfc} can be implemented in a physical chip on a card, in a discrete reader or in a smartphone. Most Android smartphones and all iPhones after 2016 have a \gls{nfc} chip. \\
 
-There are three operating modes for NFC devices. A device is considered a \emph{Full-NFC} device if it can operate in the three modes, but most of the NFC devices we interact with only support some of the modes:
+There are three operating modes for \gls{nfc} devices. A device is considered a \emph{Full-\gls{nfc}} device if it can operate in the three modes, but most of the \gls{nfc} devices we interact with only support some of the modes:
 \begin{itemize}
-	\item The "card emulation" model, also called passive mode enables a device to be used as NFC tag containing data similar to the ones present in physical NFC cards. This mode is the only one available on devices with no power, for example credit cards. This mode is called passive because it uses power from the active NFC reader to power it and enable access to its information. It can also be used on a smartphone to emulate a physical card. It is for example the mode used by mobile payments application such as Apple Pay and Google Pay. The NFC reader simply detects a standard NFC card, without knowing that is in fact emulated by a smartphone.
-	\item The reader mode, also called active mode. This mode allows reading NFC tags data with a smartphone or a specific reader, for example in an electronic doorknob or a metro station gate.
-	\item The peer-to-peer mode is used by two smartphones to exchange information between them. This mode is used on Android by the Android Beam service which allows to send pictures or other data between two Android devices by placing them back to back. In this case, the NFC peer-to-peer mode is used to initiate the connection and pair the device and then the data transfer is carried over Bluetooth or Wi-Fi Direct.
+	\item The "card emulation" model, also called passive mode enables a device to be used as \gls{nfc} tag containing data similar to the ones present in physical \gls{nfc} cards. This mode is the only one available on devices with no power, for example credit cards. This mode is called passive because it uses power from the active \gls{nfc} reader to power it and enable access to its information. It can also be used on a smartphone to emulate a physical card. It is for example the mode used by mobile payments application such as Apple Pay and Google Pay. The \gls{nfc} reader simply detects a standard \gls{nfc} card, without knowing that is in fact emulated by a smartphone.
+	\item The reader mode, also called active mode. This mode allows reading \gls{nfc} tags data with a smartphone or a specific reader, for example in an electronic doorknob or a metro station gate.
+	\item The peer-to-peer mode is used by two smartphones to exchange information between them. This mode is used on Android by the Android Beam service which allows to send pictures or other data between two Android devices by placing them back to back. In this case, the \gls{nfc} peer-to-peer mode is used to initiate the connection and pair the device and then the data transfer is carried over Bluetooth or Wi-Fi Direct.
 \end{itemize}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=.6\textwidth]{assets/oyster_reader.jpg}
-	\caption[NFC reader and Oyster Card]{A NFC card reader on the London Underground (active mode) and a Oyster Transport Card (passive mode) \cite{img:oyster}}
+	\caption[NFC reader and Oyster Card]{A \gls{nfc} card reader on the London Underground (active mode) and a Oyster Transport Card (passive mode) \cite{img:oyster}}
 \end{center}
 \end{figure}
 
 \subsection{NDEF Format}
-The NDEF (NFC Data Exchange Format) format is a standardised format used to encode data on NFC tags. By using a standard format, it allows for easier exchange of information between NFC devices. A NDEF message is composed of NDEF records. Each of these records contains metadata that provides information to help decode the data payload contained in the message.\\
+The \gls{ndef} format is a standardised format used to encode data on \gls{nfc} tags. By using a standard format, it allows for easier exchange of information between \gls{nfc} devices. A \gls{ndef} message is composed of \gls{ndef} records. Each of these records contains metadata that provides information to help decode the data payload contained in the message.\\
 
-The format of a NDEF record is the following\cite{nfc:ndef:adafruit:article}:
+The format of a \gls{ndef} record is the following\cite{nfc:ndef:adafruit:article}:
 \begin{verbatim}
 	Bit 7     6       5       4       3       2       1       0
 ------  ------  ------  ------  ------  ------  ------  ------ 
@@ -400,17 +519,17 @@ The format of a NDEF record is the following\cite{nfc:ndef:adafruit:article}:
 
 [                           PAYLOAD                          ]
 \end{verbatim}
-The first byte form the header of the NDEF record, the fields composed the header are:
+The first byte form the header of the \gls{ndef} record, the fields composed the header are:
 \begin{itemize}
-	\item The \verb+TNF+ (Type Name Format) is a 3 bits value used to identify the record type. The most common are "Empty record" and "Well-Known-Record" to define a record for which the data type is defined by a RTD (Record Type Definition) in the NDEF format, for example plain text or URI.
+	\item The \verb+TNF+ (Type Name Format) is a 3 bits value used to identify the record type. The most common are "Empty record" and "Well-Known-Record" to define a record for which the data type is defined by a RTD (Record Type Definition) in the \gls{ndef} format, for example plain text or URI.
 	\item The \verb+IL+ (ID LENGTH field) is a boolean 1 bit value to tell if the \verb+ID LENGTH+ field is present or not in the record.
 	\item The \verb+SR+ (Short Record Bit) is a boolean 1 bit value to tell if the \verb+PAYLOAD LENGTH+ has a size of 1 byte or less.
 	\item The \verb+CF+ (Chunk flag) is a boolean 1 bit value to tell if the record is the first part or a chunk of a bigger record. The value will be 0 if it is the only part or the last chunk of a record.
-	\item The \verb+ME+ (Message End) is a boolean 1 bit value to indicate that the record is the last of the NDEF message.
-	\item The \verb+MB+ (Message Begin) is a boolean 1 bit value to indicate that the record is the first of the NDEF message.
+	\item The \verb+ME+ (Message End) is a boolean 1 bit value to indicate that the record is the last of the \gls{ndef} message.
+	\item The \verb+MB+ (Message Begin) is a boolean 1 bit value to indicate that the record is the first of the \gls{ndef} message.
 \end{itemize}
 \subsubsection{Text payload}
-To give an example of a data payload contained in a NDEF record, we are going to take a closer look at a plain text payload.
+To give an example of a data payload contained in a \gls{ndef} record, we are going to take a closer look at a plain text payload.
 
 The text payload format is defined like this\cite{nfc:ndef:doc:text_record} :
 \begin{verbatim}
@@ -426,7 +545,7 @@ The first byte is called \verb+Status Byte+ and contains \verb+ENC+ which stores
 
 \section{Project inspiration - Camipro EPFL}
 \subsection{The card and the official core platform}
-The inspiration for this project mainly comes from my experience studying at EPFL. The EPFL student card, named Camipro\cite{camipro:homepage}, contains an RFID chip that allows to perform various tasks that simplify student life on campus. The use cases for the Camipro card are the following:
+The inspiration for this project mainly comes from my experience studying at \gls{epfl}. The \gls{epfl} student card, named Camipro\cite{camipro:homepage}, contains a \gls{rfid} chip that allows to perform various tasks that simplify student life on campus. The use cases for the Camipro card are the following:
 \begin{itemize}
     \item Electronic wallet to pay at every canteen on campus as well as select third-party retailers (for example the Migros shop present on campus)
     \item Access key to unlock doors and buildings
@@ -448,20 +567,20 @@ An accompanying web platform called MyCamipro was built as part of the Camipro l
 \end{figure}
 
 \subsection{PocketCampus}
-With the increased usage of smartphones by students, in 2010 a team of 20 computer science students decided to build the PocketCampus application as part of a software engineering class. They continued working on the project after the academic project was finished and it became the official EPFL application in 2013. \cite{camipro:creation}. \\
+With the increased usage of smartphones by students, in 2010 a team of 20 computer science students decided to build the PocketCampus application as part of a software engineering class. They continued working on the project after the academic project was finished and it became the official \gls{epfl} application in 2013. \cite{camipro:creation}. \\
 
-Initially you could mainly see the balance of your Camipro card on the app, but version after version, the development team added new integration in the app by collaborating with different services at EPFL.
+Initially you could mainly see the balance of your Camipro card on the app, but version after version, the development team added new integration in the app by collaborating with different services at \gls{epfl}.
 These functions include:
 \begin{itemize}
     \item Accessing the menus of all canteens on campus
-    \item Searching through the whole EPFL directory
+    \item Searching through the whole \gls{epfl} directory
     \item Having access to IS-Academia data to see course schedule and grades
-    \item Printing from your smartphone on the EPFL print system
+    \item Printing from your smartphone on the \gls{epfl} print system
     \item Accessing Lausanne public transportation itineraries
     \item Accessing Moodle documents
 \end{itemize}
 
-After having integrated every requested features, the team launched a beta web version of PocketCampus for EPFL in June 2018. They also started diversifying their business by working on PocketCampus as a platform that can be integrated in other companies and stopped working exclusively with EPFL. They announced plans on partnering with Lausanne University (UNIL) to integrate their platform there.
+After having integrated every requested features, the team launched a beta web version of PocketCampus for \gls{epfl} in June 2018. They also started diversifying their business by working on PocketCampus as a platform that can be integrated in other companies and stopped working exclusively with \gls{epfl}. They announced plans on partnering with Lausanne University (UNIL) to integrate their platform there.
 
 \begin{figure}[H]
 \begin{center}
@@ -479,10 +598,10 @@ After having integrated every requested features, the team launched a beta web v
 \end{figure}
 
 \chapter{The project}
-The project is called PocketHepia, reminiscent of the name of the project at EPFL and will consist of the two parts of the EPFL project presented earlier: the student card platform, as well as the applicative platform to access information.\\
+The project is called PocketHepia, reminiscent of the name of the project at \gls{epfl} and will consist of the two parts of the \gls{epfl} project presented earlier: the student card platform, as well as the applicative platform to access information.\\
 
 
-The idea of this project is not to build as many features as the EPFL platform due to the time constraints inherent to the Bachelor Project, but rather to focus on some key aspects of the card at first, namely payments, access control and library. We are also building features on the payment side that are not available on the EPFL platform, for example the ability to send money between users. The project of course will be extensible with other features outside the scope of the Bachelor Project. \\
+The idea of this project is not to build as many features as the \gls{epfl} platform due to the time constraints inherent to the Bachelor Project, but rather to focus on some key aspects of the card at first, namely payments, access control and library. We are also building features on the payment side that are not available on the \gls{epfl} platform, for example the ability to send money between users. The project of course will be extensible with other features outside the scope of the Bachelor Project. \\
 
 In this chapter, we will present the main features, roles and user stories for the project as specified at the beginning of this one. All of these are part of the project, but not necessarily part of the Bachelor Project. The idea was to specify the entire project and to start implementing a subset of the functionality for the academic project and continue working on the rest as well as new features outside this scope. Mainly we wanted to remain independent of other school services and infrastructure because of the associated time it would take to get permissions and setup integrations, as well as restrictions to development environments to secure access to these services. For each element of this chapter, we will specify whether it is going to be implemented as part of the Bachelor Project.\\
 
@@ -514,9 +633,9 @@ We also specified the ability to delegate the administration of an area to a use
 
 \subsection{Library books}
 \label{books_feature}
-Finally, the last feature of the project would be an integration with the library to be able to use the card as a library card. Our approach at first was to think about creating the book loans on our platform with the ISBN to identify the book and integrate with the REST API built for BibApp\cite{playstore:bibapp} but it wouldn't have been very effective because the library already handles the loans through the NEBIS platform.\\
+Finally, the last feature of the project would be an integration with the library to be able to use the card as a library card. Our approach at first was to think about creating the book loans on our platform with the ISBN to identify the book and integrate with the \gls{rest} \gls{api} built for BibApp\cite{playstore:bibapp} but it wouldn't have been very effective because the library already handles the loans through the NEBIS platform.\\
 
-The correct way to handle this would be to link the library NEBIS identifier for every user with their account on our platform and then ask NEBIS for API Access to their platform to retrieve book loans for all users and display them on the mobile and web application. This would also benefit people working at the library as they would not need to change their current workflow to accommodate.\\
+The correct way to handle this would be to link the library NEBIS identifier for every user with their account on our platform and then ask NEBIS for \gls{api} Access to their platform to retrieve book loans for all users and display them on the mobile and web application. This would also benefit people working at the library as they would not need to change their current workflow to accommodate.\\
 
 We don't have the time during the bachelor project to start a discussion with NEBIS to get access to the required information so this feature will have to be implemented later on.
 \section{Roles}
@@ -606,8 +725,8 @@ The log categories are:
 \item User deleted
 \item Admin imports users
 \item Admin cancels an import
-\item Admin assigns a NFC Tag
-\item Admin removes a NFC Tag
+\item Admin assigns a \gls{nfc} Tag
+\item Admin removes a \gls{nfc} Tag
 \item Admin adds money to a user balance
 \item Admin resets a user password
 \item Admin changes a user permissions
@@ -642,9 +761,9 @@ From the beginning, we wrote simple user stories as a roadmap for the project fe
 \textbf{User story name}                                                                                                                       & \textbf{Priority} & \textbf{Status as of July 11th 2018}                \\ \hline
 \endhead
 %
-User must be able to login using username and password (then using JWT to communicate with backend)                                            & 1 - Essential     & Done                                             \\ \hline
+User must be able to login using username and password (then using \gls{jwt} to communicate with backend)                                            & 1 - Essential     & Done                                             \\ \hline
 Admin can create users from the website                                                                                                        & 1 - Essential     & Done                                             \\ \hline
-User can view its total balance and a summary of its information on the homepage (web and application)                                         & 2 - Important     & Done                                             \\ \hline
+User can view its total balance and a summary of its information on the homepage (web and application)                                         & 2 - Important     & Balance card done, other information in progress on web, Android done                                             \\ \hline
 User can view all its transactions on the transactions page (web and application)                                                              & 2 - Important     & Done                                             \\ \hline
 User can view its total balance on the transactions page (web and application)                                                                 & 2 - Important     & Done                                             \\ \hline
 User can view all its accesses to rooms on the access page (web and application)                                                               & 2 - Important     & Done                                             \\ \hline
@@ -694,7 +813,7 @@ Librarian can view current bookings for all users from the website and Android a
 \label{technological choices}
 \subsection{The data and backend}
 %%TODO talk about JWT
-For the data and backend part of the project, we decided to build a unique backend for both the web and mobile clients. We would need a database to store the data of our models and a service to access to access that data. The easier solution would be to build a REST API in front of a database. To do this, we saw two main possibilities: a PHP REST API coupled with a SQL Database or a Node.JS Express REST API coupled with a Mongo DB. While we could mix these and use a SQL Database with Node.JS, we wanted to use the better affinity possible between the two. With the increase in popularity in Javascript based backends, we decided to rule out the PHP option and keep the Express/Mongo option. This is also due to the fact that PHP feels dated and does not provide a clear structure unless you use a PHP Framework to complement it. \\
+For the data and backend part of the project, we decided to build a unique backend for both the web and mobile clients. We would need a database to store the data of our models and a service to access to access that data. The easier solution would be to build a \gls{rest} \gls{api} in front of a database. To do this, we saw two main possibilities: a PHP \gls{rest} \gls{api} coupled with a SQL Database or a Node.JS Express \gls{rest} \gls{api} coupled with a Mongo DB. While we could mix these and use a SQL Database with Node.JS, we wanted to use the better affinity possible between the two. With the increase in popularity in Javascript based backends, we decided to rule out the PHP option and keep the Express/Mongo option. This is also due to the fact that PHP feels dated and does not provide a clear structure unless you use a PHP Framework to complement it. \\
 
 %%TODO PHP less modern => node js better => why nosql is better => php without frameworks is a mess
 
@@ -717,7 +836,7 @@ The second solution that was suggested was to use an object syncing platform to 
 \end{figure}
 The Realm platform integrates the database directly within an object server that takes care of providing access and sending data to all the clients connected to it. This is possible thanks to the Realm runtime that you need to integrate in your client-side application and will replicate the database server on your local client.\\
 
-On the contrary, using the Express/Mongo approach, we have the Mongo database and we built a REST API in front of it to provide access to the data. We do not need any particular runtime on the client-side and we can just handle data how we want. \\
+On the contrary, using the Express/Mongo approach, we have the Mongo database and we built a \gls{rest} \gls{api} in front of it to provide access to the data. We do not need any particular runtime on the client-side and we can just handle data how we want. \\
 
 As we can see in figures \ref{realm_object_saving_figure} and \ref{mongo_object_saving_figure}, when we create a new object on a client in Realm and save it locally, it is directly sent to the server and then pushed to other devices without needing any action. On the Express/Mongo side, you save the new object to the server and then other clients can retrieve it. \\
 \paragraph{Advantages of Realm}
@@ -725,11 +844,11 @@ The advantages of Realm apply mainly on the mobile front. Realm is built to the 
 \paragraph{Only for specific use cases}
 The problem with Realm is that, beyond mobile, it is not very appropriate for our project. There are many pain points and small decisions that were taken by the Realm team that impose a way of doing things that may not be compatible with every project.\\
 
-For example, one of these problems is the user authentication part and the user collection. In Realm, a user is not an object like others. It is a special object that is also used to connect to the Realm engine to handle sync. So you are limited to using Realm authentication to use the platform. Moreover, there is no way for a user with admin rights to retrieve a list of users on the client-side. This data is not accessible, unless you use the Realm Studio GUI client.\\
+For example, one of these problems is the user authentication part and the user collection. In Realm, a user is not an object like others. It is a special object that is also used to connect to the Realm engine to handle sync. So you are limited to using Realm authentication to use the platform. Moreover, there is no way for a user with admin rights to retrieve a list of users on the client-side. This data is not accessible, unless you use the Realm Studio \gls{gui} client.\\
 
-Another point is that, since you directly interact with the database/object server on the client-side, the code can easily be changed to access other people's information unlike a REST API where access to the database is regulated by the API. To avoid this, Realm has a system of permissions that are assigned to saved objects, but you need to assign the permissions every time you create a new object. Admins do not have direct access to everything, so you also have to add a permission for every admin every time. We wouldn't even imagine trying to add multiple set of roles here, it would be too cumbersome to handle.\\
+Another point is that, since you directly interact with the database/object server on the client-side, the code can easily be changed to access other people's information unlike a \gls{rest} \gls{api} where access to the database is regulated by the \gls{api}. To avoid this, Realm has a system of permissions that are assigned to saved objects, but you need to assign the permissions every time you create a new object. Admins do not have direct access to everything, so you also have to add a permission for every admin every time. We wouldn't even imagine trying to add multiple set of roles here, it would be too cumbersome to handle.\\
 
-Finally, the final point that made us abandon Realm for this project is the lack of clear solution to use it on the web. You have two ways to access the data from a web client. Either activate the GraphQL integration and write GraphQL queries to interact with the data from the web frontend. Or use the Node.JS Realm runtime to connect to the object server and serve as an API to access the data. So, even if we used Realm, we would still need to write an API. We're better off just going with the Express/Mongo option in that case. \\
+Finally, the final point that made us abandon Realm for this project is the lack of clear solution to use it on the web. You have two ways to access the data from a web client. Either activate the GraphQL integration and write GraphQL queries to interact with the data from the web frontend. Or use the Node.JS Realm runtime to connect to the object server and serve as an \gls{api} to access the data. So, even if we used Realm, we would still need to write an \gls{api}. We're better off just going with the Express/Mongo option in that case. \\
 
 It is a shame because the product provide real advantages on mobile that would take time to implement with a custom data solution, but it just isn't flexible enough and is really mobile-first while the web seems a bit like an after-thought for them. Even in their marketing material, they only present mobile-only applications such as chat or photo-sharing applications.
 
@@ -739,7 +858,7 @@ We needed to create a mobile client to access the information and status of a us
 
 We decided to build an Android application as well as coding the website to be responsive so it can be used on any smartphone. For the standard user, the mobile application is the one to use as it will provide access to all information, sync data offline and enable payments to other users. For the administrators, the mobile application will allow them to manage physical cards for users and for the rest of the administration, they can use the website on their smartphone.
 \subsubsection{Why the need for an application?}
-While we could have achieved most of the functionality with a web application, there are still some elements that require building a full mobile application. Mainly, access to device features such as NFC. With a mobile web app, we cannot have access to the NFC chip on the smartphone and thus we cannot manage physical cards or make payments through the app. This is also the reason why we only built an Android app and not an iOS one. The API for NFC on iOS\cite{apple:ios:nfc} is basic and was released in 2017, it does not allow writing on NFC tags\footnote{Unless you are a big company partnering directly with Apple} and only supported a subset of the formats of the Android API.\\
+While we could have achieved most of the functionality with a web application, there are still some elements that require building a full mobile application. Mainly, access to device features such as \gls{nfc}. With a mobile web app, we cannot have access to the \gls{nfc} chip on the smartphone and thus we cannot manage physical cards or make payments through the app. This is also the reason why we only built an Android app and not an iOS one. The \gls{api} for \gls{nfc} on iOS\cite{apple:ios:nfc} is basic and was released in 2017, it does not allow writing on \gls{nfc} tags\footnote{Unless you are a big company partnering directly with Apple} and only supported a subset of the formats of the Android \gls{api}.\\
 
 Apart from this limitation, all the other functionality could have been incorporated in a web application, for example by making a Progressive Web App (PWA)\cite{google:pwa:website}. PWA are an hybrid between a mobile application and a web application and they run on desktop and mobile operating systems. Their main advantages compared to traditional web app is that they can be "installed" on the device and act like a normal application and that they generally store data offline and can sync data in the background through the user of Service Workers.
 \subsubsection{Why go native?}
@@ -763,10 +882,11 @@ By using MongoDB with Express/Node.js and Angular, we are effectively using the 
 \label{android_chapter}
 Android is a mobile operating system developed by Google and launched in September 2008. The core of Android is open source and is known as the \emph{Android Open Source Program (AOSP)}. But nobody really knows or uses the AOSP version of Android, every phone manufacturer, even Google, forks the AOSP version to build its own for their devices. What is often referred as "pure Android" is the Google implementation of Android on their Nexus and Pixel lines of smartphones. Android runs on all kinds of platforms, from mobile phone to watches, as well as tablets and laptops. \\
 
-A SDK and an IDE are provided for developing Android applications. Those applications are written mainly in Java, with the ability to write native code in C++ using the Android NDK\footnote{This is used for example to use some C++ libraries, like OpenCV.} and interact with the Java code using JNI. The support for a second language named Kotlin was announced at Google I/O 2017 (see section \ref{kotlin}). Applications run in a virtual environment on Android called ART. You can think of ART as the equivalent of the JVM for desktop Java development.
+A \gls{sdk} and an \gls{ide} are provided for developing Android applications. Those applications are written mainly in Java, with the ability to write native code in C++ using the Android NDK\footnote{This is used for example to use some C++ libraries, like OpenCV.} and interact with the Java code using JNI. The support for a second language named Kotlin was announced at Google I/O 2017 (see section \ref{kotlin}). Applications run in a virtual environment on Android called ART. You can think of ART as the equivalent of the \gls{jvm} for desktop Java development.
 \subsection{Android Fragmentation}
-One of the biggest problems for developers is the fragmentation of OS versions running on Android devices. As of May 2018, only 62.3\% of devices were running Android Marshmallow (version 6) or later. Android Marshmallow was released in 2015, meaning that 37.7\% of devices were running software that was more than 3 years old without security updates or new features (see table \ref{android_os_table}).
+One of the biggest problems for developers is the fragmentation of \gls{os} versions running on Android devices. As of May 2018, only 62.3\% of devices were running Android Marshmallow (version 6) or later. Android Marshmallow was released in 2015, meaning that 37.7\% of devices were running software that was more than 3 years old without security updates or new features (see table \ref{android_os_table}).
 
+%%TODO this table is too large on the page
 \begin{table}[H]
 \centering
 \bgroup
@@ -794,18 +914,18 @@ One of the biggest problems for developers is the fragmentation of OS versions r
 \end{tabular}
 \egroup
 \label{android_os_table}
-\caption[Android OS Fragmentation]{Android OS Fragmentation (May 2018)\cite{android:dev:osfragmentation}}
+\caption[Android OS Fragmentation]{Android \gls{os} Fragmentation (May 2018)\cite{android:dev:osfragmentation}}
 \end{table}
 
 \subsubsection{The problem with updates}
-This problem is inherent to the very nature of the Android operating system. Each phone manufacturer, or OEM, can fork its own version of Android and integrate its own skin and set of apps on top of it. When a new version of the operating system is released by Google, they can't just start using it. They have to first adapt and test all their apps and customisation with the new version before it can ship to the devices. This is a time (and by extension money) consuming process and many OEMs just don't care about maintaining their devices for more than one or two years. To make matters worse, in certain countries, such as the United States, mobile carriers have to validate and apply their own custom apps and settings on top of the OS, adding to the time needed to validate an update and causing a supplementary potential roadblock to the release of an update.
+This problem is inherent to the very nature of the Android operating system. Each phone manufacturer, or OEM, can fork its own version of Android and integrate its own skin and set of apps on top of it. When a new version of the operating system is released by Google, they can't just start using it. They have to first adapt and test all their apps and customisation with the new version before it can ship to the devices. This is a time (and by extension money) consuming process and many OEMs just don't care about maintaining their devices for more than one or two years. To make matters worse, in certain countries, such as the United States, mobile carriers have to validate and apply their own custom apps and settings on top of the \gls{os}, adding to the time needed to validate an update and causing a supplementary potential roadblock to the release of an update.
 
 \subsubsection{What Google is doing about this?}
 Google has in the recent years taken different actions to ensure that most of the devices run safe and up-to-date software on them without depending on the OEMs willingness to maintain their products.
 \paragraph{Updating core apps through the Play Store}
 One of the most successful changes to Android in recent years has been to slowly move all Android core applications that are present on every Android device\footnote{Actually, not every Android device. Some Asian markets, mainly China don't have access to these apps because they don't have access to any Google services. This is an edge case that won't be discussed in this document. } to the Google Play Store. These apps include for example Gmail, Google Calendar, the browser (AOSP browser and Google Chrome) and even apps like the Phone Dialer and Contacts apps. This move to the Play Store allows Google to update these applications more frequently without needing a full operating system update. While it may be seen as a necessary evil at first, because it is the only way for them to update these apps if the OEM don't apply operating system updates, it is actually a very useful move because it allows for faster iteration on these applications and quicker response for bug fixes.\\
 
-If we compare this to the other major mobile operating system, iOS, all main applications on the platform are bundled with the OS. So, if Apple needs to update the Safari browser to support a new web API they have to release a full OS version and push it to all their devices instead of just updating the application that needs an update as Google would do on Android.
+If we compare this to the other major mobile operating system, iOS, all main applications on the platform are bundled with the \gls{os}. So, if Apple needs to update the Safari browser to support a new web \gls{api} they have to release a full \gls{os} version and push it to all their devices instead of just updating the application that needs an update as Google would do on Android.
 \paragraph{Android Support Library}
 %% TODO Android support library
 %% TODO the support library naming scheme => move to AndroidX
@@ -815,9 +935,9 @@ If we compare this to the other major mobile operating system, iOS, all main app
 %% TODO Security updates
 \subsection{Kotlin}
 \label{kotlin}
-As discussed in section \ref{android_chapter}, Kotlin has become a primary Android language in 2017. After having used this language for a first Android project last year, I decided to build all my subsequent Android application in Kotlin. The simplifications and reductions in code length provided by this language compared to Java make developing Android applications more enjoyable. It also helps avoid many runtime errors by catching many error-prone scenarios at compile time. In this section, we will go in further details in some of the advantages provided by Kotlin and how Google is encouraging developers to use Kotlin by introducing new Kotlin-specific features in the Android SDK.
+As discussed in section \ref{android_chapter}, Kotlin has become a primary Android language in 2017. After having used this language for a first Android project last year, I decided to build all my subsequent Android application in Kotlin. The simplifications and reductions in code length provided by this language compared to Java make developing Android applications more enjoyable. It also helps avoid many runtime errors by catching many error-prone scenarios at compile time. In this section, we will go in further details in some of the advantages provided by Kotlin and how Google is encouraging developers to use Kotlin by introducing new Kotlin-specific features in the Android \gls{sdk}.
 \subsubsection{Full interoperability with Java}
-First of all, the fact that Kotlin is fully compatible with Java and runs on the Java Virtual Machine (JVM) allows it to be easily integrated in an existing project or interact with existing Java libraries. You can just start writing classes in Kotlin and call existing Java classes from it and vice-versa. Then, when you want to convert Java code to Kotlin, Android Studio integrates a tool to convert a file to Kotlin almost perfectly. There are just some small changes to write afterwards, for example concerning the conversions of variables to constants. The IDE will even suggest converting Java code pasted inside a Kotlin file to the Kotlin version of the code.
+First of all, the fact that Kotlin is fully compatible with Java and runs on the \gls{jvm} allows it to be easily integrated in an existing project or interact with existing Java libraries. You can just start writing classes in Kotlin and call existing Java classes from it and vice-versa. Then, when you want to convert Java code to Kotlin, Android Studio integrates a tool to convert a file to Kotlin almost perfectly. There are just some small changes to write afterwards, for example concerning the conversions of variables to constants. The \gls{ide} will even suggest converting Java code pasted inside a Kotlin file to the Kotlin version of the code.
 \subsubsection{Data classes}
 Java is often defined by its detractors as a very verbose language, requiring to write a lot of repetitive boilerplate code\footnote{Boilerplate code or boilerplate refers to sections of code that have to be included in many places with little or no alteration\cite{wiki:define:boilerplate}} for simple tasks. One of these tasks is the creation of classes with accessors and mutators for some of the class fields and overriding \verb+equals+ and \verb+toString+ methods. In Object Oriented Programming, we often have to write a lot of small classes just to match the Models in our applications. These are often referred as Beans or POJOs\footnote{Plain Old Java Object}. Kotlin introduces the concept of data classes\cite{kotlin:doc:data_classes} to simplify the implementation of these type of classes. By using a data class, you get "for free" an accessor (and mutator) for each field of the class, a correct overriding of the \verb+equals+ method, an overriding of the \verb+toString+ method listing the values of all fields in the instance and a \verb+copy+ method corresponding to a copy constructor in Java. For example, if we take a simple person class in Java:
 \begin{code}
@@ -854,10 +974,17 @@ Another advantage of Kotlin is the ability to write class extensions\cite{kotlin
 For example, if we are using the \verb+ByteArray+ class and we want to convert the value to a hexadecimal \verb+String+, we can write a class extension method or property for the \verb+ByteArray+ class that we can then call on any instance of the class.
 
 This is done in this way:
+\begin{code}
 \kotlincode{assets/code/kotlin/Extensions.kt}
+\caption{Defining method and properties extensions in Kotlin}	
+\end{code}
+
 
 And can then be called like any methods or properties:
+\begin{code}
 \kotlincode{assets/code/kotlin/ExtensionsUsage.kt}
+\caption{Using method and properties extensions in Kotlin}	
+\end{code}
 
 \subsubsection{Null safety}
 In terms of safety, Kotlin introduces concepts already seen in other languages such as Scala or Swift but not present in Java, mainly around the handling of \mintinline{java}{null} values\cite{kotlin:doc:null}.\\
@@ -867,7 +994,11 @@ In Java, if a function returns a \mintinline{java}{String} or another \mintinlin
 In Kotlin, they introduce the concept of optional types, denoted by a \verb+?+. This allows for compile time check of \mintinline{java}{null} values risks. First of all, a function that returns a \mintinline{java}{String} can't return a \mintinline{java}{null} value. To return a \mintinline{java}{null} value you specifically have to return an optional type, in this case a \mintinline{kotlin}{String?}. This optional type can only be accessed after checking if it contains a non \mintinline{java}{null} value. After the check, it will be \emph{smart-casted} as \mintinline{kotlin}{String} in the corresponding code block. The program will not compile if an optional type is used without checking if it contains a value first which avoids the possibility of having \mintinline{java}{NullPointerException} at runtime\footnote{This is valid for Kotlin code. When interacting with existing Java code, the Java code can use annotations \mintinline{java}{@Nullable} and \mintinline{java}{@NotNull} to mimic optional types but they are not required annotations so you can still run into problems depending on the Java library. An error could also happen if we bypass the \mintinline{java}{null} safety check by using the \emph{not-null assertion operator}, see paragraph \ref{optional_operators_kt}} \\
 
 For example, an usage of the optional types is a function that finds an element in a list and returns the index of the element in the list. If the element is not contained in the list, it will return a \mintinline{java}{null} value. The function should then return a \mintinline{kotlin}{Int?} and this value can only be used after specifically checking that the value is not \mintinline{java}{null}:
+\begin{code}
 \kotlincode{assets/code/kotlin/optional.kt}
+\caption{Using optionals in Kotlin}	
+\end{code}
+
 
 \paragraph{Optionals-related operators}
 \label{optional_operators_kt}
@@ -879,14 +1010,14 @@ Kotlin also introduces a number of specific operators to handle optional types:
 \end{itemize}
 
 \subsection{NFC on Android}
-If an Android device contains a NFC chip, you can use the chip capabilities in an application. To do so, first of all, you have to add the request for permission to access it in the Android Manifest. The Manifest is the configuration file for the application from the OS point of view. It contains the listing of permissions, activities and other configuration. To use NFC, you have to add the line \mintinline[breaklines]{xml}{<uses-permission android:name="android.permission.NFC" />}. \\
+If an Android device contains a \gls{nfc} chip, you can use the chip capabilities in an application. To do so, first of all, you have to add the request for permission to access it in the Android Manifest. The Manifest is the configuration file for the application from the \gls{os} point of view. It contains the listing of permissions, activities and other configuration. To use \gls{nfc}, you have to add the line \mintinline[breaklines]{xml}{<uses-permission android:name="android.permission.NFC" />}. \\
 
-From there, you have two different possibilities that can also be combined. You can either register yourself to the OS to listen for any incoming NFC actions (touching a tag for example) no matter if your app is running or not. You can also intercept NFC actions when your app is in the foreground. In most cases, the latter solution is the one needed, unless you want your app to be launched when a specific NFC accessory is detected. The foreground method is called \emph{Foreground dispatch}, it means we are filtering the intent that are received by our foreground Activity to include NFC related intents and passing them to the Activity.
+From there, you have two different possibilities that can also be combined. You can either register yourself to the \gls{os} to listen for any incoming \gls{nfc} actions (touching a tag for example) no matter if your app is running or not. You can also intercept \gls{nfc} actions when your app is in the foreground. In most cases, the latter solution is the one needed, unless you want your app to be launched when a specific \gls{nfc} accessory is detected. The foreground method is called \emph{Foreground dispatch}, it means we are filtering the intent that are received by our foreground Activity to include \gls{nfc} related intents and passing them to the Activity.
 
 \subsubsection{Setting up \emph{Foreground Dispatch}}
-You have to setup \emph{Foreground Dispatch}\cite{android:doc:nfc_foregroundDispatch} at the Activity level, preferably in the \mintinline[breaklines]{kotlin}{fun onCreate(savedState: Bundle?)} method and then enable it and disable on resume and pause of the Activity respectively. If you need to use it in multiple activities, it is easier to setup a superclass Activity and extends all other Activities from it. We can then just override the \mintinline[breaklines]{kotlin}{fun onNewIntent(intent: Intent)} in the specific Activity for which we need to handle NFC specifically. In the superclass Activity, we can just discard the received NFC intent.\\
+You have to setup \emph{Foreground Dispatch}\cite{android:doc:nfc_foregroundDispatch} at the Activity level, preferably in the \mintinline[breaklines]{kotlin}{fun onCreate(savedState: Bundle?)} method and then enable it and disable on resume and pause of the Activity respectively. If you need to use it in multiple activities, it is easier to setup a superclass Activity and extends all other Activities from it. We can then just override the \mintinline[breaklines]{kotlin}{fun onNewIntent(intent: Intent)} in the specific Activity for which we need to handle \gls{nfc} specifically. In the superclass Activity, we can just discard the received \gls{nfc} intent.\\
 
-As we can see in source code \ref{foreground_dispatch_code}, we have to register all technologies and intent types that we need to filter and create a pendingIntent to be sent by it. We activate the filter when the Activity is resumed and disable it when it is destroyed. This is to avoid blocking all other apps after our application quits and avoid crashes as well because if a NFC action happens and our app gets it in the background, it will crash. When we get the NFC intent, we just log a message by default and discard the intent.
+As we can see in source code \ref{foreground_dispatch_code}, we have to register all technologies and intent types that we need to filter and create a pendingIntent to be sent by it. We activate the filter when the Activity is resumed and disable it when it is destroyed. This is to avoid blocking all other apps after our application quits and avoid crashes as well because if a \gls{nfc} action happens and our app gets it in the background, it will crash. When we get the \gls{nfc} intent, we just log a message by default and discard the intent.
 
 \begin{code}
 	\kotlincode{assets/code/kotlin/ForegroundDispatchActivity.kt}
@@ -894,7 +1025,7 @@ As we can see in source code \ref{foreground_dispatch_code}, we have to register
 	\label{foreground_dispatch_code}
 \end{code}
 \subsubsection{Getting a Tag ID}
-Now, if we want to read a NFC Tag inside an Activity, we just need to override the \mintinline[breaklines]{kotlin}{fun onNewIntent(intent: Intent)} method. For example, when assigning a Tag to a new \verb+User+, we have to get the NFC Tag unique identifier and send it to our backend. To do that, we can use the following code:
+Now, if we want to read a \gls{nfc} Tag inside an Activity, we just need to override the \mintinline[breaklines]{kotlin}{fun onNewIntent(intent: Intent)} method. For example, when assigning a Tag to a new \verb+User+, we have to get the \gls{nfc} Tag unique identifier and send it to our backend. To do that, we can use the following code:
 \begin{code}
 	\kotlincode{assets/code/kotlin/ReadNFCid.kt}
 	\caption{Reading ID from NFC Tag}
@@ -908,10 +1039,18 @@ Android KTX is a Kotlin-specific part of Android Jetpack. It provides Kotlin ext
 An example of Kotlin features used in KTX is the improvement to the usage of Lambdas and anonymous functions as well as the usage of these functions to avoid chaining calls.\\
 
 For example, when replacing a fragment in a view, you can use a block with KTX in which you write the replacement operation and the block will begin and commit the transaction automatically:
+\begin{code}
 \kotlincode{assets/code/kotlin/fragmentsKTX.kt}
+\caption{Handling Fragment transactions with Android KTX}	
+\end{code}
+
 
 Similarly when working with a SQLite Database and writing a transaction, the KTX version will take care of catching the exception and cancelling the commit if an exception is raised:
+\begin{code}
 \kotlincode{assets/code/kotlin/dbKTX.kt}
+\caption{SQLite transactions with Android KTX}	
+\end{code}
+
 \subsubsection{Room - Data persistence}
 There are three main ways to store persistent data in an Android application. First, you can use files, either user accessible files or files only available from the app code. Secondly, you can use \verb+SharedPreferences+ to store key/value pairs. And finally, you can use a database. Databases on Android are built on SQLite and have always been the best way to store data on Android. The problem though was that the code to write to use databases was too long and complex and you could easily run into errors due to the usage of bad practices or wrong SQL syntax for example. Moreover, you always had to parse the data returned from the database into models and vice-versa so it always felt like you had to do the work twice.\\
 
@@ -929,15 +1068,28 @@ As seen in figure \ref{room_architecture_img}, the application interacts with th
 The Entity\cite{android:training:jetpack:room:entities} is the model that we are saving in the database. The advantage here is that we do not need to build a model and a separate table, we can just annotate our model with \mintinline{kotlin}{@Entity} and other annotations to define the database table automatically.
 
 For example, a \verb+User+ entity is just a data class in Kotlin:
+\begin{code}
 \kotlincode{assets/code/kotlin/userEntity.kt}
+\caption{A Room User entity}	
+\end{code}
 
-Then, we have to write a DAO\cite{android:training:jetpack:room:dao} interface for the entity to create methods to interact with the entity in the database. There are methods automatically created for us, such as insertion and deletion of single entries. Queries returning elements from the database have to be written in SQL, but the IDE provides completion and there is compile time check of SQL syntax with table and column names. Finally, we can easily ask for returning LiveData for a query simply by specifying in the signature function.
+
+
+Then, we have to write a DAO\cite{android:training:jetpack:room:dao} interface for the entity to create methods to interact with the entity in the database. There are methods automatically created for us, such as insertion and deletion of single entries. Queries returning elements from the database have to be written in SQL, but the \gls{ide} provides completion and there is compile time check of SQL syntax with table and column names. Finally, we can easily ask for returning LiveData for a query simply by specifying in the signature function.
 
 For example, for the \verb+User+ DAO, we can just wrap all the return values from \verb+SELECT+ queries in \verb+LiveData+ and we will get them in that format:
+\begin{code}
 \kotlincode{assets/code/kotlin/userDao.kt}
+\caption{A Room User DAO definition}	
+\end{code}
+
 
 Finally, you can then write the Database\cite{android:training:jetpack:room:db} class by providing an array of the entities and creating an abstract fun to retrieve each DAO. It is also suggested to make the Database class a Singleton\cite{android:training:jetpack:room}:
+\begin{code}
 \kotlincode{assets/code/kotlin/userDb.kt}
+\caption{Setting up a Room Database}	
+\end{code}
+
 
 %%TODO do we talk about typeconverters?
 \paragraph{ViewModel}
@@ -946,14 +1098,22 @@ The ViewModel\cite{android:doc:viewmodel} bridges the gap between the data and t
 It is suggested to also implement a Repository behind the ViewModel to abstract the source of the data, database or network for example. In the Repository, we can also write wrapper around insertion tasks to run them on separate threads because you can't run database operations on the main thread\footnote{Queries returning LiveData already run on a background thread, due to the LiveData returning value asynchronously}.
 
 The user Repository and ViewModel look like this:
+\begin{code}
 \kotlincode{assets/code/kotlin/userViewModel.kt}
+\caption{User repository and ViewModel definition} 	
+\end{code}
+
 
 \paragraph{LiveData}
 \label{livedata}
 LiveData\cite{android:doc:jetpack:livedata} is an observable holder class that allows to react to data changes. The advantage of LiveData is that it is lifecycle aware, so you can observe the data by passing it an Activity or Fragment and will pause and resume accordingly when the Activity is paused or resumed. Otherwise, we could try refreshing the UI when the data changes and if the Activity is not in the foreground, the application would crash. LiveData allows us to always update our UI with the latest data, for example data from a Room Database.\\
 
 You can just call the \verb+observe+ method on a LiveData instance and pass a lifecycle component, in this case a Fragment and an Observer callback to handle the data.
+\begin{code}
 \kotlincode{assets/code/kotlin/userLiveData.kt}
+\caption{Observing LiveData on Android}	
+\end{code}
+
 
 \paragraph{Putting everything together}
 When putting everything together\cite{android:codelab:room}, we can see the interactions in figure \ref{viewmodel_interactions_img} with the ViewModel providing LiveData to the Fragment or Activity that can update the UI by observing it. The \verb+ViewModelProviders.of()+ is used to retrieve the requested ViewModel from the system.
@@ -966,7 +1126,11 @@ When putting everything together\cite{android:codelab:room}, we can see the inte
 \end{figure}
 
 If for example, we couple this with a RecyclerView and decide to get a list of all users from the database to display it, it gives us the following code:
+\begin{code}
 \kotlincode{assets/code/kotlin/userRoomComplete.kt}
+\caption{Using Room, ViewModels and LiveData to display a list of Users}	
+\end{code}
+
 
 \subsubsection{Work Manager - Background jobs}
 WorkManager\cite{android:doc:jetpack:work_manager} allows running background asynchronous tasks, for example downloading data from a backend. The advantage behind using WorkManager is that it will choose the correct implementation depending on the Android version it is running on and the available APIs. It will also adapt to the state of the app, running or not. Android has several background work mechanisms depending on the platform and WorkManager provides a way to avoid choosing one of them.\\
@@ -974,10 +1138,13 @@ WorkManager\cite{android:doc:jetpack:work_manager} allows running background asy
 To use WorkManager, you have to create a class that extends the \verb+Worker+ class and implement the method \mintinline[breaklines]{kotlin}{fun doWork(): Result}. This function returns a \verb+Worker.Result+ that can be either a success, a failure or a request to retry. You have access to the application context from this class, so you can save data to a database for example or access SharedPreferences.\\
 
 For example, if we want to write a Worker to retrieve a \verb+User+ from the backend, we can do it this way\cite{android:codelab:work_manager}:
+\begin{code}
 \kotlincode{assets/code/kotlin/workmanager.kt}
+\caption{Simple WorkManager Worker implementation}	
+\end{code}
 \subsubsection{Navigation}
 \label{jetpack_navigation}
-Navigation inside an application has always been more complicated on Android than on iOS. For example, all Android devices have a "back" button in the OS navigation bar at the bottom and the Android guidelines also define an "up" button in the application toolbar that most applications implement. The "up" button looks exactly like the "back" button and most user think it does exactly the same thing but that is not the case (see figure \ref{twitter_up_back_img}). The "up" button should move to the hierarchical parent screen of the current screen, so let's say that we are inside a messaging conversation, the "up" button brings us back to the conversations list. Pressing the "back" button brings us back to the screen that was used before arriving to the current screen. For example, if we were browsing the web and clicked on a notification that brought us to the messaging conversation, pressing "back" brings us back to the web browser.\\
+Navigation inside an application has always been more complicated on Android than on iOS. For example, all Android devices have a "back" button in the \gls{os} navigation bar at the bottom and the Android guidelines also define an "up" button in the application toolbar that most applications implement. The "up" button looks exactly like the "back" button and most user think it does exactly the same thing but that is not the case (see figure \ref{twitter_up_back_img}). The "up" button should move to the hierarchical parent screen of the current screen, so let's say that we are inside a messaging conversation, the "up" button brings us back to the conversations list. Pressing the "back" button brings us back to the screen that was used before arriving to the current screen. For example, if we were browsing the web and clicked on a notification that brought us to the messaging conversation, pressing "back" brings us back to the web browser.\\
 
 The problem here is that when deep linking in a screen directly, for example from a notification, we had to fill in ourselves in the backstack the hierarchical parents so that the "up" button behaved correctly. Some apps do not implement this in the correct way and by default the "up" button destroys the Activity or acts as a "back" button. This does not guarantee an excepted behaviour of those buttons for the user.\\
 
@@ -1059,7 +1226,7 @@ Angular\cite{angular:website} is a web application frontend framework. It is opn
 
 The main advantages of using a frontend framework are modularity and a clear code structure compared to not using any frameworks. \\
 
-Angular provides a CLI tool called \emph{Angular CLI} and used with the \verb+ng+ command that helps initialising and updating projects. The CLI also handles code generation, for example when creating a component, it will create all required files and register the component in the application module, more on that later. All Angular CLI commands should be run from the root directory of the Angular project. \\
+Angular provides a \gls{cli} tool called \emph{Angular CLI} and used with the \verb+ng+ command that helps initialising and updating projects. The \gls{cli} also handles code generation, for example when creating a component, it will create all required files and register the component in the application module, more on that later. All Angular \gls{cli} commands should be run from the root directory of the Angular project. \\
 
 Angular projects are usually installed and run through NPM, although Yarn can be used as well.
 \subsection{Single-page webapp}
@@ -1077,7 +1244,7 @@ An Angular application is built around Modules (called \emph{NgModules})\cite{an
 \end{center}
 \end{figure}
 \subsubsection{Folder structure}
-When initiating a new project with the Angular CLI, it will setup the default folder structure and a set of initial files to work with.
+When initiating a new project with the Angular \gls{cli}, it will setup the default folder structure and a set of initial files to work with.
 
 To create a new "demo" project, you can use the following command:
 \begin{code}
@@ -1131,7 +1298,7 @@ The main application files are contained in the \verb+src/+ directory.The \verb+
 This is the main configuration file for the Angular project. It contains directory and path configurations for the project as well as options on whether to use CSS or SASS for stylesheets. It also contains the configuration about hostnames and ports to use as well as SSL configuration for the built-in development web server.
 
 \paragraph{package.json}
-As in all NPM projects, this files contains all the NPM module dependencies of our application with their respective version as well as define commands to be run with the \verb+npm run+ command. To update our application dependencies, for example when a new Angular version comes out, we can use the Angular CLI with the command and then follow the on-screen instructions:
+As in all NPM projects, this files contains all the NPM module dependencies of our application with their respective version as well as define commands to be run with the \verb+npm run+ command. To update our application dependencies, for example when a new Angular version comes out, we can use the Angular \gls{cli} with the command and then follow the on-screen instructions:
 \begin{code}
 	\begin{shell}
 ng update
@@ -1139,12 +1306,12 @@ ng update
 	\caption{Command to check for available Angular updates}
 \end{code}
 
-When updating dependencies, the Angular CLI will update the \verb+package.json+ file with the new packages versions and then install the new dependencies.
+When updating dependencies, the Angular \gls{cli} will update the \verb+package.json+ file with the new packages versions and then install the new dependencies.
 
 \subsubsection{Components}
 A Component\cite{angular:doc:components} is used to control a subset of a view in the application. By creating small single-purpose Components, for example a Component showing only a User detail, you can easily reuse Components in multiple views. \\
 
-To generate a new Component using the Angular CLI, you can use the following command:
+To generate a new Component using the Angular \gls{cli}, you can use the following command:
 \begin{code}
 	\begin{shell}
 ng generate component <componentName>
@@ -1269,17 +1436,17 @@ To set this property when integrating the Component in a parent Component, we ca
 \subsubsection{Services}
 Services\cite{angular:doc:services} are a broader category than Component and can be seen as code that is not directly related to user interaction or user experience. Services are also often shared and used by different Components using Dependency Injection\cite{angular:doc:dependency_injection} (see \ref{dependency_injection}). Services can contain methods to manage and save data, to fetch data from a server, validate inputs. All those methods can then be called by all Components simply by injecting the Service. You can use other Services inside a Service simply by injecting them in the Service (see \ref{dependency_injection}).\\
 
-To generate a new Service, you can use the Angular CLI:
+To generate a new Service, you can use the Angular \gls{cli}:
 \begin{code}
 \begin{shell}
 ng generate service <serviceName>
 \end{shell}
-	\caption{Creating a new Service using the Angular CLI}
+	\caption{Creating a new Service using the Angular \gls{cli}}
 \end{code}
 This will create a TypeScript file and a specification file in the \verb+src/app/+ directory. 
 \paragraph{Dependency injection}
 \label{dependency_injection}
-When you create a Service using the Angular CLI, it is annotated with the \verb+@Injectable(...)+ annotation. You then have to import it in the AppModule file and add it to the \verb+providers+ array of the Module. From then on, you can use it in any other Service or Component simply by adding it to the Component or Service constructor. \\
+When you create a Service using the Angular \gls{cli}, it is annotated with the \verb+@Injectable(...)+ annotation. You then have to import it in the AppModule file and add it to the \verb+providers+ array of the Module. From then on, you can use it in any other Service or Component simply by adding it to the Component or Service constructor. \\
 
 For example, if we have a \verb+UserService+ that we want to use in our \verb+CreateUserComponent+, we can just use the following code to access the Service inside the Component:
 \begin{code}
@@ -1289,15 +1456,15 @@ For example, if we have a \verb+UserService+ that we want to use in our \verb+Cr
 \subsubsection{Routing}
 Routing\cite{angular:doc:router} inside the application is handled by the Angular Router. Even though our web application is a single-page application from the browser point of view, it is important to use a Router and not just load and unload content in a single URL. This enables for example deep linking to directly access a page of the application. \\
 
-To generate a Router, you need to generate a new Module to contain the Router. To do so, you can use the Angular CLI:
+To generate a Router, you need to generate a new Module to contain the Router. To do so, you can use the Angular \gls{cli}:
 \begin{code}
 	\begin{shell}
 ng generate module app-routing --flat --module=app
 	\end{shell}
-	\caption{Generating a routing module with the Angular CLI}
+	\caption{Generating a routing module with the Angular \gls{cli}}
 	\label{router_gen}
 \end{code}
-In source code \ref{router_gen}, the \verb+--flat+ parameter tells the CLI to put the new Module at the root of the \verb+src/app/+ without creating a separate folder and the \verb+--module=app+ parameter imports the newly created Module in the AppModule. \\
+In source code \ref{router_gen}, the \verb+--flat+ parameter tells the \gls{cli} to put the new Module at the root of the \verb+src/app/+ without creating a separate folder and the \verb+--module=app+ parameter imports the newly created Module in the AppModule. \\
 
 Then, we need to create the Router inside our Module. To do this, first you need to import the \verb+RouterModule+ and \verb+Routes+ class from Angular:
 \begin{code}
@@ -1352,12 +1519,12 @@ The most basic will return a \verb+Boolean+ to specify if the user can pass the 
 
 As an example, we can take a look at one of the most common Guard used. This Guard is used to protect a Route only available to logged-in users and will redirect to the \verb+/login+ page if the user is not logged-in.\\
 
-First of all, we can generate the Guard that we're going to call the \verb+AuthGuard+ using the Angular CLI, we have to add it to the \verb+providers+ array in the AppModule as well:
+First of all, we can generate the Guard that we're going to call the \verb+AuthGuard+ using the Angular \gls{cli}, we have to add it to the \verb+providers+ array in the AppModule as well:
 \begin{code}
 	\begin{shell}
 ng generate guard auth
 	\end{shell}
-	\caption{Generating a guard using Angular CLI}
+	\caption{Generating a guard using Angular \gls{cli}}
 \end{code}
 Then, we can add the Guard to our Route. If we take the Routes from source code \ref{simple_routes} and add a \verb+/login+ Route, we will then protect all other Routes behind the guard:
 \begin{code}
@@ -1378,7 +1545,7 @@ RxJS Observables\cite{angular:doc:observables} are similar in concept to LiveDat
 In most project, RxJS Observables are mainly used by the Angular HTTPClient\cite{angular:doc:http}. Since HTTP requests are asynchronous, when making a request the client returns an Observable on which you can subscribe to get the parsed result once it comes back from the server.\\
 
 \subsubsection{The HTTP Client}
-The HTTP Client is used to retrieve JSON Data from a backend API. It returns an Observable of the data already parsed to the correct type. Its recommended to use the HTTP Client in a Service and you can access it by Dependency Injection in any Service.\\
+The HTTP Client is used to retrieve \gls{json} Data from a backend \gls{api}. It returns an Observable of the data already parsed to the correct type. Its recommended to use the HTTP Client in a Service and you can access it by Dependency Injection in any Service.\\
 
 If we want to retrieve the list of all users from the backend, we have to create a \verb+User+ TypeScript class in our Angular project to match the data returned from the backend. Then we can simply use the HTTP Client to make a request and it will return an \verb+Observable<User[]>+:
 \begin{code}
@@ -1441,7 +1608,7 @@ NoSQL databases do not use the same data structures as SQL databases and there a
 	\item Graph databases
 \end{itemize}
 
-MongoDB is a document-oriented database\cite{wiki:document_oriented_db} launched in 2007 that store JSON-like documents in collections. It is currently one of the most used NoSQL data stores. The document would be the equivalent to a row in SQL and the collection is the equivalent to a table.
+MongoDB is a document-oriented database\cite{wiki:document_oriented_db} launched in 2007 that store \gls{json}-like documents in collections. It is currently one of the most used NoSQL data stores. The document would be the equivalent to a row in SQL and the collection is the equivalent to a table.
 
 \subsection{Schemas}
 %%TODO by default flexible schema
@@ -1518,7 +1685,7 @@ Node.js\cite{node:website}\cite{github:node} is an open source JavaScript runtim
 
 A package manager called NPM\cite{npm:website} (Node Package Manager) is used with Node.js to simplify the installation and management of libraries.   Many libraries are available in the NPM repositories and the principle behind Node.js is that you should use existing libraries instead of building everything from scratch everytime. Mongoose for example is available in the Node Package Manager. \\
 
-Node.js is often used to build backend REST APIs using the open source Express\cite{express:website}\cite{github:express} web framework that enables the creation of a simple web server to handle HTTP requests.
+Node.js is often used to build backend \gls{rest} APIs using the open source Express\cite{express:website}\cite{github:express} web framework that enables the creation of a simple web server to handle HTTP requests.
 \subsection{JavaScript ES6 and later}
 Node uses modern JavaScript features of ES6 and later\cite{wiki:ecmascript} (ECMAScript 6) first released in June 2015. ES6 brought plenty of improvements like Promises, lots of new method to deal with Arrays (mapping, filtering, etc.) as well as arrow functions, which are a new way to define anonymous functions. It is often referred as \emph{Modern JavaScript} and should be used in any new project as it is supported by major web browsers and Node. \\
 
@@ -1533,7 +1700,7 @@ Finally, with the introduction of \verb+async/await+\cite{google:dev:async_await
 
 This is used in Mongoose, as we can see in source code \ref{populating_mongo_code} because we have to return the data afterwards, so we can mark the function as \verb+async+ and then \verb+await+ the result. It is visually clearer than handling the result in a \verb+then()+ function.
 \subsection{Express}
-Express is a simple web framework that is often used to easily write REST APIs Backends. It can integrate with PassportJS (see \ref{passport}) and other Express middlewares. \\
+Express is a simple web framework that is often used to easily write \gls{rest} APIs Backends. It can integrate with PassportJS (see \ref{passport}) and other Express middlewares. \\
 
 At the base of Express, you have a server listening for Requests and providing a Response for each Request. Middlewares\cite{express:doc:middlewares} are functions that will return one after the other until a Response is sent. These middlewares will all take three parameters:
 \begin{itemize}
@@ -1626,7 +1793,7 @@ Passport\cite{github:passport}\cite{passport:website} is an authentication middl
 \chapter{Deployment guide}
 %%TODO write deployment guide
 \chapter{Backend API Documentation}
-The documentation of the Backend API, generated with APIDoc is available as an interactive version on \url{https://maximelovino.github.io/PocketHepia/api/}
+The documentation of the Backend \gls{api}, generated with APIDoc is available as an interactive version on \url{https://maximelovino.github.io/PocketHepia/api/}
 \chapter{Android Documentation}
 The documentation of the Android application, generated with Dokka is available as an interactive version on \url{https://maximelovino.github.io/PocketHepia/android/}
 \end{appendices}
