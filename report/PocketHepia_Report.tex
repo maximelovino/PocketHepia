@@ -1501,6 +1501,7 @@ Then, when finding a Car, we can just append the query with \verb+populate(owner
 \begin{code}
 	\jscode{assets/code/js/populating.js}
 	\caption{Populating a reference with Mongoose}
+	\label{populating_mongo_code}
 \end{code}
 \subsubsection{Hooks}
 \label{mongoose_hooks}
@@ -1511,27 +1512,59 @@ If we remove a Person and we want to delete all the Cars he owns, we need to rem
 	\jscode{assets/code/js/hook.js}
 	\caption{Removing referenced documents using a \emph{Hook}}
 \end{code}
-\section{NodeJS et Express}
+\section{NodeJS and Express}
 \label{node}
-\subsection{JavaScript ES6}
-\subsection{NPM Modules}
+Node.js\cite{node:website}\cite{github:node} is an open source JavaScript runtime created to run JavaScript applications outside a web browser. It is built on top of Chrome's V8 JavaScript engine. While some developers do not agree with the principle, Node.js enables the usage of a single language, JavaScript, to be used in the web browser as well as on the server. \\
+
+A package manager called NPM\cite{npm:website} (Node Package Manager) is used with Node.js to simplify the installation and management of libraries.   Many libraries are available in the NPM repositories and the principle behind Node.js is that you should use existing libraries instead of building everything from scratch everytime. Mongoose for example is available in the Node Package Manager. \\
+
+Node.js is often used to build backend REST APIs using the open source Express\cite{express:website}\cite{github:express} web framework that enables the creation of a simple web server to handle HTTP requests.
+\subsection{JavaScript ES6 and later}
+Node uses modern JavaScript features of ES6 and later\cite{wiki:ecmascript} (ECMAScript 6) first released in June 2015. ES6 brought plenty of improvements like Promises, lots of new method to deal with Arrays (mapping, filtering, etc.) as well as arrow functions, which are a new way to define anonymous functions. It is often referred as \emph{Modern JavaScript} and should be used in any new project as it is supported by major web browsers and Node. \\
+
+We are gonna cover Promises in this document a bit more (see \ref{promises}). For the rest of the features of ES6, you can have a look at \url{http://es6-features.org/}.
 \subsection{Promises}
 \label{promises}
-%%TODO do we need this part? Yes but very quick
-%%TODO find function, insert etc with await => talk about command than talk directly to mongo without passing by mongoose
-\subsection{Middlewares}
-\subsection{PassportJS}
+Promises\cite{mdn:doc:promises} are designed as a way to handle asynchronous code. Originally, this was handled by passing callback functions to functions that returned asynchronously. If this function was asynchronous as well, we would end up nesting and nesting anonymous functions with a very high level indentation that rendered the code illegible. This is often referred as \emph{callback hell}. \\
 
-\section{Containers}
-%%TODO REMOVE CONTAINER FROM TECHNOLOGIES AND PUT THEM ONLY IN DEPLOYMENT
-%%TODO talk about basis linux container distribution
-%%TODO talk about portability
-\subsection{Docker}
-\subsection{Orchestration with Docker Compose}
-\subsection{Google Cloud}
-\subsubsection{Kubernetes}
-\subsubsection{Google Container Registry}
-\subsection{Azure}
+Promises bring improvement to asynchronous by providing a syntax that can be chained by adding \verb+then()+ blocks one after the other. If we return a function returning a new Promise, we can simply chain a new \verb+then()+ afterwards. It also provides the ability to wait for multiples Promises to resolve instead of having to handle them separately. \\
+
+Finally, with the introduction of \verb+async/await+\cite{google:dev:async_await} in ES2017, we can even write synchronous-like code when using asynchronous methods returning Promises. This is useful when we can't do anything else until the Promise is resolved, so we might as well avoid having a \verb+then()+ and we can just \verb+await+ the result of the Promise. \\
+
+This is used in Mongoose, as we can see in source code \ref{populating_mongo_code} because we have to return the data afterwards, so we can mark the function as \verb+async+ and then \verb+await+ the result. It is visually clearer than handling the result in a \verb+then()+ function.
+\subsection{Express}
+Express is a simple web framework that is often used to easily write REST APIs Backends. It can integrate with PassportJS (see \ref{passport}) and other Express middlewares. \\
+
+At the base of Express, you have a server listening for Requests and providing a Response for each Request. Middlewares\cite{express:doc:middlewares} are functions that will return one after the other until a Response is sent. These middlewares will all take three parameters:
+\begin{itemize}
+	\item \verb+req+ The Request object that will contain information about the Request: its parameters, its body, its header, etc.
+	\item \verb+res+ The Response object on which we can call methods to specify the content of the Response and send it
+	\item \verb+next+ A function we can call to state that we are done with this middleware and we can pass to the next one.
+\end{itemize}
+The middlewares can be global to the server, meaning that will be called on every Request before reaching the Route or they can be specific to a Route. Each Route will specify a series of middlewares to run to handle the Request to that Route. Middlewares often need to pass information to the next middlewares, for example the \verb+body parser+ middleware used to parse \verb+x-www-form-urlencoded+ form bodies needs to pass the parsed body to the following middlewares. To do this, they can simply write what they need to pass in a field of the Request object. \\
+
+\begin{code}
+	\jscode{assets/code/js/expressServer.js}
+	\caption{Basic Express server setup with a root Router and body parser}
+	\label{express_server}
+\end{code}
+
+\begin{code}
+	\jscode{assets/code/js/routesExpress.js}
+	\caption{A Router with a Route with multiple middlewares}
+	\label{route_example}
+\end{code}
+
+In the examples in source code \ref{express_server} and \ref{route_example}, we have a basic Express setup with one Router. We can see the \verb+body parser+ middlewares is being used globally and then on the \verb+/hello+ route we use two middlewares. If we make a \verb+POST+ request to that Route, we will have the following middlewares coming into action\footnote{Listing only the ones we configured, Express has certainly other internal middlewares running}:
+\begin{enumerate}
+	\item The \verb+body parser+ middleware will parse the form body posted to the route and put the data as an object in \verb+req.body+
+	\item Our \verb+getName+ middleware will take the \verb+name+ from the data parsed and put it in \verb+req.name+ to make it more easily accessible to the next middleware, it will then call \verb+next()+\footnote{This middleware is useless, it just creates a new variable, but it is used to explain the logic of middlewares}
+	\item Finally, the \verb+helloFunction+ middleware will read the \verb+name+ and return a \verb+404+\cite{mdn:status:404} status if the \verb+name+ is "Mickael" with a message, otherwise it will return a \verb+200+\cite{mdn:status:200} status and a message to greet the person.
+\end{enumerate}
+
+\subsection{Passport}
+\label{passport}
+Passport\cite{github:passport}\cite{passport:website} is an authentication middleware compatible with Express. You can define strategies for Passport to handle username/password local authentication or authentication using tokens. You can also integrate a number of pre-built Passport strategies to authenticate using third-party services, for example Github or Facebook authentication. It will handle session data if needed. In a Route, you can then simply call the Passport middleware by using \verb+passport.authenticate(<strategyName>)+ and it will store the authenticated user in \verb+req.user+ or return a \verb+401+\cite{mdn:status:401} status code if the authentication fails. More details about the implementation in the project in section \ref{implementation_auth}.
 
 \chapter{Implementation}
 \section{Project modules}
@@ -1548,6 +1581,7 @@ If we remove a Person and we want to delete all the Cars he owns, we need to rem
 \subsection{Nginx Proxy}
 \section{Backend}
 \subsection{Authentication}
+\label{implementation_auth}
 \subsection{Endpoints}
 \subsection{Interaction with MongoDB}
 \section{Angular frontend}
@@ -1568,7 +1602,17 @@ If we remove a Person and we want to delete all the Cars he owns, we need to rem
 	\caption{Interactions in the Android application}
 \end{center}
 \end{figure}
-\chapter{Résultats}
+\section{Deployment}
+%%TODO REMOVE CONTAINER FROM TECHNOLOGIES AND PUT THEM ONLY IN DEPLOYMENT
+%%TODO talk about basis linux container distribution
+%%TODO talk about portability
+\subsection{Docker}
+\subsection{Orchestration with Docker Compose}
+\subsection{Google Cloud}
+\subsubsection{Kubernetes}
+\subsubsection{Google Container Registry}
+\subsection{Azure}
+\chapter{Results}
 \chapter{Conclusion}
 %%TODO talk about how to implement new features or sections inside the project
 \section{Future works}
@@ -1580,8 +1624,11 @@ If we remove a Person and we want to delete all the Cars he owns, we need to rem
 \begin{appendices}
 \appendixpage
 \chapter{Deployment guide}
+%%TODO write deployment guide
 \chapter{Backend API Documentation}
+The documentation of the Backend API, generated with APIDoc is available as an interactive version on \url{https://maximelovino.github.io/PocketHepia/api/}
 \chapter{Android Documentation}
+The documentation of the Android application, generated with Dokka is available as an interactive version on \url{https://maximelovino.github.io/PocketHepia/android/}
 \end{appendices}
 
 
