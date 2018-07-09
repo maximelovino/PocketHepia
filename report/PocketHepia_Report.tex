@@ -10,6 +10,7 @@
 \usepackage{float}
 \usepackage{longtable}
 \usepackage{pdfpages}
+\usepackage{tabularx}
 
 \usepackage{fancyhdr}
 \usepackage[bindingoffset=2cm,centering,includeheadfoot,margin=3cm]{geometry}
@@ -65,13 +66,13 @@
 \newenvironment{code}{\captionsetup{type=listing}}{}
 %%TODO replace \verb by \mintinline when possible
 
-%%TODO add JS, add PWA, add RTD, add ASCII, add UTF, add GDPR, add NPM, add SQL, add TS, add DAO?
+%%TODO add JS, add PWA, add RTD, add ASCII, add UTF, add GDPR, add TS
 
 %%TODO we have to list the full name here as well
 \newglossaryentry{api}
 {
     name={API},
-    description={A set of protocol, method calls and communication methods between two software components},
+    description={An Application Programming Interface (API) is a set of protocol, method calls and communication methods between two software components},
     first={Application Programming Interface (API)},
     long={Application Programming Interface}
 }
@@ -79,7 +80,7 @@
 \newglossaryentry{rest}
 {
     name={REST},
-    description={An architectural style that defines a set of constraints to be used for creating web services. Web Services that conform to the REST architectural style are called RESTful web services},
+    description={Representational State Transfer (REST) is an architectural style that defines a set of constraints to be used for creating web services. Web Services that conform to the REST architectural style are called RESTful web services},
     first={Representational State Transfer (REST)},
     long={Representational State Transfer}
 }
@@ -87,7 +88,7 @@
 \newglossaryentry{os}
 {
     name={OS},
-    description={Software layer nested between the hardware and the user application. It is responsible for process management as well as file access and peripherals interactions},
+    description={An Operating System (OS) is a software layer nested between the hardware and the user application. It is responsible for process management as well as file access and peripherals interactions},
     first={Operating System (OS)},
     long={Operating System}
 }
@@ -95,7 +96,7 @@
 \newglossaryentry{rfid}
 {
     name={RFID},
-    description={A method using electromagnetic fields to detect and track tags as well read electronically stored information on them},
+    description={Radio-Frequency Identification (RFID) is a method using electromagnetic fields to detect and track tags as well read electronically stored information on them},
     first={Radio-Frequency Identification (RFID)},
     long={Radio-Frequency Identification}
 }
@@ -103,15 +104,15 @@
 \newglossaryentry{jwt}
 {
     name={JWT},
-    description={JSON Web Token are an authentication method for HTTP requests that are often used to authenticate REST API calls},
-    first={JSON Web Token (JSON)},
+    description={JSON Web Token (JWT) are an authentication method for HTTP requests that are often used to authenticate REST API calls},
+    first={JSON Web Token (JWT)},
     long={JSON Web Token}
 }
 
 \newglossaryentry{epfl}
 {
     name={EPFL},
-    description={Also known as \emph{Swiss Federal Institute of Technology}, it is one of two institutes of technologies in Switzerland, the other being in Zurich.},
+    description={The \emph{Ecole Polytechnique Fédérale de Lausanne} (EPFL), also known as \emph{Swiss Federal Institute of Technology}, is one of two institutes of technologies in Switzerland, the other being in Zurich.},
     first={Ecole Polytechnique Fédérale de Lausanne (EPFL)},
     long={Ecole Polytechnique Fédérale de Lausanne}
 }
@@ -119,7 +120,7 @@
 \newglossaryentry{json}
 {
     name={JSON},
-    description={A human-readable text format used to transmit data objects similar to the object notation in JavaScript},
+    description={JavaScript Object Notation (JSON) is a human-readable text format used to transmit data objects similar to the object notation in JavaScript},
     first={JavaScript Object Notation (JSON)},
     long={JavaScript Object Notation}
 }
@@ -127,7 +128,7 @@
 \newglossaryentry{cli}
 {
     name={CLI},
-    description={A mean of interacting with a computer using text commands typed inside a terminal, in opposition to GUI},
+    description={A Command Line Interface (CLI) is a mean of interacting with a computer using text commands typed inside a terminal, in opposition to GUI},
     first={Command Line Interface (CLI)},
     long={Command Line Interface}
 }
@@ -135,7 +136,7 @@
 \newglossaryentry{gui}
 {
     name={GUI},
-    description={A mean of interacting with a computer in an interactive way using a pointing device, such as a mouse or a touchscreen to interact with elements like buttons or windows},
+    description={A Graphical User Interface (GUI) is a mean of interacting with a computer in an interactive way using a pointing device, such as a mouse or a touchscreen to interact with elements like buttons or windows},
     first={Graphical User Interface (GUI)},
     long={Graphical User Interface}
 }
@@ -143,7 +144,7 @@
 \newglossaryentry{ide}
 {
     name={IDE},
-    description={A computer program that incorporates a text editor with syntax highlighting and autocompletion for one or more programming languages as well as compilation, execution and debugging functionnality},
+    description={An Integrated Development Environment (IDE) is a computer program that incorporates a text editor with syntax highlighting and autocompletion for one or more programming languages as well as compilation, execution and debugging functionnality},
     first={Integrated Development Environment (IDE)},
     long={Integrated Development Environment}
 }
@@ -151,7 +152,7 @@
 \newglossaryentry{sdk}
 {
     name={SDK},
-    description={A set of software development tools and libraries used to create applications for a given software platform},
+    description={A Software Development Kit (SDK) is a set of software development tools and libraries used to create applications for a given software platform},
     first={Software Development Kit (SDK)},
     long={Software Development Kit}
 }
@@ -159,7 +160,7 @@
 \newglossaryentry{jvm}
 {
     name={JVM},
-    description={A virtual machine allowing to run programs compiled as Java Bytecode on a computer or mobile terminal. JVM languages are programming languages that can be compiled as Java Bytecode to be run on the JVM},
+    description={The Java Virtual Machine (JVM) is a virtual machine allowing to run programs compiled as Java Bytecode on a computer or mobile terminal. JVM languages are programming languages that can be compiled as Java Bytecode to be run on the JVM},
     first={Java Virtual Machine (JVM)},
     long={Java Virtual Machine}
 }
@@ -167,7 +168,7 @@
 \newglossaryentry{nfc}
 {
     name={NFC},
-    description={NFC stands for Near Field Communication and is a set of communication protocols to communicate in short ranges using electromagnetic induction},
+    description={Near Field Communication (NFC) is a set of communication protocols to communicate in short ranges using electromagnetic induction},
     first={Near Field Communication (NFC)},
     long={Near Field Communication}
 }
@@ -175,9 +176,33 @@
 \newglossaryentry{ndef}
 {
     name={NDEF},
-    description={The NFC Data Exchange Format is a standardised format used to encode data on NFC tags},
+    description={The NFC Data Exchange Format (NDEF) is a standardised format used to encode data on NFC tags},
     first={NFC Data Exchange Format (NDEF)},
     long={NFC Data Exchange Format}
+}
+
+\newglossaryentry{sql}
+{
+    name={SQL},
+    description={Structured Query Language (SQL) is a language used to manage and query data held in Relational Database Management Systems. Those databases are often referred as SQL Databases},
+    first={Structured Query Language (SQL)},
+    long={Structured Query Language}
+}
+
+\newglossaryentry{dao}
+{
+    name={DAO},
+    description={A Data Access Object (DAO) is object that provides an interface to access data in a database without exposing the details of the database},
+    first={Data Access Object (DAO)},
+    long={Data Access Object}
+}
+
+\newglossaryentry{npm}
+{
+    name={NPM},
+    description={The Node Package Manager (NPM) is a package manager for JavaScript, used mainly when working in Node.js},
+    first={Node Package Manager (NPM)},
+    long={Node Package Manager}
 }
 
 
@@ -812,10 +837,7 @@ Librarian can view current bookings for all users from the website and Android a
 \section{Technological choices}
 \label{technological choices}
 \subsection{The data and backend}
-%%TODO talk about JWT
-For the data and backend part of the project, we decided to build a unique backend for both the web and mobile clients. We would need a database to store the data of our models and a service to access to access that data. The easier solution would be to build a \gls{rest} \gls{api} in front of a database. To do this, we saw two main possibilities: a PHP \gls{rest} \gls{api} coupled with a SQL Database or a Node.JS Express \gls{rest} \gls{api} coupled with a Mongo DB. While we could mix these and use a SQL Database with Node.JS, we wanted to use the better affinity possible between the two. With the increase in popularity in Javascript based backends, we decided to rule out the PHP option and keep the Express/Mongo option. This is also due to the fact that PHP feels dated and does not provide a clear structure unless you use a PHP Framework to complement it. \\
-
-%%TODO PHP less modern => node js better => why nosql is better => php without frameworks is a mess
+For the data and backend part of the project, we decided to build a unique backend for both the web and mobile clients. We would need a database to store the data of our models and a service to access to access that data. The easier solution would be to build a \gls{rest} \gls{api} in front of a database. To do this, we saw two main possibilities: a PHP \gls{rest} \gls{api} coupled with a \gls{sql} Database or a Node.JS Express \gls{rest} \gls{api} coupled with a Mongo DB. While we could mix these and use a \gls{sql} Database with Node.JS, we wanted to use the better affinity possible between the two. With the increase in popularity in Javascript based backends, we decided to rule out the PHP option and keep the Express/Mongo option. This is also due to the fact that PHP feels dated and does not provide a clear structure unless you use a PHP Framework to complement it. \\
 
 The second solution that was suggested was to use an object syncing platform to directly synchronise data with all of our clients. One of these platforms is \emph{Realm Platform\footnote{\url{https://realm.io/products/realm-platform}}} and we decided to study the advantages of it for our project and decide if we should use it over the Express/Mongo option.
 \subsubsection{Realm vs. Express-MongoDB}
@@ -878,6 +900,7 @@ React and Angular are more mature, with Angular being the oldest of the three an
 By using MongoDB with Express/Node.js and Angular, we are effectively using the \emph{MEAN}\footnote{Stands for Mongo-Express-Angular-Node}\cite{mean:website} development stack which is regarded as the more modern equivalent to the \emph{LAMP}\footnote{Stands for Linux-Apache-MySQL-PHP}\cite{wiki:lamp} stack. The \emph{MEAN} stack also has several variants where Angular is replaced by another frontend framework like React or Vue.
 
 \chapter{Technologies}
+In this chapter, we are going to present in more details the technologies that we used during this project. We will write more detailed sections about Android (see \ref{android_chapter}) because of all the new improvements that we decided to use and we studied for this project as well as Angular (see \ref{angular_chapter}) since we learned how to use it as part of this project. Those two technologies represented the most amount of work for this project. The other technologies used, NoSQL Databases and Node.JS will be described more briefly.
 \section{Developing for Android}
 \label{android_chapter}
 Android is a mobile operating system developed by Google and launched in September 2008. The core of Android is open source and is known as the \emph{Android Open Source Program (AOSP)}. But nobody really knows or uses the AOSP version of Android, every phone manufacturer, even Google, forks the AOSP version to build its own for their devices. What is often referred as "pure Android" is the Google implementation of Android on their Nexus and Pixel lines of smartphones. Android runs on all kinds of platforms, from mobile phone to watches, as well as tablets and laptops. \\
@@ -886,12 +909,11 @@ A \gls{sdk} and an \gls{ide} are provided for developing Android applications. T
 \subsection{Android Fragmentation}
 One of the biggest problems for developers is the fragmentation of \gls{os} versions running on Android devices. As of May 2018, only 62.3\% of devices were running Android Marshmallow (version 6) or later. Android Marshmallow was released in 2015, meaning that 37.7\% of devices were running software that was more than 3 years old without security updates or new features (see table \ref{android_os_table}).
 
-%%TODO this table is too large on the page
 \begin{table}[H]
 \centering
 \bgroup
 \def\arraystretch{1.5}%  1 is the default, change whatever you need
-\begin{tabular}{|c|c|c|c|}
+\begin{tabularx}{\textwidth}{|c|l|X|X|}
 \hline
   \textbf{Year} & \textbf{Version Name} & \textbf{Usage of this version} & \textbf{Usage of this version or later}\\
   \hline
@@ -911,10 +933,10 @@ One of the biggest problems for developers is the fragmentation of \gls{os} vers
 \hline
 2017 & Oreo & 5.7\% & 5.7\% \\
 \hline
-\end{tabular}
+\end{tabularx}
 \egroup
-\label{android_os_table}
 \caption[Android OS Fragmentation]{Android \gls{os} Fragmentation (May 2018)\cite{android:dev:osfragmentation}}
+\label{android_os_table}
 \end{table}
 
 \subsubsection{The problem with updates}
@@ -1051,11 +1073,11 @@ Similarly when working with a SQLite Database and writing a transaction, the KTX
 \end{code}
 
 \subsubsection{Room - Data persistence}
-There are three main ways to store persistent data in an Android application. First, you can use files, either user accessible files or files only available from the app code. Secondly, you can use \verb+SharedPreferences+ to store key/value pairs. And finally, you can use a database. Databases on Android are built on SQLite and have always been the best way to store data on Android. The problem though was that the code to write to use databases was too long and complex and you could easily run into errors due to the usage of bad practices or wrong SQL syntax for example. Moreover, you always had to parse the data returned from the database into models and vice-versa so it always felt like you had to do the work twice.\\
+There are three main ways to store persistent data in an Android application. First, you can use files, either user accessible files or files only available from the app code. Secondly, you can use \verb+SharedPreferences+ to store key/value pairs. And finally, you can use a database. Databases on Android are built on SQLite and have always been the best way to store data on Android. The problem though was that the code to write to use databases was too long and complex and you could easily run into errors due to the usage of bad practices or wrong \gls{sql} syntax for example. Moreover, you always had to parse the data returned from the database into models and vice-versa so it always felt like you had to do the work twice.\\
 
 With Room\cite{android:doc:jetpack:room}, part of the Architecture section of Android Jetpack, the goal is to simplify the usage of SQLite databases by providing an abstraction layer on top of it. Used in conjunction with ViewModel and LiveData, it simplifies the handling and presentation of data on Android.\\
 
-As seen in figure \ref{room_architecture_img}, the application interacts with the Room Database to get an instance of Data Access Objects (DAO) and retrieve Entities. All of these are generated by the library, we just have to provide simple "configuration" classes and interfaces.\\
+As seen in figure \ref{room_architecture_img}, the application interacts with the Room Database to get an instance of \gls{dao} and retrieve Entities. All of these are generated by the library, we just have to provide simple "configuration" classes and interfaces.\\
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=.8\textwidth]{assets/room_architecture}
@@ -1074,16 +1096,16 @@ For example, a \verb+User+ entity is just a data class in Kotlin:
 
 
 
-Then, we have to write a DAO\cite{android:training:jetpack:room:dao} interface for the entity to create methods to interact with the entity in the database. There are methods automatically created for us, such as insertion and deletion of single entries. Queries returning elements from the database have to be written in SQL, but the \gls{ide} provides completion and there is compile time check of SQL syntax with table and column names. Finally, we can easily ask for returning LiveData for a query simply by specifying in the signature function.
+Then, we have to write a \gls{dao}\cite{android:training:jetpack:room:dao} interface for the entity to create methods to interact with the entity in the database. There are methods automatically created for us, such as insertion and deletion of single entries. Queries returning elements from the database have to be written in \gls{sql}, but the \gls{ide} provides completion and there is compile time check of \gls{sql} syntax with table and column names. Finally, we can easily ask for returning LiveData for a query simply by specifying in the signature function.
 
-For example, for the \verb+User+ DAO, we can just wrap all the return values from \verb+SELECT+ queries in \verb+LiveData+ and we will get them in that format:
+For example, for the \verb+User+ \gls{dao}, we can just wrap all the return values from \verb+SELECT+ queries in \verb+LiveData+ and we will get them in that format:
 \begin{code}
 \kotlincode{assets/code/kotlin/userDao.kt}
 \caption{A Room User DAO definition}	
 \end{code}
 
 
-Finally, you can then write the Database\cite{android:training:jetpack:room:db} class by providing an array of the entities and creating an abstract fun to retrieve each DAO. It is also suggested to make the Database class a Singleton\cite{android:training:jetpack:room}:
+Finally, you can then write the Database\cite{android:training:jetpack:room:db} class by providing an array of the entities and creating an abstract fun to retrieve each \gls{dao}. It is also suggested to make the Database class a Singleton\cite{android:training:jetpack:room}:
 \begin{code}
 \kotlincode{assets/code/kotlin/userDb.kt}
 \caption{Setting up a Room Database}	
@@ -1217,6 +1239,7 @@ Then in the destination screen, we can unwrap the passed arguments by using the 
 \end{code}
 
 \section{Angular 6}
+\label{angular_chapter}
 %%TODO should we talk about the main module file?
 %%TODO talk about ng serve
 %%TODO talk about exporting and running with Nginx
@@ -1227,7 +1250,7 @@ The main advantages of using a frontend framework are modularity and a clear cod
 
 Angular provides a \gls{cli} tool called \emph{Angular CLI} and used with the \verb+ng+ command that helps initialising and updating projects. The \gls{cli} also handles code generation, for example when creating a component, it will create all required files and register the component in the application module, more on that later. All Angular \gls{cli} commands should be run from the root directory of the Angular project. \\
 
-Angular projects are usually installed and run through NPM, although Yarn can be used as well.
+Angular projects are usually installed and run through \gls{npm}, although Yarn can be used as well.
 \subsection{Single-page webapp}
 Angular is used to build web applications, as opposed to websites. While for most users the differences between these two are not noticeable, web applications behave more like native applications and allow interactions from the user.\\
 
@@ -1297,7 +1320,7 @@ The main application files are contained in the \verb+src/+ directory.The \verb+
 This is the main configuration file for the Angular project. It contains directory and path configurations for the project as well as options on whether to use CSS or SASS for stylesheets. It also contains the configuration about hostnames and ports to use as well as SSL configuration for the built-in development web server.
 
 \paragraph{package.json}
-As in all NPM projects, this files contains all the NPM module dependencies of our application with their respective version as well as define commands to be run with the \verb+npm run+ command. To update our application dependencies, for example when a new Angular version comes out, we can use the Angular \gls{cli} with the command and then follow the on-screen instructions:
+As in all \gls{npm} projects, this files contains all the \gls{npm} module dependencies of our application with their respective version as well as define commands to be run with the \verb+npm run+ command. To update our application dependencies, for example when a new Angular version comes out, we can use the Angular \gls{cli} with the command and then follow the on-screen instructions:
 \begin{code}
 	\begin{shell}
 ng update
@@ -1586,11 +1609,11 @@ Contrary to a simple stylesheet library, Angular Material provides Angular Compo
 Finally, a Component Development Kit is provided to simplify building custom Material-inspired Components.
 \section{NoSQL Database - MongoDB}
 %%TODO add wikipedia ref for noSQL, mongo from wikipedia
-NoSQL databases have existed for a long time, since the late 1960s but only recently have they started become more and more popular, due to the advent of Big Data and real-time applications. While most people believe that NoSQL databases are named this way because they are \emph{NOT} SQL, it actually should mean \emph{Not-Only SQL} as some NoSQL system support SQL-like syntaxes for queries. \\
+NoSQL databases\cite{wiki:nosql} have existed for a long time, since the late 1960s but only recently have they started become more and more popular, due to the advent of Big Data and real-time applications. While most people believe that NoSQL databases are named this way because they are \emph{NOT} \gls{sql}, it actually should mean \emph{Not-Only \gls{sql}} as some NoSQL system support \gls{sql}-like syntaxes for queries. \\
 
 According to the \emph{CAP Theorem}\cite{wiki:cap_theorem}, it is impossible for a distributed data store to provide more than two out of: Consistency, Availability and Partition tolerance. NoSQL stores often compromises some consistency in favour of better availability and speed as well as simplified scaling. \\ 
 
-NoSQL databases do not use the same data structures as SQL databases and there are several categories of NoSQL databases classified by the data structures they use. Some of these categories are:
+NoSQL databases do not use the same data structures as \gls{sql} databases and there are several categories of NoSQL databases classified by the data structures they use. Some of these categories are:
 \begin{itemize}
 	\item Key-Value store
 	\item Document store
@@ -1598,14 +1621,13 @@ NoSQL databases do not use the same data structures as SQL databases and there a
 	\item Graph databases
 \end{itemize}
 
-MongoDB is a document-oriented database\cite{wiki:document_oriented_db} launched in 2007 that store \gls{json}-like documents in collections. It is currently one of the most used NoSQL data stores. The document would be the equivalent to a row in SQL and the collection is the equivalent to a table.
+MongoDB\cite{wiki:mongo} is a document-oriented database\cite{wiki:document_oriented_db} launched in 2007 that store \gls{json}-like documents in collections. It is currently one of the most used NoSQL data stores. The document would be the equivalent to a row in \gls{sql} and the collection is the equivalent to a table.
 
 \subsection{Schemas}
-%%TODO by default flexible schema
 By default, MongoDB does not impose a strict Schema inside a collection, meaning all documents inside the collection can have a different structure. While it is not a best practice, it provides flexibility when the project is still in development phase because you can modify the schema and save new documents with newly added or modified fields while already present keep their structure. When running in production, the schema should be strict in all collections. \\
 \subsubsection{How to handle references}
 \label{mongo_references}
-Often documents you save in the database will have a relation with other documents from another schema. These relations would be stored in a SQL Database as a Foreign Key linked to the Primary Key of the entry we want to reference. In MongoDB, there are three solutions to handle references depending on the number of references that are necessary from one document to another. You should think from the beginning about the maximum number of references you can have between two documents before choosing one of three references design. The limitations of the designs come from the maximum size of a MongoDB document, that is capped at 16Mb, and if you need to update referenced documents often. \\
+Often documents you save in the database will have a relation with other documents from another schema. These relations would be stored in a \gls{sql} Database as a Foreign Key linked to the Primary Key of the entry we want to reference. In MongoDB, there are three solutions to handle references depending on the number of references that are necessary from one document to another. You should think from the beginning about the maximum number of references you can have between two documents before choosing one of three references design. The limitations of the designs come from the maximum size of a MongoDB document, that is capped at 16Mb, and if you need to update referenced documents often. \\
 
 To illustrate the three options, we are gonna take an example where we people and cars. There is one schema for a person and one schema for a car and a person can have multiple cars but a car is only owned by a single person. \\
 
@@ -1622,16 +1644,16 @@ To reduce the size taken by embedding full car documents in a user's document, w
 	\caption{Storing children references in MongoDB}
 \end{code}
 
-Finally, the last option\cite{mongo:doc:refs:linkingRefs} is the most similar to the SQL Foreign Key idea and is also the one that will scale better to a big number of references. Instead of storing an array of the IDs of the cars in the person's document, we store the owner person ID in the car 's document. While it is the most complicated design to quickly retrieve information or delete all cars when we delete a person (see \ref{mongoose_hooks}), it is the most space predictable design because no documents can individually grow as the number of references increase.\\
+Finally, the last option\cite{mongo:doc:refs:linkingRefs} is the most similar to the \gls{sql} Foreign Key idea and is also the one that will scale better to a big number of references. Instead of storing an array of the IDs of the cars in the person's document, we store the owner person ID in the car 's document. While it is the most complicated design to quickly retrieve information or delete all cars when we delete a person (see \ref{mongoose_hooks}), it is the most space predictable design because no documents can individually grow as the number of references increase.\\
 
 \begin{code}
 	\jsoncode{assets/code/json/userCarsLinkingParents.json}
 	\caption{Storing parent references in MongoDB}
 \end{code}
-%%TODO talk about lack of transactions?
+
+In its current version, MongoDB lacks the ability to use Database transactions to handle multiple documents in a transaction and only commit the transaction if everything works out. Transactions are coming in MongoDB version 4, but in the meantime, you should avoid having backend operations that require updating multiple documents. For example, when handling payments, we were originally creating a payment and updating the balance in the two users documents. These are two operations and if the server stopped between the two we would get an incoherent state. We refactored our Database so that we only need to create the payment and then users' balances are calculated from payments.
 \subsection{Mongoose}
 When using MongoDB, you will often integrate it in a MEAN\cite{mean:website} stack and so you will access MongoDB with a Node library called Mongoose\cite{mongoose:website}. Mongoose allows to connect to MongoDB databases, define schemas and create, update and delete documents. Mongoose can be integrated with JavaScript ES6 Promises (see section \ref{promises}).
-%%TODO check if we keep the ref to promises
 \subsubsection{Defining a Schema}
 You can define Schemas\cite{mongoose:doc:schemas} for the database by using the \verb+Mongoose.Schema+ class constructor and specifying the field names and types as well as adding validators on fields. Some default validators are already included, for example the \verb+required+ validator or a \verb+max+ validator for fields of type \verb+Number+. \\
 
@@ -1662,18 +1684,18 @@ Then, when finding a Car, we can just append the query with \verb+populate(owner
 \end{code}
 \subsubsection{Hooks}
 \label{mongoose_hooks}
-Finally, sometimes we need to take actions before we create or remove a document for example. In the case of references for example, if we want to \emph{cascade} the deletion of the references like we would do it in SQL, we need to do this inside a \emph{Hook} that we can set to run before an action, in this case \verb+pre('remove')+.\\
+Finally, sometimes we need to take actions before we create or remove a document for example. In the case of references for example, if we want to \emph{cascade} the deletion of the references like we would do it in \gls{sql}, we need to do this inside a \emph{Hook} that we can set to run before an action, in this case \verb+pre('remove')+.\\
 
 If we remove a Person and we want to delete all the Cars he owns, we need to remove the Cars in the \verb+pre('remove')+ of the Person so that it will run when we delete the person. In the \emph{Hook} we can run:
 \begin{code}
 	\jscode{assets/code/js/hook.js}
 	\caption{Removing referenced documents using a \emph{Hook}}
 \end{code}
-\section{NodeJS and Express}
+\section{Node.js and Express}
 \label{node}
 Node.js\cite{node:website}\cite{github:node} is an open source JavaScript runtime created to run JavaScript applications outside a web browser. It is built on top of Chrome's V8 JavaScript engine. While some developers do not agree with the principle, Node.js enables the usage of a single language, JavaScript, to be used in the web browser as well as on the server. \\
 
-A package manager called NPM\cite{npm:website} (Node Package Manager) is used with Node.js to simplify the installation and management of libraries.   Many libraries are available in the NPM repositories and the principle behind Node.js is that you should use existing libraries instead of building everything from scratch everytime. Mongoose for example is available in the Node Package Manager. \\
+A package manager called \gls{npm}\cite{npm:website} is used with Node.js to simplify the installation and management of libraries.   Many libraries are available in the \gls{npm} repositories and the principle behind Node.js is that you should use existing libraries instead of building everything from scratch everytime. Mongoose for example is available in the Node Package Manager. \\
 
 Node.js is often used to build backend \gls{rest} APIs using the open source Express\cite{express:website}\cite{github:express} web framework that enables the creation of a simple web server to handle HTTP requests.
 \subsection{JavaScript ES6 and later}
@@ -1751,6 +1773,7 @@ Passport\cite{github:passport}\cite{passport:website} is an authentication middl
 \subsection{Authentication}
 %%TODO http interceptor that adds JWT, JWT stored in LocalStorage
 \subsection{Routing}
+%%TODO insert nested routes variable
 \subsection{Components}
 \section{Android application}
 \begin{figure}[H]
