@@ -211,8 +211,6 @@
     long={Create-Read-Update-Delete}
 }
 
-%%TODO use all these acronyms in text
-
 \usepackage{minted}
 \definecolor{mintedbackground}{rgb}{0.95,0.95,0.95}
 \usemintedstyle{tango}
@@ -740,6 +738,7 @@ Then, there are two roles that will not be implemented as part of the Bachelor p
 Finally, the last role is the "Librarian" role that as its name implies is attributed to users working for the library. This role enables the creation of books loans at the library for users. As stated in section \ref{books_feature}, this role will certainly be removed completely because there is already a system in place to handle book loans at the library.
 
 \section{The models}
+\label{models}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/models_relation}
@@ -1168,9 +1167,6 @@ Finally, you can then write the Database\cite{android:training:jetpack:room:db} 
 \kotlincode{assets/code/kotlin/userDb.kt}
 \caption{Setting up a Room Database}	
 \end{code}
-
-
-%%TODO do we talk about typeconverters?
 \paragraph{ViewModel}
 The ViewModel\cite{android:doc:viewmodel} bridges the gap between the data and the UI data in a lifecycle aware way. As opposed to storing data in variables in an Activity, data in a ViewModel will remain persistent when configuration changes, for example when rotating the screen.
 
@@ -1298,10 +1294,6 @@ Then in the destination screen, we can unwrap the passed arguments by using the 
 
 \section{Angular 6}
 \label{angular_chapter}
-%%TODO should we talk about the main module file?
-%%TODO talk about ng serve
-%%TODO talk about exporting and running with Nginx
-
 Angular\cite{angular:website} is a web application frontend framework. It is opne source and developed actively on GitHub\cite{github:angular} by the Angular team at Google and other individual contributors. Angular 1 was originally built in JavaScript (now AngularJS) and has now been replaced since version 2 by a new version of Angular (commonly called Angular 2, even though version 6 is out) built in TypeScript. \\
 
 The main advantages of using a frontend framework are modularity and a clear code structure compared to not using any frameworks. \\
@@ -1666,7 +1658,6 @@ Contrary to a simple stylesheet library, Angular Material provides Angular Compo
 
 Finally, a Component Development Kit is provided to simplify building custom Material-inspired Components.
 \section{NoSQL Database - MongoDB}
-%%TODO add wikipedia ref for noSQL, mongo from wikipedia
 NoSQL databases\cite{wiki:nosql} have existed for a long time, since the late 1960s but only recently have they started become more and more popular, due to the advent of Big Data and real-time applications. While most people believe that NoSQL databases are named this way because they are \emph{NOT} \gls{sql}, it actually should mean \emph{Not-Only \gls{sql}} as some NoSQL system support \gls{sql}-like syntaxes for queries. \\
 
 According to the \emph{CAP Theorem}\cite{wiki:cap_theorem}, it is impossible for a distributed data store to provide more than two out of: Consistency, Availability and Partition tolerance. NoSQL stores often compromises some consistency in favour of better availability and speed as well as simplified scaling. \\ 
@@ -1807,13 +1798,14 @@ Passport\cite{github:passport}\cite{passport:website} is an authentication middl
 \section{Project modules}
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[width=\textwidth]{assets/implementation}
+	\includegraphics[width=.9\textwidth]{assets/implementation}
 	\caption{Interactions between the components}
 	\label{all_modules_fig}
 \end{center}
 \end{figure}
-In figure \ref{all_modules_fig}, we can see the four modules of the project, with the two frontends (mobile and web) and the backend sitting in front of the Mongo Database. This figure shows the global interactions between the modules and the backend from an external point of view. In the two frontends and the backend, we have the same separation around the different data models being handled with specific elements for each technologies. On the backend, we have one Router and one Controller per model. On the Angular frontend, we have one Service per model communicating with the corresponding Routes. On Android, we have a main sync task that is communicating with all data being retrieved offline and other \emph{action} tasks that are being used when the user takes an action that communicate with the respective Routes.
+In figure \ref{all_modules_fig}, we can see the four modules of the project, with the two frontends (mobile and web) and the backend sitting in front of the Mongo Database. This figure shows the global interactions between the modules and the backend from an external point of view. In the two frontends and the backend, we have the same separation around the different data models being handled with specific elements for each technologies. On the backend, we have one Router and one Controller per model. On the Angular frontend, we have one Service per model communicating with the corresponding Routes. On Android, we have a main sync task that is communicating with all data being retrieved offline and other \emph{action} tasks that are being used when the user takes an action that communicate with the respective Routes.\\
 
+In this chapter, we are going to dive in more details about the Angular, Android and Node.js+Express modules of the project as well as the deployment and infrastructure part of the project. There is no section dedicated to MongoDB as the Mongo-specific parts are the models that we already wrote about in section \ref{models} and the rest of the interaction with MongoDB happens through Mongoose in the Node.js+Express module.
 \section{Deployment}
 \begin{figure}[H]
 \begin{center}
@@ -1825,7 +1817,7 @@ In figure \ref{all_modules_fig}, we can see the four modules of the project, wit
 We decided to use Docker and Docker Compose to simplify the deployment of our multi-tier project. The advantages provided by using a container solution like Docker are useful for a time-constrained project because we can just as easily run our project in a development environment as we can run in production. We do not need to worry when deploying it on a distant server about dependencies versions or software configuration. As long as we have the Docker Engine running on the remote machine, we can deploy our containers and run them. \\
 
 %%TODO add ref for volumes
-We decided to opt for a three containers configuration with one container acting as the entry point of our application with HTTP and HTTPS ports open. This contains a Nginx web server and proxy (more details in section \ref{nginx_proxy}) serving the compiled Angular application (details about the configuration of the container in section \ref{container_angular}). The proxy will then direct requests to the \gls{api} to the Backend container (details about the container in section \ref{container_backend}) that runs the Node.js+Express server and communicates with the last container running the Mongo Database. This last container is linked to a volume on the host machine to keep the data persistent even if we need to shutdown or restart the Mongo container. \\
+We decided to opt for a three containers configuration with one container acting as the entry point of our application with HTTP and HTTPS ports open. This contains a Nginx web server and proxy (more details in section \ref{nginx_proxy}) serving the compiled Angular application (details about the configuration of the container in section \ref{container_angular}). The proxy will then direct requests to the \gls{api} to the Backend container (details about the container in section \ref{container_backend}) that runs the Node.js+Express server and communicates with the last container running the Mongo Database. This last container is linked to a volume on the host machine to keep the data persistent even if we need to shutdown or restart the Mongo container. There is no other specific configuration for this container that uses the Mongo image available on DockerHub\cite{docker:hub:mongo}. \\
 
 We are using a virtual machine hosted on Microsoft Azure to run our containers and are using the Azure Container Registry to store the three built Docker images so we can pull them from any machine easily. The three images are the following\footnote{You can only pull them by authenticating with an authorised account, they are not public}:
 \begin{itemize}
@@ -1891,7 +1883,7 @@ Moreover, after the authentication passes, there are permissions checks for cert
 
 For each of these permissions checks, we wrote a middleware in the \verb+authController+ that will return a \verb+403+\cite{mdn:status:403} status Response if the user fails to meet the criteria and otherwise will proceed to the next middleware (see figure \ref{jwt_workflow}).
 \subsection{Endpoints}
-The endpoints of the \gls{api} are separated in categories, each with their own Router and Controller for the categories. We did this in order to avoid cramming every Route in a single Router and manage distinctively each category of Routes. All Routers can be found in the \verb+routes+ directory with the \verb+index+ Router handling the root Router and linking all sub-Routers. \\
+The endpoints of the \gls{api}\footnote{For more information about all routes and the documentation of the \gls{api}, refer to the corresponding appendix on page \pageref{appendix_api_doc} of the appendices} are separated in categories, each with their own Router and Controller for the categories. We did this in order to avoid cramming every Route in a single Router and manage distinctively each category of Routes. All Routers can be found in the \verb+routes+ directory with the \verb+index+ Router handling the root Router and linking all sub-Routers. \\
 
 There is currently one Route available in the root Router directly with no authentication. This route is used to initialise the Backend with a single user if no users are contained in the database. It will return the credentials for the newly created user if the server has been initialised by the call. \\
 
@@ -1961,6 +1953,7 @@ The Dockerfile for the Angular frontend is the most complex one. We wanted to ma
 %%TODO write deployment guide, two parts: pull images and run with docker compose, build images with sources and run them locally
 %%TODO add the fact that you need to direct pockethepia.maximelovino.ch domain to the IP of the machine used
 \chapter{Backend API Documentation}
+\label{appendix_api_doc}
 The documentation of the Backend \gls{api}, generated with APIDoc is available as an interactive version on \url{https://maximelovino.github.io/PocketHepia/api/}
 \chapter{Android Documentation}
 The documentation of the Android application, generated with Dokka is available as an interactive version on \url{https://maximelovino.github.io/PocketHepia/android/}
