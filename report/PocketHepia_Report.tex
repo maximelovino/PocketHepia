@@ -203,6 +203,14 @@
     long={Node Package Manager}
 }
 
+\newglossaryentry{crud}
+{
+    name={CRUD},
+    description={Create-Read-Update-Delete (CRUD) are the four main methods used to handle data stored in a persistent storage, such as a database},
+    first={Create-Read-Update-Delete (CRUD)},
+    long={Create-Read-Update-Delete}
+}
+
 %%TODO use all these acronyms in text
 
 \usepackage{minted}
@@ -1847,15 +1855,58 @@ All this configuration amounts to the following Nginx configuration file:
 \end{code}
 
 \section{Backend}
-%%TODO talk about its container
+For the project's Backend, we used Node.js+Express to build a \gls{rest} \gls{api} Backend that can be used from the Android and Angular Frontends. The Backend is mainly composed of \gls{crud} methods to manage the data stored in the database.
 \subsection{Authentication}
 \label{implementation_auth}
+%%TODO add diagram with authentication + permission checks before route
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/login_workflow}
+	\caption{Workflow of the local authentication on login Request}
+	\label{login_workflow}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/request_workflow}
+	\caption{Workflow of a JWT authenticated Request}
+		\label{jwt_workflow}
+\end{center}
+\end{figure}
+Access to Routes requires authentication to avoid leaking information publicly as well as to know which user is making a Request and provide the correct Response for that user. To handle authentication, we use Passport, an authentication middleware for Express available on \gls{npm} (see section \ref{passport} for more information). \\
+
+While our first initial login is handled by a username/password combination, the user should not enter its credentials at each page load or synchronisation attempt. While it would be possible to store the credentials in the client, this is not safe as the credentials could leak as clear text and be reused by an attacker on another website where the user uses the same credential for example\footnote{This is really bad practice, but alas most people do it anyway}. Instead, during the login attempt, if the login is valid, the backend will return a \gls{jwt} authentication token that is then used to authenticate the user for all other Requests (see figure \ref{login_workflow}). While we will not go into further details about how a  \gls{jwt} is constructed, it contains the actual user object with its \verb+id+, \verb+name+, etc encrypted by the server. When receiving a \gls{jwt} in a Request, the server can decrypt it and read the user information to check if the user is valid.\\
+
+In Passport, we created two authentication strategies, one for a \verb+local+ authentication that checks the email and password for the user and the other for \texttt{\gls{jwt}} authentication. 
+
+To handle \verb+local+ authentication for the user, we use a Passport plugin for Mongoose called \verb+passport-local-mongoose+\cite{github:passport_local_mongoose} that will take care of hashing and salting the password when creating users as well as providing a method to verify the passwords when logging in. The Passport strategy is created by the plugin automatically. It will add the required fields to the Schema when saving the \verb+User+ document.
+
+For the \texttt{\gls{jwt}} authentication, we create a new \gls{jwt} strategy and register it with Passport, telling it to read the \gls{jwt} in the \verb+Authorization+ header\cite{mdn:doc:auth} of the HTTP Request, using the \verb+Bearer+ pattern that stores the \gls{jwt} in the format \verb+Bearer <JWT>+ (see figure \ref{jwt_workflow}).\\
+
+Finally, to create the \gls{jwt} that we return upon successful \verb+local+ authentication, we use the \verb+jsonwebtoken+ package\cite{github:jsonwebtoken} to creates the \gls{jwt} from the \verb+User+ object returned by the \verb+local+ authentication.\\
+
+Any failure in authenticating a Request, \verb+local+ and \texttt{\gls{jwt}}, results in a \verb+401+\cite{mdn:status:401} status Response.
+\subsubsection{Permissions checks}
+Moreover, after the authentication passes, there are permissions checks for certain endpoints, for example administrative endpoints allowing to modify user data or retrieve all users. There are endpoints that can only be used by user who can accept payments. For more info on the roles, please refer to section \ref{roles_section}.\\
+
+For each of these permissions checks, we wrote a middleware in the \verb+authController+ that will return a \verb+403+\cite{mdn:status:403} status Response if the user fails to meet the criteria and otherwise will proceed to the next middleware (see figure \ref{jwt_workflow}).
 \subsection{Endpoints}
+The endpoints of the \gls{api} are separated in categories, each with their own Router and Controller for the categories. We did this in order to avoid cramming every Route in a single Router and manage distinctively each category of Routes. All Routers can be found in the \verb+routes+ directory with the \verb+index+ Router handling the root Router and linking all sub-Routers. \\
+
+There is currently one Route available in the root Router directly with no authentication. This route is used to initialise the Backend with a single user if no users are contained in the database. It will return the credentials for the newly created user if the server has been initialised by the call. \\
+
+This route is set to be replaced in the future by a Route allowing to check if the Backend is initialised to be used with a Guard (see \ref{guards}) in the Angular Frontend to access a setup page. An additional endpoint will be created to \verb+POST+ a configuration for the server from the mentioned setup page. The server configuration would include a first user or batch of users to create for example. \\
+
+The hierarchy of Routers with their sub-Routes can be seen in the following code in the root Router file:
+\begin{code}
+	\jscode{assets/code/js/routers.js}
+	\caption{Sub-Routers with their sub-Routes in the root Router configuration}
+\end{code}
+
 \subsection{Interaction with MongoDB}
 \subsection{Building the Docker Container}
 \label{container_backend}
-%%TODO link to node image on DockerHub
-In the Backend Dockerfile, we take the base Node.js image available on DockerHub and then we copy the whole current directory (in our case the \verb+backend+ directory) without the \verb+node_modules+ directory that is ignored by a \verb+.dockerignore+ file and we expose the port and install the dependencies using \verb+npm install+ before adding \verb+npm start+ as an entry point to run our container:
+In the Backend Dockerfile, we take the base Node.js image\cite{docker:hub:node} available on DockerHub and then we copy the whole current directory (in our case the \verb+backend+ directory) without the \verb+node_modules+ directory that is ignored by a \verb+.dockerignore+ file and we expose the port and install the dependencies using \verb+npm install+ before adding \verb+npm start+ as an entry point to run our container:
 \begin{code}
 \dockercode{assets/code/conf/backend.conf}
 \caption{Backend Dockerfile}	
@@ -1863,7 +1914,6 @@ In the Backend Dockerfile, we take the base Node.js image available on DockerHub
 
 
 \section{Angular frontend}
-%%TODO talk about its container
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/angular_implementation}
@@ -1873,12 +1923,15 @@ In the Backend Dockerfile, we take the base Node.js image available on DockerHub
 \subsection{Authentication}
 %%TODO http interceptor that adds JWT, JWT stored in LocalStorage
 \subsection{Routing}
-%%TODO insert nested routes variable
+\begin{code}
+	\tscode{assets/code/typescript/implementedRoutes.ts}
+	\caption{Frontend Angular Routing}
+\end{code}
+%%TODO Comment on routes
 \subsection{Components}
 \subsection{Building the Docker Container}
 \label{container_angular}
-%%TODO add ref for nginx image and node.js on docker hub and dhparam
-The Dockerfile for the Angular frontend is the most complex one. We wanted to make sure that we could built the Angular application on any machine so we decided to build the application in a Node.js container to make sure that we removed any system-specific configuration of our development machine and then we can pass the compiled files to the final container we are building which is based on the Nginx image and will act as web server and proxy. When building this container, we are retrieving the files from the first container as well as copying SSL certificates and Nginx configuration from our host machine. Then we need to install \verb+openSSL+ to generate the \verb+dhparam+ for the server SSL configuration. And then we can just expose the HTTP and HTTPS ports. The Nginx image already runs the Nginx server as an entry point for the image, so we do not need to add the corresponding line:
+The Dockerfile for the Angular frontend is the most complex one. We wanted to make sure that we could built the Angular application on any machine so we decided to build the application in a Node.js container\cite{docker:hub:node} to make sure that we removed any system-specific configuration of our development machine and then we can pass the compiled files to the final container we are building which is based on the Nginx image\cite{docker:hub:nginx} and will act as web server and proxy. When building this container, we are retrieving the files from the first container as well as copying SSL certificates and Nginx configuration from our host machine. Then we need to install \verb+openSSL+ to generate the \verb+dhparam+\cite{openssl:doc:dhparam} for the server SSL configuration. And then we can just expose the HTTP and HTTPS ports. The Nginx image already runs the Nginx server as an entry point for the image, so we do not need to add the corresponding line:
 \begin{code}
 \dockercode{assets/code/conf/frontend.conf}
 \caption{Frontend Nginx/Angular two stages Dockerfile}	
