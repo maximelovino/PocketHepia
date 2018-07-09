@@ -269,6 +269,26 @@ showtabs =false,
 texcl=false,
 }
 
+\newmintedfile[dockercode]{docker}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true,
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
 \newmintedfile[htmlcode]{html}{
 breaklines,
 bgcolor=mintedbackground,
@@ -1581,7 +1601,7 @@ Then, we can add the Guard to our Route. If we take the Routes from source code 
 	\caption{Routes protected by a Guard}
 \end{code}
 
-Then we have to write the logic of the Guard itself with the redirection. To do so, we have a service that will returns an \verb+Observable+ that specifies if the user is logged-in (more info on \verb+Observable+ operators \verb+pipe+ and \verb+tap+ in section \ref{observables}) and we are gonna return the logged-in value to the guard and redirect if it's false:
+Then we have to write the logic of the Guard itself with the redirection. To do so, we have a service that will returns an \verb+Observable+ that specifies if the user is logged-in (more info on \verb+Observable+ operators \verb+pipe+ and \verb+tap+ in section \ref{observables}) and we are going to return the logged-in value to the guard and redirect if it's false:
 \begin{code}
 	\tscode{assets/code/typescript/guard.ts}
 	\caption{Guard redirecting not logged-in users to login page}
@@ -1659,7 +1679,7 @@ By default, MongoDB does not impose a strict Schema inside a collection, meaning
 \label{mongo_references}
 Often documents you save in the database will have a relation with other documents from another schema. These relations would be stored in a \gls{sql} Database as a Foreign Key linked to the Primary Key of the entry we want to reference. In MongoDB, there are three solutions to handle references depending on the number of references that are necessary from one document to another. You should think from the beginning about the maximum number of references you can have between two documents before choosing one of three references design. The limitations of the designs come from the maximum size of a MongoDB document, that is capped at 16Mb, and if you need to update referenced documents often. \\
 
-To illustrate the three options, we are gonna take an example where we people and cars. There is one schema for a person and one schema for a car and a person can have multiple cars but a car is only owned by a single person. \\
+To illustrate the three options, we are going to take an example where we people and cars. There is one schema for a person and one schema for a car and a person can have multiple cars but a car is only owned by a single person. \\
 
 The first option to store this information is to embed the car documents in the person document\cite{mongo:doc:refs:embeddingRefs}. We don't need to have a car collection, we can just store in the person document an array of cars. We should make sure that a person will not have a lot of cars because by embedding entire car documents we will take more space and we could more easily reach the MongoDB document size limit. This option though provides the easiest way to retrieve the person and all its cars and to remove all cars when the person is removed. \\
 \begin{code}
@@ -1731,7 +1751,7 @@ Node.js is often used to build backend \gls{rest} APIs using the open source Exp
 \subsection{JavaScript ES6 and later}
 Node uses modern JavaScript features of ES6 and later\cite{wiki:ecmascript} (ECMAScript 6) first released in June 2015. ES6 brought plenty of improvements like Promises, lots of new method to deal with Arrays (mapping, filtering, etc.) as well as arrow functions, which are a new way to define anonymous functions. It is often referred as \emph{Modern JavaScript} and should be used in any new project as it is supported by major web browsers and Node. \\
 
-We are gonna cover Promises in this document a bit more (see \ref{promises}). For the rest of the features of ES6, you can have a look at \url{http://es6-features.org/}.
+We are going to cover Promises in this document a bit more (see \ref{promises}). For the rest of the features of ES6, you can have a look at \url{http://es6-features.org/}.
 \subsection{Promises}
 \label{promises}
 Promises\cite{mdn:doc:promises} are designed as a way to handle asynchronous code. Originally, this was handled by passing callback functions to functions that returned asynchronously. If this function was asynchronous as well, we would end up nesting and nesting anonymous functions with a very high level indentation that rendered the code illegible. This is often referred as \emph{callback hell}. \\
@@ -1834,9 +1854,12 @@ All this configuration amounts to the following Nginx configuration file:
 \subsection{Interaction with MongoDB}
 \subsection{Building the Docker Container}
 \label{container_backend}
-
-
-
+%%TODO link to node image on DockerHub
+In the Backend Dockerfile, we take the base Node.js image available on DockerHub and then we copy the whole current directory (in our case the \verb+backend+ directory) without the \verb+node_modules+ directory that is ignored by a \verb+.dockerignore+ file and we expose the port and install the dependencies using \verb+npm install+ before adding \verb+npm start+ as an entry point to run our container:
+\begin{code}
+\dockercode{assets/code/conf/backend.conf}
+\caption{Backend Dockerfile}	
+\end{code}
 
 
 \section{Angular frontend}
@@ -1854,7 +1877,12 @@ All this configuration amounts to the following Nginx configuration file:
 \subsection{Components}
 \subsection{Building the Docker Container}
 \label{container_angular}
-
+%%TODO add ref for nginx image and node.js on docker hub and dhparam
+The Dockerfile for the Angular frontend is the most complex one. We wanted to make sure that we could built the Angular application on any machine so we decided to build the application in a Node.js container to make sure that we removed any system-specific configuration of our development machine and then we can pass the compiled files to the final container we are building which is based on the Nginx image and will act as web server and proxy. When building this container, we are retrieving the files from the first container as well as copying SSL certificates and Nginx configuration from our host machine. Then we need to install \verb+openSSL+ to generate the \verb+dhparam+ for the server SSL configuration. And then we can just expose the HTTP and HTTPS ports. The Nginx image already runs the Nginx server as an entry point for the image, so we do not need to add the corresponding line:
+\begin{code}
+\dockercode{assets/code/conf/frontend.conf}
+\caption{Frontend Nginx/Angular two stages Dockerfile}	
+\end{code}
 
 \section{Android application}
 \begin{figure}[H]
@@ -1863,16 +1891,8 @@ All this configuration amounts to the following Nginx configuration file:
 	\caption{Interactions in the Android application}
 \end{center}
 \end{figure}
-\section{Deployment}
-%%TODO REMOVE CONTAINER FROM TECHNOLOGIES AND PUT THEM ONLY IN DEPLOYMENT
-%%TODO talk about basis linux container distribution
-%%TODO talk about portability
-\subsection{Docker}
+%%TODO talk about FAB handling, authentication, sync thread, distinct activities for given things
 
-\subsection{Google Cloud}
-\subsubsection{Kubernetes}
-\subsubsection{Google Container Registry}
-\subsection{Azure}
 \chapter{Results}
 \chapter{Conclusion}
 %%TODO talk about how to implement new features or sections inside the project
@@ -1885,7 +1905,8 @@ All this configuration amounts to the following Nginx configuration file:
 \begin{appendices}
 \appendixpage
 \chapter{Deployment guide}
-%%TODO write deployment guide
+%%TODO write deployment guide, two parts: pull images and run with docker compose, build images with sources and run them locally
+%%TODO add the fact that you need to direct pockethepia.maximelovino.ch domain to the IP of the machine used
 \chapter{Backend API Documentation}
 The documentation of the Backend \gls{api}, generated with APIDoc is available as an interactive version on \url{https://maximelovino.github.io/PocketHepia/api/}
 \chapter{Android Documentation}
