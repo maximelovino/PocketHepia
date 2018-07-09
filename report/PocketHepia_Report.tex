@@ -65,7 +65,7 @@
 \usepackage{caption}
 \newenvironment{code}{\captionsetup{type=listing}}{}
 
-%%TODO add JS, add PWA, add RTD, add ASCII, add UTF, add GDPR, add TS
+%%TODO add PWA, add RTD, add ASCII, add UTF, add GDPR, add TS
 \newglossaryentry{api}
 {
     name={API},
@@ -550,7 +550,15 @@ console.log(`Hello world ${username}`);
 .2 child\_3. 
 }
 \chapter*{Acknowledgements}
-%%TODO write acknowledgments
+I would like to thank all people who followed me during this project. In particular Prof. Mickaël Hoerdt who was at times even more enthusiastic than me about the project and always brought great ideas to the table during our discussions. I thank him for reading this Bachelor Thesis as it was being written in order to give me feedback along the way. \\
+
+Secondly, I need to thank my friend Ms. Stephanie Lauren Arreguit O'Neill who provided User Experience feedback after testing the web application which helped improve some visual elements of the interface. \\
+
+Next up, I thank Mr. Samuel Joseph-Jean Sekarski for trusting me with its NFC Tags that I used for testing throughout this project.\\
+
+%%and for showing me during all the years I have known him how not to handle project deadlines so that I didn't risk making the same mistakes.
+
+Finally, a  warm thank you to my colleagues at hepia with which I shared the room dedicated to the Bachelor projects. It was great to work in a good and comfortable environment and interact with other skilled students in moments of difficulties.
 \printglossary[title=Terms and Definitions]
 \newpage
 \mainmatter
@@ -1924,7 +1932,6 @@ If we used \verb+map+, it would return an \verb+Observable<Observable<HTTPEvent>
 \jscode{assets/code/js/interceptor.js}
 	\caption{The HTTP Interceptor Service that inserts the JWT in the Request}
 \end{code}
-%%TODO http interceptor that adds JWT, JWT stored in LocalStorage
 \subsection{Routing}
 \begin{code}
 	\tscode{assets/code/typescript/implementedRoutes.ts}
@@ -1952,8 +1959,8 @@ When using Components in Angular, you should think of a Component as an element 
 	\label{sidenav_screen}
 \end{center}
 \end{figure}
-%%TODO link to material sidenav? or schematics generation
-First of all, we are talking about the skeleton of the application. We have a Component including a side navigation drawer that can be toggled on and off. The side navigation contains the buttons to access the different pages of the application. The administrative page links will only be displayed if the current user is an administrator. The drawer will also be closed and the button to open it hidden when the user is not logged-in, see section \ref{login_component_implementation}.\\
+
+First of all, we are talking about the skeleton of the application. We have a Component including a side navigation drawer\cite{angular:material:component:sidenav} that can be toggled on and off. The side navigation contains the buttons to access the different pages of the application. The administrative page links will only be displayed if the current user is an administrator. The drawer will also be closed and the button to open it hidden when the user is not logged-in, see section \ref{login_component_implementation}.\\
 
 Then we have the Component content area in which we place the \verb+RouterOutlet+ so that the Router will fill this area with the routed Component.
 \subsubsection{Login Component}
@@ -2025,6 +2032,7 @@ Finally, the \verb+UsersTableComponent+ displays the list of users using a Mater
 			\label{logs_screen}
 \end{center}
 \end{figure}
+On the Logs page, we are mainly displaying Logs and we implemented filtering methods on top of the page to filter logs by category, user and date range. We display a list of \verb+LogEntryComponent+ each taking a \verb+Log+ as an input. To display this, we decided to use an Expansion Panel\cite{angular:material:component:expansion_panel} as it fits nicely in a list but can also be expanded easily to display the details of a \verb+Log+.
 \subsubsection{Admin Areas and Rooms Component}
 \begin{figure}[H]
 \begin{center}
@@ -2033,7 +2041,9 @@ Finally, the \verb+UsersTableComponent+ displays the list of users using a Mater
 			\label{areas_screen}
 \end{center}
 \end{figure}
+This Component is similar to the \verb+UsersComponent+ mentioned earlier, we have two creation Components and two table Components and the creation Components will emit events when an element is created that the parent Component will catch to then refresh the corresponding table. In each table, we have action buttons to delete an entry, this will trigger a modal window to confirm. In the \verb+RoomTableComponent+, we also have a pencil icon that will take us to the detail page for that \verb+Room+ (see \ref{room_detail_component}).
 \subsubsection{Admin Room details Component}
+\label{room_detail_component}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/angular/room}
@@ -2042,6 +2052,7 @@ Finally, the \verb+UsersTableComponent+ displays the list of users using a Mater
 \end{center}
 \end{figure}
 
+Finally, in the Room details page, you can create accesses for the room using the \verb+AccessCreationComponent+ to specify time range and start and end dates for the access. You can choose a user as well with an autocompleted input from the list of users.
 \subsection{Building the Docker Container}
 \label{container_angular}
 The Dockerfile for the Angular frontend is the most complex one. We wanted to make sure that we could built the Angular application on any machine so we decided to build the application in a Node.js container\cite{docker:hub:node} to make sure that we removed any system-specific configuration of our development machine and then we can pass the compiled files to the final container we are building which is based on the Nginx image\cite{docker:hub:nginx} and will act as web server and proxy. When building this container, we are retrieving the files from the first container as well as copying SSL certificates and Nginx configuration from our host machine. Then we need to install \verb+openSSL+ to generate the \verb+dhparam+\cite{openssl:doc:dhparam} for the server SSL configuration. And then we can just expose the HTTP and HTTPS ports. The Nginx image already runs the Nginx server as an entry point for the image, so we do not need to an entry point:
@@ -2071,6 +2082,7 @@ The Dockerfile for the Angular frontend is the most complex one. We wanted to ma
 \chapter{Deployment guide}
 %%TODO write deployment guide, two parts: pull images and run with docker compose, build images with sources and run them locally
 %%TODO add the fact that you need to direct pockethepia.maximelovino.ch domain to the IP of the machine used
+%%TODO talk about calling init etc
 \chapter{Backend API Documentation}
 \label{appendix_api_doc}
 The documentation of the Backend \gls{api}, generated with APIDoc is available as an interactive version on \url{https://maximelovino.github.io/PocketHepia/api/}
