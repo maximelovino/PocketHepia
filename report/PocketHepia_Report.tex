@@ -67,8 +67,6 @@
 %%TODO replace \verb by \mintinline when possible
 
 %%TODO add JS, add PWA, add RTD, add ASCII, add UTF, add GDPR, add TS
-
-%%TODO we have to list the full name here as well
 \newglossaryentry{api}
 {
     name={API},
@@ -205,13 +203,6 @@
     long={Node Package Manager}
 }
 
-
-
-
-
-
-
-
 %%TODO use all these acronyms in text
 
 \usepackage{minted}
@@ -239,6 +230,26 @@ texcl=false,
 }
 
 \newmintedfile[jsoncode]{json}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true,
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+\newmintedfile[yamlcode]{yaml}{
 breaklines,
 bgcolor=mintedbackground,
 linenos=true,
@@ -339,6 +350,26 @@ texcl=false,
 }
 
 \newmintedfile[jscode]{javascript}{
+breaklines,
+bgcolor=mintedbackground,
+linenos=true,
+numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+frame=leftline,
+framerule=0.4pt,
+framesep=2mm,
+funcnamehighlighting=true,
+tabsize=2,
+obeytabs=false,
+mathescape=false
+samepage=true,
+showspaces=false,
+showtabs =false,
+texcl=false,
+}
+
+\newmintedfile[nginxcode]{nginx}{
 breaklines,
 bgcolor=mintedbackground,
 linenos=true,
@@ -486,14 +517,15 @@ console.log(`Hello world ${username}`);
 		\caption*{This is the caption for the example source code}
 	\end{code}
 	\item Filesystem hierarchies are described using the \verb+dirtree+ package, for example:
+\end{itemize}
 \dirtree{%
 .1 parent. 
 .2 child\_1. 
 .2 child\_2. 
 .2 child\_3. 
 }
-\end{itemize}
 \chapter*{Acknowledgements}
+%%TODO write acknowledgments
 \printglossary[title=Terms and Definitions]
 \newpage
 \mainmatter
@@ -680,8 +712,6 @@ Then, there are two roles that will not be implemented as part of the Bachelor p
 Finally, the last role is the "Librarian" role that as its name implies is attributed to users working for the library. This role enables the creation of books loans at the library for users. As stated in section \ref{books_feature}, this role will certainly be removed completely because there is already a system in place to handle book loans at the library.
 
 \section{The models}
-%%TODO should we talk about books
-%%TODO should we add not implement models to the schema, for example access requests
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/models_relation}
@@ -1751,19 +1781,66 @@ Passport\cite{github:passport}\cite{passport:website} is an authentication middl
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/implementation}
 	\caption{Interactions between the components}
+	\label{all_modules_fig}
 \end{center}
 \end{figure}
-%%TODO add explanation of figure
-%%TODO add full architecture diagram of interaction between all technologies and modules
+In figure \ref{all_modules_fig}, we can see the four modules of the project, with the two frontends (mobile and web) and the backend sitting in front of the Mongo Database. This figure shows the global interactions between the modules and the backend from an external point of view. In the two frontends and the backend, we have the same separation around the different data models being handled with specific elements for each technologies. On the backend, we have one Router and one Controller per model. On the Angular frontend, we have one Service per model communicating with the corresponding Routes. On Android, we have a main sync task that is communicating with all data being retrieved offline and other \emph{action} tasks that are being used when the user takes an action that communicate with the respective Routes.
+
 \section{Deployment}
-\subsection{Deployment architecture}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/deployment}
+	\caption{Docker containers deployed}
+	\label{docker_figu}
+\end{center}
+\end{figure}
+We decided to use Docker and Docker Compose to simplify the deployment of our multi-tier project. The advantages provided by using a container solution like Docker are useful for a time-constrained project because we can just as easily run our project in a development environment as we can run in production. We do not need to worry when deploying it on a distant server about dependencies versions or software configuration. As long as we have the Docker Engine running on the remote machine, we can deploy our containers and run them. \\
+
+%%TODO add ref for volumes
+We decided to opt for a three containers configuration with one container acting as the entry point of our application with HTTP and HTTPS ports open. This contains a Nginx web server and proxy (more details in section \ref{nginx_proxy}) serving the compiled Angular application (details about the configuration of the container in section \ref{container_angular}). The proxy will then direct requests to the \gls{api} to the Backend container (details about the container in section \ref{container_backend}) that runs the Node.js+Express server and communicates with the last container running the Mongo Database. This last container is linked to a volume on the host machine to keep the data persistent even if we need to shutdown or restart the Mongo container. \\
+
+We are using a virtual machine hosted on Microsoft Azure to run our containers and are using the Azure Container Registry to store the three built Docker images so we can pull them from any machine easily. The three images are the following\footnote{You can only pull them by authenticating with an authorised account, they are not public}:
+\begin{itemize}
+	\item \verb+pockethepia.azurecr.io/backend+ for the Backend container
+	\item \verb+pockethepia.azurecr.io/db+ for the Mongo container
+	\item \verb+pockethepia.azurecr.io/frontend+ for the Nginx Frontend proxy container
+\end{itemize}
+
+Docker Compose is used to deploy the three containers and link them together so they can communicate with each other. With Compose, we specify the mappings of ports for each container as well as their hostname. For the Mongo container, we also specify how to map the \verb+/data/db+ container folder to a folder on the host machine to keep the data persistent:
+\begin{code}
+\yamlcode{assets/code/conf/compose.yml}
+	\caption{Docker Compose file used for the deployment}
+\end{code}
+
 \subsection{Nginx Proxy}
+\label{nginx_proxy}
+When running the project, in order to avoid enabling Cross-site scripting as well as having a single domain, we need to have the Backend on the same domain as the Frontend. To enable this, we used a Nginx\cite{nginx:website} proxy and web server to serve the compiled Angular application as well as redirect all requests to a route starting with \verb+/api+ to the Backend. \\
+
+When compiled, an Angular application amounts to a single HTML file with a stylesheet and a JavaScript file. We do not have a page per Route, because the route is included as part of the application in the JavaScript file. When serving the application through a classic web server like Apache\cite{apache:website} or Nginx, it will look for a file at the path of the Route you are requesting and will not find him, so it will return a \verb+404+\cite{mdn:status:404} status. We need to configure the web server to direct all page requests with the single \verb+index.html+ file and it will take care of the rest. \\
+
+In the Nginx configuration, we have to configure a proxy as well to redirect all calls to Routes starting with \verb+/api/*+ to the Backend container on the corresponding \verb+/*+ Route. Only the Nginx proxy is aware of the \verb+/api+ needed to access the Backend, so we can just run everything on the root \verb+/+ in the Backend Router. The Backend is also used to serve static files, so the configuration is handled in the Nginx proxy as well \\
+
+All this configuration amounts to the following Nginx configuration file:
+\begin{code}
+	\nginxcode{assets/code/conf/nginx.conf}
+	\caption{Nginx proxy configuration}
+\end{code}
+
 \section{Backend}
+%%TODO talk about its container
 \subsection{Authentication}
 \label{implementation_auth}
 \subsection{Endpoints}
 \subsection{Interaction with MongoDB}
+\subsection{Building the Docker Container}
+\label{container_backend}
+
+
+
+
+
 \section{Angular frontend}
+%%TODO talk about its container
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/angular_implementation}
@@ -1775,6 +1852,10 @@ Passport\cite{github:passport}\cite{passport:website} is an authentication middl
 \subsection{Routing}
 %%TODO insert nested routes variable
 \subsection{Components}
+\subsection{Building the Docker Container}
+\label{container_angular}
+
+
 \section{Android application}
 \begin{figure}[H]
 \begin{center}
@@ -1787,7 +1868,7 @@ Passport\cite{github:passport}\cite{passport:website} is an authentication middl
 %%TODO talk about basis linux container distribution
 %%TODO talk about portability
 \subsection{Docker}
-\subsection{Orchestration with Docker Compose}
+
 \subsection{Google Cloud}
 \subsubsection{Kubernetes}
 \subsubsection{Google Container Registry}
