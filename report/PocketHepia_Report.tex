@@ -64,7 +64,6 @@
 
 \usepackage{caption}
 \newenvironment{code}{\captionsetup{type=listing}}{}
-%%TODO replace \verb by \mintinline when possible
 
 %%TODO add JS, add PWA, add RTD, add ASCII, add UTF, add GDPR, add TS
 \newglossaryentry{api}
@@ -1488,6 +1487,7 @@ Inside the \verb+CreateUserComponent+, the \verb+created+ property is defined as
 From there, we can just call any public method in the table component, in this case \verb+refreshData()+.
 
 \paragraph{Communication between components - Input parameters}
+\label{input_angular}
 Finally, you can also have parametric Components. These Components can be integrated inside other Components through their selector but you also have to specify a set of inputs for the Component. In the Component, these inputs are properties with \verb+@Input()+. \\
 
 For example, if we have a Component displaying a single User, this Component would take the User to display as a parameter. So in the Component, we can write the User property like this and it will behave like any other property:
@@ -1817,7 +1817,6 @@ In this chapter, we are going to dive in more details about the Angular, Android
 \end{figure}
 We decided to use Docker and Docker Compose to simplify the deployment of our multi-tier project. The advantages provided by using a container solution like Docker are useful for a time-constrained project because we can just as easily run our project in a development environment as we can run in production. We do not need to worry when deploying it on a distant server about dependencies versions or software configuration. As long as we have the Docker Engine running on the remote machine, we can deploy our containers and run them. \\
 
-%%TODO add ref for volumes
 We decided to opt for a three containers configuration with one container acting as the entry point of our application with HTTP and HTTPS ports open. This contains a Nginx web server and proxy (more details in section \ref{nginx_proxy}) serving the compiled Angular application (details about the configuration of the container in section \ref{container_angular}). The proxy will then direct requests to the \gls{api} to the Backend container (details about the container in section \ref{container_backend}) that runs the Node.js+Express server and communicates with the last container running the Mongo Database. This last container is linked to a volume on the host machine to keep the data persistent even if we need to shutdown or restart the Mongo container. There is no other specific configuration for this container that uses the Mongo image available on DockerHub\cite{docker:hub:mongo}. \\
 
 We are using a virtual machine hosted on Microsoft Azure to run our containers and are using the Azure Container Registry to store the three built Docker images so we can pull them from any machine easily. The three images are the following\footnote{You can only pull them by authenticating with an authorised account, they are not public}:
@@ -1851,7 +1850,6 @@ All this configuration amounts to the following Nginx configuration file:
 For the project's Backend, we used Node.js+Express to build a \gls{rest} \gls{api} Backend that can be used from the Android and Angular Frontends. The Backend is mainly composed of \gls{crud} methods to manage the data stored in the database.
 \subsection{Authentication}
 \label{implementation_auth}
-%%TODO add diagram with authentication + permission checks before route
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/login_workflow}
@@ -1895,9 +1893,6 @@ The hierarchy of Routers with their sub-Routes can be seen in the following code
 	\jscode{assets/code/js/routers.js}
 	\caption{Sub-Routers with their sub-Routes in the root Router configuration}
 \end{code}
-
-%% TODO \subsection{Interaction with MongoDB}?
-%%TODO really?
 \subsection{Building the Docker Container}
 \label{container_backend}
 In the Backend Dockerfile, we take the base Node.js image\cite{docker:hub:node} available on DockerHub and then we copy the whole current directory (in our case the \verb+backend+ directory) without the \verb+node_modules+ directory that is ignored by a \verb+.dockerignore+ file and we expose the port and install the dependencies using \verb+npm install+ before adding \verb+npm start+ as an entry point to run our container:
@@ -1908,6 +1903,9 @@ In the Backend Dockerfile, we take the base Node.js image\cite{docker:hub:node} 
 
 
 \section{Angular frontend}
+In this section, we will dive into more details about specific parts of our Angular implementation, namely the integration of the authentication on the Angular side, the Routing and the content of the different pages Components. \\
+
+We will not talk about the Services implemented as they are pretty self-explanatory and mostly just contain methods calling a Backend route using the Angular HTTP Client.
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/angular_implementation}
@@ -1916,11 +1914,10 @@ In the Backend Dockerfile, we take the base Node.js image\cite{docker:hub:node} 
 \end{center}
 \end{figure}
 \subsection{Authentication}
-%%TODO add ref for local storage package
-All interactions between the Angular frontend and the Backend are done in Services using Angular HTTP Client. On the login page, we \verb+POST+ the login form data to the Backend login route and we retrieve the \gls{jwt} if the authentication is successful. From there, we use a package called \verb+@ngx-pwa/local-storage+ to interact with the browser local storage and store the \gls{jwt}. As we will see in section \ref{guards_implementation} about the Guards we implemented, we consider a user as logged-in if a \gls{jwt} is stored in local storage.\\
+All interactions between the Angular frontend and the Backend are done in Services using Angular HTTP Client. On the login page, we \verb+POST+ the login form data to the Backend login route and we retrieve the \gls{jwt} if the authentication is successful. From there, we use a package called \verb+@ngx-pwa/local-storage+\cite{github:angular:localstorage} to interact with the browser local storage and store the \gls{jwt}. As we will see in section \ref{guards_implementation} about the Guards we implemented, we consider a user as logged-in if a \gls{jwt} is stored in local storage.\\
 
-%%TODO ref for interceptors
-Instead of retrieving the \gls{jwt} every time we make a HTTP Client Request, we built a \verb+HTTPInterceptor+ that will clone the Request and add the \gls{jwt} to the Request Header before sending it out. This will return an \verb+Observable+ for the new Request because retrieving the \gls{jwt} is asynchronous.
+
+Instead of retrieving the \gls{jwt} every time we make a HTTP Client Request, we built a \verb+HTTPInterceptor+\cite{angular:doc:httpinterceptor} that will clone the Request and add the \gls{jwt} to the Request Header before sending it out. This will return an \verb+Observable+ for the new Request because retrieving the \gls{jwt} is asynchronous.
 We use the \verb+pipe+ operator called \verb+flatMap+ to handle the \verb+Observable<String>+ \gls{jwt} and return the Request. This operator is equivalent to the \verb+map+ operator presented in \ref{pipe_operators} but instead of returning an \verb+Observable+ of the returned type, it will convert the \verb+Observable+ to the new type.
 If we used \verb+map+, it would return an \verb+Observable<Observable<HTTPEvent>>+ and with \verb+flatMap+, it will return an \verb+Observable<HTTPEvent>+.
 \begin{code}
@@ -1945,9 +1942,9 @@ We are going to dive into more details on the content of each screen in the Comp
 We built three Guards to protect areas of the web application. First of all, the \verb+AuthGuard+ is used to check if a user is authenticated and will redirect to the \verb+/login+ page if the user is not authenticated. Then, the \verb+AdminGuard+ takes care of verifying that the user has an administrative role every time it tries to enter a page under \verb+/admin+. The current user is stored in memory to improve performance so it will stay unchanged until a refresh of the application. This means that if we had the administrative role to a user, he needs to refresh the application to access the admin area. Finally, the \verb+NotAuthGuard+ is the opposite of the \verb+AuthGuard+ and will only let you continue if you are not logged-in. It is used to avoid accessing the \verb+/login+ page if we are already logged-in and will redirect to the application homepage.
 
 \subsection{Components}
-%%TODO tell that we will talk about main screens only, there are modals then etc, each form has a method in services etc
-%%TODO talk about reusing components and modularity
 \label{component_implementation}
+When using Components in Angular, you should think of a Component as an element serving a single purpose and that must be as self-contained as possible. This allows for a greater modularity and Components than can be reused inside multiple other Components. We followed this idea when implementing our own Components and in this section, we are going to go into details about each page Component and the sub-Components integrated into the page main Component. We built more smaller Components, mainly modal windows and bottom sheet Components for example that overlay on top of the screen to edit or display additional information but we won't go into more details about those as they are simple enough to be understood with the code.
+\subsubsection{Main container with Side navigation}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/angular/sidenav}
@@ -1955,7 +1952,12 @@ We built three Guards to protect areas of the web application. First of all, the
 	\label{sidenav_screen}
 \end{center}
 \end{figure}
-\label{component_implementation}
+%%TODO link to material sidenav? or schematics generation
+First of all, we are talking about the skeleton of the application. We have a Component including a side navigation drawer that can be toggled on and off. The side navigation contains the buttons to access the different pages of the application. The administrative page links will only be displayed if the current user is an administrator. The drawer will also be closed and the button to open it hidden when the user is not logged-in, see section \ref{login_component_implementation}.\\
+
+Then we have the Component content area in which we place the \verb+RouterOutlet+ so that the Router will fill this area with the routed Component.
+\subsubsection{Login Component}
+\label{login_component_implementation}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/angular/login}
@@ -1963,6 +1965,11 @@ We built three Guards to protect areas of the web application. First of all, the
 		\label{login_screen}
 \end{center}
 \end{figure}
+The first of the Components to fill the content area is a particular one. This is the Login Component and as we can see in the screenshot, it fills the entire area and the drawer is toggled off with no means to display it back on. This is because the user is not logged-in.\\
+
+The Login Component incorporates a form used to input the login credentials and will then redirect to the homepage when we receive the correct login answer.
+\subsubsection{Home Component}
+\label{home_component_impl}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/angular/homepage}
@@ -1970,6 +1977,11 @@ We built three Guards to protect areas of the web application. First of all, the
 			\label{home_screen}
 \end{center}
 \end{figure}
+This is the first of our main logged-in pages Component. The homepage will be used to display a summary of the information of the other sections. As of this writing, we incorporate the \verb+WelcomeComponent+ that will display the current user name as well as a \verb+BalanceCardComponent+ that displays the current user balance. Both of these Components are self-contained, the \verb+WelcomeComponent+ fetches the user from the \verb+UserService+ and displays it and the balance one calls the method to retrieve the balance and displays it. \\
+
+More Components will be integrated on the homepage to display information from other sections.
+\subsubsection{Transactions Component}
+\label{transactions_component_impl}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/angular/transactions}
@@ -1977,6 +1989,11 @@ We built three Guards to protect areas of the web application. First of all, the
 			\label{transactions_screen}
 \end{center}
 \end{figure}
+Moving on, we have the Transactions Component. This Component integrates all information relative to the users' money transactions. We have the \verb+BalanceCardComponent+ already used on the homepage as well as a \\\verb+RechargeCardComponent+ for which the logic is not yet implemented but will handle a credit card transaction to charge money on our account. This credit card transaction will be processed using Stripe\cite{stripe:website}.\\
+
+On the right of the page, we have the \verb+TransactionsListComponent+ that will fetch the list of transactions using the \verb+TransactionService+ and will loop over the list to display a \verb+TransactionEntryComponent+ for each transaction. This Component takes a \verb+Transaction+ as an input (see \ref{input_angular}) and displays a Material Card\cite{angular:material:component:card} with its information.
+\subsubsection{Accesses Component}
+\label{accesses_component_impl}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/angular/accesses}
@@ -1984,6 +2001,8 @@ We built three Guards to protect areas of the web application. First of all, the
 			\label{accesses_screen}
 \end{center}
 \end{figure}
+This Component is simple and similar to the Transactions Component, we have an \verb+AccessListComponent+ that will fetch accesses and loop over them to pass them to \verb+AccessEntryComponent+ to display each \verb+Access+.
+\subsubsection{Admin Users Component}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/angular/users}
@@ -1991,6 +2010,14 @@ We built three Guards to protect areas of the web application. First of all, the
 			\label{users_screen}
 \end{center}
 \end{figure}
+Starting with this Component, we enter the administrative Components, which are more complex due to the fact that they need to handle often all \gls{crud} operations and not just provide a read-access to the data. In this \verb+UsersComponent+, we integrated two creation Components. \\
+
+The \verb+CreateUserComponent+ uses a form to create a \verb+User+ and displays it in a three-steps process using a Material Stepper\cite{angular:material:component:stepper}. It then calls a method in the \verb+UserService+ to send the user creation to the Backend. Once we receive the confirmation of the user creation, we emit an event to inform the \verb+UsersComponent+ which will then refresh the \verb+UserTableComponent+.\\
+
+The \verb+UsersImportComponent+ works similarly but takes a CSV file as input and sends it to the Backend to import users from it. Once we receive the confirmation of the users creation, we emit an event to inform the \verb+UsersComponent+ which will then refresh the \verb+UserTableComponent+.\\
+
+Finally, the \verb+UsersTableComponent+ displays the list of users using a Material Table\cite{angular:material:component:table}. We can filter the data and sort the users through individual columns. Each row also contains three action buttons that will trigger modal windows for each of them. The first one is used to display all accesses for a user, the second one is used to edit the user (edit its password, change permissions, add to its balance) and the third one to delete it and the modal will ask for confirmation.
+\subsubsection{Admin Logs Component}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/angular/logs}
@@ -1998,6 +2025,7 @@ We built three Guards to protect areas of the web application. First of all, the
 			\label{logs_screen}
 \end{center}
 \end{figure}
+\subsubsection{Admin Areas and Rooms Component}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/angular/areas}
@@ -2005,6 +2033,7 @@ We built three Guards to protect areas of the web application. First of all, the
 			\label{areas_screen}
 \end{center}
 \end{figure}
+\subsubsection{Admin Room details Component}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/angular/room}
@@ -2012,10 +2041,7 @@ We built three Guards to protect areas of the web application. First of all, the
 			\label{room_screen}
 \end{center}
 \end{figure}
-%%TODO start with sidenav that incorporates router outlet with navigation displayed if admin (drawer opening/closing if logged-in)
-%%TODO add all the text
-%%TODO then do all other screens and show which components are inside
-%%TODO screeenshot of components
+
 \subsection{Building the Docker Container}
 \label{container_angular}
 The Dockerfile for the Angular frontend is the most complex one. We wanted to make sure that we could built the Angular application on any machine so we decided to build the application in a Node.js container\cite{docker:hub:node} to make sure that we removed any system-specific configuration of our development machine and then we can pass the compiled files to the final container we are building which is based on the Nginx image\cite{docker:hub:nginx} and will act as web server and proxy. When building this container, we are retrieving the files from the first container as well as copying SSL certificates and Nginx configuration from our host machine. Then we need to install \verb+openSSL+ to generate the \verb+dhparam+\cite{openssl:doc:dhparam} for the server SSL configuration. And then we can just expose the HTTP and HTTPS ports. The Nginx image already runs the Nginx server as an entry point for the image, so we do not need to an entry point:
