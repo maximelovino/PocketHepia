@@ -680,7 +680,7 @@ After having integrated every requested features, the team launched a beta web v
 \end{center}
 \end{figure}
 
-\chapter{The project}
+\chapter{Project specifications}
 The project is called PocketHepia, reminiscent of the name of the project at \gls{epfl} and will consist of the two parts of the \gls{epfl} project presented earlier: the student card platform, as well as the applicative platform to access information.\\
 
 
@@ -974,21 +974,21 @@ One of the biggest problems for developers is the fragmentation of \gls{os} vers
 \hline
   \textbf{Year} & \textbf{Version Name} & \textbf{Usage of this version} & \textbf{Usage of this version or later}\\
   \hline
-2010 & Gingerbread & 0.3\% & 100.0\% \\
+2010 & Gingerbread 2.3 & 0.3\% & 100.0\% \\
 \hline
-2011 & Ice Cream Sandwich & 0.4\% & 99.7\% \\
+2011 & Ice Cream Sandwich 4.0 & 0.4\% & 99.7\% \\
 \hline
-2012 & Jelly Bean & 4.3\% & 99.3\% \\
+2012 & Jelly Bean 4.1 & 4.3\% & 99.3\% \\
 \hline
-2013 & Kit Kat & 10.3\% & 95.0\% \\
+2013 & Kit Kat 4.4 & 10.3\% & 95.0\% \\
 \hline
-2014 & Lollipop & 22.4\% & 84.7\% \\
+2014 & Lollipop 5.0 & 22.4\% & 84.7\% \\
 \hline
-2015 & Marshmallow & 25.5\% & 62.3\% \\
+2015 & Marshmallow 6.0 & 25.5\% & 62.3\% \\
 \hline
-2016 & Nougat & 31.1\% & 36.8\% \\
+2016 & Nougat 7.0 & 31.1\% & 36.8\% \\
 \hline
-2017 & Oreo & 5.7\% & 5.7\% \\
+2017 & Oreo 8.0 & 5.7\% & 5.7\% \\
 \hline
 \end{tabularx}
 \egroup
@@ -1294,7 +1294,7 @@ Then in the destination screen, we can unwrap the passed arguments by using the 
 
 \section{Angular 6}
 \label{angular_chapter}
-Angular\cite{angular:website} is a web application frontend framework. It is opne source and developed actively on GitHub\cite{github:angular} by the Angular team at Google and other individual contributors. Angular 1 was originally built in JavaScript (now AngularJS) and has now been replaced since version 2 by a new version of Angular (commonly called Angular 2, even though version 6 is out) built in TypeScript. \\
+Angular\cite{angular:website} is a web application frontend framework. It is open source and developed actively on GitHub\cite{github:angular} by the Angular team at Google and other individual contributors. Angular 1 was originally built in JavaScript (now AngularJS) and has now been replaced since version 2 by a new version of Angular (commonly called Angular 2, even though version 6 is out) built in TypeScript. \\
 
 The main advantages of using a frontend framework are modularity and a clear code structure compared to not using any frameworks. \\
 
@@ -1628,6 +1628,7 @@ Then, when calling this method from a Component for example, we can \verb+subscr
 	\caption{Subscribing to data from an Observable}
 \end{code}
 \subsubsection{Pipe and other operators}
+\label{pipe_operators}
 Sometimes it can be useful to handle the data of an Observable before the subscribers are notified of new data. This is done using the \verb+pipe+ operator. When returning an Observable, you can append a call to \verb+pipe+ at the end of it and insert operations that will be run as part of the Observable before it triggers the subscribers. These operations are function calls that take a \verb+function(data)+ as parameter. \\
 
 One of the operations that can be run is the \verb+tap+ operation. This operation does not make any change to the data being sent to the subscribers but allows to use it before sending it untouched. For example, it is used in the the \verb+AuthGuard+ presented before (source code \ref{authGuard}) to access the returned data so that it can redirect to the \verb+/login+ page if the user was not logged in. Basically, we pass the value to the function caller, but we can use it too when it comes back.\\
@@ -1895,7 +1896,8 @@ The hierarchy of Routers with their sub-Routes can be seen in the following code
 	\caption{Sub-Routers with their sub-Routes in the root Router configuration}
 \end{code}
 
-\subsection{Interaction with MongoDB}
+%% TODO \subsection{Interaction with MongoDB}?
+%%TODO really?
 \subsection{Building the Docker Container}
 \label{container_backend}
 In the Backend Dockerfile, we take the base Node.js image\cite{docker:hub:node} available on DockerHub and then we copy the whole current directory (in our case the \verb+backend+ directory) without the \verb+node_modules+ directory that is ignored by a \verb+.dockerignore+ file and we expose the port and install the dependencies using \verb+npm install+ before adding \verb+npm start+ as an entry point to run our container:
@@ -1910,20 +1912,113 @@ In the Backend Dockerfile, we take the base Node.js image\cite{docker:hub:node} 
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/angular_implementation}
 	\caption[Interactions in the Angular Frontend]{Interactions in the Angular Frontend (Components in red, services in green)}
+	\label{interactions_angular}
 \end{center}
 \end{figure}
 \subsection{Authentication}
+%%TODO add ref for local storage package
+All interactions between the Angular frontend and the Backend are done in Services using Angular HTTP Client. On the login page, we \verb+POST+ the login form data to the Backend login route and we retrieve the \gls{jwt} if the authentication is successful. From there, we use a package called \verb+@ngx-pwa/local-storage+ to interact with the browser local storage and store the \gls{jwt}. As we will see in section \ref{guards_implementation} about the Guards we implemented, we consider a user as logged-in if a \gls{jwt} is stored in local storage.\\
+
+%%TODO ref for interceptors
+Instead of retrieving the \gls{jwt} every time we make a HTTP Client Request, we built a \verb+HTTPInterceptor+ that will clone the Request and add the \gls{jwt} to the Request Header before sending it out. This will return an \verb+Observable+ for the new Request because retrieving the \gls{jwt} is asynchronous.
+We use the \verb+pipe+ operator called \verb+flatMap+ to handle the \verb+Observable<String>+ \gls{jwt} and return the Request. This operator is equivalent to the \verb+map+ operator presented in \ref{pipe_operators} but instead of returning an \verb+Observable+ of the returned type, it will convert the \verb+Observable+ to the new type.
+If we used \verb+map+, it would return an \verb+Observable<Observable<HTTPEvent>>+ and with \verb+flatMap+, it will return an \verb+Observable<HTTPEvent>+.
+\begin{code}
+\jscode{assets/code/js/interceptor.js}
+	\caption{The HTTP Interceptor Service that inserts the JWT in the Request}
+\end{code}
 %%TODO http interceptor that adds JWT, JWT stored in LocalStorage
 \subsection{Routing}
 \begin{code}
 	\tscode{assets/code/typescript/implementedRoutes.ts}
 	\caption{Frontend Angular Routing}
 \end{code}
-%%TODO Comment on routes
+We used a nested Route hierarchy to avoid specifying the Guards required for each area. We can distinguish three areas:
+\begin{itemize}
+	\item Logged-in area
+	\item Admin area (that is also logged-in area)
+	\item Not necessarily logged-in
+\end{itemize}
+We are going to dive into more details on the content of each screen in the Components section, see \ref{component_implementation}
+\subsubsection{Guards}
+\label{guards_implementation}
+We built three Guards to protect areas of the web application. First of all, the \verb+AuthGuard+ is used to check if a user is authenticated and will redirect to the \verb+/login+ page if the user is not authenticated. Then, the \verb+AdminGuard+ takes care of verifying that the user has an administrative role every time it tries to enter a page under \verb+/admin+. The current user is stored in memory to improve performance so it will stay unchanged until a refresh of the application. This means that if we had the administrative role to a user, he needs to refresh the application to access the admin area. Finally, the \verb+NotAuthGuard+ is the opposite of the \verb+AuthGuard+ and will only let you continue if you are not logged-in. It is used to avoid accessing the \verb+/login+ page if we are already logged-in and will redirect to the application homepage.
+
 \subsection{Components}
+%%TODO tell that we will talk about main screens only, there are modals then etc, each form has a method in services etc
+%%TODO talk about reusing components and modularity
+\label{component_implementation}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/screens/angular/sidenav}
+	\caption{Main side navigation Component}
+	\label{sidenav_screen}
+\end{center}
+\end{figure}
+\label{component_implementation}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/screens/angular/login}
+	\caption{Login page Component}
+		\label{login_screen}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/screens/angular/homepage}
+	\caption{Home page Component}
+			\label{home_screen}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/screens/angular/transactions}
+	\caption{Transactions page Component}
+			\label{transactions_screen}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/screens/angular/accesses}
+	\caption{Accesses page Component}
+			\label{accesses_screen}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/screens/angular/users}
+	\caption{Users page Component}
+			\label{users_screen}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/screens/angular/logs}
+	\caption{Logs page Component}
+			\label{logs_screen}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/screens/angular/areas}
+	\caption{Areas and Rooms page Component}
+			\label{areas_screen}
+\end{center}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/screens/angular/room}
+	\caption{Room details page Component}
+			\label{room_screen}
+\end{center}
+\end{figure}
+%%TODO start with sidenav that incorporates router outlet with navigation displayed if admin (drawer opening/closing if logged-in)
+%%TODO add all the text
+%%TODO then do all other screens and show which components are inside
+%%TODO screeenshot of components
 \subsection{Building the Docker Container}
 \label{container_angular}
-The Dockerfile for the Angular frontend is the most complex one. We wanted to make sure that we could built the Angular application on any machine so we decided to build the application in a Node.js container\cite{docker:hub:node} to make sure that we removed any system-specific configuration of our development machine and then we can pass the compiled files to the final container we are building which is based on the Nginx image\cite{docker:hub:nginx} and will act as web server and proxy. When building this container, we are retrieving the files from the first container as well as copying SSL certificates and Nginx configuration from our host machine. Then we need to install \verb+openSSL+ to generate the \verb+dhparam+\cite{openssl:doc:dhparam} for the server SSL configuration. And then we can just expose the HTTP and HTTPS ports. The Nginx image already runs the Nginx server as an entry point for the image, so we do not need to add the corresponding line:
+The Dockerfile for the Angular frontend is the most complex one. We wanted to make sure that we could built the Angular application on any machine so we decided to build the application in a Node.js container\cite{docker:hub:node} to make sure that we removed any system-specific configuration of our development machine and then we can pass the compiled files to the final container we are building which is based on the Nginx image\cite{docker:hub:nginx} and will act as web server and proxy. When building this container, we are retrieving the files from the first container as well as copying SSL certificates and Nginx configuration from our host machine. Then we need to install \verb+openSSL+ to generate the \verb+dhparam+\cite{openssl:doc:dhparam} for the server SSL configuration. And then we can just expose the HTTP and HTTPS ports. The Nginx image already runs the Nginx server as an entry point for the image, so we do not need to an entry point:
 \begin{code}
 \dockercode{assets/code/conf/frontend.conf}
 \caption{Frontend Nginx/Angular two stages Dockerfile}	
@@ -1937,8 +2032,6 @@ The Dockerfile for the Angular frontend is the most complex one. We wanted to ma
 \end{center}
 \end{figure}
 %%TODO talk about FAB handling, authentication, sync thread, distinct activities for given things
-
-\chapter{Results}
 \chapter{Conclusion}
 %%TODO talk about how to implement new features or sections inside the project
 \section{Future works}

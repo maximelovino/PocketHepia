@@ -11,7 +11,6 @@ export class HttpTokenInterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.userService.getToken().pipe(flatMap(token => {
-      // TODO should check if token exists
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`

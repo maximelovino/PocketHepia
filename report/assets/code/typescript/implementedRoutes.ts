@@ -6,6 +6,7 @@ const routes: Routes = [
 			{ path: 'access', component: AccessComponent },
 			{
 				path: 'admin', canActivate: [AdminGuard], children: [
+					{ path: '', redirectTo: 'users', pathMatch: 'full' },
 					{ path: 'logs', component: LogsComponent },
 					{ path: 'users', component: UsersComponent },
 					{ path: 'access', component: AccessAdminComponent },

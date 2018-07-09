@@ -39,7 +39,6 @@ export class UserService {
     }
   }
 
-  // TODO store user in service and if we already have, return of(user)
   public retrieveUser(): Observable<User> {
     if (this.user) {
       return of(this.user);
