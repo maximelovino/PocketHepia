@@ -65,7 +65,6 @@
 \usepackage{caption}
 \newenvironment{code}{\captionsetup{type=listing}}{}
 
-%%TODO add PWA, add RTD, add ASCII, add UTF, add GDPR, add TS
 \newglossaryentry{api}
 {
     name={API},
@@ -208,6 +207,22 @@
     description={Create-Read-Update-Delete (CRUD) are the four main methods used to handle data stored in a persistent storage, such as a database},
     first={Create-Read-Update-Delete (CRUD)},
     long={Create-Read-Update-Delete}
+}
+
+\newglossaryentry{pwa}
+{
+    name={PWA},
+    description={Progressive Web App (PWA) are web applications that work on desktop and mobile with a responsive layout, provide offline functionality and can often be installed like "native" applications},
+    first={Progressive Web App (PWA)},
+    long={Progressive Web App}
+}
+
+\newglossaryentry{rtd}
+{
+    name={RTD},
+    description={Record Type Definition (RTD) are used to specify the format and rules for building standard record types used in the NDEF format},
+    first={Record Type Definition (RTD)},
+    long={Record Type Definition}
 }
 
 \usepackage{minted}
@@ -611,7 +626,7 @@ The format of a \gls{ndef} record is the following\cite{nfc:ndef:adafruit:articl
 \end{verbatim}
 The first byte form the header of the \gls{ndef} record, the fields composed the header are:
 \begin{itemize}
-	\item The \verb+TNF+ (Type Name Format) is a 3 bits value used to identify the record type. The most common are "Empty record" and "Well-Known-Record" to define a record for which the data type is defined by a RTD (Record Type Definition) in the \gls{ndef} format, for example plain text or URI.
+	\item The \verb+TNF+ (Type Name Format) is a 3 bits value used to identify the record type. The most common are "Empty record" and "Well-Known-Record" to define a record for which the data type is defined by a \gls{rtd} in the \gls{ndef} format, for example plain text or URI.
 	\item The \verb+IL+ (ID LENGTH field) is a boolean 1 bit value to tell if the \verb+ID LENGTH+ field is present or not in the record.
 	\item The \verb+SR+ (Short Record Bit) is a boolean 1 bit value to tell if the \verb+PAYLOAD LENGTH+ has a size of 1 byte or less.
 	\item The \verb+CF+ (Chunk flag) is a boolean 1 bit value to tell if the record is the first part or a chunk of a bigger record. The value will be 0 if it is the only part or the last chunk of a record.
@@ -946,7 +961,7 @@ We decided to build an Android application as well as coding the website to be r
 \subsubsection{Why the need for an application?}
 While we could have achieved most of the functionality with a web application, there are still some elements that require building a full mobile application. Mainly, access to device features such as \gls{nfc}. With a mobile web app, we cannot have access to the \gls{nfc} chip on the smartphone and thus we cannot manage physical cards or make payments through the app. This is also the reason why we only built an Android app and not an iOS one. The \gls{api} for \gls{nfc} on iOS\cite{apple:ios:nfc} is basic and was released in 2017, it does not allow writing on \gls{nfc} tags\footnote{Unless you are a big company partnering directly with Apple} and only supported a subset of the formats of the Android \gls{api}.\\
 
-Apart from this limitation, all the other functionality could have been incorporated in a web application, for example by making a Progressive Web App (PWA)\cite{google:pwa:website}. PWA are an hybrid between a mobile application and a web application and they run on desktop and mobile operating systems. Their main advantages compared to traditional web app is that they can be "installed" on the device and act like a normal application and that they generally store data offline and can sync data in the background through the user of Service Workers.
+Apart from this limitation, all the other functionality could have been incorporated in a web application, for example by making a \gls{pwa}\cite{google:pwa:website}. \gls{pwa} are an hybrid between a mobile application and a web application and they run on desktop and mobile operating systems. Their main advantages compared to traditional web app is that they can be "installed" on the device and act like a normal application and that they generally store data offline and can sync data in the background through the user of Service Workers.
 \subsubsection{Why go native?}
 We could have also found a middle ground between the mobile web application and the native web application by using a mobile application framework such as Ionic or React Native to build our mobile application using web technologies. This would have allowed us to reuse some components built for the web in our mobile application.\\
 
