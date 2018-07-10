@@ -1117,6 +1117,7 @@ If an Android device contains a \gls{nfc} chip, you can use the chip capabilitie
 From there, you have two different possibilities that can also be combined. You can either register yourself to the \gls{os} to listen for any incoming \gls{nfc} actions (touching a tag for example) no matter if your app is running or not. You can also intercept \gls{nfc} actions when your app is in the foreground. In most cases, the latter solution is the one needed, unless you want your app to be launched when a specific \gls{nfc} accessory is detected. The foreground method is called \emph{Foreground dispatch}, it means we are filtering the intent that are received by our foreground Activity to include \gls{nfc} related intents and passing them to the Activity.
 
 \subsubsection{Setting up \emph{Foreground Dispatch}}
+\label{foreground_dispatch}
 You have to setup \emph{Foreground Dispatch}\cite{android:doc:nfc_foregroundDispatch} at the Activity level, preferably in the \mintinline[breaklines]{kotlin}{fun onCreate(savedState: Bundle?)} method and then enable it and disable on resume and pause of the Activity respectively. If you need to use it in multiple activities, it is easier to setup a superclass Activity and extends all other Activities from it. We can then just override the \mintinline[breaklines]{kotlin}{fun onNewIntent(intent: Intent)} in the specific Activity for which we need to handle \gls{nfc} specifically. In the superclass Activity, we can just discard the received \gls{nfc} intent.\\
 
 As we can see in source code \ref{foreground_dispatch_code}, we have to register all technologies and intent types that we need to filter and create a pendingIntent to be sent by it. We activate the filter when the Activity is resumed and disable it when it is destroyed. This is to avoid blocking all other apps after our application quits and avoid crashes as well because if a \gls{nfc} action happens and our app gets it in the background, it will crash. When we get the \gls{nfc} intent, we just log a message by default and discard the intent.
@@ -2101,11 +2102,10 @@ For storage, we are using the \verb+Room+ database. We setup the entities and \g
 \end{code}
 We stored the \verb+id+ of the current user in the \verb+SharedPreferences+ so we can retrieve it from the database and we know which user it is. This is particularly important for administrators that have all users stored in the database.
 \subsection{Data display and lists}
-%%TODO add ref for recyclerview
+%%TODO add ref for recyclerview, adapters etc
 To display the data stored in the \verb+Room+ database in our views, we used \verb+Repositories+ and \verb+ViewModels+ and subscribed to the \verb+LiveData+ returned by the \verb+ViewModel+ to update a \verb+RecyclerView+ list through a \verb+RecyclerView.ListAdapter+ in most cases. The one exception to this is the custom \verb+Adapter+ we wrote for the list of users on the admin screen because we wanted to add search to filter the list of users and we could not do that with the \verb+ListAdapter+. Both type of \verb+Adapters+ are used to link data from the list and map the fields from the individual item layout to the fields of the list entry.
-\subsection{Action HTTP Tasks}
 
-\subsection{Navigation}
+\subsection{Navigation and screens}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/android/navigation}
@@ -2113,21 +2113,32 @@ To display the data stored in the \verb+Room+ database in our views, we used \ve
 \end{center}
 \end{figure}
 
+The Android application is built around three (four if admin) main screens that you can switch between using a Bottom Navigation View\cite{android:doc:material:bottom_nav}, all these views are contained in a single Activity called the \verb+MainActivity+. We linked the Bottom Navigation to the new Navigation Controller and it switches between three (four if admin) Fragments on screen to display each screen.\\ The three screens are the homepage that contains a quick summary, the transactions screen and the access screen listing all accesses. An additional admin screen is displayed if the connected user is an administrator and will display the list of users. \\
+
+%%TODO add ref for FAB
+All these screen Fragments extends a \verb+BaseFragment+ that defines that the Fragment requires to be loaded inside the \verb+MainActivity+ so we can use the Floating Action Button (FAB) contained in the \verb+MainActivity+ in certain fragments. By default in the \verb+BaseFragment+, the method \verb+handleFabDisplay()+ is implemented by default to hide the FAB but in the Transactions screen this method is overridden to display the FAB. 
+
+\subsubsection{Transactions section}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/android/transactions_payment}
 	\caption{The Transactions list and the creation of a new payment}
 \end{center}
 \end{figure}
+As stated before, the Transactions screen displays the FAB from the \verb+MainActivity+ and will listen for clicks on it to navigate to a separate Activity to create a new payment. As all Activities in the application, we enabled \gls{nfc} \emph{Foreground Dispatch} (see section \ref{foreground_dispatch}) to ignore \gls{nfc} intents but in the \verb+PaymentActivity+ we catch \gls{nfc} intents to create payment to (or from if the user can accept payments) a user tag. The payment is done by reading the identifier from the tag and sending it to the backend using an \verb+AsyncTask+  in a background thread. If the payment works, we go back to the transactions screen, ask for a refresh using the \verb+SyncWorker+ and, thanks to \verb+LiveData+, as soon as the new data is saved to the \verb+Room+ database, the whole interface is updated with the new information.\\
 
+The main Transaction screen is composed of a \verb+BalanceFragment+ displaying the user balance which is also used on the home screen. Then we have a \verb+RecyclerView+ displaying the transactions that scrolls underneath. Since the FAB is overlayed on the list, we decided to hide it when the list is being scrolled to have a better view of the list.
+
+\subsubsection{Admin section}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=\textwidth]{assets/screens/android/user_detail_nfc}
 	\caption{The Users list with the details for a User and NFC Tag assignment}
 \end{center}
 \end{figure}
-%%TODO talk about FAB handling, authentication, sync thread, data management, distinct activities for given things
-%%TODO present all main screens with bottom nav and navigation config => user list to user detail for example
+Finally, we have the admin section of the application which displays a filterable \verb+RecyclerView+ of the users from which we can dive in a \verb+UserDetailFragment+ by using the Navigation Controller to navigate and pass the user \verb+id+ to see more details about a specific user and then we can launch the \verb+NFCAssignmentActivity+ to assign a tag to the user. This is done on Android because it is the most practical way to read \gls{nfc} tags that we have available. \\
+
+The assignment of the tag is done by reading the unique identifier of the tag and sending it to the backend using an \verb+AsyncTask+ that runs on another thread. If the assignment works, we ask for a refresh of the data using the \verb+SyncWorker+ and we come back to the \verb+UserDetailFragment+ and the new tag will be displayed and we can remove it.
 \chapter{Conclusion}
 I have really enjoyed working on this project during these last few weeks and it only reinforced my conviction that developing this for the student is really useful and we can improve the student life in many different ways. I plan to continue working on this project on my personal time and am ready to collaborate with hepia to integrate the project in the existing infrastructure and to listen to their feedback if the project is to be adopted at hepia. With the school support, we could push the project forward and even integrate the other computer science orientations such as the hardware orientation to create purpose-built readers for payment station or door-locks for example. This project could be extended by other students throughout the years to make it grow with new ideas. \\
 
@@ -2142,9 +2153,72 @@ For the near future, my plan is to continue polishing the applications visually 
 \begin{appendices}
 \appendixpage
 \chapter{Deployment guide}
+A zip file named \verb+ITI_IN_diplome_Lovino_Hoerdt_2018.zip+ is included with this Bachelor Thesis. This file contains all the project sources, configuration files and the report/abstract PDF documents.\\
+
+Once you unzip the folder, you will find yourself with the following file structure (condensed to three levels here):
+\dirtree{%
+.1 ITI\_IN\_diplome\_Lovino\_Hoerdt\_2018.
+.2 ITI\_IN\_memoire\_diplome\_Lovino\_Hoerdt\_2018.pdf.
+.2 ITI\_IN\_resume\_diplome\_Lovino\_Hoerdt\_2018.pdf.
+.2 ITI\_IN\_src\_diplome\_Lovino\_Hoerdt\_2018.
+.3 android.
+.4 PocketHepia/\DTcomment{Contains the Android Studio project}.
+.3 backend.
+.4 Dockerfile.
+.4 certs/.
+.4 pocketHepiaServer/\DTcomment{Contains the NPM backend project}.
+.3 conf.
+.4 proxy.conf.json\DTcomment{Configuration file to run Angular locally}.
+.3 db.
+.4 Dockerfile.
+.4 data/\DTcomment{Contains the database attached volume}.
+.3 docker-compose.yml.
+.3 docs.
+.4 android/\DTcomment{Contains the Android HTML Documentation}.
+.4 api/\DTcomment{Contains the APIDoc HTML Documentation}.
+.3 frontend.
+.4 Dockerfile.
+.4 certs/.
+.4 pockethepia/\DTcomment{Contains the NPM Angular project}.
+.4 pockethepia.conf.
+}
+
+From there, you need to have Docker and Docker Compose installed on your machine. To do that, you can use the guide to install Docker for Ubuntu for example available at: \url{https://docs.docker.com/install/linux/docker-ce/ubuntu/} and for Docker Compose you can use \url{https://docs.docker.com/compose/install/}. Once you have installed both, you can run the project.
+
+First of all, navigate to the \verb+ITI_IN_src_diplome_Lovino_Hoerdt_2018+.Then, here are two ways to get the Docker images, you can either pull the images from the Azure Container Registry but you will need credentials to access them (the images are private as of this writing) or you can build the images locally.
+
+To pull the three images from the Azure Container Registry, you can run:
+\begin{code}
+\begin{shell}
+docker pull pockethepia.azurecr.io/db
+docker pull pockethepia.azurecr.io/backend
+docker pull pockethepia.azurecr.io/frontend
+\end{shell}
+	\caption[Pulling images from the Azure Container Registry]{Pulling images from the Azure Container Registry, you may need to \texttt{sudo} the commands and/or enter Azure credentials}
+\end{code}
+To build the images locally, you can run the following commands:
+\begin{code}
+\begin{shell}
+docker build --rm -f frontend/Dockerfile -t pockethepia.azurecr.io/frontend frontend
+docker build --rm -f backend/Dockerfile -t pockethepia.azurecr.io/backend backend
+docker build --rm -f db/Dockerfile -t pockethepia.azurecr.io/db db
+\end{shell}
+	\caption[Building Docker images locally]{Building Docker images locally, you may need to \texttt{sudo} the commands}
+\end{code}
+
+Once you built all three Docker images or pulled them from Azure, you can run the containers by using Docker Compose:
+\begin{code}
+\begin{shell}
+docker compose up
+\end{shell}
+	\caption[Running the project with Docker Compose]{Running the project with Docker Compose, you may need to \texttt{sudo} the command, you can the \texttt{-d} flag to run in background}
+\end{code}
+
+Now that the project is deployed and running, it is important to note that the server will only respond at the \verb+pockethepia.maximelovino.ch+ domain name. You will need to modify your \verb+/etc/hosts+ file to map the domain to the IP of the machine you are running the project on to access it (127.0.0.1 if you are running on your local machine).
 %%TODO write deployment guide, two parts: pull images and run with docker compose, build images with sources and run them locally
 %%TODO add the fact that you need to direct pockethepia.maximelovino.ch domain to the IP of the machine used
 %%TODO talk about calling init etc
+%%TODO talk about ng serve?
 \chapter{Backend API Documentation}
 \label{appendix_api_doc}
 The documentation of the Backend \gls{api}, generated with APIDoc is available as an interactive version on \url{https://maximelovino.github.io/PocketHepia/api/}
