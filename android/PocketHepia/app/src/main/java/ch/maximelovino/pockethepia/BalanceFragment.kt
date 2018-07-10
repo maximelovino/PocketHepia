@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import ch.maximelovino.pockethepia.data.models.Transaction
 import ch.maximelovino.pockethepia.utils.BaseFragment
 import kotlinx.android.synthetic.main.fragment_balance.*
 
@@ -21,7 +22,7 @@ class BalanceFragment : BaseFragment() {
 
         activity.currentUser.observe(this, Observer {
             if (it != null) {
-                hero_balance.text = " %.2f CHF".format(it.balance ?: 0.0)
+                hero_balance.text = Transaction.formatAmount(it.balance ?: 0.0, false)
             }
         })
 

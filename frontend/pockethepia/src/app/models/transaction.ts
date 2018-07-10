@@ -10,6 +10,10 @@ export class Transaction {
   adminCharge: boolean;
   stripe: boolean;
 
+  public static displayMoney(amount: Number, sign: boolean = true): String {
+    return `${(sign && amount > 0) ? '+' : ''}${amount.toFixed(2)} CHF`;
+  }
+
   constructor(transaction: Transaction) {
     this.id = transaction.id;
     this.title = transaction.title;
@@ -36,7 +40,9 @@ export class Transaction {
   }
 
   public amountString(): String {
-    return `${this.amount > 0 ? '+' : ''}${this.amount.toFixed(2)} CHF`;
+    return Transaction.displayMoney(this.amount);
   }
+
+
 
 }

@@ -18,6 +18,11 @@ data class Transaction(
         val stripe: Boolean
 ) {
 
+    val displayAmount: String
+    get() {
+        return formatAmount(this.amount)
+    }
+
     fun nameToDisplay(): String {
         return if (this.stripe) {
             "Stripe Charge"
@@ -52,6 +57,17 @@ data class Transaction(
             val adminCharge = jsonObject.getBoolean("adminCharge")
             val stripe = jsonObject.getBoolean("stripe")
             return Transaction(id, title, amount, to, from, date, adminCharge, stripe)
+        }
+
+        fun formatAmount(amount: Double, sign: Boolean = true): String{
+            var newAmount = amount
+            val signToAdd = if (amount < 0){
+                newAmount *= -1
+                "-"
+            }else{
+                "+"
+            }
+            return "${if(sign) signToAdd else ""}${" %.2f CHF".format(newAmount ?: 0.0)}"
         }
     }
 }

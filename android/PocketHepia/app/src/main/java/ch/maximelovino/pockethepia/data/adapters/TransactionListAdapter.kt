@@ -126,7 +126,7 @@ class TransactionListAdapter(val context: Context) : ListAdapter<Transaction, Tr
             holder.titleText.text = current.title
             holder.personText.text = current.nameToDisplay()
             holder.dateText.text = simpleDateFormat.format(current.date.time)
-            holder.amountText.text = current.amount.toString()
+            holder.amountText.text = current.displayAmount
             holder.amountText.setTextColor(if (current.amount < 0) context.resources.getColor(R.color.negativeAmount) else context.resources.getColor(R.color.positiveAmount))
         } else {
             // Covers the case of data not being ready yet.
