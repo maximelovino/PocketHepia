@@ -513,18 +513,20 @@ texcl=false,
 		\centering
 		\includegraphics[width=.7\linewidth]{assets/logo_hes.png}
 	\end{minipage}
-	\vspace{3cm}
+	\vspace{1cm}
 	{\huge\bfseries \\PocketHepia\\A student card platform based on NFC \par}
-			\vspace{2cm}
-	{\Large Bachelor Thesis presented by \par}
-				\vspace{0.5cm}
+			\vspace{0.5cm}
+			\includegraphics[width=.8\linewidth]{assets/app_presentation}
+			\vspace{0.2cm}
+	{\Large \\Bachelor Thesis presented by \par}
+				\vspace{0.2cm}
 		{\Large \bfseries Mr. Maxime Alexandre LOVINO\par}
-				\vspace{0.5cm}
+				\vspace{0.2cm}
 			{\Large for the obtention of the Bachelor of Science HES-SO in \par}
-				\vspace{0.5cm}
+				\vspace{0.2cm}
 			{\Large \bfseries Ingénierie des Technologies de l’Information avec orientation en
 Logiciels et Systèmes Complexes \par}	
-	\vspace{2cm}
+	\vspace{0.5cm}
 	{\scshape\Large September 2018\par}
 	\vfill
 	\raggedright
@@ -2083,7 +2085,35 @@ The Dockerfile for the Angular frontend is the most complex one. We wanted to ma
 	\caption{Interactions in the Android application}
 \end{center}
 \end{figure}
-%%TODO talk about FAB handling, authentication, sync thread, distinct activities for given things
+In the Android application, we mainly focused on integrating new libraries that are part of Android Jetpack to improve the data layer of the application, with the offline data storage and the background synchronisation with the backend. We put a focus on navigation as well, by integration the new Navigation Jetpack library.
+\subsection{Authentication}
+As far as authentication is concerned, we have something similar to the Angular frontend client but instead of using the browser local storage to store the \gls{jwt}, we use the Android equivalent for applications: \verb+SharedPreferences+. In \verb+SharedPreferences+ we can store key-value pairs so it is perfect to store the \gls{jwt} under a given key. We also store the \verb+id+ of the connected user that we receive on first login and we will update it at every synchronisation. We built a Kotlin Object\footnote{Objects are classes containing only static functions} called \verb+PreferenceManager+ that contains functions to store and retrieve the \gls{jwt} and user \verb+id+ from the \verb+SharedPreferences+ as well as clear both of them when logging out.
+\subsection{Data synchronisation and storage}
+%%TODO we store userID
+We use \verb+WorkManager+ and \verb+Room+ to handle the background synchronisation and offline storage of the data respectively. \\
+
+We wrote a \verb+Worker+ called \verb+SyncWorker+ that will retrieve information about the connected user, its transaction, its accesses and, if the user is an admin, it will retrieve data from all other users. Once all data is retrieved, we will update the connected user \verb+id+ in the \verb+SharedPreferences+ to make sure that we have the latest version and we will clear each table and store the new information in it. Since the database is used just to keep data offline, we can clear everything locally and always take the server version of the data. This \verb+SyncWorker+ will run in the background every hour as long as the device does not have low battery and is connected to a unmetered\footnote{An unmetered connection is a connection with no data limit, by default Wi-Fi connections are unmetered in Android even though you can set a Wi-Fi connection as metered if it is an hotspot for example} connection. Due to the nature of \verb+WorkManager+ and the optimisation in place, it will not run exactly every 60 minutes, but it will trigger around one hour after the latest trigger. The system will wake up the device once for all background tasks scheduled to run at a given time. If we needed exact timing, we would not be using \verb+WorkManager+. Finally, on all main screens of the application, you can do a \emph{pull-to-refresh} on the screen to trigger a manual synchronisation at any time. \\
+
+For storage, we are using the \verb+Room+ database. We setup the entities and \gls{dao} for all the models we are storing. We used some \verb+TypeConverters+ to store \verb+Date+ fields (for transactions for example) as Unix time in the database and then retrieve back as date. This can be easily done by creating methods with the annotation \verb+@TypeConverter+ and taking the first type as parameter and returning the second type. In the case of our dates, it gives the following converters (one for each way):
+\begin{code}
+	\kotlincode{assets/code/kotlin/dataTransformers.kt}
+	\caption{TypeConverters to store Calendar in Room}
+\end{code}
+We stored the \verb+id+ of the current user in the \verb+SharedPreferences+ so we can retrieve it from the database and we know which user it is. This is particularly important for administrators that have all users stored in the database.
+\subsection{Data display and lists}
+%%TODO add ref for recyclerview
+To display the data stored in the \verb+Room+ database in our views, we used \verb+Repositories+ and \verb+ViewModels+ and subscribed to the \verb+LiveData+ returned by the \verb+ViewModel+ to update a \verb+RecyclerView+ list through a \verb+RecyclerView.ListAdapter+ in most cases. The one exception to this is the custom \verb+Adapter+ we wrote for the list of users on the admin screen because we wanted to add search to filter the list of users and we could not do that with the \verb+ListAdapter+. Both type of \verb+Adapters+ are used to link data from the list and map the fields from the individual item layout to the fields of the list entry.
+\subsection{Action HTTP Tasks}
+
+\subsection{Navigation}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=\textwidth]{assets/screens/android/navigation}
+	\caption{Bottom Navigation with four screens}
+\end{center}
+\end{figure}
+%%TODO talk about FAB handling, authentication, sync thread, data management, distinct activities for given things
+%%TODO present all main screens with bottom nav and navigation config => user list to user detail for example
 \chapter{Conclusion}
 %%TODO talk about how to implement new features or sections inside the project
 \section{Future works}
