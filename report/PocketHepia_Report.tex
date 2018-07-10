@@ -1118,7 +1118,7 @@ From there, you have two different possibilities that can also be combined. You 
 
 \subsubsection{Setting up \emph{Foreground Dispatch}}
 \label{foreground_dispatch}
-You have to setup \emph{Foreground Dispatch}\cite{android:doc:nfc_foregroundDispatch} at the Activity level, preferably in the \mintinline[breaklines]{kotlin}{fun onCreate(savedState: Bundle?)} method and then enable it and disable on resume and pause of the Activity respectively. If you need to use it in multiple activities, it is easier to setup a superclass Activity and extends all other Activities from it. We can then just override the \mintinline[breaklines]{kotlin}{fun onNewIntent(intent: Intent)} in the specific Activity for which we need to handle \gls{nfc} specifically. In the superclass Activity, we can just discard the received \gls{nfc} intent.\\
+You have to setup \emph{Foreground Dispatch}\cite{android:doc:nfc_foregroundDispatch} at the Activity level, preferably in the \mintinline[breaklines]{kotlin}{fun onCreate(savedState: Bundle?)} method and then enable it and disable on resume and pause of the Activity respectively. If you need to use it in multiple activities, it is easier to setup a superclass Activity and extends all other Activities from it. We can then just override the \\\mintinline[breaklines]{kotlin}{fun onNewIntent(intent: Intent)} in the specific Activity for which we need to handle \gls{nfc} specifically. In the superclass Activity, we can just discard the received \gls{nfc} intent.\\
 
 As we can see in source code \ref{foreground_dispatch_code}, we have to register all technologies and intent types that we need to filter and create a pendingIntent to be sent by it. We activate the filter when the Activity is resumed and disable it when it is destroyed. This is to avoid blocking all other apps after our application quits and avoid crashes as well because if a \gls{nfc} action happens and our app gets it in the background, it will crash. When we get the \gls{nfc} intent, we just log a message by default and discard the intent.
 
@@ -1350,6 +1350,7 @@ ng new demo
 	\end{shell}
 	\caption{Command to create a new Angular project}
 \end{code}
+\newpage
 And it will present you with this starting architecture:
 \dirtree{%
 .1 demo. 
@@ -1508,7 +1509,7 @@ From the parent component point of view, it looks like this:
 \end{code}
 When looking at source code \ref{parent_component_files} Template file, we can see \verb+(created)+ that is assigned to a function call and passing \verb+$event+ to that function. This is called event binding.\\
 
-Inside the \verb+CreateUserComponent+, the \verb+created+ property is defined as an \mintinline[breaklines]{ts}{@Output() created = new EventEmitter<boolean>();}. With this event emitter, we can call the method \verb+emit()+ on it to emit a value of the specified type, in our case \verb+boolean+. The \verb+$event+ passed to the function call in the parent component is the value passed at the emission of the event.
+Inside the \verb+CreateUserComponent+, the \verb+created+ property is defined as an \\\mintinline[breaklines]{ts}{@Output() created = new EventEmitter<boolean>();}. With this event emitter, we can call the method \verb+emit()+ on it to emit a value of the specified type, in our case \verb+boolean+. The \verb+$event+ passed to the function call in the parent component is the value passed at the emission of the event.
 
 From there, we can just call any public method in the table component, in this case \verb+refreshData()+.
 
@@ -1940,7 +1941,7 @@ We will not talk about the Services implemented as they are pretty self-explanat
 \end{center}
 \end{figure}
 \subsection{Authentication}
-All interactions between the Angular frontend and the Backend are done in Services using Angular HTTP Client. On the login page, we \verb+POST+ the login form data to the Backend login route and we retrieve the \gls{jwt} if the authentication is successful. From there, we use a package called \verb+@ngx-pwa/local-storage+\cite{github:angular:localstorage} to interact with the browser local storage and store the \gls{jwt}. As we will see in section \ref{guards_implementation} about the Guards we implemented, we consider a user as logged-in if a \gls{jwt} is stored in local storage.\\
+All interactions between the Angular frontend and the Backend are done in Services using Angular HTTP Client. On the login page, we \verb+POST+ the login form data to the Backend login route and we retrieve the \gls{jwt} if the authentication is successful. From there, we use a package called \\\verb+@ngx-pwa/local-storage+\cite{github:angular:localstorage} to interact with the browser local storage and store the \gls{jwt}. As we will see in section \ref{guards_implementation} about the Guards we implemented, we consider a user as logged-in if a \gls{jwt} is stored in local storage.\\
 
 
 Instead of retrieving the \gls{jwt} every time we make a HTTP Client Request, we built a \verb+HTTPInterceptor+\cite{angular:doc:httpinterceptor} that will clone the Request and add the \gls{jwt} to the Request Header before sending it out. This will return an \verb+Observable+ for the new Request because retrieving the \gls{jwt} is asynchronous.
@@ -2090,7 +2091,6 @@ In the Android application, we mainly focused on integrating new libraries that 
 \subsection{Authentication}
 As far as authentication is concerned, we have something similar to the Angular frontend client but instead of using the browser local storage to store the \gls{jwt}, we use the Android equivalent for applications: \verb+SharedPreferences+. In \verb+SharedPreferences+ we can store key-value pairs so it is perfect to store the \gls{jwt} under a given key. We also store the \verb+id+ of the connected user that we receive on first login and we will update it at every synchronisation. We built a Kotlin Object\footnote{Objects are classes containing only static functions} called \verb+PreferenceManager+ that contains functions to store and retrieve the \gls{jwt} and user \verb+id+ from the \verb+SharedPreferences+ as well as clear both of them when logging out.
 \subsection{Data synchronisation and storage}
-%%TODO we store userID
 We use \verb+WorkManager+ and \verb+Room+ to handle the background synchronisation and offline storage of the data respectively. \\
 
 We wrote a \verb+Worker+ called \verb+SyncWorker+ that will retrieve information about the connected user, its transaction, its accesses and, if the user is an admin, it will retrieve data from all other users. Once all data is retrieved, we will update the connected user \verb+id+ in the \verb+SharedPreferences+ to make sure that we have the latest version and we will clear each table and store the new information in it. Since the database is used just to keep data offline, we can clear everything locally and always take the server version of the data. This \verb+SyncWorker+ will run in the background every hour as long as the device does not have low battery and is connected to a unmetered\footnote{An unmetered connection is a connection with no data limit, by default Wi-Fi connections are unmetered in Android even though you can set a Wi-Fi connection as metered if it is an hotspot for example} connection. Due to the nature of \verb+WorkManager+ and the optimisation in place, it will not run exactly every 60 minutes, but it will trigger around one hour after the latest trigger. The system will wake up the device once for all background tasks scheduled to run at a given time. If we needed exact timing, we would not be using \verb+WorkManager+. Finally, on all main screens of the application, you can do a \emph{pull-to-refresh} on the screen to trigger a manual synchronisation at any time. \\
@@ -2102,8 +2102,7 @@ For storage, we are using the \verb+Room+ database. We setup the entities and \g
 \end{code}
 We stored the \verb+id+ of the current user in the \verb+SharedPreferences+ so we can retrieve it from the database and we know which user it is. This is particularly important for administrators that have all users stored in the database.
 \subsection{Data display and lists}
-%%TODO add ref for recyclerview, adapters etc
-To display the data stored in the \verb+Room+ database in our views, we used \verb+Repositories+ and \verb+ViewModels+ and subscribed to the \verb+LiveData+ returned by the \verb+ViewModel+ to update a \verb+RecyclerView+ list through a \verb+RecyclerView.ListAdapter+ in most cases. The one exception to this is the custom \verb+Adapter+ we wrote for the list of users on the admin screen because we wanted to add search to filter the list of users and we could not do that with the \verb+ListAdapter+. Both type of \verb+Adapters+ are used to link data from the list and map the fields from the individual item layout to the fields of the list entry.
+To display the data stored in the \verb+Room+ database in our views, we used \\\verb+Repositories+ and \verb+ViewModels+ and subscribed to the \verb+LiveData+ returned by the \verb+ViewModel+ to update a \verb+RecyclerView+\cite{android:doc:recycler} list through a \verb+RecyclerView.ListAdapter+\cite{android:doc:recycler:listadapter} in most cases. The one exception to this is the custom \verb+Adapter+\cite{android:doc:recycler:adapter} we wrote for the list of users on the admin screen because we wanted to add search to filter the list of users and we could not do that with the \verb+ListAdapter+. Both type of \verb+Adapters+ are used to link data from the list and map the fields from the individual item layout to the fields of the list entry.
 
 \subsection{Navigation and screens}
 \begin{figure}[H]
@@ -2115,8 +2114,7 @@ To display the data stored in the \verb+Room+ database in our views, we used \ve
 
 The Android application is built around three (four if admin) main screens that you can switch between using a Bottom Navigation View\cite{android:doc:material:bottom_nav}, all these views are contained in a single Activity called the \verb+MainActivity+. We linked the Bottom Navigation to the new Navigation Controller and it switches between three (four if admin) Fragments on screen to display each screen.\\ The three screens are the homepage that contains a quick summary, the transactions screen and the access screen listing all accesses. An additional admin screen is displayed if the connected user is an administrator and will display the list of users. \\
 
-%%TODO add ref for FAB
-All these screen Fragments extends a \verb+BaseFragment+ that defines that the Fragment requires to be loaded inside the \verb+MainActivity+ so we can use the Floating Action Button (FAB) contained in the \verb+MainActivity+ in certain fragments. By default in the \verb+BaseFragment+, the method \verb+handleFabDisplay()+ is implemented by default to hide the FAB but in the Transactions screen this method is overridden to display the FAB. 
+All these screen Fragments extends a \verb+BaseFragment+ that defines that the Fragment requires to be loaded inside the \verb+MainActivity+ so we can use the Floating Action Button (FAB)\cite{android:doc:material:fab} contained in the \verb+MainActivity+ in certain fragments. By default in the \verb+BaseFragment+, the method \verb+handleFabDisplay()+ is implemented by default to hide the FAB but in the Transactions screen this method is overridden to display the FAB. 
 
 \subsubsection{Transactions section}
 \begin{figure}[H]
@@ -2214,18 +2212,10 @@ docker compose up
 	\caption[Running the project with Docker Compose]{Running the project with Docker Compose, you may need to \texttt{sudo} the command, you can the \texttt{-d} flag to run in background}
 \end{code}
 
-Now that the project is deployed and running, it is important to note that the server will only respond at the \verb+pockethepia.maximelovino.ch+ domain name. You will need to modify your \verb+/etc/hosts+ file to map the domain to the IP of the machine you are running the project on to access it (127.0.0.1 if you are running on your local machine).
-%%TODO write deployment guide, two parts: pull images and run with docker compose, build images with sources and run them locally
-%%TODO add the fact that you need to direct pockethepia.maximelovino.ch domain to the IP of the machine used
-%%TODO talk about calling init etc
-%%TODO talk about ng serve?
 \chapter{Backend API Documentation}
 \label{appendix_api_doc}
 The documentation of the Backend \gls{api}, generated with APIDoc is available as an interactive version on \url{https://maximelovino.github.io/PocketHepia/api/}
 \chapter{Android Documentation}
 The documentation of the Android application, generated with Dokka is available as an interactive version on \url{https://maximelovino.github.io/PocketHepia/android/}
 \end{appendices}
-
-
-
 \end{document}

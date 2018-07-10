@@ -7,11 +7,6 @@ open class ForegroundDispatchedActivity : AppCompatActivity() {
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
-        /*
-        Create a generic PendingIntent that will be delivered to this activity. The NFC stack
-        will fill in the intent with the details of the discovered tag before delivering to
-        this activity.
-         */
         pendingIntent = PendingIntent.getActivity(this, 0, Intent(this, this.javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0)
         // Setup an intent filter for all MIME based dispatches
 
