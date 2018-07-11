@@ -5,7 +5,6 @@ import android.arch.lifecycle.Observer
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.button.MaterialButton
-import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -23,8 +22,7 @@ import javax.net.ssl.HttpsURLConnection
 
 
 /**
- * A simple [Fragment] subclass.
- *
+ * This Fragment displays the detail of a user
  */
 class UserDetailFragment : BaseFragment() {
     private var dialog: AlertDialog? = null
@@ -55,7 +53,6 @@ class UserDetailFragment : BaseFragment() {
 
         val userDao = AppDatabase.getInstance(context!!).userDao()
 
-        //TODO shouldn't we use the ViewModel and Repository too here? and elsewhere where we have single elements
         val user = userDao.findById(id)
 
         user.observe(this, Observer {
@@ -90,6 +87,9 @@ class UserDetailFragment : BaseFragment() {
         return v
     }
 
+    /**
+     * Function trigger after the server response for deleting the tag
+     */
     fun postTagDelete(success: Boolean) {
         val activity: MainActivity = activity!! as MainActivity
         val message = if (success) {
@@ -106,6 +106,9 @@ class UserDetailFragment : BaseFragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
+    /**
+     * Async Task to delete the tag for the user by requesting to the server
+     */
     inner class DeleteTagTask(private val token: String) : AsyncTask<Void, Void, Boolean>() {
         override fun doInBackground(vararg p0: Void?): Boolean {
             try {

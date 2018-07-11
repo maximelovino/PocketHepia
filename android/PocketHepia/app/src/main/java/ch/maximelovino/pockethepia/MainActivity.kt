@@ -28,6 +28,11 @@ import ch.maximelovino.pockethepia.workers.SyncWorker
 import kotlinx.android.synthetic.main.activity_main.*
 
 
+/**
+ * This is the main activity of the application, it incorporates the navigation host
+ * and the 4 main Fragments
+ * It also handles the swipe to refresh and the launch of the manual synchronisation
+ */
 class MainActivity : ForegroundDispatchedActivity() {
     private val workManager: WorkManager = WorkManager.getInstance()
     private var adminShown = false
@@ -116,6 +121,9 @@ class MainActivity : ForegroundDispatchedActivity() {
         launchSync()
     }
 
+    /**
+     * Function that launches a manual synchronisation
+     */
     fun launchSync() {
         val syncRequest = OneTimeWorkRequest.Builder(SyncWorker::class.java).addTag(MANUAL_SYNC_TAG).build()
         this.workManager.beginUniqueWork(MANUAL_SYNC_TAG, ExistingWorkPolicy.KEEP, syncRequest).enqueue()
@@ -141,7 +149,10 @@ class MainActivity : ForegroundDispatchedActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun logout() {
+    /**
+     * Function that logs out the user, clears the stored JWT and userID, empties the DB, unregister the sync task
+     */
+    private fun logout() {
         cancelPeriodicSyncTask()
         val db = AppDatabase.getInstance(this)
         ClearDatabaseTask(db).execute()
@@ -151,12 +162,18 @@ class MainActivity : ForegroundDispatchedActivity() {
         finish()
     }
 
+    /**
+     * Function that cancels the periodic sync task
+     */
     private fun cancelPeriodicSyncTask() {
         val wm = WorkManager.getInstance()
         wm.cancelAllWorkByTag(Constants.SYNC_TAG)
         wm.cancelUniqueWork(Constants.SYNC_TAG)
     }
 
+    /**
+     * Function used to fix a display bug of BottomNavigationView
+     */
     @SuppressLint("RestrictedApi")
     private fun disableShiftMode(view: BottomNavigationView) {
         val menuView = view.getChildAt(0) as BottomNavigationMenuView
@@ -178,6 +195,9 @@ class MainActivity : ForegroundDispatchedActivity() {
         }
     }
 
+    /**
+     * Function that will toggle the display of the admin menu in the Bottom Navigation View
+     */
     private fun toggleAdminMenu() {
         if (adminShown) {
             navigation.menu.removeItem(R.id.adminFragment)
@@ -192,6 +212,9 @@ class MainActivity : ForegroundDispatchedActivity() {
         return findNavController(R.id.nav_host_fragment).navigateUp()
     }
 
+    /**
+     * Async task to clear the database in the background, can't do it on the main thread
+     */
     class ClearDatabaseTask(val db: AppDatabase) : AsyncTask<Void, Void, Unit>() {
         override fun doInBackground(vararg p0: Void?) {
             db.clearAllTables()

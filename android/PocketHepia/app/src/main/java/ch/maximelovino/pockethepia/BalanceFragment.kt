@@ -11,6 +11,9 @@ import ch.maximelovino.pockethepia.utils.BaseFragment
 import kotlinx.android.synthetic.main.fragment_balance.*
 
 
+/**
+ * This Fragment only displays a card with the user balance, taken from the local database
+ */
 class BalanceFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

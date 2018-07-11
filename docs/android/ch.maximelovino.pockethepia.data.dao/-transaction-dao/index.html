@@ -9,6 +9,7 @@
 <br/>
 <h1>TransactionDao</h1>
 <code><span class="keyword">interface </span><span class="identifier">TransactionDao</span></code>
+<p>This the Data Access Object for the <a href="../../ch.maximelovino.pockethepia.data.models/-transaction/index.html">Transaction</a> Entity</p>
 <h3>Functions</h3>
 <table>
 <tbody>
@@ -17,28 +18,36 @@
 <p><a href="delete.html">delete</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">delete</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.dao.TransactionDao$delete(ch.maximelovino.pockethepia.data.models.Transaction)/transaction">transaction</span><span class="symbol">:</span>&nbsp;<a href="../../ch.maximelovino.pockethepia.data.models/-transaction/index.html"><span class="identifier">Transaction</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">delete</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.dao.TransactionDao$delete(ch.maximelovino.pockethepia.data.models.Transaction)/transaction">transaction</span><span class="symbol">:</span>&nbsp;<a href="../../ch.maximelovino.pockethepia.data.models/-transaction/index.html"><span class="identifier">Transaction</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Removes an transaction from the database</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-all.html">getAll</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getAll</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-transaction/index.html"><span class="identifier">Transaction</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getAll</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-transaction/index.html"><span class="identifier">Transaction</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Retrieves all transactions from the database</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="insert.html">insert</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">insert</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="ch.maximelovino.pockethepia.data.dao.TransactionDao$insert(kotlin.Array((ch.maximelovino.pockethepia.data.models.Transaction)))/transactions">transactions</span><span class="symbol">:</span>&nbsp;<a href="../../ch.maximelovino.pockethepia.data.models/-transaction/index.html"><span class="identifier">Transaction</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">insert</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="ch.maximelovino.pockethepia.data.dao.TransactionDao$insert(kotlin.Array((ch.maximelovino.pockethepia.data.models.Transaction)))/transactions">transactions</span><span class="symbol">:</span>&nbsp;<a href="../../ch.maximelovino.pockethepia.data.models/-transaction/index.html"><span class="identifier">Transaction</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Inserts transactions in the database, replacing on conflicts</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="nuke.html">nuke</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">nuke</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">nuke</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Clear all transactions from the database table</p>
+</td>
 </tr>
 </tbody>
 </table>

@@ -9,7 +9,8 @@
 <br/>
 <h1>LoginActivity</h1>
 <code><span class="keyword">class </span><span class="identifier">LoginActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatActivity</span></code>
-<p>A login screen that offers login via email/password.</p>
+<p>A login activity that offers login via email/password.
+This is the generated LoginActivity from Android Studio tweaked to fit our needs</p>
 <h3>Types</h3>
 <table>
 <tbody>
@@ -19,8 +20,7 @@
 </td>
 <td>
 <code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">UserLoginTask</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/AsyncTask.html"><span class="identifier">AsyncTask</span></a><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">,</span>&nbsp;<a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code>
-<p>Represents an asynchronous login/registration task used to authenticate
-the user.</p>
+<p>This Task will authenticate the user against the backend in the background</p>
 </td>
 </tr>
 </tbody>
@@ -34,7 +34,8 @@ the user.</p>
 </td>
 <td>
 <code><span class="identifier">LoginActivity</span><span class="symbol">(</span><span class="symbol">)</span></code>
-<p>A login screen that offers login via email/password.</p>
+<p>A login activity that offers login via email/password.
+This is the generated LoginActivity from Android Studio tweaked to fit our needs</p>
 </td>
 </tr>
 </tbody>
@@ -62,7 +63,7 @@ the user.</p>
 </td>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">attemptLogin</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Attempts to sign in or register the account specified by the login form.
+<p>Attempts to sign in the account specified by the login form.
 If there are form errors (invalid email, missing fields, etc.), the
 errors are presented and no actual login attempt is made.</p>
 </td>
@@ -72,7 +73,9 @@ errors are presented and no actual login attempt is made.</p>
 <p><a href="create-periodic-sync-task.html">createPeriodicSyncTask</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">createPeriodicSyncTask</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">createPeriodicSyncTask</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>This function will register the periodic WorkManager sync task</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -93,7 +96,9 @@ errors are presented and no actual login attempt is made.</p>
 <p><a href="login-correct.html">loginCorrect</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">loginCorrect</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.LoginActivity$loginCorrect(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">loginCorrect</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.LoginActivity$loginCorrect(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>This function is called when the login is correct and passes the JWT token</p>
+</td>
 </tr>
 <tr>
 <td>

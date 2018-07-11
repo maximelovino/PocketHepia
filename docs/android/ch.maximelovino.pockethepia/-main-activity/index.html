@@ -9,6 +9,9 @@
 <br/>
 <h1>MainActivity</h1>
 <code><span class="keyword">class </span><span class="identifier">MainActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/index.html"><span class="identifier">ForegroundDispatchedActivity</span></a></code>
+<p>This is the main activity of the application, it incorporates the navigation host
+and the 4 main Fragments
+It also handles the swipe to refresh and the launch of the manual synchronisation</p>
 <h3>Types</h3>
 <table>
 <tbody>
@@ -17,7 +20,9 @@
 <p><a href="-clear-database-task/index.html">ClearDatabaseTask</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">ClearDatabaseTask</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/AsyncTask.html"><span class="identifier">AsyncTask</span></a><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">,</span>&nbsp;<a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">class </span><span class="identifier">ClearDatabaseTask</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/AsyncTask.html"><span class="identifier">AsyncTask</span></a><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">,</span>&nbsp;<a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">&gt;</span></code>
+<p>Async task to clear the database in the background, can't do it on the main thread</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -29,7 +34,11 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">MainActivity</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+<code><span class="identifier">MainActivity</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>This is the main activity of the application, it incorporates the navigation host
+and the 4 main Fragments
+It also handles the swipe to refresh and the launch of the manual synchronisation</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -122,28 +131,36 @@
 <p><a href="cancel-periodic-sync-task.html">cancelPeriodicSyncTask</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">cancelPeriodicSyncTask</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">cancelPeriodicSyncTask</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Function that cancels the periodic sync task</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="disable-shift-mode.html">disableShiftMode</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">disableShiftMode</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.MainActivity$disableShiftMode(android.support.design.widget.BottomNavigationView)/view">view</span><span class="symbol">:</span>&nbsp;<span class="identifier">BottomNavigationView</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">disableShiftMode</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.MainActivity$disableShiftMode(android.support.design.widget.BottomNavigationView)/view">view</span><span class="symbol">:</span>&nbsp;<span class="identifier">BottomNavigationView</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Function used to fix a display bug of BottomNavigationView</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="launch-sync.html">launchSync</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">launchSync</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">launchSync</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Function that launches a manual synchronisation</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="logout.html">logout</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">logout</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">logout</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Function that logs out the user, clears the stored JWT and userID, empties the DB, unregister the sync task</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -185,7 +202,9 @@
 <p><a href="toggle-admin-menu.html">toggleAdminMenu</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">toggleAdminMenu</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">toggleAdminMenu</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Function that will toggle the display of the admin menu in the Bottom Navigation View</p>
+</td>
 </tr>
 </tbody>
 </table>

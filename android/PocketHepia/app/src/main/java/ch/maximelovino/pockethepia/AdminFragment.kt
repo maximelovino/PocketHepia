@@ -3,7 +3,6 @@ package ch.maximelovino.pockethepia
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
@@ -14,13 +13,8 @@ import ch.maximelovino.pockethepia.utils.BaseFragment
 
 
 /**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [HomeFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
+ * The admin Fragment, displays the list of users and implement a searchview in the toolbar,
+ * adds to the Activity base menu
  */
 class AdminFragment : BaseFragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextSubmit(p0: String?): Boolean {

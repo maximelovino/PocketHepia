@@ -3,7 +3,6 @@ package ch.maximelovino.pockethepia
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.design.card.MaterialCardView
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +13,8 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 
 /**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [HomeFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
+ * The homepage fragment, integrates the BalanceFragment and provides navigation to the transactions screens
+ * Integrates a link to the virtual card as well
  */
 class HomeFragment : BaseFragment() {
 

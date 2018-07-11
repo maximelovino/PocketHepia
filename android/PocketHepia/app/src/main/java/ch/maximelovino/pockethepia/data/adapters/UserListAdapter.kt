@@ -12,7 +12,10 @@ import ch.maximelovino.pockethepia.AdminFragmentDirections
 import ch.maximelovino.pockethepia.R
 import ch.maximelovino.pockethepia.data.models.User
 
-
+/**
+ * Class representing the RecyclerView adapter for User, this uses a custom RecyclerView.Adapter instead of a ListAdapter
+ * @param context The context of the application
+ */
 class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
     /**
      * Returns the total number of items in the data set held by the adapter.
@@ -29,6 +32,9 @@ class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapt
     private var query = ""
 
 
+    /**
+     * Private function that will filter the dataset with the query value and put the filtered data in filteredDataSet
+     */
     private fun filterData() {
         this.filteredDataSet.clear()
         if (query.isEmpty()) {
@@ -39,17 +45,30 @@ class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapt
         notifyDataSetChanged()
     }
 
+    /**
+     * Method to set new list data for the adapter
+     *
+     * @param users The new list of users
+     */
     fun setData(users: List<User>) {
         dataset.clear()
         dataset.addAll(users)
         filterData()
     }
 
+    /**
+     * Method to set a new query to filter the list
+     *
+     * @param query The query to filter the list
+     */
     fun filter(query: String) {
         this.query = query
         filterData()
     }
 
+    /**
+     * Method to remove the filter from the list, sets the query to empty and displays everything
+     */
     fun clearFilter() {
         this.query = ""
         filterData()
@@ -57,7 +76,7 @@ class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapt
 
 
     /**
-     * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
+     * Called when RecyclerView needs a new UserViewHolder of the given type to represent
      * an item.
      *
      *
@@ -69,7 +88,7 @@ class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapt
      * The new ViewHolder will be used to display items of the adapter using
      * [.onBindViewHolder]. Since it will be re-used to display
      * different items in the data set, it is a good idea to cache references to sub views of
-     * the View to avoid unnecessary [View.findViewById] calls.
+     * the View to avoid unnecessary View.findViewById calls.
      *
      * @param parent The ViewGroup into which the new View will be added after it is bound to
      * an adapter position.
@@ -86,16 +105,16 @@ class UserListAdapter(val context: Context) : RecyclerView.Adapter<UserListAdapt
 
     /**
      * Called by RecyclerView to display the data at the specified position. This method should
-     * update the contents of the [ViewHolder.itemView] to reflect the item at the given
+     * update the contents of the UserViewHolder.itemView to reflect the item at the given
      * position.
      *
      *
-     * Note that unlike [android.widget.ListView], RecyclerView will not call this method
+     * Note that unlike android.widget.ListView, RecyclerView will not call this method
      * again if the position of the item changes in the data set unless the item itself is
      * invalidated or the new position cannot be determined. For this reason, you should only
      * use the `position` parameter while acquiring the related data item inside
      * this method and should not keep a copy of it. If you need the position of an item later
-     * on (e.g. in a click listener), use [ViewHolder.getAdapterPosition] which will
+     * on (e.g. in a click listener), use UserViewHolder.getAdapterPosition which will
      * have the updated adapter position.
      *
      * Override [.onBindViewHolder] instead if Adapter can

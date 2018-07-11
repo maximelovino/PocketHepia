@@ -12,6 +12,10 @@ import ch.maximelovino.pockethepia.R
 import ch.maximelovino.pockethepia.data.models.Access
 
 
+/**
+ * Class representing the RecyclerView adapter for Access
+ * @param context The context of the application
+ */
 class AccessListAdapter(val context: Context) : ListAdapter<Access, AccessListAdapter.AccessViewHolder>(object : DiffUtil.ItemCallback<Access>() {
     /**
      * Called to check whether two items have the same data.
@@ -20,16 +24,16 @@ class AccessListAdapter(val context: Context) : ListAdapter<Access, AccessListAd
      * This information is used to detect if the contents of an item have changed.
      *
      *
-     * This method to check equality instead of [Object.equals] so that you can
+     * This method to check equality instead of Object.equals so that you can
      * change its behavior depending on your UI.
      *
      *
      * For example, if you are using DiffUtil with a
-     * [RecyclerView.Adapter][android.support.v7.widget.RecyclerView.Adapter], you should
+     * RecyclerView.Adapter , you should
      * return whether the items' visual representations are the same.
      *
      *
-     * This method is called only if [.areItemsTheSame] returns `true` for
+     * This method is called only if .areItemsTheSame returns `true` for
      * these items.
      *
      *
@@ -40,7 +44,6 @@ class AccessListAdapter(val context: Context) : ListAdapter<Access, AccessListAd
      * @param newItem The item in the new list.
      * @return True if the contents of the items are the same or false if they are different.
      *
-     * @see Callback.areContentsTheSame
      */
     override fun areContentsTheSame(oldItem: Access, newItem: Access): Boolean {
         return oldItem == newItem
@@ -61,7 +64,6 @@ class AccessListAdapter(val context: Context) : ListAdapter<Access, AccessListAd
      * @param newItem The item in the new list.
      * @return True if the two items represent the same object or false if they are different.
      *
-     * @see Callback.areItemsTheSame
      */
     override fun areItemsTheSame(oldItem: Access, newItem: Access): Boolean {
         return oldItem.id == newItem.id
@@ -69,7 +71,7 @@ class AccessListAdapter(val context: Context) : ListAdapter<Access, AccessListAd
 }) {
     private val layoutInflater = LayoutInflater.from(context)
     /**
-     * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
+     * Called when RecyclerView needs a new AccessViewHolder of the given type to represent
      * an item.
      *
      *
@@ -81,7 +83,7 @@ class AccessListAdapter(val context: Context) : ListAdapter<Access, AccessListAd
      * The new ViewHolder will be used to display items of the adapter using
      * [.onBindViewHolder]. Since it will be re-used to display
      * different items in the data set, it is a good idea to cache references to sub views of
-     * the View to avoid unnecessary [View.findViewById] calls.
+     * the View to avoid unnecessary View.findViewById calls.
      *
      * @param parent The ViewGroup into which the new View will be added after it is bound to
      * an adapter position.
@@ -98,16 +100,16 @@ class AccessListAdapter(val context: Context) : ListAdapter<Access, AccessListAd
 
     /**
      * Called by RecyclerView to display the data at the specified position. This method should
-     * update the contents of the [ViewHolder.itemView] to reflect the item at the given
+     * update the contents of the AccessViewHolder.itemView to reflect the item at the given
      * position.
      *
      *
-     * Note that unlike [android.widget.ListView], RecyclerView will not call this method
+     * Note that unlike android.widget.ListView, RecyclerView will not call this method
      * again if the position of the item changes in the data set unless the item itself is
      * invalidated or the new position cannot be determined. For this reason, you should only
      * use the `position` parameter while acquiring the related data item inside
      * this method and should not keep a copy of it. If you need the position of an item later
-     * on (e.g. in a click listener), use [ViewHolder.getAdapterPosition] which will
+     * on (e.g. in a click listener), use AccessViewHolder.getAdapterPosition which will
      * have the updated adapter position.
      *
      * Override [.onBindViewHolder] instead if Adapter can

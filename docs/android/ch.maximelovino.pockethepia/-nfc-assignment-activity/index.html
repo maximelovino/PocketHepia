@@ -9,6 +9,7 @@
 <br/>
 <h1>NfcAssignmentActivity</h1>
 <code><span class="keyword">class </span><span class="identifier">NfcAssignmentActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/index.html"><span class="identifier">ForegroundDispatchedActivity</span></a></code>
+<p>Activity to assign a nfc tag to a user, it takes the userID as parameter</p>
 <h3>Types</h3>
 <table>
 <tbody>
@@ -17,7 +18,9 @@
 <p><a href="-assign-n-f-c-task/index.html">AssignNFCTask</a></p>
 </td>
 <td>
-<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">AssignNFCTask</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/AsyncTask.html"><span class="identifier">AsyncTask</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">AssignNFCTask</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/AsyncTask.html"><span class="identifier">AsyncTask</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code>
+<p>AsyncTask to assign the tag by communicating with the server</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -29,7 +32,9 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">NfcAssignmentActivity</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+<code><span class="identifier">NfcAssignmentActivity</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Activity to assign a nfc tag to a user, it takes the userID as parameter</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -108,7 +113,9 @@
 <p><a href="on-new-intent.html">onNewIntent</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">onNewIntent</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.NfcAssignmentActivity$onNewIntent(android.content.Intent)/intent">intent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Intent.html"><span class="identifier">Intent</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">onNewIntent</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.NfcAssignmentActivity$onNewIntent(android.content.Intent)/intent">intent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Intent.html"><span class="identifier">Intent</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>When we touch a new NFC card, we launch the assignment</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -122,7 +129,9 @@
 <p><a href="post-assignment.html">postAssignment</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">postAssignment</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.NfcAssignmentActivity$postAssignment(kotlin.Boolean, kotlin.String)/success">success</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.NfcAssignmentActivity$postAssignment(kotlin.Boolean, kotlin.String)/response">response</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">postAssignment</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.NfcAssignmentActivity$postAssignment(kotlin.Boolean, kotlin.String)/success">success</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.NfcAssignmentActivity$postAssignment(kotlin.Boolean, kotlin.String)/response">response</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Function triggered after the response of the assignment task, closes the Activity to come back to the last activity</p>
+</td>
 </tr>
 </tbody>
 </table>

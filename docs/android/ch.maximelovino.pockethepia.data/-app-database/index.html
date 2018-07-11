@@ -9,6 +9,7 @@
 <br/>
 <h1>AppDatabase</h1>
 <code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AppDatabase</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">RoomDatabase</span></code>
+<p>Class that defines the database with the three models and links the <a href="../-data-transformers/index.html">DataTransformers</a></p>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -17,7 +18,9 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">AppDatabase</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+<code><span class="identifier">AppDatabase</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Class that defines the database with the three models and links the <a href="../-data-transformers/index.html">DataTransformers</a></p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -67,7 +70,10 @@
 <p><a href="get-instance.html">getInstance</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getInstance</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.AppDatabase.Companion$getInstance(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AppDatabase</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getInstance</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.AppDatabase.Companion$getInstance(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AppDatabase</span></a></code>
+<p>Database uses the singleton pattern, we return one single instance
+When migrating the database, we remove all data</p>
+</td>
 </tr>
 </tbody>
 </table>

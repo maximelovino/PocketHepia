@@ -9,6 +9,7 @@
 <br/>
 <h1>SyncWorker</h1>
 <code><span class="keyword">class </span><span class="identifier">SyncWorker</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Worker</span></code>
+<p>The Worker used for data synchronisation in the application</p>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -17,7 +18,9 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">SyncWorker</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+<code><span class="identifier">SyncWorker</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>The Worker used for data synchronisation in the application</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -30,7 +33,8 @@
 </td>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">doWork</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Result</span></code>
-<p>Override this method to do your actual background processing.</p>
+<p>This Worker method will retrieve all necessary information from the backend server
+and save it in the local Room Database</p>
 </td>
 </tr>
 <tr>
@@ -38,28 +42,36 @@
 <p><a href="get-current-user.html">getCurrentUser</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getCurrentUser</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.workers.SyncWorker$getCurrentUser(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">?</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getCurrentUser</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.workers.SyncWorker$getCurrentUser(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">?</span></code>
+<p>This retrieves the connected user information from the backend</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-my-accesses.html">getMyAccesses</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getMyAccesses</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.workers.SyncWorker$getMyAccesses(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-access/index.html"><span class="identifier">Access</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getMyAccesses</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.workers.SyncWorker$getMyAccesses(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-access/index.html"><span class="identifier">Access</span></a><span class="symbol">&gt;</span></code>
+<p>This retrieves all the user's accesses from the backend</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-my-transactions.html">getMyTransactions</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getMyTransactions</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.workers.SyncWorker$getMyTransactions(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-transaction/index.html"><span class="identifier">Transaction</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getMyTransactions</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.workers.SyncWorker$getMyTransactions(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-transaction/index.html"><span class="identifier">Transaction</span></a><span class="symbol">&gt;</span></code>
+<p>This retrieves all the user's transactions from the backend</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="retrieve-users.html">retrieveUsers</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">retrieveUsers</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.workers.SyncWorker$retrieveUsers(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">retrieveUsers</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.workers.SyncWorker$retrieveUsers(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">&gt;</span></code>
+<p>This retrieves all users from the backend</p>
+</td>
 </tr>
 </tbody>
 </table>

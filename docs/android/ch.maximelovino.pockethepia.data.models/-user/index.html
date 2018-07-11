@@ -9,6 +9,30 @@
 <br/>
 <h1>User</h1>
 <code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">User</span></code>
+<p>This is the <a href="./index.html">User</a> RoomDB Entity</p>
+<h3>Parameters</h3>
+<p><a name="id"></a>
+<code>id</code> - The unique identifier, also the primary key</p>
+<p><a name="name"></a>
+<code>name</code> - The name of the user</p>
+<p><a name="email"></a>
+<code>email</code> - The email of the user</p>
+<p><a name="isAdmin"></a>
+<code>isAdmin</code> - Specifies if the user is admin</p>
+<p><a name="cardId"></a>
+<code>cardId</code> - The id of the user's nfc card, or null if no card</p>
+<p><a name="virtualCard"></a>
+<code>virtualCard</code> - The id of the user's virtual nfc card, or null if no card</p>
+<p><a name="balance"></a>
+<code>balance</code> - The user's balance or null if balance unknown, this is updatable later</p>
+<p><a name="isLibrarian"></a>
+<code>isLibrarian</code> - Specifies if the user is librarian</p>
+<p><a name="acceptsPayments"></a>
+<code>acceptsPayments</code> - Specifies if the user accepts payments</p>
+<p><a name="canInvite"></a>
+<code>canInvite</code> - Specifies if the user can invite new users</p>
+<p><a name="isAuditor"></a>
+<code>isAuditor</code> - Specifies if the user is an auditor</p>
 <h3>Types</h3>
 <table>
 <tbody>
@@ -29,7 +53,9 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">User</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/email">email</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/isAdmin">isAdmin</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/cardId">cardId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/virtualCard">virtualCard</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/balance">balance</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/isLibrarian">isLibrarian</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/acceptsPayments">acceptsPayments</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/canInvite">canInvite</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/isAuditor">isAuditor</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span></code></td>
+<code><span class="identifier">User</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/email">email</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/isAdmin">isAdmin</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/cardId">cardId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/virtualCard">virtualCard</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/balance">balance</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/isLibrarian">isLibrarian</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/acceptsPayments">acceptsPayments</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/canInvite">canInvite</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.String, kotlin.String, kotlin.Double, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean, kotlin.Boolean)/isAuditor">isAuditor</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span></code>
+<p>This is the <a href="./index.html">User</a> RoomDB Entity</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -41,77 +67,99 @@
 <p><a href="accepts-payments.html">acceptsPayments</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">acceptsPayments</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">val </span><span class="identifier">acceptsPayments</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Specifies if the user accepts payments</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="balance.html">balance</a></p>
 </td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">balance</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">?</span></code></td>
+<code><span class="keyword">var </span><span class="identifier">balance</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">?</span></code>
+<p>The user's balance or null if balance unknown, this is updatable later</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="can-invite.html">canInvite</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">canInvite</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">val </span><span class="identifier">canInvite</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Specifies if the user can invite new users</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="card-id.html">cardId</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">cardId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+<code><span class="keyword">val </span><span class="identifier">cardId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>The id of the user's nfc card, or null if no card</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="email.html">email</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">email</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+<code><span class="keyword">val </span><span class="identifier">email</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>The email of the user</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="id.html">id</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">id</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+<code><span class="keyword">val </span><span class="identifier">id</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>The unique identifier, also the primary key</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="is-admin.html">isAdmin</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">isAdmin</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">val </span><span class="identifier">isAdmin</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Specifies if the user is admin</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="is-auditor.html">isAuditor</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">isAuditor</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">val </span><span class="identifier">isAuditor</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Specifies if the user is an auditor</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="is-librarian.html">isLibrarian</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">isLibrarian</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">val </span><span class="identifier">isLibrarian</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Specifies if the user is librarian</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="name.html">name</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">name</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+<code><span class="keyword">val </span><span class="identifier">name</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>The name of the user</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="virtual-card.html">virtualCard</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">virtualCard</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+<code><span class="keyword">val </span><span class="identifier">virtualCard</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>The id of the user's virtual nfc card, or null if no card</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -123,8 +171,11 @@
 <p><a href="from-json.html">fromJson</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">fromJson</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User.Companion$fromJson(org.json.JSONObject)/jsonObject">jsonObject</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/org/json/JSONObject.html"><span class="identifier">JSONObject</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">User</span></a></code><br/>
-<code><span class="keyword">fun </span><span class="identifier">fromJson</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User.Companion$fromJson(org.json.JSONObject, kotlin.Double)/jsonObject">jsonObject</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/org/json/JSONObject.html"><span class="identifier">JSONObject</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User.Companion$fromJson(org.json.JSONObject, kotlin.Double)/balance">balance</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">User</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">fromJson</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User.Companion$fromJson(org.json.JSONObject)/jsonObject">jsonObject</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/org/json/JSONObject.html"><span class="identifier">JSONObject</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">User</span></a></code>
+<p>Method that takes a <a href="https://developer.android.com/reference/org/json/JSONObject.html">JSONObject</a> and returns an object of type <a href="../-json-parsable/index.html#T">T</a></p>
+<code><span class="keyword">fun </span><span class="identifier">fromJson</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User.Companion$fromJson(org.json.JSONObject, kotlin.Double)/jsonObject">jsonObject</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/org/json/JSONObject.html"><span class="identifier">JSONObject</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.models.User.Companion$fromJson(org.json.JSONObject, kotlin.Double)/balance">balance</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">User</span></a></code>
+<p>Similar to <a href="-companion/from-json.html">fromJson</a> but takes a balance here as well</p>
+</td>
 </tr>
 </tbody>
 </table>

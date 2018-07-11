@@ -9,6 +9,10 @@
 <br/>
 <h1>UserListAdapter</h1>
 <code><span class="keyword">class </span><span class="identifier">UserListAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Adapter</span><span class="symbol">&lt;</span><a href="-user-view-holder/index.html"><span class="identifier">UserViewHolder</span></a><span class="symbol">&gt;</span></code>
+<p>Class representing the RecyclerView adapter for User, this uses a custom RecyclerView.Adapter instead of a ListAdapter</p>
+<h3>Parameters</h3>
+<p><a name="context"></a>
+<code>context</code> - The context of the application</p>
 <h3>Types</h3>
 <table>
 <tbody>
@@ -29,7 +33,9 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">UserListAdapter</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$<init>(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span></code></td>
+<code><span class="identifier">UserListAdapter</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$<init>(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span></code>
+<p>Class representing the RecyclerView adapter for User, this uses a custom RecyclerView.Adapter instead of a ListAdapter</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -41,7 +47,9 @@
 <p><a href="context.html">context</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">context</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a></code></td>
+<code><span class="keyword">val </span><span class="identifier">context</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a></code>
+<p>The context of the application</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -81,21 +89,27 @@
 <p><a href="clear-filter.html">clearFilter</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">clearFilter</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">clearFilter</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Method to remove the filter from the list, sets the query to empty and displays everything</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="filter.html">filter</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">filter</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$filter(kotlin.String)/query">query</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">filter</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$filter(kotlin.String)/query">query</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Method to set a new query to filter the list</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="filter-data.html">filterData</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">filterData</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">filterData</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Private function that will filter the dataset with the query value and put the filtered data in filteredDataSet</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -113,7 +127,7 @@
 <td>
 <code><span class="keyword">fun </span><span class="identifier">onBindViewHolder</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$onBindViewHolder(ch.maximelovino.pockethepia.data.adapters.UserListAdapter.UserViewHolder, kotlin.Int)/holder">holder</span><span class="symbol">:</span>&nbsp;<a href="-user-view-holder/index.html"><span class="identifier">UserViewHolder</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$onBindViewHolder(ch.maximelovino.pockethepia.data.adapters.UserListAdapter.UserViewHolder, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Called by RecyclerView to display the data at the specified position. This method should
-update the contents of the <a href="#">ViewHolder.itemView</a> to reflect the item at the given
+update the contents of the UserViewHolder.itemView to reflect the item at the given
 position.</p>
 </td>
 </tr>
@@ -123,7 +137,7 @@ position.</p>
 </td>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">onCreateViewHolder</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/viewType">viewType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-user-view-holder/index.html"><span class="identifier">UserViewHolder</span></a></code>
-<p>Called when RecyclerView needs a new <a href="#">ViewHolder</a> of the given type to represent
+<p>Called when RecyclerView needs a new UserViewHolder of the given type to represent
 an item.</p>
 </td>
 </tr>
@@ -132,7 +146,9 @@ an item.</p>
 <p><a href="set-data.html">setData</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setData</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$setData(kotlin.collections.List((ch.maximelovino.pockethepia.data.models.User)))/users">users</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setData</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$setData(kotlin.collections.List((ch.maximelovino.pockethepia.data.models.User)))/users">users</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Method to set new list data for the adapter</p>
+</td>
 </tr>
 </tbody>
 </table>

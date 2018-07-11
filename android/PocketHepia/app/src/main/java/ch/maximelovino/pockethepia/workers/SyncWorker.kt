@@ -15,20 +15,20 @@ import java.io.InputStreamReader
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-
+/**
+ * The Worker used for data synchronisation in the application
+ */
 class SyncWorker : Worker() {
     /**
-     * Override this method to do your actual background processing.
+     * This Worker method will retrieve all necessary information from the backend server
+     * and save it in the local Room Database
      *
      * @return The result of the work, corresponding to a [Worker.Result] value.  If a
      * different value is returned, the result shall be defaulted to
      * [Worker.Result.FAILURE].
      */
     override fun doWork(): Result {
-
         try {
-
-
             val context = applicationContext
 
             val token = PreferenceManager.retrieveToken(context) ?: return Result.FAILURE
@@ -71,6 +71,11 @@ class SyncWorker : Worker() {
         }
     }
 
+    /**
+     * This retrieves the connected user information from the backend
+     * @param token The JWT used for auth with the backend
+     * @return The connected user, or null in case of problem or bad token
+     */
     private fun getCurrentUser(token: String): User? {
         try {
             val url = URL(Constants.CURRENT_USER_URL)
@@ -104,6 +109,11 @@ class SyncWorker : Worker() {
         return null
     }
 
+    /**
+     * This retrieves all users from the backend
+     * @param token The JWT used for auth with the backend
+     * @return The list of all users, the list will be empty in case of permissions problem
+     */
     private fun retrieveUsers(token: String): List<User> {
         val users = mutableListOf<User>()
 
@@ -132,6 +142,11 @@ class SyncWorker : Worker() {
         return users.toList()
     }
 
+    /**
+     * This retrieves all the user's transactions from the backend
+     * @param token The JWT used for auth with the backend
+     * @return The list of the user's transactions
+     */
     private fun getMyTransactions(token: String): List<Transaction> {
         val transactions = mutableListOf<Transaction>()
 
@@ -159,6 +174,11 @@ class SyncWorker : Worker() {
         return transactions
     }
 
+    /**
+     * This retrieves all the user's accesses from the backend
+     * @param token The JWT used for auth with the backend
+     * @return The list of the user's accesses
+     */
     private fun getMyAccesses(token: String): List<Access> {
         val accesses = mutableListOf<Access>()
 

@@ -29,7 +29,8 @@ import javax.net.ssl.HttpsURLConnection
 
 
 /**
- * A login screen that offers login via email/password.
+ * A login activity that offers login via email/password.
+ * This is the generated LoginActivity from Android Studio tweaked to fit our needs
  */
 class LoginActivity : AppCompatActivity() {
     /**
@@ -54,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
+     * Attempts to sign in the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
@@ -116,6 +117,10 @@ class LoginActivity : AppCompatActivity() {
         return password.isNotEmpty()
     }
 
+    /**
+     * This function is called when the login is correct and passes the JWT token
+     * @param token The JWT Token used for all subsequent auth
+     */
     private fun loginCorrect(token: String) {
         PreferenceManager.saveToken(this, token)
         createPeriodicSyncTask()
@@ -123,6 +128,9 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
+    /**
+     * This function will register the periodic WorkManager sync task
+     */
     private fun createPeriodicSyncTask() {
         val wm = WorkManager.getInstance()
 
@@ -178,8 +186,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
+     * This Task will authenticate the user against the backend in the background
      */
     inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, String>() {
 

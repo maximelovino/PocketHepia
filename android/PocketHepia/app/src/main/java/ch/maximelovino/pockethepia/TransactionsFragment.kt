@@ -3,7 +3,6 @@ package ch.maximelovino.pockethepia
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -17,13 +16,8 @@ import ch.maximelovino.pockethepia.utils.BaseFragment
 
 
 /**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [HomeFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
+ * This is the transaction Fragment, will show the balance Fragment and a list of all users transactions
+ * This Fragment displays the FAB and uses it to launch the PaymentActivity
  */
 class TransactionsFragment : BaseFragment() {
 
@@ -71,11 +65,11 @@ class TransactionsFragment : BaseFragment() {
 
         transactionsViewModel.transactions.observe(this, Observer {
 
-            if (it != null){
-                if(it.isEmpty()){
+            if (it != null) {
+                if (it.isEmpty()) {
                     noTransactionsText.visibility = View.VISIBLE
                     recyclerView.visibility = View.GONE
-                }else{
+                } else {
                     recyclerView.visibility = View.VISIBLE
                     noTransactionsText.visibility = View.GONE
                 }

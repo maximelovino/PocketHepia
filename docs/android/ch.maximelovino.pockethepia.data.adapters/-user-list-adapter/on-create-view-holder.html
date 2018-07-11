@@ -10,7 +10,7 @@
 <h1>onCreateViewHolder</h1>
 <a name="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)"></a>
 <code><span class="keyword">fun </span><span class="identifier">onCreateViewHolder</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.UserListAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/viewType">viewType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-user-view-holder/index.html"><span class="identifier">UserViewHolder</span></a></code>
-<p>Called when RecyclerView needs a new <a href="#">ViewHolder</a> of the given type to represent
+<p>Called when RecyclerView needs a new UserViewHolder of the given type to represent
 an item.</p>
 <p>This new ViewHolder should be constructed with a new View that can represent the items
 of the given type. You can either create a new View manually or inflate it from an XML
@@ -18,7 +18,7 @@ layout file.</p>
 <p>The new ViewHolder will be used to display items of the adapter using
 <a href="#">.onBindViewHolder</a>. Since it will be re-used to display
 different items in the data set, it is a good idea to cache references to sub views of
-the View to avoid unnecessary <a href="https://developer.android.com/reference/android/view/View.html#findViewById(int)">View.findViewById</a> calls.</p>
+the View to avoid unnecessary View.findViewById calls.</p>
 <h3>Parameters</h3>
 <p><a name="parent"></a>
 <code>parent</code> - The ViewGroup into which the new View will be added after it is bound to

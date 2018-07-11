@@ -3,7 +3,6 @@ package ch.maximelovino.pockethepia
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -16,13 +15,7 @@ import ch.maximelovino.pockethepia.utils.BaseFragment
 
 
 /**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [HomeFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
+ * The access Fragment, this fragment displays the list of the user's accesses
  */
 class AccessFragment : BaseFragment() {
 
@@ -35,7 +28,7 @@ class AccessFragment : BaseFragment() {
         val viewAdapter = AccessListAdapter(this.context!!)
         val viewManager = LinearLayoutManager(this.context!!)
 
-        val recyclerView =  v.findViewById<RecyclerView>(R.id.access_recycler_view)
+        val recyclerView = v.findViewById<RecyclerView>(R.id.access_recycler_view)
         val noAccessText = v.findViewById<TextView>(R.id.no_access_text)
 
         recyclerView.apply {
@@ -47,11 +40,11 @@ class AccessFragment : BaseFragment() {
 
         accessViewModel.accesses.observe(this, Observer {
 
-            if (it != null){
-                if(it.isEmpty()){
+            if (it != null) {
+                if (it.isEmpty()) {
                     noAccessText.visibility = View.VISIBLE
                     recyclerView.visibility = View.GONE
-                }else{
+                } else {
                     recyclerView.visibility = View.VISIBLE
                     noAccessText.visibility = View.GONE
                 }

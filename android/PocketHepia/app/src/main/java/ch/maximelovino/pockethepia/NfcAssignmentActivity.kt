@@ -3,14 +3,12 @@ package ch.maximelovino.pockethepia
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.nfc.NfcAdapter
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import ch.maximelovino.pockethepia.data.AppDatabase
 import ch.maximelovino.pockethepia.utils.ForegroundDispatchedActivity
-import ch.maximelovino.pockethepia.utils.toHex
 import kotlinx.android.synthetic.main.activity_nfc_assignment.*
 import java.io.BufferedReader
 import java.io.DataOutputStream
@@ -20,6 +18,9 @@ import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
 
 
+/**
+ * Activity to assign a nfc tag to a user, it takes the userID as parameter
+ */
 class NfcAssignmentActivity : ForegroundDispatchedActivity() {
     private lateinit var userID: String
     private lateinit var token: String
@@ -44,11 +45,17 @@ class NfcAssignmentActivity : ForegroundDispatchedActivity() {
         return true
     }
 
+    /**
+     * When we touch a new NFC card, we launch the assignment
+     */
     override fun onNewIntent(intent: Intent) {
         val hexTagID = NFCTools.retrieveIDFromCard(intent)
         AssignNFCTask(token).execute(hexTagID)
     }
 
+    /**
+     * Function triggered after the response of the assignment task, closes the Activity to come back to the last activity
+     */
     fun postAssignment(success: Boolean, response: String?) {
         val message = if (success) {
             getString(R.string.card_assigned)
@@ -60,6 +67,9 @@ class NfcAssignmentActivity : ForegroundDispatchedActivity() {
     }
 
 
+    /**
+     * AsyncTask to assign the tag by communicating with the server
+     */
     @SuppressLint("StaticFieldLeak")
     inner class AssignNFCTask(private val token: String) : AsyncTask<String, Void, Boolean>() {
         private var response: String? = null

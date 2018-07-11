@@ -17,6 +17,9 @@ import java.net.URL
 import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
 
+/**
+ * Payment activity to create a new payment and then accept NFC cards
+ */
 class PaymentActivity : ForegroundDispatchedActivity() {
     private lateinit var nfcDialog: AlertDialog
     private lateinit var token: String
@@ -63,6 +66,9 @@ class PaymentActivity : ForegroundDispatchedActivity() {
         }
     }
 
+    /**
+     * Function to update the text that tells what the switch is set to
+     */
     private fun updateSwitchText(switch: CompoundButton) {
         sending_money_switch_text.text = if (switch.isChecked) {
             getString(R.string.sending_money)
@@ -76,6 +82,9 @@ class PaymentActivity : ForegroundDispatchedActivity() {
         return true
     }
 
+    /**
+     * When a tag is touched and we have created the payment, we call the task to send the payment
+     */
     override fun onNewIntent(intent: Intent) {
         if (nfcDialog.isShowing) {
             val id = NFCTools.retrieveIDFromCard(intent)
@@ -90,6 +99,9 @@ class PaymentActivity : ForegroundDispatchedActivity() {
         }
     }
 
+    /**
+     * Function triggered after the server response to the payment
+     */
     fun handlePaymentResult(success: Boolean) {
         val message = if (success) {
             getString(R.string.payment_ok)
@@ -104,6 +116,9 @@ class PaymentActivity : ForegroundDispatchedActivity() {
         }
     }
 
+    /**
+     * Async Task to send the payment to the backend
+     */
     inner class PaymentTask(private val token: String, val title: String, private val amount: Double, private val sending: Boolean = true, val destination: String) : AsyncTask<Void, Void, Boolean>() {
         override fun doInBackground(vararg p0: Void?): Boolean {
             val url = if (sending) URL(Constants.TRANSACTIONS_PAY_ROUTE) else URL(Constants.TRANSACTIONS_GET_PAID_ROUTE)

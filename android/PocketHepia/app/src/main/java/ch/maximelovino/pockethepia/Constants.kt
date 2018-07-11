@@ -1,6 +1,9 @@
 package ch.maximelovino.pockethepia
 
 
+/**
+ * This object contains all of the application constants, mainly strings for backend routes
+ */
 object Constants {
 
     const val SYNC_TAG = "SYNC"

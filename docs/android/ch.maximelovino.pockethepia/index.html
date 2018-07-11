@@ -17,12 +17,7 @@
 </td>
 <td>
 <code><span class="keyword">class </span><span class="identifier">AccessFragment</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-base-fragment/index.html"><span class="identifier">BaseFragment</span></a></code>
-<p>A simple <a href="#">Fragment</a> subclass.
-Activities that contain this fragment must implement the
-<a href="#">HomeFragment.OnFragmentInteractionListener</a> interface
-to handle interaction events.
-Use the <a href="#">HomeFragment.newInstance</a> factory method to
-create an instance of this fragment.</p>
+<p>The access Fragment, this fragment displays the list of the user's accesses</p>
 </td>
 </tr>
 <tr>
@@ -31,12 +26,8 @@ create an instance of this fragment.</p>
 </td>
 <td>
 <code><span class="keyword">class </span><span class="identifier">AdminFragment</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-base-fragment/index.html"><span class="identifier">BaseFragment</span></a><span class="symbol">, </span><a href="https://developer.android.com/reference/android/widget/SearchView/OnQueryTextListener.html"><span class="identifier">OnQueryTextListener</span></a></code>
-<p>A simple <a href="#">Fragment</a> subclass.
-Activities that contain this fragment must implement the
-<a href="#">HomeFragment.OnFragmentInteractionListener</a> interface
-to handle interaction events.
-Use the <a href="#">HomeFragment.newInstance</a> factory method to
-create an instance of this fragment.</p>
+<p>The admin Fragment, displays the list of users and implement a searchview in the toolbar,
+adds to the Activity base menu</p>
 </td>
 </tr>
 <tr>
@@ -44,14 +35,18 @@ create an instance of this fragment.</p>
 <p><a href="-balance-fragment/index.html">BalanceFragment</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">BalanceFragment</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-base-fragment/index.html"><span class="identifier">BaseFragment</span></a></code></td>
+<code><span class="keyword">class </span><span class="identifier">BalanceFragment</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-base-fragment/index.html"><span class="identifier">BaseFragment</span></a></code>
+<p>This Fragment only displays a card with the user balance, taken from the local database</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="-constants/index.html">Constants</a></p>
 </td>
 <td>
-<code><span class="keyword">object </span><span class="identifier">Constants</span></code></td>
+<code><span class="keyword">object </span><span class="identifier">Constants</span></code>
+<p>This object contains all of the application constants, mainly strings for backend routes</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -59,12 +54,8 @@ create an instance of this fragment.</p>
 </td>
 <td>
 <code><span class="keyword">class </span><span class="identifier">HomeFragment</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-base-fragment/index.html"><span class="identifier">BaseFragment</span></a></code>
-<p>A simple <a href="#">Fragment</a> subclass.
-Activities that contain this fragment must implement the
-<a href="#">HomeFragment.OnFragmentInteractionListener</a> interface
-to handle interaction events.
-Use the <a href="#">HomeFragment.newInstance</a> factory method to
-create an instance of this fragment.</p>
+<p>The homepage fragment, integrates the BalanceFragment and provides navigation to the transactions screens
+Integrates a link to the virtual card as well</p>
 </td>
 </tr>
 <tr>
@@ -73,7 +64,8 @@ create an instance of this fragment.</p>
 </td>
 <td>
 <code><span class="keyword">class </span><span class="identifier">LoginActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatActivity</span></code>
-<p>A login screen that offers login via email/password.</p>
+<p>A login activity that offers login via email/password.
+This is the generated LoginActivity from Android Studio tweaked to fit our needs</p>
 </td>
 </tr>
 <tr>
@@ -81,7 +73,11 @@ create an instance of this fragment.</p>
 <p><a href="-main-activity/index.html">MainActivity</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">MainActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/index.html"><span class="identifier">ForegroundDispatchedActivity</span></a></code></td>
+<code><span class="keyword">class </span><span class="identifier">MainActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/index.html"><span class="identifier">ForegroundDispatchedActivity</span></a></code>
+<p>This is the main activity of the application, it incorporates the navigation host
+and the 4 main Fragments
+It also handles the swipe to refresh and the launch of the manual synchronisation</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -97,21 +93,27 @@ create an instance of this fragment.</p>
 <p><a href="-nfc-assignment-activity/index.html">NfcAssignmentActivity</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">NfcAssignmentActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/index.html"><span class="identifier">ForegroundDispatchedActivity</span></a></code></td>
+<code><span class="keyword">class </span><span class="identifier">NfcAssignmentActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/index.html"><span class="identifier">ForegroundDispatchedActivity</span></a></code>
+<p>Activity to assign a nfc tag to a user, it takes the userID as parameter</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="-payment-activity/index.html">PaymentActivity</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">PaymentActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/index.html"><span class="identifier">ForegroundDispatchedActivity</span></a></code></td>
+<code><span class="keyword">class </span><span class="identifier">PaymentActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-foreground-dispatched-activity/index.html"><span class="identifier">ForegroundDispatchedActivity</span></a></code>
+<p>Payment activity to create a new payment and then accept NFC cards</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="-preference-manager/index.html">PreferenceManager</a></p>
 </td>
 <td>
-<code><span class="keyword">object </span><span class="identifier">PreferenceManager</span></code></td>
+<code><span class="keyword">object </span><span class="identifier">PreferenceManager</span></code>
+<p>This object contains method to handle the data stored in SharedPreferences</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -119,12 +121,8 @@ create an instance of this fragment.</p>
 </td>
 <td>
 <code><span class="keyword">class </span><span class="identifier">TransactionsFragment</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-base-fragment/index.html"><span class="identifier">BaseFragment</span></a></code>
-<p>A simple <a href="#">Fragment</a> subclass.
-Activities that contain this fragment must implement the
-<a href="#">HomeFragment.OnFragmentInteractionListener</a> interface
-to handle interaction events.
-Use the <a href="#">HomeFragment.newInstance</a> factory method to
-create an instance of this fragment.</p>
+<p>This is the transaction Fragment, will show the balance Fragment and a list of all users transactions
+This Fragment displays the FAB and uses it to launch the PaymentActivity</p>
 </td>
 </tr>
 <tr>
@@ -133,7 +131,7 @@ create an instance of this fragment.</p>
 </td>
 <td>
 <code><span class="keyword">class </span><span class="identifier">UserDetailFragment</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../ch.maximelovino.pockethepia.utils/-base-fragment/index.html"><span class="identifier">BaseFragment</span></a></code>
-<p>A simple <a href="#">Fragment</a> subclass.</p>
+<p>This Fragment displays the detail of a user</p>
 </td>
 </tr>
 <tr>
@@ -141,7 +139,9 @@ create an instance of this fragment.</p>
 <p><a href="-virtual-card-activity/index.html">VirtualCardActivity</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">VirtualCardActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatActivity</span></code></td>
+<code><span class="keyword">class </span><span class="identifier">VirtualCardActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatActivity</span></code>
+<p>This Activity handles the virtual card emulation, not implemented yet</p>
+</td>
 </tr>
 </tbody>
 </table>

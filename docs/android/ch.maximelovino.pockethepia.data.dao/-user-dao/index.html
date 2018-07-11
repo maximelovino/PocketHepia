@@ -9,6 +9,7 @@
 <br/>
 <h1>UserDao</h1>
 <code><span class="keyword">interface </span><span class="identifier">UserDao</span></code>
+<p>This the Data Access Object for the <a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html">User</a> Entity</p>
 <h3>Functions</h3>
 <table>
 <tbody>
@@ -17,35 +18,45 @@
 <p><a href="delete.html">delete</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">delete</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.dao.UserDao$delete(ch.maximelovino.pockethepia.data.models.User)/user">user</span><span class="symbol">:</span>&nbsp;<a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">delete</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.dao.UserDao$delete(ch.maximelovino.pockethepia.data.models.User)/user">user</span><span class="symbol">:</span>&nbsp;<a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Removes a user from the database</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="find-by-id.html">findById</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">findById</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.dao.UserDao$findById(kotlin.String)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">findById</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.dao.UserDao$findById(kotlin.String)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">&gt;</span></code>
+<p>Retrieves a user by its id from the database</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-all.html">getAll</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getAll</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getAll</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Retrieves all users from the database</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="insert.html">insert</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">insert</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="ch.maximelovino.pockethepia.data.dao.UserDao$insert(kotlin.Array((ch.maximelovino.pockethepia.data.models.User)))/users">users</span><span class="symbol">:</span>&nbsp;<a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">insert</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="ch.maximelovino.pockethepia.data.dao.UserDao$insert(kotlin.Array((ch.maximelovino.pockethepia.data.models.User)))/users">users</span><span class="symbol">:</span>&nbsp;<a href="../../ch.maximelovino.pockethepia.data.models/-user/index.html"><span class="identifier">User</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Inserts users in the database, replacing on conflicts</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="nuke.html">nuke</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">nuke</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">nuke</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Clear all users from the database table</p>
+</td>
 </tr>
 </tbody>
 </table>

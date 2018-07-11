@@ -38,7 +38,7 @@ task myDokka(type: org.jetbrains.dokka.gradle.DokkaAndroidTask) {
 
 dependencies {
     // Android KTX extensions
-    // TODO put them back when using androidx
+    // TODO put them back when we can safely move to androidx
     /*implementation 'androidx.core:core-ktx:1.0.0-alpha3'
     implementation 'androidx.fragment:fragment-ktx:1.0.0-alpha3'
     implementation 'androidx.collection:collection-ktx:1.0.0-alpha3'*/
@@ -70,7 +70,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
-    //TODO move to alpha 3 once text in button works
+    //TODO move to alpha 3 once text in button bug is resolved
     implementation 'com.android.support:design:28.0.0-alpha1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:support-v4:28.0.0-alpha3'

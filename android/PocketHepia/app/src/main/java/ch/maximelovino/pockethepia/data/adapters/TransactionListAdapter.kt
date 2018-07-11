@@ -13,7 +13,10 @@ import ch.maximelovino.pockethepia.data.models.Transaction
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+/**
+ * Class representing the RecyclerView adapter for Transaction
+ * @param context The context of the application
+ */
 class TransactionListAdapter(val context: Context) : ListAdapter<Transaction, TransactionListAdapter.TransactionViewHolder>(object : DiffUtil.ItemCallback<Transaction>() {
     /**
      * Called to check whether two items have the same data.
@@ -42,7 +45,6 @@ class TransactionListAdapter(val context: Context) : ListAdapter<Transaction, Tr
      * @param newItem The item in the new list.
      * @return True if the contents of the items are the same or false if they are different.
      *
-     * @see Callback.areContentsTheSame
      */
     override fun areContentsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
         return oldItem == newItem
@@ -63,7 +65,6 @@ class TransactionListAdapter(val context: Context) : ListAdapter<Transaction, Tr
      * @param newItem The item in the new list.
      * @return True if the two items represent the same object or false if they are different.
      *
-     * @see Callback.areItemsTheSame
      */
     override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
         return oldItem.id == newItem.id
@@ -72,7 +73,7 @@ class TransactionListAdapter(val context: Context) : ListAdapter<Transaction, Tr
     private val layoutInflater = LayoutInflater.from(context)
     private val simpleDateFormat = SimpleDateFormat("dd/MM/yy HH:mm", Locale.ENGLISH)
     /**
-     * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
+     * Called when RecyclerView needs a new [TransactionViewHolder] of the given type to represent
      * an item.
      *
      *
@@ -101,7 +102,7 @@ class TransactionListAdapter(val context: Context) : ListAdapter<Transaction, Tr
 
     /**
      * Called by RecyclerView to display the data at the specified position. This method should
-     * update the contents of the [ViewHolder.itemView] to reflect the item at the given
+     * update the contents of the [TransactionViewHolder.itemView] to reflect the item at the given
      * position.
      *
      *
@@ -110,7 +111,7 @@ class TransactionListAdapter(val context: Context) : ListAdapter<Transaction, Tr
      * invalidated or the new position cannot be determined. For this reason, you should only
      * use the `position` parameter while acquiring the related data item inside
      * this method and should not keep a copy of it. If you need the position of an item later
-     * on (e.g. in a click listener), use [ViewHolder.getAdapterPosition] which will
+     * on (e.g. in a click listener), use [TransactionViewHolder.getAdapterPosition] which will
      * have the updated adapter position.
      *
      * Override [.onBindViewHolder] instead if Adapter can

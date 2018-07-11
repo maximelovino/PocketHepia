@@ -5,6 +5,20 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import org.json.JSONObject
 
+/**
+ * This is the [User] RoomDB Entity
+ * @param id The unique identifier, also the primary key
+ * @param name The name of the user
+ * @param email The email of the user
+ * @param isAdmin Specifies if the user is admin
+ * @param cardId The id of the user's nfc card, or null if no card
+ * @param virtualCard The id of the user's virtual nfc card, or null if no card
+ * @param balance The user's balance or null if balance unknown, this is updatable later
+ * @param isLibrarian Specifies if the user is librarian
+ * @param acceptsPayments Specifies if the user accepts payments
+ * @param canInvite Specifies if the user can invite new users
+ * @param isAuditor Specifies if the user is an auditor
+ */
 @Entity
 data class User(
         @PrimaryKey val id: String,
@@ -46,6 +60,9 @@ data class User(
             return User(id, name, email, isAdmin, cardId, virtualCard, null, isLibrarian, acceptsPayments, canInvite, isAuditor)
         }
 
+        /**
+         * Similar to [fromJson] but takes a balance here as well
+         */
         fun fromJson(jsonObject: JSONObject, balance: Double): User {
             val user = fromJson(jsonObject)
             user.balance = balance

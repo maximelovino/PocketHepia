@@ -9,6 +9,7 @@
 <br/>
 <h1>PreferenceManager</h1>
 <code><span class="keyword">object </span><span class="identifier">PreferenceManager</span></code>
+<p>This object contains method to handle the data stored in SharedPreferences</p>
 <h3>Properties</h3>
 <table>
 <tbody>
@@ -43,35 +44,45 @@
 <p><a href="delete-all.html">deleteAll</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">deleteAll</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$deleteAll(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">deleteAll</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$deleteAll(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Deletes token and userID</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="retrieve-token.html">retrieveToken</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">retrieveToken</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$retrieveToken(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">retrieveToken</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$retrieveToken(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>Retrieves the token from the Prefs</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="retrieve-user-i-d.html">retrieveUserID</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">retrieveUserID</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$retrieveUserID(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">retrieveUserID</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$retrieveUserID(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>Retrieves the userID from the Prefs</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="save-token.html">saveToken</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">saveToken</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$saveToken(android.content.Context, kotlin.String)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$saveToken(android.content.Context, kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">saveToken</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$saveToken(android.content.Context, kotlin.String)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$saveToken(android.content.Context, kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Saves the token in the Prefs</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="save-user-i-d.html">saveUserID</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">saveUserID</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$saveUserID(android.content.Context, kotlin.String)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$saveUserID(android.content.Context, kotlin.String)/userID">userID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">saveUserID</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$saveUserID(android.content.Context, kotlin.String)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.PreferenceManager$saveUserID(android.content.Context, kotlin.String)/userID">userID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Saves the token in the Prefs</p>
+</td>
 </tr>
 </tbody>
 </table>

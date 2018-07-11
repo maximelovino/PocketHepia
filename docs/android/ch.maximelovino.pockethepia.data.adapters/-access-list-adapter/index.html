@@ -9,6 +9,10 @@
 <br/>
 <h1>AccessListAdapter</h1>
 <code><span class="keyword">class </span><span class="identifier">AccessListAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ListAdapter</span><span class="symbol">&lt;</span><a href="../../ch.maximelovino.pockethepia.data.models/-access/index.html"><span class="identifier">Access</span></a><span class="symbol">,</span>&nbsp;<a href="-access-view-holder/index.html"><span class="identifier">AccessViewHolder</span></a><span class="symbol">&gt;</span></code>
+<p>Class representing the RecyclerView adapter for Access</p>
+<h3>Parameters</h3>
+<p><a name="context"></a>
+<code>context</code> - The context of the application</p>
 <h3>Types</h3>
 <table>
 <tbody>
@@ -29,7 +33,9 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">AccessListAdapter</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.AccessListAdapter$<init>(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span></code></td>
+<code><span class="identifier">AccessListAdapter</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.AccessListAdapter$<init>(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span></code>
+<p>Class representing the RecyclerView adapter for Access</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -41,7 +47,9 @@
 <p><a href="context.html">context</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">context</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a></code></td>
+<code><span class="keyword">val </span><span class="identifier">context</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a></code>
+<p>The context of the application</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -62,7 +70,7 @@
 <td>
 <code><span class="keyword">fun </span><span class="identifier">onBindViewHolder</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.AccessListAdapter$onBindViewHolder(ch.maximelovino.pockethepia.data.adapters.AccessListAdapter.AccessViewHolder, kotlin.Int)/holder">holder</span><span class="symbol">:</span>&nbsp;<a href="-access-view-holder/index.html"><span class="identifier">AccessViewHolder</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.AccessListAdapter$onBindViewHolder(ch.maximelovino.pockethepia.data.adapters.AccessListAdapter.AccessViewHolder, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Called by RecyclerView to display the data at the specified position. This method should
-update the contents of the <a href="#">ViewHolder.itemView</a> to reflect the item at the given
+update the contents of the AccessViewHolder.itemView to reflect the item at the given
 position.</p>
 </td>
 </tr>
@@ -72,7 +80,7 @@ position.</p>
 </td>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">onCreateViewHolder</span><span class="symbol">(</span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.AccessListAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">, </span><span class="identifier" id="ch.maximelovino.pockethepia.data.adapters.AccessListAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/viewType">viewType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-access-view-holder/index.html"><span class="identifier">AccessViewHolder</span></a></code>
-<p>Called when RecyclerView needs a new <a href="#">ViewHolder</a> of the given type to represent
+<p>Called when RecyclerView needs a new AccessViewHolder of the given type to represent
 an item.</p>
 </td>
 </tr>
