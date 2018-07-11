@@ -142,8 +142,8 @@ router.get("/all", passport.authenticate('jwt'), authController.checkAdmin, user
  * 
  * @apiParamExample  {x-www-form-urlencoded} Request-Example:
  * {
- *     name : El Risitas
- *     email : risitas@jvc.com
+ *     name : El Risitas,
+ *     email : risitas@jvc.com,
  *     password : Pa$$w0rd
  * }
  * 
@@ -156,7 +156,7 @@ router.post("/create", passport.authenticate('jwt'), authController.checkAdmin, 
 
 /**
  * 
- * @api {POST} /users/delete/:id Delete user
+ * @api {DELETE} /users/delete/:id Delete user
  * @apiName DeleteUser
  * @apiGroup Users
  * @apiVersion  1.0.0
@@ -207,16 +207,144 @@ router.delete("/delete/:id", passport.authenticate('jwt'), authController.checkA
  * 
  */
 router.put("/resetPassword/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.resetPassword, logController.resetPassword)
+
+/**
+ * 
+ * @api {PUT} /users/changePermissions/:id Change user permissions
+ * @apiName ChangePermissions
+ * @apiGroup Users
+ * @apiVersion  1.0.0
+ * 
+ * @apiHeader {String} Authorization The content of the authorization header must be of the form "Bearer $token" where $token is the JWT Token received at login
+ * 
+ * @apiSuccess (200) {Void} OK Empty response
+ * 
+ * @apiParam  {String} id The id of the user for which to change permissions
+ * 
+ * 
+ * @apiParamExample  {} Request-Example:
+ * {
+ *     id : 5b1fd5bb44ab8b001de7de16
+ * }
+ * 
+ * @apiError (400) BadRequest Error happens if the params are not set correctly 
+ * @apiError (401) Unauthorized Error happens if JWT Token is wrong or authorization was not correctly provided
+ * @apiError (403) Forbidden Error happens if you try to access this without having the admin role
+ * @apiError [404] NotFound Error happens if the user doesn't exist
+ * 
+ */
 router.put("/changePermissions/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.changePermissions, logController.changePermissions)
 
+/**
+ * 
+ * @api {POST} /users/import Import a batch of users
+ * @apiName ImportUsers
+ * @apiGroup Users
+ * @apiVersion  1.0.0
+ * 
+ * @apiHeader {String} Authorization The content of the authorization header must be of the form "Bearer $token" where $token is the JWT Token received at login
+ * 
+ * @apiSuccess (200) {Void} OK Empty response
+ * 
+ * @apiParam  {File} csvFile A CSV file containing the users
+ * 
+ * 
+ * 
+ * @apiError (400) BadRequest Error happens if the params are not set correctly 
+ * @apiError (401) Unauthorized Error happens if JWT Token is wrong or authorization was not correctly provided
+ * @apiError (403) Forbidden Error happens if you try to access this without having the admin role
+ * 
+ */
 router.post("/import", passport.authenticate('jwt'), authController.checkAdmin, upload.single('csvFile'), csv.parseUsers, userController.import, logController.importUsers)
 
+/**
+ * 
+ * @api {DELETE} /users/undo/:id Undoes a batch import of users
+ * @apiName UndoImportUsers
+ * @apiGroup Users
+ * @apiVersion  1.0.0
+ * 
+ * @apiHeader {String} Authorization The content of the authorization header must be of the form "Bearer $token" where $token is the JWT Token received at login
+ * 
+ * @apiSuccess (200) {Void} OK Empty response
+ * 
+ * @apiParam  {String} id The id of the import we want to undo
+ * 
+ * 
+ * @apiParamExample  {} Request-Example:
+ * {
+ *     id : 42352545207097153
+ * }
+ * 
+ * 
+ * 
+ * @apiError (400) BadRequest Error happens if the params are not set correctly 
+ * @apiError (401) Unauthorized Error happens if JWT Token is wrong or authorization was not correctly provided
+ * @apiError (403) Forbidden Error happens if you try to access this without having the admin role
+ * 
+ */
 router.delete("/undo/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.undoImport, logController.undoImport)
 
-//TODO why here no assignTag/:userID ? doesn't seem coherent
+/**
+ * 
+ * @api {PUT} /users/assign Assign a tag to a user
+ * @apiName AssignTagUser
+ * @apiGroup Users
+ * @apiVersion  1.0.0
+ * 
+ * @apiHeader {String} Authorization The content of the authorization header must be of the form "Bearer $token" where $token is the JWT Token received at login
+ * 
+ * @apiSuccess (200) {Void} OK Empty response
+ * 
+ * @apiParam  {String} userID The id of the user
+ * @apiParam  {String} tagID The id of the tag to assign
+ * 
+ * 
+ * @apiParamExample  {} Request-Example:
+ * {
+ *     userID : 42352545207097153,
+ *     tagID : CAFE8008
+ * }
+ * 
+ * 
+ * 
+ * @apiError (400) BadRequest Error happens if the params are not set correctly 
+ * @apiError (401) Unauthorized Error happens if JWT Token is wrong or authorization was not correctly provided
+ * @apiError (403) Forbidden Error happens if you try to access this without having the admin role
+ * @apiError [404] NotFound Error happens if the user doesn't exist
+ * @apiError [500] InternalServerError Error happens if the tag is already assigned
+ * 
+ */
 router.put("/assign", passport.authenticate('jwt'), authController.checkAdmin, userController.assignTag, logController.assignTag)
 
 //This :id is the user id actually
+/**
+ * 
+ * @api {DELETE} /users/removeTag/:id Removes a tag for a user
+ * @apiName RemoveTagUser
+ * @apiGroup Users
+ * @apiVersion  1.0.0
+ * 
+ * @apiHeader {String} Authorization The content of the authorization header must be of the form "Bearer $token" where $token is the JWT Token received at login
+ * 
+ * @apiSuccess (200) {Void} OK Empty response
+ * 
+ * @apiParam  {String} id The id of the user
+ * 
+ * 
+ * @apiParamExample  {} Request-Example:
+ * {
+ *     userID : 42352545207097153
+ * }
+ * 
+ * 
+ * 
+ * @apiError (400) BadRequest Error happens if the params are not set correctly 
+ * @apiError (401) Unauthorized Error happens if JWT Token is wrong or authorization was not correctly provided
+ * @apiError (403) Forbidden Error happens if you try to access this without having the admin role
+ * @apiError [404] NotFound Error happens if the user doesn't exist
+ * 
+ */
 router.delete("/removeTag/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.removeTag, logController.removeTag)
 
 module.exports = router;

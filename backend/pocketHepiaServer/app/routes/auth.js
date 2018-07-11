@@ -23,14 +23,14 @@ router.post("/register", authController.register);
  * 
  * @apiParamExample  {x-www-form-urlencoded} Request-Example:
  * {
- *     email : smartguy@hepia.ch
+ *     email : smartguy@hepia.ch,
  *     password : Pa$$w0rd
  * }
  * 
  * 
  * @apiSuccessExample {json} Success-Response:
  * {
- *     "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJiYWxhbmNlIjowLCJpc0xpYnJhcmlhbiI6ZmFsc2UsImFjY2VwdHNQYXltZW50cyI6ZmFsc2UsImFkbWluRm9yQXJlYXMiOltdLCJjYW5JbnZpdGUiOmZhbHNlLCJpc0F1ZGl0b3IiOmZhbHNlLCJlbWFpbCI6Im1heGltZWxvdmlub0BnbWFpbC5jb20iLCJuYW[...]"
+ *     "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJiYWxhbmNlIjowLCJpc0xpYnJhcmlhbiI6ZmFsc2UsImFjY2VwdHNQYXltZW50cyI6ZmFsc2UsImFkbWluRm9yQXJlYXMiOltdLCJjYW5JbnZpdGUiOmZhbHNlLCJpc0F1ZGl0b3IiOmZhbHNlLCJlbWFpbCI6Im1heGltZWxvdmlub0BnbWFpbC5jb20iLCJuYW[...]",
  *     "id" : "8008CAFE"
  * }
  * 
@@ -57,8 +57,8 @@ router.post("/login", passport.authenticate('local'), authController.login);
  * 
  * @apiParamExample  {x-www-form-urlencoded} Request-Example:
  * {
- *     oldPassword : 12345
- *     password : Pa$$w0rd
+ *     oldPassword : 12345,
+ *     password : Pa$$w0rd,
  *     password2 : Pa$$w0rd
  * }
  * 

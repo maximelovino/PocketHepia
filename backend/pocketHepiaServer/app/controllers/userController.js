@@ -111,13 +111,13 @@ exports.changePermissions = async (req, res, next) => {
 
 	const oldUser = await User.findByIdAndUpdate(req.params.id, { isLibrarian, acceptsPayments, isAdmin, isAuditor, canInvite });
 	if (!oldUser) {
-		res.sendStatus(500);
+		res.sendStatus(404);
 		return;
 	}
 	const newUser = await User.findById(req.params.id);
 
 	if (!newUser) {
-		res.sendStatus(500);
+		res.sendStatus(404);
 		return;
 	}
 
@@ -179,13 +179,13 @@ exports.assignTag = async (req, res, next) => {
 		const oldUser = await User.findByIdAndUpdate(req.body.userID, { cardId: req.body.tagID })
 
 		if (!oldUser) {
-			res.sendStatus(500);
+			res.sendStatus(404);
 			return;
 		}
 		const newUser = await User.findById(req.body.userID);
 
 		if (!newUser) {
-			res.sendStatus(500);
+			res.sendStatus(404);
 			return;
 		}
 		req.affectedUser = newUser
@@ -207,14 +207,14 @@ exports.removeTag = async (req, res, next) => {
 
 		if (!oldUser) {
 			console.log("No old user");
-			res.sendStatus(500);
+			res.sendStatus(404);
 			return;
 		}
 		const newUser = await User.findById(req.params.id);
 
 		if (!newUser) {
 			console.log("No new user");
-			res.sendStatus(500);
+			res.sendStatus(404);
 			return;
 		}
 		req.affectedUser = newUser

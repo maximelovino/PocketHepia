@@ -37,7 +37,7 @@ exports.createRoom = async (req, res, next) => {
 	const area = await Area.findById(req.body.areaID)
 
 	if (!area) {
-		res.status(500);
+		res.status(404);
 		res.send("The area doesn't exist");
 		return;
 	}
@@ -67,17 +67,6 @@ exports.getAreas = async (req, res) => {
 	res.json(toReturn)
 }
 
-exports.getRoomsForArea = async (req, res) => {
-	if (!req.params.id) {
-		res.sendStatus(400);
-	}
-
-	const rooms = await Room.find({ area: req.params.id }).populate('area')
-
-	const toReturn = rooms.map(r => r.toObject());
-
-	res.json(toReturn)
-}
 
 exports.getRooms = async (req, res) => {
 	const rooms = await Room.find().populate('area')
@@ -165,7 +154,7 @@ exports.giveAccess = async (req, res, next) => {
 	const room = await Room.findById(req.body.roomID)
 
 	if (!room) {
-		res.status(500);
+		res.status(404);
 		res.send("The room doesn't exist");
 		return;
 	}
@@ -173,7 +162,7 @@ exports.giveAccess = async (req, res, next) => {
 	const user = await User.findById(req.body.userID)
 
 	if (!user) {
-		res.status(500);
+		res.status(404);
 		res.send("The user doesn't exist");
 		return;
 	}
@@ -183,9 +172,7 @@ exports.giveAccess = async (req, res, next) => {
 		room: room._id
 	})
 
-	//TODO the problem here is the startDate and endDate we get here are with the time, not midnight and 23:59, we should do that instead => startDate is taken back to 00:00 and endDate taken to 23:59
 
-	//TODO create a date handler for this, because there's something similar in log controller
 	if (req.body.startDate) {
 		const start = new Date(parseInt(req.body.startDate));
 		access.startDate = start
