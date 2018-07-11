@@ -23,8 +23,8 @@ router.post("/register", authController.register);
  * 
  * @apiParamExample  {x-www-form-urlencoded} Request-Example:
  * {
- *     email : smartguy@hepia.ch,
- *     password : Pa$$w0rd
+ *     "email" : "smartguy@hepia.ch",
+ *     "password" : "Pa$$w0rd"
  * }
  * 
  * 
@@ -57,9 +57,9 @@ router.post("/login", passport.authenticate('local'), authController.login);
  * 
  * @apiParamExample  {x-www-form-urlencoded} Request-Example:
  * {
- *     oldPassword : 12345,
- *     password : Pa$$w0rd,
- *     password2 : Pa$$w0rd
+ *     "oldPassword" : "12345",
+ *     "password" : "Pa$$w0rd",
+ *     "password2" : "Pa$$w0rd"
  * }
  * 
  * @apiSuccess (200) {Void} OK Empty response

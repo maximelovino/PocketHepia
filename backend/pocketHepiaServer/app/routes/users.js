@@ -194,11 +194,15 @@ router.delete("/delete/:id", passport.authenticate('jwt'), authController.checkA
  * @apiSuccess (200) {Void} OK Empty response
  * 
  * @apiParam  {String} id The id of the user for which to reset the password
+ * @apiParam  {String} password The new passsword
+ * @apiParam  {String} password2 The new password, confirmed
  * 
  * 
  * @apiParamExample  {} Request-Example:
  * {
- *     id : 5b1fd5bb44ab8b001de7de16
+ *     "id" : "5b1fd5bb44ab8b001de7de16",
+ *     "password" : "cuck",
+ *     "password2" : "cuck",
  * }
  * 
  * @apiError (400) BadRequest Error happens if the params are not set correctly or passwords don't match
@@ -220,17 +224,24 @@ router.put("/resetPassword/:id", passport.authenticate('jwt'), authController.ch
  * @apiSuccess (200) {Void} OK Empty response
  * 
  * @apiParam  {String} id The id of the user for which to change permissions
+ * @apiParam  {Boolean} [isAdmin] A boolean to specify if the user has admin role
+ * @apiParam  {Boolean} [canInvite] A boolean to specify if the user has invite role
+ * @apiParam  {Boolean} [acceptsPayments] A boolean to specify if the user has acceptsPayment role
+ * @apiParam  {Boolean} [isAuditor] A boolean to specify if the user has auditor role
+ * @apiParam  {Boolean} [isLibrarian] A boolean to specify if the user has librarian role
  * 
  * 
  * @apiParamExample  {} Request-Example:
  * {
- *     id : 5b1fd5bb44ab8b001de7de16
+ *     "id" : "cuck",
+ *     "isLibrarian" : "true",
+ *     "isAdmin" : "true",
  * }
  * 
  * @apiError (400) BadRequest Error happens if the params are not set correctly 
  * @apiError (401) Unauthorized Error happens if JWT Token is wrong or authorization was not correctly provided
  * @apiError (403) Forbidden Error happens if you try to access this without having the admin role
- * @apiError [404] NotFound Error happens if the user doesn't exist
+ * @apiError (404) NotFound Error happens if the user doesn't exist
  * 
  */
 router.put("/changePermissions/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.changePermissions, logController.changePermissions)
@@ -272,9 +283,9 @@ router.post("/import", passport.authenticate('jwt'), authController.checkAdmin, 
  * 
  * 
  * @apiParamExample  {} Request-Example:
- * {
- *     id : 42352545207097153
- * }
+{
+     "id" : "42352545207097153"
+}
  * 
  * 
  * 
@@ -302,8 +313,8 @@ router.delete("/undo/:id", passport.authenticate('jwt'), authController.checkAdm
  * 
  * @apiParamExample  {} Request-Example:
  * {
- *     userID : 42352545207097153,
- *     tagID : CAFE8008
+ *     "userID" : "42352545207097153",
+ *     "tagID" : "CAFE8008"
  * }
  * 
  * 
@@ -311,8 +322,8 @@ router.delete("/undo/:id", passport.authenticate('jwt'), authController.checkAdm
  * @apiError (400) BadRequest Error happens if the params are not set correctly 
  * @apiError (401) Unauthorized Error happens if JWT Token is wrong or authorization was not correctly provided
  * @apiError (403) Forbidden Error happens if you try to access this without having the admin role
- * @apiError [404] NotFound Error happens if the user doesn't exist
- * @apiError [500] InternalServerError Error happens if the tag is already assigned
+ * @apiError (404) NotFound Error happens if the user doesn't exist
+ * @apiError (500) InternalServerError Error happens if the tag is already assigned
  * 
  */
 router.put("/assign", passport.authenticate('jwt'), authController.checkAdmin, userController.assignTag, logController.assignTag)
@@ -334,7 +345,7 @@ router.put("/assign", passport.authenticate('jwt'), authController.checkAdmin, u
  * 
  * @apiParamExample  {} Request-Example:
  * {
- *     userID : 42352545207097153
+ *     "userID" : "42352545207097153"
  * }
  * 
  * 
@@ -342,7 +353,7 @@ router.put("/assign", passport.authenticate('jwt'), authController.checkAdmin, u
  * @apiError (400) BadRequest Error happens if the params are not set correctly 
  * @apiError (401) Unauthorized Error happens if JWT Token is wrong or authorization was not correctly provided
  * @apiError (403) Forbidden Error happens if you try to access this without having the admin role
- * @apiError [404] NotFound Error happens if the user doesn't exist
+ * @apiError (404) NotFound Error happens if the user doesn't exist
  * 
  */
 router.delete("/removeTag/:id", passport.authenticate('jwt'), authController.checkAdmin, userController.removeTag, logController.removeTag)

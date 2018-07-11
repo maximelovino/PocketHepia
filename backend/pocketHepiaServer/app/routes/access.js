@@ -240,7 +240,7 @@ router.get("/room/:id", passport.authenticate('jwt'), authController.checkAdmin,
 
 /**
  * 
- * @api {POST} /access/room/:id Delete an room
+ * @api {POST} /access/room/:id Delete a room
  * @apiName AccessDeleteRoom
  * @apiGroup Access
  * @apiVersion  1.0.0
@@ -282,6 +282,99 @@ router.delete("/room/:id", passport.authenticate('jwt'), authController.checkAdm
  * @apiSuccess (200) {Int} -.startTime The start Time, as minutes past midnight
  * @apiSuccess (200) {Int} -.endTime The end Time, as minutes past midnight
  * 
+ * @apiSuccessExample {json} Success-Response:
+ [
+	{
+		"startTime": 0,
+		"endTime": 1439,
+		"user": {
+			"isAdmin": false,
+			"isLibrarian": true,
+			"acceptsPayments": false,
+			"adminForAreas": [],
+			"canInvite": false,
+			"isAuditor": false,
+			"email": "marco@lopes.com",
+			"name": "Marco Lopes",
+			"id": "5b2e149f0dde6c001bf242b2"
+		},
+		"room": {
+			"accessReaders": [
+				"identifier1234"
+			],
+			"name": "A404",
+			"area": {
+				"name": "ITI Floor",
+				"id": "5b2f53450dde6c001bf242b4"
+			},
+			"id": "5b2f534a0dde6c001bf242b6"
+		},
+		"startDate": 1530277560117,
+		"endDate": 1530828000000,
+		"id": "5b362ec30dde6c001bf242c3"
+	},
+	{
+		"startTime": 0,
+		"endTime": 1439,
+		"user": {
+			"isAdmin": true,
+			"isLibrarian": false,
+			"acceptsPayments": false,
+			"adminForAreas": [],
+			"canInvite": false,
+			"isAuditor": false,
+			"email": "maximelovino@gmail.com",
+			"name": "Maxime Lovino",
+			"importBatch": "038e9a70-7662-11e8-ab85-f986a9facd10",
+			"id": "5b2d67fd9073cd001b2cbcb7"
+		},
+		"room": {
+			"accessReaders": [
+				"identifier1234"
+			],
+			"name": "A404",
+			"area": {
+				"name": "ITI Floor",
+				"id": "5b2f53450dde6c001bf242b4"
+			},
+			"id": "5b2f534a0dde6c001bf242b6"
+		},
+		"startDate": 1531166290708,
+		"endDate": 1532556000000,
+		"id": "5b43be5b0dde6c001bf242d1"
+	},
+	{
+		"startTime": 480,
+		"endTime": 1439,
+		"user": {
+			"isAdmin": true,
+			"isLibrarian": false,
+			"acceptsPayments": false,
+			"adminForAreas": [],
+			"canInvite": false,
+			"isAuditor": false,
+			"email": "maximelovino@gmail.com",
+			"name": "Maxime Lovino",
+			"importBatch": "038e9a70-7662-11e8-ab85-f986a9facd10",
+			"id": "5b2d67fd9073cd001b2cbcb7"
+		},
+		"room": {
+			"accessReaders": [
+				"identifier1234"
+			],
+			"name": "A404",
+			"area": {
+				"name": "ITI Floor",
+				"id": "5b2f53450dde6c001bf242b4"
+			},
+			"id": "5b2f534a0dde6c001bf242b6"
+		},
+		"startDate": 1531166624790,
+		"endDate": 1537394400000,
+		"id": "5b43bfb40dde6c001bf242d3"
+	}
+]
+ * 
  * @apiParam  {String} id The id of the room to get acceses for
  * 
  * 
@@ -315,6 +408,99 @@ router.get("/accesses/room/:id", passport.authenticate('jwt'), authController.ch
  * @apiSuccess (200) {Int} -.startTime The start Time, as minutes past midnight
  * @apiSuccess (200) {Int} -.endTime The end Time, as minutes past midnight
  * 
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ [
+	{
+		"startTime": 0,
+		"endTime": 1439,
+		"user": {
+			"isAdmin": false,
+			"isLibrarian": true,
+			"acceptsPayments": false,
+			"adminForAreas": [],
+			"canInvite": false,
+			"isAuditor": false,
+			"email": "marco@lopes.com",
+			"name": "Marco Lopes",
+			"id": "5b2e149f0dde6c001bf242b2"
+		},
+		"room": {
+			"accessReaders": [
+				"identifier1234"
+			],
+			"name": "A404",
+			"area": {
+				"name": "ITI Floor",
+				"id": "5b2f53450dde6c001bf242b4"
+			},
+			"id": "5b2f534a0dde6c001bf242b6"
+		},
+		"startDate": 1530277560117,
+		"endDate": 1530828000000,
+		"id": "5b362ec30dde6c001bf242c3"
+	},
+	{
+		"startTime": 0,
+		"endTime": 1439,
+		"user": {
+			"isAdmin": true,
+			"isLibrarian": false,
+			"acceptsPayments": false,
+			"adminForAreas": [],
+			"canInvite": false,
+			"isAuditor": false,
+			"email": "maximelovino@gmail.com",
+			"name": "Maxime Lovino",
+			"importBatch": "038e9a70-7662-11e8-ab85-f986a9facd10",
+			"id": "5b2d67fd9073cd001b2cbcb7"
+		},
+		"room": {
+			"accessReaders": [
+				"identifier1234"
+			],
+			"name": "A404",
+			"area": {
+				"name": "ITI Floor",
+				"id": "5b2f53450dde6c001bf242b4"
+			},
+			"id": "5b2f534a0dde6c001bf242b6"
+		},
+		"startDate": 1531166290708,
+		"endDate": 1532556000000,
+		"id": "5b43be5b0dde6c001bf242d1"
+	},
+	{
+		"startTime": 480,
+		"endTime": 1439,
+		"user": {
+			"isAdmin": true,
+			"isLibrarian": false,
+			"acceptsPayments": false,
+			"adminForAreas": [],
+			"canInvite": false,
+			"isAuditor": false,
+			"email": "maximelovino@gmail.com",
+			"name": "Maxime Lovino",
+			"importBatch": "038e9a70-7662-11e8-ab85-f986a9facd10",
+			"id": "5b2d67fd9073cd001b2cbcb7"
+		},
+		"room": {
+			"accessReaders": [
+				"identifier1234"
+			],
+			"name": "A404",
+			"area": {
+				"name": "ITI Floor",
+				"id": "5b2f53450dde6c001bf242b4"
+			},
+			"id": "5b2f534a0dde6c001bf242b6"
+		},
+		"startDate": 1531166624790,
+		"endDate": 1537394400000,
+		"id": "5b43bfb40dde6c001bf242d3"
+	}
+]
  * @apiParam  {String} id The id of the user to get acceses for
  * 
  * 
@@ -398,6 +584,12 @@ router.post("/accesses/room/reader", passport.authenticate('jwt'), authControlle
  * 
  * @apiSuccess (200) {String[]} - Readers array is the root of the document
  * 
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ [
+	"identifier1234",
+	"identifier1423235",
+]
  * @apiParam  {String} id The id of the room
  * 
  * 
@@ -462,6 +654,99 @@ router.delete("/accesses/room/:roomID/reader/:readerID", passport.authenticate('
  * @apiSuccess (200) {Int} -.startTime The start Time, as minutes past midnight
  * @apiSuccess (200) {Int} -.endTime The end Time, as minutes past midnight
  * 
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ [
+	{
+		"startTime": 0,
+		"endTime": 1439,
+		"user": {
+			"isAdmin": false,
+			"isLibrarian": true,
+			"acceptsPayments": false,
+			"adminForAreas": [],
+			"canInvite": false,
+			"isAuditor": false,
+			"email": "marco@lopes.com",
+			"name": "Marco Lopes",
+			"id": "5b2e149f0dde6c001bf242b2"
+		},
+		"room": {
+			"accessReaders": [
+				"identifier1234"
+			],
+			"name": "A404",
+			"area": {
+				"name": "ITI Floor",
+				"id": "5b2f53450dde6c001bf242b4"
+			},
+			"id": "5b2f534a0dde6c001bf242b6"
+		},
+		"startDate": 1530277560117,
+		"endDate": 1530828000000,
+		"id": "5b362ec30dde6c001bf242c3"
+	},
+	{
+		"startTime": 0,
+		"endTime": 1439,
+		"user": {
+			"isAdmin": true,
+			"isLibrarian": false,
+			"acceptsPayments": false,
+			"adminForAreas": [],
+			"canInvite": false,
+			"isAuditor": false,
+			"email": "maximelovino@gmail.com",
+			"name": "Maxime Lovino",
+			"importBatch": "038e9a70-7662-11e8-ab85-f986a9facd10",
+			"id": "5b2d67fd9073cd001b2cbcb7"
+		},
+		"room": {
+			"accessReaders": [
+				"identifier1234"
+			],
+			"name": "A404",
+			"area": {
+				"name": "ITI Floor",
+				"id": "5b2f53450dde6c001bf242b4"
+			},
+			"id": "5b2f534a0dde6c001bf242b6"
+		},
+		"startDate": 1531166290708,
+		"endDate": 1532556000000,
+		"id": "5b43be5b0dde6c001bf242d1"
+	},
+	{
+		"startTime": 480,
+		"endTime": 1439,
+		"user": {
+			"isAdmin": true,
+			"isLibrarian": false,
+			"acceptsPayments": false,
+			"adminForAreas": [],
+			"canInvite": false,
+			"isAuditor": false,
+			"email": "maximelovino@gmail.com",
+			"name": "Maxime Lovino",
+			"importBatch": "038e9a70-7662-11e8-ab85-f986a9facd10",
+			"id": "5b2d67fd9073cd001b2cbcb7"
+		},
+		"room": {
+			"accessReaders": [
+				"identifier1234"
+			],
+			"name": "A404",
+			"area": {
+				"name": "ITI Floor",
+				"id": "5b2f53450dde6c001bf242b4"
+			},
+			"id": "5b2f534a0dde6c001bf242b6"
+		},
+		"startDate": 1531166624790,
+		"endDate": 1537394400000,
+		"id": "5b43bfb40dde6c001bf242d3"
+	}
+]
  * 
  * @apiError (400) BadRequest Error happens if the params are not set correctly
  * @apiError (401) Unauthorized Error happens if JWT Token is wrong or authorization was not correctly provided

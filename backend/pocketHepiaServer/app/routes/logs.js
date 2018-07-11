@@ -20,6 +20,7 @@ const passport = require('passport');
  * @apiSuccess (200) {User} -.triggeringUser The User object for the user that triggered the log
  * @apiSuccess (200) {String} -.description The description of the log
  * @apiSuccess (200) {Int} -.date The date of the log, as Unix milliseconds time
+ * @apiSuccess (200) {Object} -.rawData Additional data
  * 
  * @apiSuccessExample {json} Success-Response:
  [
@@ -90,6 +91,7 @@ router.get("/all", passport.authenticate('jwt'), authController.checkAdmin, logC
  * @apiSuccess (200) {User} -.triggeringUser The User object for the user that triggered the log
  * @apiSuccess (200) {String} -.description The description of the log
  * @apiSuccess (200) {Int} -.date The date of the log, as Unix milliseconds time
+ * @apiSuccess (200) {Object} -.rawData Additional data
  * 
  * @apiSuccessExample {json} Success-Response:
  [
