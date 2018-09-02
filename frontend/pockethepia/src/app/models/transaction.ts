@@ -19,13 +19,14 @@ export class Transaction {
     this.title = transaction.title;
     this.amount = transaction.amount;
     this.from = transaction.from ? new User(transaction.from) : undefined;
-    this.to = new User(transaction.to);
+    this.to = this.to ? new User(transaction.to) : undefined;
     this.date = new Date(transaction.date);
     this.adminCharge = transaction.adminCharge;
     this.stripe = transaction.stripe;
   }
 
   public nameToDisplay(): String {
+    console.log(this);
     if (this.stripe) {
       return 'Stripe Charge';
     } else if (this.adminCharge) {
