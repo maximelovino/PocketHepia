@@ -19,7 +19,7 @@ export class Transaction {
     this.title = transaction.title;
     this.amount = transaction.amount;
     this.from = transaction.from ? new User(transaction.from) : undefined;
-    this.to = this.to ? new User(transaction.to) : undefined;
+    this.to = transaction.to ? new User(transaction.to) : undefined;
     this.date = new Date(transaction.date);
     this.adminCharge = transaction.adminCharge;
     this.stripe = transaction.stripe;
