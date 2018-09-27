@@ -46,7 +46,7 @@
         tools:layout="@layout/fragment_user_detail">
         <argument
             android:name="userID"
-            app:type="string" />
+            app:argType="string" />
         <action
             android:id="@+id/userDetailToNFC"
             app:destination="@id/nfcAssignmentActivity" />
@@ -58,7 +58,7 @@
         tools:layout="@layout/activity_nfc_assignment">
         <argument
             android:name="userID"
-            app:type="string" />
+            app:argType="string" />
     </activity>
     <activity
         android:id="@+id/paymentActivity"
@@ -67,7 +67,7 @@
         tools:layout="@layout/activity_payment" >
         <argument
             android:name="userID"
-            app:type="string" />
+            app:argType="string" />
     </activity>
     <activity
         android:id="@+id/virtualCardActivity"
